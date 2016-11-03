@@ -1,0 +1,26 @@
+************************************************************
+
+Wrong APDU command for decryption by card driver
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 02 00 c5 
+SW: 90 00 
+
+LASERCardDecrypt
+APDU: 00 2a 80 0e 1b 82 81 18 99 47 54 fe e0 54 df 7e d2 e9 49 fe bf e1 8d 5c a3 4c fc 1a 26 f8 51 5b 00 
+SW: 6a 86 
+
+************************************************************
+
+Correct APDU commands sent manually
+
+APDU: 80 a4 08 00 08 3f 00 30 00 30 02 00 c5 
+SW: 90 00 
+
+APDU: 00 2a 80 0e 23 82 81 20 4f 01 50 27 37 33 72 7f 99 47 54 fe e0 54 df 7e d2 e9 49 fe bf e1 8d 5c a3 4c fc 1a 26 f8 51 5b 00
+SW: 80 20 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f 20 90 00
+
+
+
+
+

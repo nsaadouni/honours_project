@@ -1,0 +1,1 @@
+gcc -L/usr/lib/x64-athena/ -Wl,-rpath=/usr/lib/x64-athena/ -Wall -o copy copy.c -lASEP11 -ldl

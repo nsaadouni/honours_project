@@ -1,0 +1,476 @@
+************************************************************
+
+initialize...
+
+LASERCardSelectApplet
+APDU: 00 a4 04 00 0c a0 00 00 01 64 4c 41 53 45 52 00 01 00 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 d0 7e 
+SW: 6a 82 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 03 40 00 
+SW: 90 00 
+
+LASERCardReadBinary
+APDU: 00 b0 00 02 64 
+SW: 41 54 48 45 4e 41 53 4e c0 ad aa 78 fc 88 42 0d 90 00 
+
+************************************************************
+
+login with pin "12345"...
+
+LASERCardSelectFile
+APDU: 80 a4 08 0c 04 3f 00 00 20 00 
+SW: 62 2f 87 01 08 83 02 00 20 80 02 00 10 8a 01 04 86 0e 00 ff c0 30 00 ff 00 10 00 ff 00 10 00 00 85 0f 00 01 00 00 aa 00 04 10 00 00 00 00 00 ff ff 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 04 3f 00 00 20 
+SW: 90 00 
+
+LASERCardGetChallenge
+APDU: 00 84 00 00 08 
+SW: 3a 3b 33 a2 90 4c 66 22 90 00 
+
+LASERCardSecureVerifyPIN
+APDU: 80 20 00 00 10 b6 d7 67 1a 62 d9 0b 2b 17 9c 73 bc ba 07 e1 95 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 02 d0 7e 
+SW: 6a 82 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 d0 7e 
+SW: 6a 82 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+************************************************************
+
+Generated rsa key pair "Odysseus" and "Penelope"
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 04 3f 00 00 20 
+SW: 90 00 
+
+LASERCardGetChallenge
+APDU: 00 84 00 00 08 
+SW: fc 0d d9 2d fb d2 ce cf 90 00 
+
+LASERCardSecureVerifyPIN
+APDU: 80 20 00 00 10 b6 d7 67 1a 62 d9 0b 2b d1 09 6b 4e 96 93 c0 73 
+SW: 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 86 7f 
+SW: 90 00 
+
+LASERCardReadBinary
+APDU: 00 b0 00 0c 14 
+SW: c3 29 79 b6 e3 d6 40 b3 28 1a 09 f7 10 54 40 e8 2e b1 cf bc 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 86 7f 
+SW: 90 00 
+
+LASERCardReadBinary
+APDU: 00 b0 00 00 00 
+SW: 00 86 86 7f 02 7f 0a 80 13 10 00 14 c3 29 79 b6 e3 d6 40 b3 28 1a 09 f7 10 54 40 e8 2e b1 cf bc 00 00 00 00 04 00 00 00 00 00 01 00 00 01 01 00 02 00 00 01 00 00 03 10 00 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 10 10 00 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 11 10 01 c2 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 61 00 
+
+LASERCardReadBinary
+APDU: 00 b0 01 00 00 
+SW: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 61 83 
+
+LASERCardReadBinary
+APDU: 00 b0 02 00 00 
+SW: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 10 00 00 ff ff ff ff ff ff ff ff 01 70 00 00 01 01 80 10 00 00 01 00 00 00 00 00 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 04 3f 00 00 20 
+SW: 90 00 
+
+LASERCardGetChallenge
+APDU: 00 84 00 00 08 
+SW: c4 09 7b 76 b4 d4 42 55 90 00 
+
+LASERCardSecureVerifyPIN
+APDU: 80 20 00 00 10 ab 07 3d 57 64 86 93 3b e9 dd d6 c0 93 c2 05 77 
+SW: 90 00 
+
+LASERCardCloseSecureMessaging
+APDU: 80 86 ff ff 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 03 40 01 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 04 04 50 01 50 01 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 06 3f 00 30 00 30 02 
+SW: 90 00 
+
+LASERCardListFiles
+APDU: 80 30 01 00 00 
+SW: d1 02 00 04 d2 02 03 43 d2 02 03 42 d2 02 03 41 d2 02 03 40 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 03 40 01 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 04 04 51 01 51 01 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 06 3f 00 30 00 30 01 
+SW: 90 00 
+
+LASERCardCreateBinary
+APDU: 00 e0 01 00 18 62 81 15 8a 01 04 83 02 01 40 80 02 01 a7 86 08 00 00 00 00 00 00 00 00 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 01 40 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 00 fa 01 01 01 40 01 a3 16 00 00 00 00 04 02 00 00 00 00 01 00 00 01 01 00 02 00 00 01 00 00 03 10 00 08 4f 64 79 73 73 65 75 73 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 86 32 00 01 00 01 00 00 00 04 00 00 00 00 01 01 10 00 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 02 10 00 01 0b ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 04 00 00 01 01 01 06 00 00 01 01 01 0a 00 00 01 01 01 0b 00 00 01 00 01 0c 10 00 01 00 01 10 10 00 00 ff ff ff ff ff ff ff ff 01 11 10 00 00 ff ff ff ff ff ff ff ff 01 20 00 00 80 38 5c 59 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 fa ad 1d e3 7f 00 00 38 5c 59 1d e3 7f 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 30 00 00 00 00 00 00 00 30 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 98 5b 59 1d e3 7f 00 00 00 00 00 00 42 03 00 00 00 00 00 00 00 00 00 00 30 00 00 00 00 00 00 00 71 00 00 00 00 00 00 00 d8 5b 59 1d e3 7f 00 00 d8 5b 59 1d e3 7f 00 00 00 00 00 00 42 03 00 00 00 00 00 00 00 00 00 00 01 21 00 00 04 00 04 00 00 01 22 00 00 03 01 00 01 01 63 00 00 01 01 01 66 00 00 04 00 00 00 00 01 70 00 00 01 01 80 10 00 00 01 00 51 01 51 01 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 06 3f 00 30 00 30 02 
+SW: 90 00 
+
+LASERCardCreateBinary
+APDU: 00 e0 01 00 1e 62 81 1b 8a 01 04 83 02 02 00 80 02 01 23 84 04 6b 78 73 30 86 08 00 00 00 20 00 20 00 20 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 02 02 00 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 00 fa 01 02 02 00 01 1f 16 00 00 00 00 04 03 00 00 00 00 01 00 00 01 01 00 02 00 00 01 01 00 03 10 00 08 50 65 6e 65 6c 6f 70 65 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 00 00 00 04 00 00 00 00 01 01 10 00 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 02 10 00 01 0b ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 03 30 00 01 01 01 05 50 00 01 01 01 07 50 00 01 01 01 08 50 00 01 01 01 09 50 00 01 00 01 0c 10 00 01 00 01 10 10 00 00 ff ff ff ff ff ff ff ff 01 11 10 00 00 ff ff ff ff ff ff ff ff 01 62 50 00 01 00 01 63 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 fa 29 00 00 01 01 01 64 00 00 01 01 01 65 00 00 01 01 01 66 00 00 04 00 00 00 00 01 70 00 00 01 01 80 10 00 00 01 00 51 01 51 01 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 06 3f 00 30 00 30 02 
+SW: 90 00 
+
+LASERCardCreatePrivateCRTRSAKey
+APDU: 00 e0 08 00 27 62 81 24 8a 01 04 83 02 00 41 80 02 00 80 85 05 05 0c 20 00 a3 86 0e 00 00 00 ff 00 ff 00 20 00 20 00 00 00 20 71 00 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 00 00 02 00 41 
+SW: 90 00 
+
+LASERCardGenerateKeyPair
+APDU: 00 47 00 00 0c ac 81 09 80 01 06 81 81 03 01 00 01 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 02 00 41 
+SW: 90 00 
+
+LASERCardGetPublicKey
+APDU: 80 48 00 00 00 
+SW: 7f 49 81 88 81 81 80 cd 8f 10 44 c7 fc 5a f4 b7 cc dc a0 52 eb 16 2d 25 6e 48 dc 8c 91 c4 97 a6 06 b6 54 0c 43 1b 81 35 a2 c5 74 b1 6e 8d 92 de 8d d4 f2 ca 7c 9e 56 5a ef 72 5f 94 78 05 3e 75 d9 52 3c 86 c5 52 1f 62 d9 40 d2 77 85 a3 e4 2f 77 bd 64 05 0a b3 37 fb 8e 1c 34 53 d4 17 1f 4d ea 05 f1 41 13 dd c2 df 6f 46 1b 37 71 9a 16 1d b6 10 dc 18 aa 0a 78 f2 c5 9e 31 4b a1 89 c0 e6 4e 77 35 94 85 7f 97 82 03 01 00 01 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 06 3f 00 30 00 30 01 
+SW: 90 00 
+
+LASERCardCreatePublicRSAKey
+APDU: 00 e0 08 00 b0 62 81 ad 8a 01 04 83 02 00 81 80 02 00 80 85 05 05 08 20 00 a3 86 0e 00 00 00 ff 00 ff 00 00 00 00 00 00 00 00 71 81 88 90 03 01 00 01 91 81 80 cd 8f 10 44 c7 fc 5a f4 b7 cc dc a0 52 eb 16 2d 25 6e 48 dc 8c 91 c4 97 a6 06 b6 54 0c 43 1b 81 35 a2 c5 74 b1 6e 8d 92 de 8d d4 f2 ca 7c 9e 56 5a ef 72 5f 94 78 05 3e 75 d9 52 3c 86 c5 52 1f 62 d9 40 d2 77 85 a3 e4 2f 77 bd 64 05 0a b3 37 fb 8e 1c 34 53 d4 17 1f 4d ea 05 f1 41 13 dd c2 df 6f 46 1b 37 71 9a 16 1d b6 10 dc 18 aa 0a 78 f2 c5 9e 31 4b a1 89 c0 e6 4e 77 35 94 85 7f 97 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 01 40 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 f5 82 00 80 cd 8f 10 44 c7 fc 5a f4 b7 cc dc a0 52 eb 16 2d 25 6e 48 dc 8c 91 c4 97 a6 06 b6 54 0c 43 1b 81 35 a2 c5 74 b1 6e 8d 92 de 8d d4 f2 ca 7c 9e 56 5a ef 72 5f 94 78 05 3e 75 d9 52 3c 86 c5 52 1f 62 d9 40 d2 77 85 a3 e4 2f 77 bd 64 05 0a b3 37 fb 8e 1c 34 53 d4 17 1f 4d ea 05 f1 41 13 dd c2 df 6f 46 1b 37 71 9a 16 1d b6 10 dc 18 aa 0a 78 f2 c5 9e 31 4b a1 89 c0 e6 4e 77 35 94 85 7f 97 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 01 40 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 00 01 00 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 02 02 00 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 00 01 00 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 86 7f 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 0c 14 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 d0 7e 
+SW: 6a 82 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 86 7f 
+SW: 90 00 
+
+LASERCardReallocateBinaryFile
+APDU: 90 32 00 03 ff 02 83 00 00 62 82 02 83 00 86 86 7f 02 7f 0a 80 13 10 00 14 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 04 00 00 00 00 00 01 00 00 01 01 00 02 00 00 01 00 00 03 10 00 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 10 10 00 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 11 10 01 c2 0b 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 03 00 00 
+SW: 90 00 
+
+LASERCardReallocateBinaryFile
+APDU: 90 32 00 03 ff 00 00 04 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+SW: 90 00 
+
+LASERCardReallocateBinaryFile
+APDU: 80 32 00 03 8d 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 10 00 00 ff ff ff ff ff ff ff ff 01 70 00 00 01 01 80 10 00 00 01 00 00 00 00 00 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 86 7f 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 0c 14 ba 8b 3d d9 27 47 50 3a fa 43 fc 03 a4 64 c9 eb 27 eb 57 01 
+SW: 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+************************************************************
+
+Generated rsa key pair "Eros" and "Psyche"
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 04 3f 00 00 20 
+SW: 90 00 
+
+LASERCardGetChallenge
+APDU: 00 84 00 00 08 
+SW: ae ea 53 e7 a0 80 0d 14 90 00 
+
+LASERCardSecureVerifyPIN
+APDU: 80 20 00 00 10 d6 a4 e6 ff 4c c5 7d f2 93 a7 b7 24 eb 36 4a 9e 
+SW: 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 06 3f 00 30 00 30 01 
+SW: 90 00 
+
+LASERCardListFiles
+APDU: 80 30 01 00 00 
+SW: d1 02 00 02 d2 02 01 40 d2 0a 86 7f 63 6d 61 70 66 69 6c 65 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 04 3f 00 00 20 
+SW: 90 00 
+
+LASERCardGetChallenge
+APDU: 00 84 00 00 08 
+SW: a6 33 46 e9 78 d9 3b 26 90 00 
+
+LASERCardSecureVerifyPIN
+APDU: 80 20 00 00 10 d6 a4 e6 ff 4c c5 7d f2 88 a5 c1 3c 06 f7 89 3c 
+SW: 90 00 
+
+LASERCardCloseSecureMessaging
+APDU: 80 86 ff ff 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 03 40 01 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 04 04 52 01 52 01 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 06 3f 00 30 00 30 02 
+SW: 90 00 
+
+LASERCardListFiles
+APDU: 80 30 01 00 00 
+SW: d1 02 00 05 d2 06 02 00 6b 78 73 30 d2 02 03 43 d2 02 03 42 d2 02 03 41 d2 02 03 40 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 03 40 01 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 04 04 53 01 53 01 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 06 3f 00 30 00 30 01 
+SW: 90 00 
+
+LASERCardCreateBinary
+APDU: 00 e0 01 00 18 62 81 15 8a 01 04 83 02 01 41 80 02 01 a7 86 08 00 00 00 00 00 00 00 00 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 01 41 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 00 fa 01 01 01 41 01 a3 16 00 00 00 00 04 02 00 00 00 00 01 00 00 01 01 00 02 00 00 01 00 00 03 10 00 04 45 72 6f 73 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 86 32 00 01 00 01 00 00 00 04 00 00 00 00 01 01 10 00 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 02 10 00 01 0c ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 04 00 00 01 01 01 06 00 00 01 01 01 0a 00 00 01 01 01 0b 00 00 01 00 01 0c 10 00 01 00 01 10 10 00 00 ff ff ff ff ff ff ff ff 01 11 10 00 00 ff ff ff ff ff ff ff ff 01 20 00 00 80 78 5b 59 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 fa ad 1d e3 7f 00 00 78 5b 59 1d e3 7f 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 10 40 00 00 00 40 08 40 00 00 08 40 10 40 00 00 00 00 00 00 10 40 08 00 10 00 08 40 00 00 08 00 10 40 00 40 00 00 08 40 00 40 08 40 00 40 00 00 00 00 08 40 00 40 00 40 10 00 00 00 10 40 08 40 10 40 08 00 10 00 00 00 00 40 00 00 00 00 00 40 10 40 00 00 00 40 08 40 00 00 08 00 10 00 00 40 01 21 00 00 04 00 04 00 00 01 22 00 00 03 01 00 01 01 63 00 00 01 01 01 66 00 00 04 00 00 00 00 01 70 00 00 01 01 80 10 00 00 01 00 53 01 53 01 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 06 3f 00 30 00 30 02 
+SW: 90 00 
+
+LASERCardCreateBinary
+APDU: 00 e0 01 00 1e 62 81 1b 8a 01 04 83 02 02 01 80 02 01 23 84 04 6b 78 73 31 86 08 00 00 00 20 00 20 00 20 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 02 02 01 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 00 fa 01 02 02 01 01 1f 16 00 00 00 00 04 03 00 00 00 00 01 00 00 01 01 00 02 00 00 01 01 00 03 10 00 06 50 73 79 63 68 65 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 00 00 00 04 00 00 00 00 01 01 10 00 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 02 10 00 01 0c ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 03 30 00 01 01 01 05 50 00 01 01 01 07 50 00 01 01 01 08 50 00 01 01 01 09 50 00 01 00 01 0c 10 00 01 00 01 10 10 00 00 ff ff ff ff ff ff ff ff 01 11 10 00 00 ff ff ff ff ff ff ff ff 01 62 50 00 01 00 01 63 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 fa 29 00 00 01 01 01 64 00 00 01 01 01 65 00 00 01 01 01 66 00 00 04 00 00 00 00 01 70 00 00 01 01 80 10 00 00 01 00 53 01 53 01 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 06 3f 00 30 00 30 02 
+SW: 90 00 
+
+LASERCardCreatePrivateCRTRSAKey
+APDU: 00 e0 08 00 27 62 81 24 8a 01 04 83 02 00 42 80 02 00 80 85 05 05 0c 20 00 a3 86 0e 00 00 00 ff 00 ff 00 20 00 20 00 00 00 20 71 00 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 00 00 02 00 42 
+SW: 90 00 
+
+LASERCardGenerateKeyPair
+APDU: 00 47 00 00 0c ac 81 09 80 01 06 81 81 03 01 00 01 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 02 00 42 
+SW: 90 00 
+
+LASERCardGetPublicKey
+APDU: 80 48 00 00 00 
+SW: 7f 49 81 88 81 81 80 96 d0 af df 89 40 88 d7 ad 46 f7 3c 1c c8 96 53 36 22 f7 28 e9 b3 dd e6 a7 4b e8 a6 d9 b9 3c 17 76 90 79 2e d4 ed 50 0b 03 88 ac 16 2b fc fa 27 f3 2c e3 51 28 e0 a3 4d 40 29 61 41 17 ce c6 cf e5 46 3c 16 5e 9e 74 75 2a 6e c2 dc ce 8a 31 94 8c ed 8d da f2 b2 20 05 db fc ea 65 31 a9 2c e2 07 72 fa a2 1b ca 61 91 e5 9b 02 66 36 ff 33 4a 22 36 7c 0c 75 5d 2e d2 6f 47 fb 28 5d de b6 9d 82 03 01 00 01 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 06 3f 00 30 00 30 01 
+SW: 90 00 
+
+LASERCardCreatePublicRSAKey
+APDU: 00 e0 08 00 b0 62 81 ad 8a 01 04 83 02 00 82 80 02 00 80 85 05 05 08 20 00 a3 86 0e 00 00 00 ff 00 ff 00 00 00 00 00 00 00 00 71 81 88 90 03 01 00 01 91 81 80 96 d0 af df 89 40 88 d7 ad 46 f7 3c 1c c8 96 53 36 22 f7 28 e9 b3 dd e6 a7 4b e8 a6 d9 b9 3c 17 76 90 79 2e d4 ed 50 0b 03 88 ac 16 2b fc fa 27 f3 2c e3 51 28 e0 a3 4d 40 29 61 41 17 ce c6 cf e5 46 3c 16 5e 9e 74 75 2a 6e c2 dc ce 8a 31 94 8c ed 8d da f2 b2 20 05 db fc ea 65 31 a9 2c e2 07 72 fa a2 1b ca 61 91 e5 9b 02 66 36 ff 33 4a 22 36 7c 0c 75 5d 2e d2 6f 47 fb 28 5d de b6 9d 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 01 41 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 f5 82 00 80 96 d0 af df 89 40 88 d7 ad 46 f7 3c 1c c8 96 53 36 22 f7 28 e9 b3 dd e6 a7 4b e8 a6 d9 b9 3c 17 76 90 79 2e d4 ed 50 0b 03 88 ac 16 2b fc fa 27 f3 2c e3 51 28 e0 a3 4d 40 29 61 41 17 ce c6 cf e5 46 3c 16 5e 9e 74 75 2a 6e c2 dc ce 8a 31 94 8c ed 8d da f2 b2 20 05 db fc ea 65 31 a9 2c e2 07 72 fa a2 1b ca 61 91 e5 9b 02 66 36 ff 33 4a 22 36 7c 0c 75 5d 2e d2 6f 47 fb 28 5d de b6 9d 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 01 41 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 00 01 00 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 02 02 01 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 00 01 00 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 86 7f 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 0c 14 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 d0 7e 
+SW: 6a 82 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 86 7f 
+SW: 90 00 
+
+LASERCardReallocateBinaryFile
+APDU: 90 32 00 03 ff 02 83 00 00 62 82 02 83 00 86 86 7f 02 7f 0a 80 13 10 00 14 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 04 00 00 00 00 00 01 00 00 01 01 00 02 00 00 01 00 00 03 10 00 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 10 10 00 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 11 10 01 c2 0b 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 03 00 00 
+SW: 90 00 
+
+LASERCardReallocateBinaryFile
+APDU: 90 32 00 03 ff 00 00 04 01 00 00 00 0c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 00 04 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+SW: 90 00 
+
+LASERCardReallocateBinaryFile
+APDU: 80 32 00 03 8d 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 10 00 00 ff ff ff ff ff ff ff ff 01 70 00 00 01 01 80 10 00 00 01 00 00 00 00 00 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 86 7f 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 0c 14 e3 89 7a 73 27 84 b1 73 28 db e3 77 2c 1b 32 06 74 b9 41 31 
+SW: 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+

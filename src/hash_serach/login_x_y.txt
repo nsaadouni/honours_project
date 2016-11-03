@@ -1,0 +1,42 @@
+# apdu traces -> extract x and y
+
+
+--- login1.parsed ----
+
+----- APDU command/response pair 12 -----
+C 00 84 00 00 08
+R 29 C7 29 1F ED 13 23 7B 90 00
+
+----- APDU command/response pair 13 -----
+C 80 20 00 00 10 AE 69 B8 4B 7D BE BB 2B 63 63 D3 7D 07 9D D3 EC
+R 90 00
+
+
+
+--- login2.parsed ----
+
+----- APDU command/response pair 12 -----
+C 00 84 00 00 08
+R 8B A2 79 0F C9 DD E8 F6 90 00
+
+----- APDU command/response pair 13 -----
+C 80 20 00 00 10 4A 33 47 76 88 12 D6 AC AD 2B 2E 43 EF D7 7B 48
+R 90 00
+
+
+
+---- login_fail_1.parsed -----
+
+----- APDU command/response pair 12 -----
+C 00 84 00 00 08
+R DD CE 37 DB 50 F9 46 9F 90 00
+
+----- APDU command/response pair 13 -----
+C 80 20 00 00 10 EF CB 38 DF 53 CA 9F 31 A1 DA EE C7 26 77 EA AD
+R 63 C9
+
+C9 indicates 9 tries left!
+Test to see if I can restart pcscd and if that resets the counter!
+If so, and I have found the hash function I can brute force the pin!
+
+NICE!

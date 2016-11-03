@@ -1,0 +1,51 @@
+Directory structure
+************************
+MSc_Project
+  |
+  --C_code
+  |   |
+  |   --C_copyObject
+  |   |
+  |   --spy_library
+  |
+  --Python_Code
+  |          
+  --Trace
+
+
+Content of folders
+************************
+Folder 'C_copyObject' contains the source code, complied binary, necessary header file, and compiling command of a small programme created to call the 'C_createObject' PKCS11 function.
+
+Folder spy_library contains the source code, binary, and necessary header file of the implemented 'spy_library'. 
+
+Folder Python_Code contains the following Python scripts:
+
+	delObject.py: Script for deleting key objects.
+
+	getTrace.py: Script for calling various PKCS11 functions.
+
+	login.py: Simple script that only perform login. Used in 
+		combination with the man-in-the-middle tool to pypass 
+		authentication.
+ 
+	man-in-the-middle.py: The implemented man-in-the-middle-tool. 
+		Requires the open source virtual card reader 'vpcd' from 
+		Virtual Smart Card project: https://
+		frankmorgner.github.io/vsmartcard/virtualsmartcard/	
+		README.html
+
+	populateCard.py: Script for populating the card with keys.
+
+	sendAPDU.py: Simple tool for directly sending APDU. Can't bypass 
+		authentication.
+
+
+	*Python libraries needed for the functioning of scripts include:
+
+		PyKCS11: https://pypi.python.org/pypi/pykcs11
+
+		pyscard: https://pypi.python.org/pypi/pyscard 
+
+Folder 'Trace' contains APDU traces of various PKCS11 functions as well as the trace for the 'Key Value Modification' attack.
+

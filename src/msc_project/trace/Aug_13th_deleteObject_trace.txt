@@ -1,0 +1,56 @@
+************************************************************
+
+Delete a non-private secret key object
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 04 3f 00 00 20 
+SW: 90 00 
+
+LASERCardGetChallenge
+APDU: 00 84 00 00 08 
+SW: 8a 7e 92 3f ad 4f d2 d3 90 00 
+
+LASERCardSecureVerifyPIN
+APDU: 80 20 00 00 10 87 8d 6d 9c 07 9e 5a 6d c6 2d ab 78 9f b4 aa 7b 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 d0 7e 
+SW: 6a 82 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 03 40 01 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 04 04 61 01 61 01 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 03 40 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 00 01 01 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 00 c1 
+SW: 90 00 
+
+LASERCardDeleteFile
+APDU: 00 e4 00 00 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 03 40 
+SW: 90 00 
+
+LASERCardDeleteFile
+APDU: 00 e4 00 00 
+SW: 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+

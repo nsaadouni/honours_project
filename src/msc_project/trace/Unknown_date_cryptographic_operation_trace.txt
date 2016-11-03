@@ -1,0 +1,509 @@
+************************************************************
+
+Encrypt with 'fire'
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 04 3f 00 00 20 
+SW: 90 00 
+
+LASERCardGetChallenge
+APDU: 00 84 00 00 08 
+SW: ec 19 9d 9f 0e 73 5d 62 90 00 
+
+LASERCardSecureVerifyPIN
+APDU: 80 20 00 00 10 c6 45 f0 95 7d dc 9e d0 a6 87 d9 ff a1 02 a6 56 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 00 81 
+SW: 90 00 
+
+LASERCardEncrypt
+APDU: 00 2a 82 0c 83 80 81 80 00 02 de c4 1b 6f 58 21 dd 0d 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f 20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f 30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f 40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f 50 51 52 53 54 55 56 57 58 59 5a 5b 5c 5d 5e 5f 60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f 70 71 72 73 74 75 00 
+SW: 82 81 80 47 d2 51 e7 be 9f cf 2d a7 6a 32 e1 73 c4 86 f3 70 71 bc 2c 82 db 9d 5c 4f d4 54 a3 1c e5 b8 45 c9 cd c7 52 db 0b 21 10 da 29 ef 17 d7 54 cf ad 00 f1 43 00 e8 a0 f0 59 2d 25 5f 44 94 b0 1c 15 fb a1 6b 23 65 5d d5 90 d3 e3 8b 54 f7 b7 d9 d8 7e b2 98 51 89 ae 63 86 fc 5f 04 e5 4f 90 69 60 3f 7c 08 e9 1a 47 03 49 aa 33 58 5e 99 4c eb ac 9f 13 f6 84 26 6d 7c f0 a9 f6 5a b0 ff 03 d1 ee 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 04 3f 00 00 20 
+SW: 90 00 
+
+LASERCardGetChallenge
+APDU: 00 84 00 00 08 
+SW: 80 bf 57 63 c2 e8 ac 5a 90 00 
+
+LASERCardSecureVerifyPIN
+APDU: 80 20 00 00 10 47 f1 3b c3 7f 0f 99 94 4d 95 52 6b bd 47 b6 8f 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 01 00 81 
+SW: 90 00 
+
+LASERCardEncrypt
+APDU: 00 2a 82 0c 83 80 81 80 00 02 d4 e1 4e c8 7a d2 ea 75 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f 20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f 30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f 40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f 50 51 52 53 54 55 56 57 58 59 5a 5b 5c 5d 5e 5f 60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f 70 71 72 73 74 75 00 
+SW: 82 81 80 01 60 57 de 0a 6e dc 62 91 4c aa 2d cd 02 4a ef dc f8 2e 49 50 26 98 3b 5e e7 04 4c 09 8d 09 2f 4f 0d 93 64 00 df 69 1f 99 3f 95 5a e0 71 82 11 bc 8d b6 a2 dd 30 c8 86 c2 01 b9 f1 b4 d1 ab 47 2b 19 e8 be 38 f9 25 d5 49 9f a6 fa 75 7f cf 87 e5 08 70 c1 d7 04 f7 11 4c d7 ad 5b bd f9 7b 37 a4 73 c5 93 f0 9a 0b a6 d7 2d cc 0b 12 2c e1 d5 42 de 8d 2e 2f b4 1c e0 7b 3b 41 82 be e1 6b 55 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+************************************************************
+
+Decrypt with 'ice'
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 04 3f 00 00 20 
+SW: 90 00 
+
+LASERCardGetChallenge
+APDU: 00 84 00 00 08 
+SW: e8 19 e5 8f 28 b7 3a 55 90 00 
+
+LASERCardSecureVerifyPIN
+APDU: 80 20 00 00 10 fd b4 fd c2 eb 03 c4 92 a4 08 6c d8 2d 3a a4 b9 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 02 00 41 
+SW: 90 00 
+
+LASERCardDecrypt
+APDU: 00 2a 80 0a 83 82 81 80 01 60 57 de 0a 6e dc 62 91 4c aa 2d cd 02 4a ef dc f8 2e 49 50 26 98 3b 5e e7 04 4c 09 8d 09 2f 4f 0d 93 64 00 df 69 1f 99 3f 95 5a e0 71 82 11 bc 8d b6 a2 dd 30 c8 86 c2 01 b9 f1 b4 d1 ab 47 2b 19 e8 be 38 f9 25 d5 49 9f a6 fa 75 7f cf 87 e5 08 70 c1 d7 04 f7 11 4c d7 ad 5b bd f9 7b 37 a4 73 c5 93 f0 9a 0b a6 d7 2d cc 0b 12 2c e1 d5 42 de 8d 2e 2f b4 1c e0 7b 3b 41 82 be e1 6b 55 00 
+SW: 80 75 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f 20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f 30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f 40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f 50 51 52 53 54 55 56 57 58 59 5a 5b 5c 5d 5e 5f 60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f 70 71 72 73 74 75 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 04 3f 00 00 20 
+SW: 90 00 
+
+LASERCardGetChallenge
+APDU: 00 84 00 00 08 
+SW: f3 86 3e fc 77 65 a6 35 90 00 
+
+LASERCardSecureVerifyPIN
+APDU: 80 20 00 00 10 78 fd 2a cf 0b da ad 90 ca 07 aa 36 df 93 60 35 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 02 00 41 
+SW: 90 00 
+
+LASERCardDecrypt
+APDU: 00 2a 80 0a 83 82 81 80 01 60 57 de 0a 6e dc 62 91 4c aa 2d cd 02 4a ef dc f8 2e 49 50 26 98 3b 5e e7 04 4c 09 8d 09 2f 4f 0d 93 64 00 df 69 1f 99 3f 95 5a e0 71 82 11 bc 8d b6 a2 dd 30 c8 86 c2 01 b9 f1 b4 d1 ab 47 2b 19 e8 be 38 f9 25 d5 49 9f a6 fa 75 7f cf 87 e5 08 70 c1 d7 04 f7 11 4c d7 ad 5b bd f9 7b 37 a4 73 c5 93 f0 9a 0b a6 d7 2d cc 0b 12 2c e1 d5 42 de 8d 2e 2f b4 1c e0 7b 3b 41 82 be e1 6b 55 00 
+SW: 80 75 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f 20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f 30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f 40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f 50 51 52 53 54 55 56 57 58 59 5a 5b 5c 5d 5e 5f 60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f 70 71 72 73 74 75 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00
+
+************************************************************
+
+Sign with 'ice'
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 04 3f 00 00 20 
+SW: 90 00 
+
+LASERCardGetChallenge
+APDU: 00 84 00 00 08 
+SW: bd 84 b8 88 d6 bf 1f 9e 90 00 
+
+LASERCardSecureVerifyPIN
+APDU: 80 20 00 00 10 52 67 0a df 3f 47 78 53 fd 50 3d a7 a0 26 cc 94 
+SW: 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 04 3f 00 00 20 
+SW: 90 00 
+
+LASERCardGetChallenge
+APDU: 00 84 00 00 08 
+SW: 9a 32 57 30 03 b0 f2 aa 90 00 
+
+LASERCardSecureVerifyPIN
+APDU: 80 20 00 00 10 0a 7b a6 1b 1f 92 3d f2 7d 3c 48 91 2b f7 1c c0 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 02 00 41 
+SW: 90 00 
+
+LASERCardSign
+APDU: 00 2a 9e 8a 78 80 81 75 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f 20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f 30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f 40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f 50 51 52 53 54 55 56 57 58 59 5a 5b 5c 5d 5e 5f 60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f 70 71 72 73 74 75 00 
+SW: b5 dc 51 2d 72 2c ea 09 9d bf 1c 07 fb 29 cf 5e c7 dd 28 70 2f 0b 7a d2 fc eb ec db 8f 95 b2 61 3a 5a 3b 9f 74 5d 4e d0 40 02 6c 3d d9 5a a0 37 0a 41 4b 75 30 3a 00 c9 ae b3 40 af cd f7 9c 0b a5 1c 75 83 ed 4f ee e8 e5 0f 0a 8a 94 d6 84 98 03 aa 56 52 a4 98 9f 00 09 0e b2 bc 87 6f 6d 00 0d 29 d8 71 bd 19 07 b4 10 56 86 d1 66 cc 7e 85 ee de a9 d3 ab b6 e2 3a 07 fc fc 23 6d 37 e0 d7 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+************************************************************
+
+Verify with 'fire'
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 04 3f 00 00 20 
+SW: 90 00 
+
+LASERCardGetChallenge
+APDU: 00 84 00 00 08 
+SW: 22 7e 3d 8f 3a 0a a0 9c 90 00 
+
+LASERCardSecureVerifyPIN
+APDU: 80 20 00 00 10 c4 d6 06 d1 b5 b9 95 b9 7c b3 09 58 0d 4f e6 7f 
+SW: 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 04 3f 00 00 20 
+SW: 90 00 
+
+LASERCardGetChallenge
+APDU: 00 84 00 00 08 
+SW: 24 8f 8d 6b b7 40 81 7c 90 00 
+
+LASERCardSecureVerifyPIN
+APDU: 80 20 00 00 10 c4 d6 06 d1 b5 b9 95 b9 f5 97 20 a5 00 91 8c 0a 
+SW: 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00
+
+p.s. it is likely that the library already stored the value of the public key at this point 
+
+************************************************************
+
+Encrypt with 'Prometheus'
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 04 3f 00 00 20 
+SW: 90 00 
+
+LASERCardGetChallenge
+APDU: 00 84 00 00 08 
+SW: b5 d7 76 1d 04 41 2a e1 90 00 
+
+LASERCardSecureVerifyPIN
+APDU: 80 20 00 00 10 9b 7d 40 a5 95 85 f5 08 ef 3f a0 17 6d 43 1e 0c 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 02 00 c1 
+SW: 90 00 
+
+LASERCardEncrypt
+APDU: 00 2a 82 0e 23 80 81 20 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f 20 00 
+SW: 82 20 5f 03 d3 dc 8e 90 c6 c5 87 77 69 95 0f bf 66 91 ce 78 85 a3 88 db c8 0d 36 fd 48 09 7c 70 4d 30 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 04 3f 00 00 20 
+SW: 90 00 
+
+LASERCardGetChallenge
+APDU: 00 84 00 00 08 
+SW: 0a 7c 05 2c 65 dc b9 d9 90 00 
+
+LASERCardSecureVerifyPIN
+APDU: 80 20 00 00 10 a7 b7 e8 45 91 38 e8 ab 69 64 cb 00 02 50 51 10 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 02 00 c1 
+SW: 90 00 
+
+LASERCardEncrypt
+APDU: 00 2a 82 0e 23 80 81 20 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f 20 00 
+SW: 82 20 5f 03 d3 dc 8e 90 c6 c5 87 77 69 95 0f bf 66 91 ce 78 85 a3 88 db c8 0d 36 fd 48 09 7c 70 4d 30 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+************************************************************
+
+Decrypt with 'Prometheus'
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 04 3f 00 00 20 
+SW: 90 00 
+
+LASERCardGetChallenge
+APDU: 00 84 00 00 08 
+SW: a0 62 ef 6c 75 0a 46 db 90 00 
+
+LASERCardSecureVerifyPIN
+APDU: 80 20 00 00 10 0e 09 38 6f 9e f9 92 27 b8 90 29 e2 75 dc 67 90 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 02 00 c1 
+SW: 90 00 
+
+LASERCardDecrypt
+APDU: 00 2a 80 0e 1b 82 81 18 87 77 69 95 0f bf 66 91 ce 78 85 a3 88 db c8 0d 36 fd 48 09 7c 70 4d 30 00 
+SW: 6a 86 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00
+
+p.s. the card driver has coded decrypt with AES_ECB in a wrong way!
+
+************************************************************
+
+Sign with 'Prometheus'
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 04 3f 00 00 20 
+SW: 90 00 
+
+LASERCardGetChallenge
+APDU: 00 84 00 00 08 
+SW: 13 49 ed a1 73 c4 f8 b4 90 00 
+
+LASERCardSecureVerifyPIN
+APDU: 80 20 00 00 10 ba 7f 6f 33 11 84 55 76 71 be 03 7f 67 42 1d 61 
+SW: 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 04 3f 00 00 20 
+SW: 90 00 
+
+LASERCardGetChallenge
+APDU: 00 84 00 00 08 
+SW: e2 01 dd 9c 0a 6c db c6 90 00 
+
+LASERCardSecureVerifyPIN
+APDU: 80 20 00 00 10 ba 7f 6f 33 11 84 55 76 39 7b 09 6b d0 7f f0 da 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 02 00 c1 
+SW: 90 00 
+
+LASERCardSign
+APDU: 00 2a 9e 12 23 80 81 20 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f 20 00 
+SW: dd e8 62 01 8d 10 00 7c 9c 07 b5 77 43 80 e2 ed 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+************************************************************
+
+Verify with 'Prometheus'
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 04 3f 00 00 20 
+SW: 90 00 
+
+LASERCardGetChallenge
+APDU: 00 84 00 00 08 
+SW: 4f d6 21 ed eb ab aa d4 90 00 
+
+LASERCardSecureVerifyPIN
+APDU: 80 20 00 00 10 b6 62 af 89 99 21 4f b4 25 c3 4c f6 be 86 35 34 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 02 00 c1 
+SW: 90 00 
+
+LASERCardSign
+APDU: 00 2a 9e 12 23 80 81 20 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f 20 00 
+SW: dd e8 62 01 8d 10 00 7c 9c 07 b5 77 43 80 e2 ed 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00
+
+************************************************************
+
+Encrypt, Decrypt, Sign, Verify all exposed the location of the key file.
+
+Decryption, Signing is not possible with 'ice' before authentication
+
+Encryption, Decryption, Signature, Verification are all possible with 'Prometheus' before authentication
+
+p.s. the way 'Prometheus' verifies is just to sign again.
+
+CKA_SENSITIVE: If set to True, then certain attributes can not be revealed. This attribute should not be changed from True to False
+
+CKA_EXTRACTABLE: If set to False, then certain attributes can not be revealed and key can not be wrapped even if it's supported. This attribute should not be changed from False to True.
+
+CKA_PRIVATE: If set to True, then user may not access the object until authenticated.
+
+used apdu command 00 d6 00 00 fa 00 02 02 00 01 1f 16 00 00 00 00 04 03 00 00 00 00 01 00 00 01 01 00 02 00 00 01 00 00 03 10 00 03 69 63 65 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 00 00 00 04 00 00 00 00 01 01 10 00 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 02 10 00 01 03 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 03 30 00 01 01 01 05 50 00 01 01 01 07 50 00 01 01 01 08 50 00 01 01 01 09 50 00 01 00 01 0c 10 00 01 00 01 10 10 00 00 ff ff ff ff ff ff ff ff 01 11 10 00 00 ff ff ff ff ff ff ff ff 01 62 50 00 01 00 01 63 to modifiy the CKA_PRIVATE attribute of 'ice'
+
+however, at the api level 'ice' disapperaed, though at apdu level it still exists.
+
+changing everything back does restore the key. Therefore, it might be that I accidentally changed something else as well.
+
+Second attempt again resulted in the disappearance of 'ice'
+
+ALso, at the apdu layer, even if the private attribute is modified, the private key is still not accessable without authentication.
+
+Also, 'ice' don't have always_authenticate attribute.
+
+used command 90 32 00 03 ff 01 2f 00 00 62 82 01 2f 00 03 03 40 01 2b 18 00 00 00 00 04 04 00 00 00 00 01 00 00 01 01 00 02 00 00 01 00 00 03 10 00 0a 50 72 6f 6d 65 74 68 65 75 73 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 11 01 00 20 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 00 00 00 04 1f 00 00 00 01 02 10 00 01 07 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 03 30 00 01 01 01 04 00 00 01 01 01 05 50 00 01 01 01 06 00 00 01 01 01 07 50 00 01 01 01 08 50 00 01 01 01 0a 00 00 01 01 01 0c 10 00 01 00 01 10 10 00 00 ff ff ff ff ff ff ff ff 01 11 10 00 00 ff on secret key 'Prometheus'
+
+As well as command 80 32 00 03 38 ff ff ff ff ff ff ff 01 62 50 00 01 00 01 63 00 00 01 01 01 64 00 00 01 01 01 65 00 00 01 01 01 66 00 00 04 80 10 00 00 01 70 00 00 01 01 80 10 00 00 01 00 0c 01 0c 01
+
+Prometheus neither disappear, nor become available at API layer before login
+
+However, its private attribute does get changed
+
+Used the following command again on 'Prometheus' hoping to change CKA_SENSIIVE CKA_EXTRACTABLE CKA_ALWAYS_SENSITIVE, CKA_NEVER_EXTRACTABLE
+90 32 00 03 ff 01 2f 00 00 62 82 01 2f 00 03 03 40 01 2b 18 00 00 00 00 04 04 00 00 00 00 01 00 00 01 01 00 02 00 00 01 00 00 03 10 00 0a 50 72 6f 6d 65 74 68 65 75 73 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 11 01 00 20 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 00 00 00 04 1f 00 00 00 01 02 10 00 01 07 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 03 30 00 01 00 01 04 00 00 01 01 01 05 50 00 01 01 01 06 00 00 01 01 01 07 50 00 01 01 01 08 50 00 01 01 01 0a 00 00 01 01 01 0c 10 00 01 00 01 10 10 00 00 ff ff ff ff ff ff ff ff 01 11 10 00 00 ff
+
+80 32 00 03 38 ff ff ff ff ff ff ff 01 62 50 00 01 01 01 63 00 00 01 01 01 64 00 00 01 00 01 65 00 00 01 00 01 66 00 00 04 80 10 00 00 01 70 00 00 01 01 80 10 00 00 01 00 0c 01 0c 01
+
+successed...
+
+Now see if it can be accessed at API layer without authentication
+
+No it is still not available at API layer without authentication
+
+At apdu layer it is still accessable without authentication
+
+try to restore ice to the previous state and see if we can modify the attributed another way...
+
+used command
+
+80 a4 08 00 08 3f 00 30 00 30 02 02 00
+
+00 d6 00 00 fa 01 02 02 00 01 1f 16 00 00 00 00 04 03 00 00 00 00 01 00 00 01 01 00 02 00 00 01 01 00 03 10 00 03 69 63 65 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 00 00 00 04 00 00 00 00 01 01 10 00 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 02 10 00 01 03 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 03 30 00 01 01 01 05 50 00 01 01 01 07 50 00 01 01 01 08 50 00 01 01 01 09 50 00 01 00 01 0c 10 00 01 00 01 10 10 00 00 ff ff ff ff ff ff ff ff 01 11 10 00 00 ff ff ff ff ff ff ff ff 01 62 50 00 01 00 01 63
+
+00 d6 00 fa 29 00 00 01 01 01 64 00 00 01 01 01 65 00 00 01 01 01 66 00 00 04 00 00 00 00 01 70 00 00 01 01 80 10 00 00 01 00 10 01 10 01
+
+00 d6 00 00 01 00
+
+successfully recovered 'ice'...
+
+Now obtaining some traces for changing atrribute at API level...
+
+The trace obtained:
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 04 3f 00 00 20 
+SW: 90 00 
+
+LASERCardGetChallenge
+APDU: 00 84 00 00 08 
+SW: 55 bb e3 5b 10 6d 60 f9 90 00 
+
+LASERCardSecureVerifyPIN
+APDU: 80 20 00 00 10 57 f1 cd 5c 9d 4f d9 1b 63 65 20 92 cb cb 56 51 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 03 40 01 
+SW: 90 00 
+
+LASERCardUpdateBinary
+APDU: 00 d6 00 04 04 13 01 13 01 
+SW: 90 00 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 02 d0 7e 
+SW: 6a 82 
+
+LASERCardSelectFile
+APDU: 80 a4 08 00 08 3f 00 30 00 30 02 02 00 
+SW: 90 00 
+
+LASERCardReallocateBinaryFile
+APDU: 90 32 00 03 ff 01 23 00 00 62 82 01 23 00 02 02 00 01 1f 16 00 00 00 00 04 03 00 00 00 00 01 00 00 01 01 00 02 00 00 01 01 00 03 10 00 03 69 63 65 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 00 00 00 04 00 00 00 00 01 01 10 00 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 02 10 00 01 03 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 03 30 00 01 01 01 05 50 00 01 01 01 07 50 00 01 01 01 08 50 00 01 01 01 09 50 00 01 00 01 0c 10 00 01 00 01 10 10 00 00 ff ff ff ff ff ff ff ff 01 11 10 00 00 ff ff ff ff ff ff ff ff 01 62 50 00 01 
+SW: 90 00 
+
+LASERCardReallocateBinaryFile
+APDU: 80 32 00 03 2c 00 01 63 00 00 01 01 01 64 00 00 01 01 01 65 00 00 01 01 01 66 00 00 04 00 00 00 00 01 70 00 00 01 01 80 10 00 00 01 00 10 01 10 01 
+SW: 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00 
+
+LASERCardClearSecurityStatus
+APDU: 80 28 00 00 04 00 00 00 20 
+SW: 90 00
+
+Now trying the modify the CKA_PRIVATE attribute of 'ice'...
+
+Used commands:
+
+90 32 00 03 ff 01 23 00 00 62 82 01 23 00 02 02 00 01 1f 16 00 00 00 00 04 03 00 00 00 00 01 00 00 01 01 00 02 00 00 01 00 00 03 10 00 03 69 63 65 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 00 00 00 04 00 00 00 00 01 01 10 00 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 02 10 00 01 03 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 03 30 00 01 01 01 05 50 00 01 01 01 07 50 00 01 01 01 08 50 00 01 01 01 09 50 00 01 00 01 0c 10 00 01 00 01 10 10 00 00 ff ff ff ff ff ff ff ff 01 11 10 00 00 ff ff ff ff ff ff ff ff 01 62 50 00 01
+
+80 32 00 03 2c 00 01 63 00 00 01 01 01 64 00 00 01 01 01 65 00 00 01 01 01 66 00 00 04 00 00 00 00 01 70 00 00 01 01 80 10 00 00 01 00 10 01 10 01
+
+'ice' disappeared again from the API layer...
+
+And it is still not accessable at apdu layer without authentication. (but still usable after authentication...)
+
+Now trying to change CKA_CLASS CKA_SENSITIVE CKA_EXTRACTABLE, CKA_ALWASY_SENSITIVE, CKA_NEVER_EXTRACTABLE all at once and see if 'ice' would appear again...
+
+Commands to use:
+
+90 32 00 03 ff 01 23 00 00 62 82 01 23 00 02 02 00 01 1f 16 00 00 00 00 04 02 00 00 00 00 01 00 00 01 01 00 02 00 00 01 00 00 03 10 00 03 69 63 65 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 00 00 00 04 00 00 00 00 01 01 10 00 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 02 10 00 01 03 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 01 03 30 00 01 00 01 05 50 00 01 01 01 07 50 00 01 01 01 08 50 00 01 01 01 09 50 00 01 00 01 0c 10 00 01 00 01 10 10 00 00 ff ff ff ff ff ff ff ff 01 11 10 00 00 ff ff ff ff ff ff ff ff 01 62 50 00 01
+
+80 32 00 03 2c 01 01 63 00 00 01 01 01 64 00 00 01 00 01 65 00 00 01 00 01 66 00 00 04 00 00 00 00 01 70 00 00 01 01 80 10 00 00 01 00 10 01 10 01
+
+'ice' is still not available
+
+now, only restore its CKA_PRIAVTE attribute
+
+'ice' appeared again as a public key...
+

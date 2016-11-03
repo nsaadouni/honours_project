@@ -1,0 +1,21 @@
+sudo bash
+modprobe usbmon --> starts the module
+
+
+cat /sys/kernel/debug/usb/usbmon/_whichever_one_is_needed > output
+
+grep 015
+
+need a script to make sense of the data!
+
+
+---------------------------------------------
+IM AN IDIOT!!!
+
+
+sudo pcscd -a -f > apdu_trace.out
+
+
+if it running already kill it
+
+kill -9 pid
