@@ -23,10 +23,13 @@ session = pkcs11.openSession(slot, CKF_SERIAL_SESSION | CKF_RW_SESSION)
 
 
 
-pin = '12345'
+# CKU_USER -> standard user
+# admin account login with pin, 0
+
+pin = '12345678'
 print CKU
 try:
-    session.login(pin, CKU_USER)
+    session.login(pin, 0)
 except PyKCS11Error as e:
     print e
 

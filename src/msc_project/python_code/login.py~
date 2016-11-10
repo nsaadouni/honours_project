@@ -23,7 +23,7 @@ session = pkcs11.openSession(slot, CKF_SERIAL_SESSION | CKF_RW_SESSION)
 
 
 
-pin = '99999'
+pin = '12345'
 print CKU
 try:
     session.login(pin, CKU_USER)

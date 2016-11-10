@@ -35,6 +35,7 @@ R DD CE 37 DB 50 F9 46 9F 90 00
 C 80 20 00 00 10 EF CB 38 DF 53 CA 9F 31 A1 DA EE C7 26 77 EA AD
 R 63 C9
 
+
 C9 indicates 9 tries left!
 Test to see if I can restart pcscd and if that resets the counter!
 If so, and I have found the hash function I can brute force the pin!
