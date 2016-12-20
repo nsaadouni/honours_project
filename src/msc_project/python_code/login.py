@@ -12,6 +12,10 @@ pkcs11.load(lib)
 slot = pkcs11.getSlotList()[2]
 session = pkcs11.openSession(slot, CKF_SERIAL_SESSION | CKF_RW_SESSION)
 
+pin = '123456'
+session.login(pin)
+
+
 #print pkcs11.getInfo()
 #print pkcs11.getTokenInfo(slot)
 
@@ -26,12 +30,11 @@ session = pkcs11.openSession(slot, CKF_SERIAL_SESSION | CKF_RW_SESSION)
 # CKU_USER -> standard user
 # admin account login with pin, 0
 
-pin = '12345678'
-print CKU
-try:
-    session.login(pin, 0)
-except PyKCS11Error as e:
-    print e
+# print CKU
+# try:
+#     session.login(pin, 0)
+# except PyKCS11Error as e:
+#     print e
 
 #print hex(CKR_PIN_INCORRECT)
 
