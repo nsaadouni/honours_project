@@ -12,15 +12,20 @@ pkcs11.load(lib)
 slot = pkcs11.getSlotList()[2]
 session = pkcs11.openSession(slot, CKF_SERIAL_SESSION | CKF_RW_SESSION)
 
-pin = '123456'
+pin = '0000000000000000'
 session.login(pin)
 
 
-#print pkcs11.getInfo()
-#print pkcs11.getTokenInfo(slot)
+
+print pkcs11.getInfo()
+print '-------------------------'
+print pkcs11.getTokenInfo(slot)
+print '-------------------------'
+print pkcs11.getSlotInfo(slot)
+print '-------------------------'
 
 #for key in CKF:
- #   print str(key) + "," +str(CKF[key])
+#    print str(key) + "," +str(CKF[key])
 #print "is login required? " + str(CKF_LOGIN_REQUIRED)
 #print CKF_RNG, CKF_LOGIN_REQUIRED, CKF_TOKEN_INITIALIZED, CKF_USER_PIN_INITIALIZED
 #print session.getSessionInfo()

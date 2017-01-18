@@ -36,7 +36,7 @@ def recvFromVPICC():
     if len(sizestr) == 0:
         raise socket.error
     size = struct.unpack('!H', sizestr)[0]
-    print size
+    #print size
 
     if size:
         msg = sock.recv(size)

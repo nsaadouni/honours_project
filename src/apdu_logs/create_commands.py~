@@ -18,7 +18,7 @@ if APDU COMMAND split into:
 	Le
 
 if APDU RESPONSE (SW) split into:
-	DATA -> everything except for last four hex digits
+	DATA -> everything except for last two hex digits
 
 	SW1  -> 2nd two last two hex
 	SW2  -> last two hex
