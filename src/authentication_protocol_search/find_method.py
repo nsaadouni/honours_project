@@ -1,7 +1,7 @@
 import math
-# from bitarray import bitarray
 import hashlib as hs 
 import binascii as ba
+
 from multiprocessing import Pool
 import itertools
 

@@ -7,7 +7,7 @@ from PyKCS11 import *
 lib = "/usr/lib/x64-athena/libASEP11.so"
 lib2= "/usr/lib/pkcs11/pkcs11-spy.so"
 pkcs11 = PyKCS11Lib()	
-pkcs11.load(lib)
+pkcs11.load(lib2)
 
 slot = pkcs11.getSlotList()[2]
 session = pkcs11.openSession(slot, CKF_SERIAL_SESSION | CKF_RW_SESSION)
@@ -17,12 +17,12 @@ session.login(pin)
 
 
 
-print pkcs11.getInfo()
-print '-------------------------'
-print pkcs11.getTokenInfo(slot)
-print '-------------------------'
-print pkcs11.getSlotInfo(slot)
-print '-------------------------'
+#print pkcs11.getInfo()
+#print '-------------------------'
+#print pkcs11.getTokenInfo(slot)
+#print '-------------------------'
+#print pkcs11.getSlotInfo(slot)
+#print '-------------------------'
 
 #for key in CKF:
 #    print str(key) + "," +str(CKF[key])

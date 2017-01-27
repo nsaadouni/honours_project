@@ -1,0 +1,45 @@
+\contentsline {chapter}{\numberline {1}Introduction}{7}
+\contentsline {chapter}{\numberline {2}Background}{9}
+\contentsline {section}{\numberline {2.1}PKCS\#11}{9}
+\contentsline {subsection}{\numberline {2.1.1}Key Object}{9}
+\contentsline {subsection}{\numberline {2.1.2}Attributes}{9}
+\contentsline {subsection}{\numberline {2.1.3}Most Common Functions}{9}
+\contentsline {section}{\numberline {2.2}ISO 7816}{9}
+\contentsline {subsection}{\numberline {2.2.1}Command Structure}{9}
+\contentsline {subsection}{\numberline {2.2.2}Response Structure}{9}
+\contentsline {subsection}{\numberline {2.2.3}Inter-Industry/ Proprietary}{9}
+\contentsline {subsection}{\numberline {2.2.4}Most Common Commands}{9}
+\contentsline {subsection}{\numberline {2.2.5}File Structure}{9}
+\contentsline {chapter}{\numberline {3}Cryptographic Operations}{11}
+\contentsline {section}{\numberline {3.1}Hash Function}{11}
+\contentsline {section}{\numberline {3.2}Asymmetric Encryption}{11}
+\contentsline {section}{\numberline {3.3}Symmetric Encryption}{11}
+\contentsline {section}{\numberline {3.4}MAC}{11}
+\contentsline {section}{\numberline {3.5}OTP}{11}
+\contentsline {chapter}{\numberline {4}Tools}{13}
+\contentsline {section}{\numberline {4.1}PCSC}{13}
+\contentsline {section}{\numberline {4.2}Virtual Smart-Card}{13}
+\contentsline {section}{\numberline {4.3}Parsing?}{13}
+\contentsline {chapter}{\numberline {5}Related Work / Literature Review}{15}
+\contentsline {chapter}{\numberline {6}PKCS\#11 Functions - APDU analysis}{17}
+\contentsline {section}{\numberline {6.1}Initialization?}{17}
+\contentsline {section}{\numberline {6.2}C\_login}{17}
+\contentsline {section}{\numberline {6.3}C\_findObjectInit}{17}
+\contentsline {section}{\numberline {6.4}C\_generateKey}{17}
+\contentsline {section}{\numberline {6.5}C\_generateKeyPair}{17}
+\contentsline {section}{\numberline {6.6}C\_createObject}{18}
+\contentsline {section}{\numberline {6.7}C\_destroyObject}{18}
+\contentsline {section}{\numberline {6.8}C\_encrypt}{18}
+\contentsline {section}{\numberline {6.9}C\_decrypt}{18}
+\contentsline {section}{\numberline {6.10}C\_sign}{18}
+\contentsline {section}{\numberline {6.11}C\_verify}{18}
+\contentsline {section}{\numberline {6.12}C\_setAttribute}{18}
+\contentsline {section}{\numberline {6.13}C\_wrap / C\_unwrap}{18}
+\contentsline {chapter}{\numberline {7}Attempts To Attack At the APDU Level}{19}
+\contentsline {section}{\numberline {7.1}Reverse Engineering PIN/password Authentication}{19}
+\contentsline {subsection}{\numberline {7.1.1}Authentication protocol search 1.0}{20}
+\contentsline {subsection}{\numberline {7.1.2}Search 1.1}{21}
+\contentsline {subsection}{\numberline {7.1.3}Search 1.2}{22}
+\contentsline {subsection}{\numberline {7.1.4}Search 1.3}{22}
+\contentsline {subsection}{\numberline {7.1.5}Authentication protocol search 2.0}{22}
+\contentsline {chapter}{\numberline {8}Conclusion / Results}{23}
