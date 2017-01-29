@@ -13,9 +13,19 @@
 \contentsline {chapter}{\numberline {3}Cryptographic Operations}{11}
 \contentsline {section}{\numberline {3.1}Hash Function}{11}
 \contentsline {section}{\numberline {3.2}Asymmetric Encryption}{11}
+\contentsline {subsection}{\numberline {3.2.1}RSA}{11}
 \contentsline {section}{\numberline {3.3}Symmetric Encryption}{11}
-\contentsline {section}{\numberline {3.4}MAC}{11}
-\contentsline {section}{\numberline {3.5}OTP}{11}
+\contentsline {subsection}{\numberline {3.3.1}DES}{12}
+\contentsline {subsection}{\numberline {3.3.2}Triple DES}{12}
+\contentsline {subsection}{\numberline {3.3.3}AES}{12}
+\contentsline {subsection}{\numberline {3.3.4}ECB Mode}{12}
+\contentsline {subsection}{\numberline {3.3.5}CBC Mode}{12}
+\contentsline {section}{\numberline {3.4}MAC}{12}
+\contentsline {subsection}{\numberline {3.4.1}HMAC}{12}
+\contentsline {subsection}{\numberline {3.4.2}CMAC}{12}
+\contentsline {section}{\numberline {3.5}OTP}{12}
+\contentsline {subsection}{\numberline {3.5.1}HOTP}{12}
+\contentsline {subsection}{\numberline {3.5.2}TOTP}{12}
 \contentsline {chapter}{\numberline {4}Tools}{13}
 \contentsline {section}{\numberline {4.1}PCSC}{13}
 \contentsline {section}{\numberline {4.2}Virtual Smart-Card}{13}
@@ -39,7 +49,8 @@
 \contentsline {section}{\numberline {7.1}Reverse Engineering PIN/password Authentication}{19}
 \contentsline {subsection}{\numberline {7.1.1}Authentication protocol search 1.0}{20}
 \contentsline {subsection}{\numberline {7.1.2}Search 1.1}{21}
-\contentsline {subsection}{\numberline {7.1.3}Search 1.2}{22}
-\contentsline {subsection}{\numberline {7.1.4}Search 1.3}{22}
-\contentsline {subsection}{\numberline {7.1.5}Authentication protocol search 2.0}{22}
-\contentsline {chapter}{\numberline {8}Conclusion / Results}{23}
+\contentsline {subsection}{\numberline {7.1.3}Search 1.2}{23}
+\contentsline {subsection}{\numberline {7.1.4}Search 1.3}{23}
+\contentsline {subsection}{\numberline {7.1.5}Authentication protocol search 2.0}{23}
+\contentsline {chapter}{\numberline {8}Conclusion / Results}{25}
+\contentsline {chapter}{Bibliography}{27}

@@ -1,0 +1,56 @@
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
+\BOOKMARK [0][-]{chapter.2}{Background}{}% 2
+\BOOKMARK [1][-]{section.2.1}{PKCS\04311}{chapter.2}% 3
+\BOOKMARK [2][-]{subsection.2.1.1}{Key Object}{section.2.1}% 4
+\BOOKMARK [2][-]{subsection.2.1.2}{Attributes}{section.2.1}% 5
+\BOOKMARK [2][-]{subsection.2.1.3}{Most Common Functions}{section.2.1}% 6
+\BOOKMARK [1][-]{section.2.2}{ISO 7816}{chapter.2}% 7
+\BOOKMARK [2][-]{subsection.2.2.1}{Command Structure}{section.2.2}% 8
+\BOOKMARK [2][-]{subsection.2.2.2}{Response Structure}{section.2.2}% 9
+\BOOKMARK [2][-]{subsection.2.2.3}{Inter-Industry/ Proprietary}{section.2.2}% 10
+\BOOKMARK [2][-]{subsection.2.2.4}{Most Common Commands}{section.2.2}% 11
+\BOOKMARK [2][-]{subsection.2.2.5}{File Structure}{section.2.2}% 12
+\BOOKMARK [0][-]{chapter.3}{Cryptographic Operations}{}% 13
+\BOOKMARK [1][-]{section.3.1}{Hash Function}{chapter.3}% 14
+\BOOKMARK [1][-]{section.3.2}{Asymmetric Encryption}{chapter.3}% 15
+\BOOKMARK [2][-]{subsection.3.2.1}{RSA}{section.3.2}% 16
+\BOOKMARK [1][-]{section.3.3}{Symmetric Encryption}{chapter.3}% 17
+\BOOKMARK [2][-]{subsection.3.3.1}{DES}{section.3.3}% 18
+\BOOKMARK [2][-]{subsection.3.3.2}{Triple DES}{section.3.3}% 19
+\BOOKMARK [2][-]{subsection.3.3.3}{AES}{section.3.3}% 20
+\BOOKMARK [2][-]{subsection.3.3.4}{ECB Mode}{section.3.3}% 21
+\BOOKMARK [2][-]{subsection.3.3.5}{CBC Mode}{section.3.3}% 22
+\BOOKMARK [1][-]{section.3.4}{MAC}{chapter.3}% 23
+\BOOKMARK [2][-]{subsection.3.4.1}{HMAC}{section.3.4}% 24
+\BOOKMARK [2][-]{subsection.3.4.2}{CMAC}{section.3.4}% 25
+\BOOKMARK [1][-]{section.3.5}{OTP}{chapter.3}% 26
+\BOOKMARK [2][-]{subsection.3.5.1}{HOTP}{section.3.5}% 27
+\BOOKMARK [2][-]{subsection.3.5.2}{TOTP}{section.3.5}% 28
+\BOOKMARK [0][-]{chapter.4}{Tools}{}% 29
+\BOOKMARK [1][-]{section.4.1}{PCSC}{chapter.4}% 30
+\BOOKMARK [1][-]{section.4.2}{Virtual Smart-Card}{chapter.4}% 31
+\BOOKMARK [1][-]{section.4.3}{Parsing?}{chapter.4}% 32
+\BOOKMARK [0][-]{chapter.5}{Related Work / Literature Review}{}% 33
+\BOOKMARK [0][-]{chapter.6}{PKCS\04311 Functions - APDU analysis}{}% 34
+\BOOKMARK [1][-]{section.6.1}{Initialization?}{chapter.6}% 35
+\BOOKMARK [1][-]{section.6.2}{C\137login}{chapter.6}% 36
+\BOOKMARK [1][-]{section.6.3}{C\137findObjectInit}{chapter.6}% 37
+\BOOKMARK [1][-]{section.6.4}{C\137generateKey}{chapter.6}% 38
+\BOOKMARK [1][-]{section.6.5}{C\137generateKeyPair}{chapter.6}% 39
+\BOOKMARK [1][-]{section.6.6}{C\137createObject}{chapter.6}% 40
+\BOOKMARK [1][-]{section.6.7}{C\137destroyObject}{chapter.6}% 41
+\BOOKMARK [1][-]{section.6.8}{C\137encrypt}{chapter.6}% 42
+\BOOKMARK [1][-]{section.6.9}{C\137decrypt}{chapter.6}% 43
+\BOOKMARK [1][-]{section.6.10}{C\137sign}{chapter.6}% 44
+\BOOKMARK [1][-]{section.6.11}{C\137verify}{chapter.6}% 45
+\BOOKMARK [1][-]{section.6.12}{C\137setAttribute}{chapter.6}% 46
+\BOOKMARK [1][-]{section.6.13}{C\137wrap / C\137unwrap}{chapter.6}% 47
+\BOOKMARK [0][-]{chapter.7}{Attempts To Attack At the APDU Level}{}% 48
+\BOOKMARK [1][-]{section.7.1}{Reverse Engineering PIN/password Authentication}{chapter.7}% 49
+\BOOKMARK [2][-]{subsection.7.1.1}{Authentication protocol search 1.0}{section.7.1}% 50
+\BOOKMARK [2][-]{subsection.7.1.2}{Search 1.1}{section.7.1}% 51
+\BOOKMARK [2][-]{subsection.7.1.3}{Search 1.2}{section.7.1}% 52
+\BOOKMARK [2][-]{subsection.7.1.4}{Search 1.3}{section.7.1}% 53
+\BOOKMARK [2][-]{subsection.7.1.5}{Authentication protocol search 2.0}{section.7.1}% 54
+\BOOKMARK [0][-]{chapter.8}{Conclusion / Results}{}% 55
+\BOOKMARK [0][-]{chapter*.4}{Bibliography}{}% 56
