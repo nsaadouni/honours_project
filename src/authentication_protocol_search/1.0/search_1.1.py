@@ -140,7 +140,9 @@ def method_6(hash_name, pad, pad_i, out, join):
 	return t, t == Y_list
 
 
-
+"""
+hash search using different methods of joining and truncating the output
+"""
 def search_1():
 
 	found = False
@@ -152,41 +154,35 @@ def search_1():
 
 	methods = [method_1, method_2, method_3, method_4, method_5, method_6]
 	str_methods = ['method 1', 'method 2', 'method_3', 'method_4', 'method_5', 'method 6']
-	# methods = [method_7]
-	# str_methods = ['method 7']
-	padding = [pad_end, pad_start]
-	padding_str = ['END', 'START']
+	# padding = [pad_end, pad_start]
+	# padding_str = ['END', 'START']
 	outputs = [first_16_out, last_16_out, mod_out]
 	str_outputs = ['first 16', 'last 16', 'mod out']
 
 	for join_index, join in enumerate(joins):
 		for method_index, method in enumerate(methods):
-			for pad_index, pad in enumerate(padding):
-				for i in range(256):
-					for hash_name in hs.algorithms_available:
-						for out_index, out in enumerate(outputs):
+			for hash_name in hs.algorithms_available:
+				for out_index, out in enumerate(outputs):
 
+					o, print_status = method(hash_name, do_not_pad, 0, out, join)
+					
+					found = print_status
 
+					if print_status:
+						print 'METHOD FOUND'
+						print 'method used: ' + str_methods[method_index]
+						# print 'padding is at the ' + padding_str[pad_index]
+						# print 'pad char (int): ' + str(i)
+						print 'join used: ' + joins_str[join_index]
+						print 'output format: ' + str_outputs[out_index]
+						print 'hash name: ' + str(hash_name)
+						print ''
+						print Y_list
+						print o
+						print '--------------'
+						break
+					c+=1
 
-							o, print_status = method(hash_name, pad, i, out, join)
-							
-							found = print_status
-
-							if print_status:
-								print 'METHOD FOUND'
-								print 'method used: ' + str_methods[method_index]
-								print 'padding is at the ' + padding_str[pad_index]
-								print 'pad char (int): ' + str(i)
-								print 'join used: ' + joins_str[join_index]
-								print 'output format: ' + str_outputs[out_index]
-								print 'hash name: ' + str(hash_name)
-								print ''
-								print Y_list
-								print o
-								print '--------------'
-								break
-							c+=1
-	
 	print found	
 	print c
 

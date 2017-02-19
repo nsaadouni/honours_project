@@ -57,6 +57,7 @@ def invert_intarray(x):
 #########################################################
 
 # needs generalized to allow smaller and larger pins
+# MIGHT JUST GET RID OF THIS!
 
 def pad_end(pin, pad=255):
 	out = []
@@ -78,6 +79,8 @@ def pad_start(pin,pad=255):
 	
 	return out
 
+def do_not_pad(pin, pad=255):
+	return pin
 ##########################################################
 
 def xor_join(pin_array, x_array):
@@ -155,11 +158,13 @@ def mod_out(hexdigest):
 #				Running Area							#
 #########################################################
 # ascii
-pin = '12345'
+pin = '0000000000000000'
 # hex
-X ='29 C7 29 1F ED 13 23 7B'
+# X ='29 C7 29 1F ED 13 23 7B'
+X = '68 F1 E4 92 85 36 39 A3'
 # hex
-Y = 'AE 69 B8 4B 7D BE BB 2B 63 63 D3 7D 07 9D D3 EC'
+# Y = 'AE 69 B8 4B 7D BE BB 2B 63 63 D3 7D 07 9D D3 EC'
+Y  = '53 17 55 20 F4 30 18 56 80 E6 75 55 E1 91 A7 EC'
 
 # pre process inputs into lists
 pin_list = []

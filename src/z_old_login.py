@@ -10,7 +10,7 @@ lib2= "/usr/lib/pkcs11/pkcs11-spy.so"
 pkcs11 = PyKCS11Lib()	
 pkcs11.load(lib)
 
-slot = pkcs11.getSlotList()[0]
+slot = pkcs11.getSlotList()[2]
 session = pkcs11.openSession(slot, CKF_SERIAL_SESSION | CKF_RW_SESSION)
 
 pin = '0000000000000000'

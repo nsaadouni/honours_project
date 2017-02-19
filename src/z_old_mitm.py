@@ -107,7 +107,7 @@ while True:
             _atr_char_array = [chr(int(_, 16)) for _ in _atr_hex_str.split()]
             atr = ''.join(_atr_char_array)
             sendToVPICC(atr)
-    
+
     else:
         if size != len(msg):
             print format("Expected %u bytes, but received only %u",size, len(msg))
@@ -120,10 +120,10 @@ while True:
 
         _response_int_array = data + [sw1] + [sw2]
         _response_hex_array = []
-        
+
         for _ in _response_int_array:
             _response_hex_array.append(char_to_hex(chr(_)))
-        
+
         response = ' '.join(_response_hex_array)
 
         _message_hex_array = _response_hex_array
@@ -132,71 +132,71 @@ while True:
             _message_chr_array.append(chr(int(_, 16)))
         message = ''.join(_message_chr_array)
 
-        # _in = raw_input()
-        # if _in == '':
-        print apdu
-        print response
-        print ''
-        sendToVPICC(message)
+    #     _in = raw_input()
+    #     if _in == '':
+    #         print apdu
+    #         print response
+    #         print ''
+    #         sendToVPICC(message)
     # else:
-        #     message = '00 00 00 00 00 00 00 00 90 00'
-        #     print apdu
-        #     print message
-        #     print ''
-        #     message = message.split()
-        #     out = []
-        #     for i in message:
-        #         out.append(chr(int(i,16)))
-        #     sendToVPICC(''.join(out))
+    #         message = '00 00 00 00 00 00 00 00 90 00'
+    #         print apdu
+    #         print message
+    #         print ''
+    #         message = message.split()
+    #         out = []
+    #         for i in message:
+    #             out.append(chr(int(i,16)))
+    #         sendToVPICC(''.join(out))
 
 
-        #############################################################
-        # if counter != 1:
-        #     if apdu == '00 84 00 00 08':
+        ############################################################
+        if counter != 1:
+            if apdu == '00 84 00 00 08':
 
-        #         if counter == -2:
-        #             m = '00 00 00 00 00 00 00 00 90 00'
-        #         elif counter == -1:
-        #             m = '00 00 00 00 00 00 00 01 90 00'
-        #         elif counter == 0:
-        #             m = '00 00 00 00 00 00 00 02 90 00'
-        #         else:
-        #             m = '00 00 00 00 00 00 00 03 90 00'
+                if counter == -2:
+                    m = '00 00 00 00 00 00 00 00 90 00'
+                elif counter == -1:
+                    m = '00 00 00 00 00 00 00 00 90 00'
+                elif counter == 0:
+                    m = '00 00 00 00 00 00 00 00 90 00'
+                else:
+                    m = '00 00 00 00 00 00 00 00 90 00'
 
-        #         print apdu
-        #         print m
-        #         print response
-        #         print ''
-        #         m = m.split()
-        #         out = []
-        #         for i in m:
-        #             out.append(chr(int(i,16)))
-        #         sendToVPICC(''.join(out))
-        #         counter +=1
-        #         flag = 1
-        #     else:
-        #         if flag == 1:
-        #             print apdu
-        #             print response
-        #             print ''
-        #             flag =0
-        #         sendToVPICC(message)
-        # else:
-        #     if apdu == '00 84 00 00 08':
-        #         print apdu
-        #         print response
-        #         print 'here now!'
-        #         print ''
-        #         sendToVPICC(message)
-        #         counter =0
-        #         flag = 1
-        #     else:
-        #         if flag == 1:
-        #             print apdu
-        #             print response
-        #             print ''
-        #             flag = 0
-        #         sendToVPICC(message)
+                print apdu
+                print m
+                print response
+                print ''
+                m = m.split()
+                out = []
+                for i in m:
+                    out.append(chr(int(i,16)))
+                sendToVPICC(''.join(out))
+                counter +=1
+                flag = 1
+            else:
+                if flag == 1:
+                    print apdu
+                    print response
+                    print ''
+                    flag =0
+                sendToVPICC(message)
+        else:
+            if apdu == '00 84 00 00 08':
+                print apdu
+                print response
+                print 'here now!'
+                print ''
+                sendToVPICC(message)
+                counter =0
+                flag = 1
+            else:
+                if flag == 1:
+                    print apdu
+                    print response
+                    print ''
+                    flag = 0
+                sendToVPICC(message)
 
 ##############################################################################################
             # if flag == 1:

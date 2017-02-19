@@ -1,0 +1,42 @@
+To do list
+
+
+
+1) create MiTM that generates nice traces for all of the functions [DONE]
+
+3) DELETE old keys!!! [DONE]
+
+
+
+
+2) clean up code for reverse engineeringe [Still to do]
+
+4) generate all APDU traces for all functions ------------------> almost threre!
+	
+	During this process create new RSA, DES, DES3, and AES keys
+
+
+LASERcardgetpublickey -> HAS to b ECC!!!
+
+
+
+
+
+
+This no longer needs to be done as this can be compelted by using the man in the middle tool
+---------------------------------------------------------------------------------------------
+a) alter create_commands.py
+	what I want:
+		- two lists that I can import 
+			1. list of all APDU commands sent from API
+			2. list of all APDU responses sent from CARD
+
+	I need to check on the format of how I would like them.
+	(I think the best format is an array or an array of integers (corresponding to bytes))
+---------------------------------------------------------------------------------------------
+
+
+This cannot be done ... althougth will create script to grab a login
+---------------------------------------------------------------------------------------------
+b) create script that starts MiTM and then starts c_login -> outputs Y calculated by API and then shuts both processes down. 
+---------------------------------------------------------------------------------------------

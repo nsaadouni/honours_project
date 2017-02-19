@@ -1,6 +1,7 @@
-#!/usr/bin/python
+
 
 from PyKCS11 import *
+
 
 def print_header(_str):
     print '*' * 60

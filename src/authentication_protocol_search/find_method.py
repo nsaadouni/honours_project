@@ -517,9 +517,9 @@ def search_2(hash_name):
 
 
 
-# _hashes = ['sha', 'sha1', 'sha256']# 'sha224', 'sha256', 'sha384', 'sha512', 'md4', 'md5', 'DSA-SHA', 'DSA', 'ecdsa-with-SHA1', 'ripemd160', 'whirlpool']
-# p = Pool(3)
-# p.map(search_2, _hashes)
+_hashes = ['sha', 'sha1', 'sha256']# 'sha224', 'sha256', 'sha384', 'sha512', 'md4', 'md5', 'DSA-SHA', 'DSA', 'ecdsa-with-SHA1', 'ripemd160', 'whirlpool']
+p = Pool(3)
+p.map(search_2, _hashes)
 
 
 
@@ -1088,6 +1088,8 @@ def search_10():
 
 
 
+
+# this is a bullshit search!!!
 def search_11():
 
 	found = False
@@ -1149,4 +1151,4 @@ def search_11():
 	print c
 
 
-search_11()
+# search_11()

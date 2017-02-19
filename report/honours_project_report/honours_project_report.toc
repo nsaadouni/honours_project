@@ -20,16 +20,16 @@
 \contentsline {subsection}{\numberline {3.3.3}AES}{12}
 \contentsline {subsection}{\numberline {3.3.4}ECB Mode}{12}
 \contentsline {subsection}{\numberline {3.3.5}CBC Mode}{12}
-\contentsline {section}{\numberline {3.4}MAC}{12}
-\contentsline {subsection}{\numberline {3.4.1}HMAC}{12}
-\contentsline {subsection}{\numberline {3.4.2}CMAC}{12}
-\contentsline {section}{\numberline {3.5}OTP}{12}
-\contentsline {subsection}{\numberline {3.5.1}HOTP}{12}
-\contentsline {subsection}{\numberline {3.5.2}TOTP}{12}
+\contentsline {section}{\numberline {3.4}Message Authentication Codes}{12}
+\contentsline {subsection}{\numberline {3.4.1}Hash Based - Message Authentication Codes (HMAC)}{12}
+\contentsline {subsection}{\numberline {3.4.2}Cryptographic Based - Message Authentication Codes (CMAC)}{12}
+\contentsline {section}{\numberline {3.5}One Time Passwords}{12}
+\contentsline {subsection}{\numberline {3.5.1}Hash Based - One Time Passwords (HOTP)}{12}
+\contentsline {subsection}{\numberline {3.5.2}Time Based - One Time Passwords (TOTP)}{12}
 \contentsline {chapter}{\numberline {4}Tools}{13}
-\contentsline {section}{\numberline {4.1}PCSC}{13}
+\contentsline {section}{\numberline {4.1}PCSC-lite}{13}
 \contentsline {section}{\numberline {4.2}Virtual Smart-Card}{13}
-\contentsline {section}{\numberline {4.3}Parsing?}{13}
+\contentsline {section}{\numberline {4.3}Parsing $\rightarrow $ Scripts created for ease of reading}{13}
 \contentsline {chapter}{\numberline {5}Related Work / Literature Review}{15}
 \contentsline {chapter}{\numberline {6}PKCS\#11 Functions - APDU analysis}{17}
 \contentsline {section}{\numberline {6.1}Initialization?}{17}
@@ -47,10 +47,7 @@
 \contentsline {section}{\numberline {6.13}C\_wrap / C\_unwrap}{18}
 \contentsline {chapter}{\numberline {7}Attempts To Attack At the APDU Level}{19}
 \contentsline {section}{\numberline {7.1}Reverse Engineering PIN/password Authentication}{19}
-\contentsline {subsection}{\numberline {7.1.1}Authentication protocol search 1.0}{20}
-\contentsline {subsection}{\numberline {7.1.2}Search 1.1}{21}
-\contentsline {subsection}{\numberline {7.1.3}Search 1.2}{23}
-\contentsline {subsection}{\numberline {7.1.4}Search 1.3}{23}
-\contentsline {subsection}{\numberline {7.1.5}Authentication protocol search 2.0}{23}
-\contentsline {chapter}{\numberline {8}Conclusion / Results}{25}
-\contentsline {chapter}{Bibliography}{27}
+\contentsline {subsection}{\numberline {7.1.1}Authentication Protocol Search 1.0 (Password Storage)}{22}
+\contentsline {subsection}{\numberline {7.1.2}Authentication Protocol Search 2.0 (One Time Passwords)}{24}
+\contentsline {chapter}{\numberline {8}Conclusion / Results}{27}
+\contentsline {chapter}{Bibliography}{29}
