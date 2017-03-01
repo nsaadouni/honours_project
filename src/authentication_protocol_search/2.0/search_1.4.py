@@ -1,6 +1,13 @@
 from base import *
 from Crypto.Cipher import AES
 
+
+"""
+AES-CBC(key=pin, IV=0, msg=hash(X))
+
+No
+"""
+
 def search_4():
 
 	found = False

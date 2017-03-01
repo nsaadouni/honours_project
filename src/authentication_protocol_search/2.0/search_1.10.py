@@ -1,6 +1,12 @@
 from base import *
 
+"""
+HMAC(password=pin, key=X, hash_name)
 
+Also need to do 
+
+HMAC(password=X, key=pin, hash_name)
+"""
 def search_10():
 
 	found = False
@@ -14,36 +20,33 @@ def search_10():
 
 
 	for hash_name in [hs.sha1, hs.sha224, hs.sha256, hs.sha384, hs.sha512, hs.md5]:
-		for hn in hs.algorithms_available:
 
-			h1 = hs.new(hn)
-			h1.update(pin)
-			hashed_password = h1.digest()
-			
-			key = ''.join(intarray_to_asciiarray(X_list))
+		
+		key = ''.join(intarray_to_asciiarray(X_list))
+		password = intarray_to_asciiarray(pin_list)
 
-			dig = hmac.new(password, key, hash_name)
-			d = out(dig.hexdigest())
-			d = hexstring_to_intarray(d)
-			
-			found = d == Y_list
+		dig = hmac.new(password, key, hash_name)
+		d = out(dig.hexdigest())
+		d = hexstring_to_intarray(d)
+		
+		found = d == Y_list
 
-			if found:
-				print 'FOUND YA BASTARD HAHAHAHAHAHA!'
-				print ''
-				print Y_list
-				print d
-				print '--------------'
-			elif d[0] == Y_list [0]:
-				print 'something relevant'
-				print ''
-				print Y_list
-				print Y_list_invert
-				print d
-				print '------------'
-			c+=1
-	
-	print found	
-	print c
+		if found:
+			print 'FOUND YA BASTARD HAHAHAHAHAHA!'
+			print ''
+			print Y_list
+			print d
+			print '--------------'
+		elif d[0] == Y_list [0]:
+			print 'something relevant'
+			print ''
+			print Y_list
+			print Y_list_invert
+			print d
+			print '------------'
+		c+=1
+
+print found	
+print c
 
 #search_10

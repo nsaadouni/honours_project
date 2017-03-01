@@ -88,6 +88,7 @@ def char_to_hex(char):
 
 flag = 0
 counter = -2
+timeitnow=0
 while True:
     try:
         (size, msg) = recvFromVPICC()
@@ -152,18 +153,22 @@ while True:
 
         ############################################################
         if counter != 1:
+            if timeitnow == 0:
+                start = time.time()
+                timeitnow=1
+
             if apdu == '00 84 00 00 08':
 
                 if counter == -2:
-                    m = '00 00 00 00 00 00 00 00 90 00'
+                    m = 'ff ff ff ff ff ff ff ff 90 00'
                 elif counter == -1:
-                    m = '00 00 00 00 00 00 00 00 90 00'
+                    m = 'ff ff ff ff ff ff ff ff 90 00'
                 elif counter == 0:
-                    m = '00 00 00 00 00 00 00 00 90 00'
+                    m = 'ff ff ff ff ff ff ff ff 90 00'
                 else:
-                    m = '00 00 00 00 00 00 00 00 90 00'
+                    m = 'ff ff ff ff ff ff ff ff 90 00'
 
-                print apdu
+                # print apdu
                 print m
                 print response
                 print ''
@@ -186,6 +191,8 @@ while True:
                 print apdu
                 print response
                 print 'here now!'
+                end = time.time()
+                print end - start
                 print ''
                 sendToVPICC(message)
                 counter =0

@@ -2,7 +2,11 @@ from base import *
 
 
 
+"""
+AES-CMAC(key=pin, msg=X||X)
 
+No
+"""
 
 def search_7():
 

@@ -82,6 +82,6 @@ def search_3b():
 
 
 
-s
+
 earch_3b()
 search_3a()

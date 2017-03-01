@@ -290,6 +290,10 @@ def alter_trace(sock, connection):
             # CONTINE ON THIS FORM HERE!
             elif input_arg == '':
 
+                change = 0
+                if api_intarray_msg == [0, 132, 0, 0, 8]:
+                    change = 1
+
 
                 # send the message from API to the smartcard
                 data,sw1,sw2 = connection.transmit(api_intarray_msg)
@@ -298,11 +302,17 @@ def alter_trace(sock, connection):
                 sc_intarray_response = data + [sw1] + [sw2]
 
                 # convert sc_intarray_response -> asciistring
-                sc_ascii_response = intarray_to_asciistring(sc_intarray_response)
+                if change == 0:
+                    sc_ascii_response = intarray_to_asciistring(sc_intarray_response)
+                else:
+                    sc_intarray_response = [255,255,255,255,255,255,255,255, 144,0]
+                    sc_ascii_response = intarray_to_asciistring(sc_intarray_response)
+                    change = 0
 
                 print 'RESPONSE'
                 # print response
                 h.hexdump(sc_ascii_response)
+                print sc_intarray_response  # print the message as an intarray for easy manipulation
                 print '' # for space to the next command
                 
                 # send to API
@@ -312,8 +322,8 @@ def alter_trace(sock, connection):
 
 
 sock, connection = setup_socket_connection(2, 0)
-print_trace(sock, connection)
-# alter_trace(sock, connection)
+# print_trace(sock, connection)
+alter_trace(sock, connection)
 
 
 """

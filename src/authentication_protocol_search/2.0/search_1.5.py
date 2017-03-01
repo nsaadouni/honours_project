@@ -1,7 +1,11 @@
 from base import *
 
 
+"""
+AES-CBC(key=pin, IV=sha256(X)[16:32], msg=sha256(X)[0:15])
 
+No
+"""
 
 def search_5():
 

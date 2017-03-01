@@ -1,5 +1,10 @@
 from base import *
 
+"""
+AES-CMAC(key=sha256(pin), msg=X)
+
+No
+"""
 def search_8():
 
 	found = False

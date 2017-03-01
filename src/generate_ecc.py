@@ -11,16 +11,16 @@ pub_key_1 = keys.get_public_key(priv_key_1, curve.P521)
 #---------------------------------------------------------------#
 
 # generate a private key for curve P256
-priv_key_2 = keys.gen_private_key(curve.P384)
+priv_key_2 = keys.gen_private_key(curve.P256)
 
 # get the public key corresponding to the private key we just generated
-pub_key_2 = keys.get_public_key(priv_key_2, curve.P384)
+pub_key_2 = keys.get_public_key(priv_key_2, curve.P256)
 (Qx_2, Qy_2) = pub_key_2  # recall that pub_key is simply an integer pair
 
 #---------------------------------------------------------------#
 
 print len(hex(Qx_1)[2:-1] + hex(Qy_1)[2:-1])
-print hex(Qx_1)[2:] #+ hex(Qy_1)[2:]
+# print hex(Qx_1)[2:] #+ hex(Qy_1)[2:]
 print ''
 # print len(hex(Qx_2)[2:-1] + hex(Qy_2)[2:-1])
 # print hex(Qx_2)[2:-1] + hex(Qy_2)[2:-1]

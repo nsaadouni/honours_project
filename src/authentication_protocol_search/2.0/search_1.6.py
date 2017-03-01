@@ -2,6 +2,11 @@ from base import *
 
 from CryptoPlus.Cipher import AES
 
+"""
+AES-CMAC(key=pin, msg=X) [this is okay despite X being 8 bytes]
+
+No
+"""
 def search_6():
 
 	found = False
@@ -54,4 +59,4 @@ def search_6():
 
 
 
-# search_6()
+search_6()

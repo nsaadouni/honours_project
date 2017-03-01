@@ -1,4 +1,4 @@
-from Crypto.Cipher import DES, DES3
+from CryptoPlus.Cipher import DES, DES3
 import binascii as ba 
 
 # input: array of characters (string)
@@ -82,6 +82,7 @@ IV = ''.join(IV)
 ###############################################################
 
 tmp = 'ce 62 54 20 d4 89 26 2f 59 57 0d e8 f7 f2 ca 08'
+tmp = '7c c0 e0 4c 14 1d 61 69 7f 7b b5 1e e0 fd 4f fb'
 tmp = tmp.split()
 ciphertext = []
 for i in tmp:
@@ -90,52 +91,47 @@ ciphertext2 = ''.join(ciphertext)
 
 ##############################################################
 
-
-
-
-
-
-
-
 # DES-MAC
+print ''.join(tmp)[0:16] + ' ' + ''.join(tmp)[16:32]
 
-cipher2 = DES3.new(key1_3des, DES3.MODE_CBC, IV)
+cipher2 = DES3.new(key1_3des, DES3.MODE_ECB)
 
 ciphertext1 = cipher2.decrypt(ciphertext2)
 conf = ciphertext1[0:8]
 MAC = ciphertext1[8:16]
 
-print ba.hexlify(conf)
-print ba.hexlify(MAC)
+print 'decrypted A: ' + ba.hexlify(conf)
+print 'decrypted B: ' +ba.hexlify(MAC)
+# print msg+conf
 
-# now from SKID2 repreduce MAC using:
-# password, random number X, conf
+cipher1 = DES3.new(key1_3des, DES3.MODE_CMAC)
 
-print msg+conf
-import hashlib
-import hmac
+ciphertext11 = cipher1.encrypt(conf+msg)
 
-for hash_used in hashlib.algorithms_available:
-	h1 = hashlib.new(hash_used)
-	h1.update(msg+conf)
-
-	h2 = hashlib.new(hash_used)
-	h2.update(conf+msg)
-
-	print h1.hexdigest()
-	print ''
-	print h2.hexdigest()
-	print ''
-
-	# dig = hmac.new(key1_3des, msg+conf)
+encrypted_conf = ciphertext11[0:8]
+MAC2 = ciphertext11[8:16]
 
 
-# cipher1 = DES3.new(key1_3des, DES3.MODE_CBC, IV)
+print ba.hexlify(encrypted_conf)
+print ba.hexlify(MAC2)
 
-# ciphertext11 = cipher1.encrypt(conf + msg)
 
-# encrypted_conf = ciphertext11[0:8]
-# MAC2 = ciphertext11[8:16]
 
-# print ba.hexlify(MAC2)
-# print ba.hexlify(encrypted_conf)
+
+
+"""
+3DES-ECB(key=pin, msg=Y) [decrypt] = [A||B]
+
+3DES-CBC(key=pin, IV=A, msg=X) [encrypt] = A
+
+
+"""
+
+
+"""
+SKID? -> was doing someting with that
+
+DES && DES3 key = pin
+Decrypt(16 bytes [Y]) -> ECB, CBC -> should give [conf, MAC]
+Reproduce MAC using -> pin, X, conf!
+"""

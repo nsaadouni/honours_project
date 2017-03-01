@@ -2,6 +2,13 @@ from base import *
 from Crypto.Cipher import DES3
 
 
+"""
+DES-ECB(key=pin, msg=X)
+
+also need to do
+
+DES-CBC?
+"""
 def search_9():
 
 	found = False

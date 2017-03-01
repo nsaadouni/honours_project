@@ -10,13 +10,33 @@ lib2= "/usr/lib/pkcs11/pkcs11-spy.so"
 pkcs11 = PyKCS11Lib()	
 pkcs11.load(lib)
 
-slot = pkcs11.getSlotList()[2]
+slot = pkcs11.getSlotList()[0]
 session = pkcs11.openSession(slot, CKF_SERIAL_SESSION | CKF_RW_SESSION)
 
 pin = '0000000000000000'
 
 # print 'quick sleep to allow everthing to run smoothly'
 # time.sleep(5)
+
+try:
+    session.login(pin)
+except PyKCS11Error as e:
+    print e
+
+try:
+    session.login(pin)
+except PyKCS11Error as e:
+    print e
+
+try:
+    session.login(pin)
+except PyKCS11Error as e:
+    print e
+
+try:
+    session.login(pin)
+except PyKCS11Error as e:
+    print e
 
 try:
     session.login(pin)
