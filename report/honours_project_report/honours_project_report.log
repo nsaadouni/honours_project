@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.14)  24 FEB 2017 17:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.14)  11 MAR 2017 20:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -239,27 +239,52 @@ Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
 \tymax=\dimen128
 \TY@tablewidth=\dimen129
 )
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count101
+\lst@gtempboxa=\box30
+\lst@token=\toks20
+\lst@length=\count102
+\lst@currlwidth=\dimen130
+\lst@column=\count103
+\lst@pos=\count104
+\lst@lostspace=\dimen131
+\lst@width=\dimen132
+\lst@newlines=\count105
+\lst@lineno=\count106
+\lst@maxwidth=\dimen133
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+\c@lstnumber=\count107
+\lst@skipnumbers=\count108
+\lst@framebox=\box31
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2015/06/04 1.6 listings configuration
+))
+Package: listings 2015/06/04 1.6 (Carsten Heinz)
+
 (./honours_project_report.aux)
 \openout1 = `honours_project_report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for OMS/pzccm/m/n on input line 14.
-LaTeX Font Info:    Try loading font information for OMS+pzccm on input line 14
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMS/pzccm/m/n on input line 15.
+LaTeX Font Info:    Try loading font information for OMS+pzccm on input line 15
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omspzccm.fd
 File: omspzccm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/pzccm.
 )
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -297,17 +322,17 @@ LaTeX Font Info:    ... okay on input line 14.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count101
-\scratchdimen=\dimen130
-\scratchbox=\box30
-\nofMPsegments=\count102
-\nofMParguments=\count103
-\everyMPshowfont=\toks20
-\MPscratchCnt=\count104
-\MPscratchDim=\dimen131
-\MPnumerator=\count105
-\makeMPintoPDFobject=\count106
-\everyMPtoPDFconversion=\toks21
+\scratchcounter=\count109
+\scratchdimen=\dimen134
+\scratchbox=\box32
+\nofMPsegments=\count110
+\nofMParguments=\count111
+\everyMPshowfont=\toks21
+\MPscratchCnt=\count112
+\MPscratchDim=\dimen135
+\MPnumerator=\count113
+\makeMPintoPDFobject=\count114
+\everyMPtoPDFconversion=\toks22
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -354,14 +379,16 @@ e
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
+Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\AtBeginShipoutBox=\box31
+\AtBeginShipoutBox=\box33
+\c@lstlisting=\count115
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <20.74> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 52.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 53.
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <20.74> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 52.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 53.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 18.66588pt on input line 52.
+(Font)              scaled to size 18.66588pt on input line 53.
 
 [1
 
@@ -369,39 +396,39 @@ LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 
 ]
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 10.79993pt on input line 52.
+(Font)              scaled to size 10.79993pt on input line 53.
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <12> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 52.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 53.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 10.79993pt on input line 52.
+(Font)              scaled to size 10.79993pt on input line 53.
 
-Underfull \hbox (badness 10000) in paragraph at lines 52--52
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 52--52
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
 
  []
 
 LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <12> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 52.
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 53.
 LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
-(Font)              scaled to size 10.79993pt on input line 52.
+(Font)              scaled to size 10.79993pt on input line 53.
 [3]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17.28> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 55.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 56.
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <17.28> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 55.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 56.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 15.55188pt on input line 55.
+(Font)              scaled to size 15.55188pt on input line 56.
  [4]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24.88> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 60.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 61.
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <24.88> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 60.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 61.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 22.39185pt on input line 60.
+(Font)              scaled to size 22.39185pt on input line 61.
  (./honours_project_report.toc
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
@@ -436,23 +463,23 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
  [6]
 Chapter 1.
 
-Underfull \hbox (badness 10000) in paragraph at lines 67--68
+Underfull \hbox (badness 10000) in paragraph at lines 68--69
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 69--78
+Underfull \hbox (badness 10000) in paragraph at lines 70--79
 
  []
 
 
-Overfull \hbox (2.932pt too wide) in paragraph at lines 80--81
+Overfull \hbox (2.932pt too wide) in paragraph at lines 81--82
 \OT1/ptm/m/n/12 dard). Also known as 'Cryp-toki' (cryp-to-graphic to-ken in-ter
 -face, pro-nounced as 'crypto-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 80--81
+Underfull \hbox (badness 10000) in paragraph at lines 81--82
 
  []
 
@@ -461,11 +488,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 80--81
 ] [8]
 Chapter 2.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 93.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 94.
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 93.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 94.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 12.9599pt on input line 93.
+(Font)              scaled to size 12.9599pt on input line 94.
 [9
 
 ] [10
@@ -476,7 +503,7 @@ Chapter 3.
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [11]
-Overfull \hbox (9.26312pt too wide) in paragraph at lines 145--145
+Overfull \hbox (9.26312pt too wide) in paragraph at lines 146--146
 []\OT1/phv/b/n/14.4 Cryptographic Based - Mes-sage Au-then-ti-ca-tion Codes (CM
 AC) 
  []
@@ -484,7 +511,7 @@ AC)
 [12]
 Chapter 4.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 167.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 168.
 [13
 
 ] [14
@@ -498,10 +525,10 @@ Chapter 6.
 [17] [18]
 Chapter 7.
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
-(Font)              Font shape `OMS/pzccm/m/n' tried instead on input line 238.
+(Font)              Font shape `OMS/pzccm/m/n' tried instead on input line 239.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 239--240
+Underfull \hbox (badness 10000) in paragraph at lines 240--241
 
  []
 
@@ -510,7 +537,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 239--240
 File: images/section_7/7.1/authencation_method.png Graphic file (type png)
 <use images/section_7/7.1/authencation_method.png>
 Package pdftex.def Info: images/section_7/7.1/authencation_method.png used on i
-nput line 247.
+nput line 248.
 (pdftex.def)             Requested size: 412.56497pt x 247.11081pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -518,12 +545,12 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [19
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 255--256
+Underfull \hbox (badness 10000) in paragraph at lines 256--257
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 257--258
+Underfull \hbox (badness 10000) in paragraph at lines 258--259
 
  []
 
@@ -531,100 +558,122 @@ Underfull \hbox (badness 10000) in paragraph at lines 257--258
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [20 <./images/section_7/7.1/authencation_method.png>] [21]
-Underfull \hbox (badness 10000) in paragraph at lines 326--327
+Underfull \hbox (badness 10000) in paragraph at lines 327--328
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 354--355
+Underfull \hbox (badness 10000) in paragraph at lines 355--356
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 359--360
+Underfull \hbox (badness 10000) in paragraph at lines 360--361
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 363--365
+Underfull \hbox (badness 10000) in paragraph at lines 364--366
 
  []
 
 [22]
-Underfull \hbox (badness 10000) in paragraph at lines 366--367
+Underfull \hbox (badness 10000) in paragraph at lines 367--368
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 382--383
+Underfull \hbox (badness 10000) in paragraph at lines 383--384
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 386--388
+Underfull \hbox (badness 10000) in paragraph at lines 387--389
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 389--390
+Underfull \hbox (badness 10000) in paragraph at lines 390--391
 
  []
 
 [23]
-Underfull \hbox (badness 10000) in paragraph at lines 398--399
+Underfull \hbox (badness 10000) in paragraph at lines 399--400
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 417--418
+Underfull \hbox (badness 10000) in paragraph at lines 418--419
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 419--422
+Underfull \hbox (badness 10000) in paragraph at lines 420--423
 
  []
 
 [24]
-Underfull \hbox (badness 10000) in paragraph at lines 423--428
+Underfull \hbox (badness 10000) in paragraph at lines 424--429
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 432--437
+Underfull \hbox (badness 10000) in paragraph at lines 433--438
 
  []
 
-[25] [26
 
-]
+Overfull \hbox (64.79346pt too wide) in paragraph at lines 457--457
+[]\OT1/pcr/m/n/12 (CKA\_CLASS, LowLevel.CKO\_SECRET\_KEY), [private, public, da
+ta, cert (X.509)][] 
+ []
+
+
+Overfull \hbox (21.9536pt too wide) in paragraph at lines 457--457
+[]\OT1/pcr/m/n/12 (CKA\_EXTRACTABLE, False)) [is allowed to be extracted from t
+he device][] 
+ []
+
+
+Overfull \hbox (29.30638pt too wide) in paragraph at lines 466--466
+[]\OT1/phv/b/n/17.28 Altering File Con-trol Pa-ram-e-ters for Lo-gin Retry Coun
+er 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [25]
+[26]
 Chapter 8.
-[27] [28
+[27
+
+] [28
 
 ]
 Missing character: There is no â in font ptmr7t!
 Missing character: There is no € in font ptmr7t!
 Missing character: There is no “ in font ptmr7t!
 
-Overfull \hbox (29.70047pt too wide) in paragraph at lines 474--477
+Overfull \hbox (29.70047pt too wide) in paragraph at lines 511--514
 \OT1/pcr/m/n/12 https://frankmorgner.github.io/vsmartcard/virtualsmartcard/READ
 ME.html 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 474--477
+Underfull \hbox (badness 10000) in paragraph at lines 511--514
 
  []
 
 [29] (./honours_project_report.aux) ) 
 Here is how much of TeX's memory you used:
- 5103 strings out of 493085
- 77024 string characters out of 6136916
- 154231 words of memory out of 5000000
- 8472 multiletter control sequences out of 15000+600000
+ 6273 strings out of 493085
+ 94318 string characters out of 6136916
+ 172740 words of memory out of 5000000
+ 9630 multiletter control sequences out of 15000+600000
  45639 words of font info for 86 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 43i,12n,40p,1221b,370s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 43i,12n,40p,1221b,374s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/d
 vips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.
@@ -635,7 +684,7 @@ ist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/ty
 pe1/urw/helvetic/uhvro8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/tim
 es/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><
 /usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on honours_project_report.pdf (29 pages, 150917 bytes).
+Output written on honours_project_report.pdf (29 pages, 156514 bytes).
 PDF statistics:
  141 PDF objects out of 1000 (max. 8388607)
  97 compressed objects within 1 object stream

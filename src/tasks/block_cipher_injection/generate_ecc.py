@@ -19,9 +19,29 @@ pub_key_2 = keys.get_public_key(priv_key_2, curve.P256)
 
 #---------------------------------------------------------------#
 
-print len(hex(Qx_1)[2:-1] + hex(Qy_1)[2:-1])
-# print hex(Qx_1)[2:] #+ hex(Qy_1)[2:]
+
+def intarray_to_hexstring(x):
+	out = []
+	for i in x:
+
+		if i < 16:
+			out.append('0'+hex(i)[2:-1])
+		else:
+			out.append(hex(i)[2:-1])
+
+	out = ''.join(out)
+	if len(out) % 2 == 0:
+		return out
+	else:
+		return '0'+out
+
+key1 = intarray_to_hexstring([Qx_1, Qy_1])
+key2 = intarray_to_hexstring([Qx_2, Qy_2])
+
+print key1
+print len(key1)
+
 print ''
-# print len(hex(Qx_2)[2:-1] + hex(Qy_2)[2:-1])
-# print hex(Qx_2)[2:-1] + hex(Qy_2)[2:-1]
-# print ''
+
+print key2
+print len(key2)

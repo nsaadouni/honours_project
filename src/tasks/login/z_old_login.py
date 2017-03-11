@@ -23,25 +23,27 @@ try:
 except PyKCS11Error as e:
     print e
 
-try:
-    session.login(pin)
-except PyKCS11Error as e:
-    print e
+pin = '1111111111111111'
 
 try:
     session.login(pin)
 except PyKCS11Error as e:
     print e
 
-try:
-    session.login(pin)
-except PyKCS11Error as e:
-    print e
+# try:
+#     session.login(pin)
+# except PyKCS11Error as e:
+#     print e
 
-try:
-    session.login(pin)
-except PyKCS11Error as e:
-    print e
+# try:
+#     session.login(pin)
+# except PyKCS11Error as e:
+#     print e
+
+# try:
+#     session.login(pin)
+# except PyKCS11Error as e:
+#     print e
 
 # # pin = '0000000000000001'
 

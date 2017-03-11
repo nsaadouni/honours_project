@@ -52,7 +52,7 @@ def search_2(hash_name):
 
 
 
-
-_hashes = ['sha', 'sha1', 'sha256']# 'sha224', 'sha256', 'sha384', 'sha512', 'md4', 'md5', 'DSA-SHA', 'DSA', 'ecdsa-with-SHA1', 'ripemd160', 'whirlpool']
+# 'sha224', 'sha256', 'sha384', 'sha512', 'md4', 'md5', 'DSA-SHA', 'DSA', 'ecdsa-with-SHA1', 'ripemd160', 'whirlpool']
+_hashes = ['sha', 'sha1', 'sha256', 'md5']
 name = Pool(2)
 name.map(search_2, _hashes)

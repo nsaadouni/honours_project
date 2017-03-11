@@ -49,5 +49,9 @@
 \contentsline {section}{\numberline {7.1}Reverse Engineering PIN/password Authentication}{19}
 \contentsline {subsection}{\numberline {7.1.1}Authentication Protocol Search 1.0 (Password Storage)}{22}
 \contentsline {subsection}{\numberline {7.1.2}Authentication Protocol Search 2.0 (One Time Passwords)}{24}
+\contentsline {section}{\numberline {7.2}Altering File Control Parameters for Login Retry Couner}{26}
+\contentsline {section}{\numberline {7.3}Block Cipher Injection (MiTM)}{26}
+\contentsline {section}{\numberline {7.4}Altering Key Object Attributes}{26}
+\contentsline {section}{\numberline {7.5}Using Key's without Authentication}{26}
 \contentsline {chapter}{\numberline {8}Conclusion / Results}{27}
 \contentsline {chapter}{Bibliography}{29}

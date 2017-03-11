@@ -8,6 +8,7 @@
 \usepackage{float}% If comment this, figure moves to Page 2
 \usepackage{subcaption}
 \usepackage{tabulary}
+\usepackage{listings}
 %\usepackage{hyperref}
 
 
@@ -437,6 +438,42 @@ These characteristics are only present if the 'logins' happen within the same se
 
 
 
+\begin{verbatim}
+template = (\\
+	(CKA\_CLASS, LowLevel.CKO\_SECRET\_KEY), [private, public, data, cert (X.509)]
+	(CKA\_KEY_TYPE, LowLevel.CKK_DES), [AES,DES,RSA,ECC]
+	(CKA\_LABEL, label), [name]
+	(CKA\_ID, chr(id)), [id]
+	(CKA\_PRIVATE, True), [requires authentication]
+	(CKA\_SENSITIVE, True), [cannot be extracted unencrypted]
+	(CKA\_ENCRYPT, True), [can be used for encrypting data]
+	(CKA\_DECRYPT, True), [can be used for decrypting data]
+	(CKA\_SIGN, True), [[can be used for signing data]
+	(CKA\_VERIFY, True), [can be used for verifiying data]
+	(CKA\_TOKEN, True), [can be stored permanently on the device]
+	(CKA\_WRAP, True), [can encrypt a key to be extracted]
+	(CKA\_UNWRAP, True), [can decrypt an encrypted key]
+	(CKA\_EXTRACTABLE, False)) [is allowed to be extracted from the device]
+\end{verbatim}
+
+Problem 1:\\
+I inject my own RSA-2048 public key (only the public modulus part, the injected key has the same public exponent 9 bytes).\\
+When secure messaging is starting to open straight after the communiacation of the injected key SEG\_FAULT!
+Back to square 1, do not know what the key is.
+
+
+
+\section{Altering File Control Parameters for Login Retry Couner}
+
+\section{Block Cipher Injection (MiTM)}
+
+
+\section{Altering Key Object Attributes}
+- MSC's work
+
+\section{Using Key's without Authentication}
+- MSC's work
+- there is an attribute that should prevent this!
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 \chapter{Conclusion / Results}

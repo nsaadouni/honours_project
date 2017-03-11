@@ -160,13 +160,13 @@ while True:
             if apdu == '00 84 00 00 08':
 
                 if counter == -2:
-                    m = 'ff ff ff ff ff ff ff ff 90 00'
+                    m = '00 00 00 00 00 00 00 01 90 00'
                 elif counter == -1:
-                    m = 'ff ff ff ff ff ff ff ff 90 00'
+                    m = '00 00 00 00 00 00 00 01 90 00'
                 elif counter == 0:
-                    m = 'ff ff ff ff ff ff ff ff 90 00'
+                    m = '00 00 00 00 00 00 00 00 90 00'
                 else:
-                    m = 'ff ff ff ff ff ff ff ff 90 00'
+                    m = '00 00 00 00 00 00 00 00 90 00'
 
                 # print apdu
                 print m

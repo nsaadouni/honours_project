@@ -8,7 +8,8 @@ List of functions that I have to have traces for!!
 
 session.login()
 session.findObjects()
-session.generateKeyPair()
+session.generateKeyPair() RSA
+session.generateKey() BLOCK CIPHERS
 session.createObject()
 session.destroyObject()
 session.encrypt()
@@ -18,6 +19,10 @@ session.verify()
 session.__setattr__()
 session.wrapKey()
 session.unwrapKey()
+
+new
+getAttributeValue
+getAttribute_value_fragmneted (returns None value when attribute is senseitive or unknown)
 """
 
 
@@ -38,19 +43,8 @@ session.unwrapKey()
 """
 
 
-# arg = int(sys.argv[1])
-# lib = "/usr/lib/pkcs11/pkcs11-spy.so"
-lib = "/usr/lib/x64-athena/libASEP11.so"
-pkcs11 = PyKCS11Lib()
-pkcs11.load(lib)
-
-pin = '0000000000000000'
-
-
+# incorrect at the minute
 def generateKeyPair_rsa():
-    return 0
-
-def generate_AES(id, label):
     template = (
         (LowLevel.CKA_CLASS, LowLevel.CKO_SECRET_KEY),
         (LowLevel.CKA_KEY_TYPE, LowLevel.CKK_AES),
@@ -74,6 +68,32 @@ def generate_AES(id, label):
     rv = pkcs11.lib.C_GenerateKey(session.session, m, t, key)
     if rv != LowLevel.CKR_OK:
         raise PyKCS11Error(rv)
+
+def generate_AES(_id, label, session):
+    template = (
+        (LowLevel.CKA_CLASS, LowLevel.CKO_SECRET_KEY),
+        (LowLevel.CKA_KEY_TYPE, LowLevel.CKK_AES),
+        (LowLevel.CKA_VALUE_LEN, 32),
+        (LowLevel.CKA_LABEL, label),
+        (LowLevel.CKA_ID, chr(_id)),
+        (LowLevel.CKA_PRIVATE, True),
+        (LowLevel.CKA_SENSITIVE, True),
+        (LowLevel.CKA_ENCRYPT, True),
+        (LowLevel.CKA_DECRYPT, True),
+        (LowLevel.CKA_SIGN, True),
+        (LowLevel.CKA_VERIFY, True),
+        (LowLevel.CKA_TOKEN, True),
+        (LowLevel.CKA_WRAP, True),
+        (LowLevel.CKA_UNWRAP, True),
+        (LowLevel.CKA_EXTRACTABLE, True))
+    t = session._template2ckattrlist(template) 
+    ck_handle = LowLevel.CK_OBJECT_HANDLE()
+    m = LowLevel.CK_MECHANISM()
+    m.mechanism = LowLevel.CKM_AES_KEY_GEN
+    rv = pkcs11.lib.C_GenerateKey(session.session, m, t, ck_handle) 
+    if rv != LowLevel.CKR_OK:
+        raise PyKCS11Error(rv) 
+    return ck_handle 
 
 
 def generate_DES(id, label):
@@ -129,37 +149,38 @@ def unwrapKey():
 
 #--------------------------------------------------------#
 
-def login():
-    try:
-        slot = pkcs11.getSlotList()[2]
-        session = pkcs11.openSession(slot, LowLevel.CKF_SERIAL_SESSION | LowLevel.CKF_RW_SESSION)
-        session.login(pin)
-    except PyKCS11Error as e:
-        print e
-
-    return session
-
-def destroyObjects(session, objects):
+def destroyAllObjects():
+    objects = session.findObjects()
     for o in objects:
         session.destroyObject(o)
 
-def findObjects(session):
-    objects = session.findObjects()
-    return objects
+########################################################
+#                   Running Area                       #
+########################################################
 
+arg = 0
+lib = "/usr/lib/x64-athena/libASEP11.so"
+pkcs11 = PyKCS11Lib()
+pkcs11.load(lib)
+pin = '0000000000000000'
 
-session = login()
-# print 'login completed'
-# print ''
+# login
+try:
+    slot = pkcs11.getSlotList()[arg]
+    session = pkcs11.openSession(slot, LowLevel.CKF_SERIAL_SESSION | LowLevel.CKF_RW_SESSION)
+    session.login(pin)
+except PyKCS11Error as e:
+    print e
+
+print 'login completed\n'
 # i = raw_input()
-# generate_AES(1, "testing")
 
+# destroyAllObjects()
+aes_key_handl2e = generate_AES(0, "nodz", session)
+session.closeSession()
 
-pkcs11_objects = findObjects(session)
-print pkcs11_objects
-
-# i = raw_input()
-# destroyObjects(session, pkcs11_objects)
+# objects = session.findObjects()
+# print objects
 
 
 
