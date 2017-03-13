@@ -210,7 +210,7 @@ def print_trace(sock, connection):
 
 
 # prints the trace with 'hexdump', but allows alterations for command and responses
-def alter_trace(sock, connection):
+def alter_trace(sock, connection, print_int_array=False):
 
     print 'Man in the middle tool started (for printing traces) ....'
     print ''
@@ -278,7 +278,8 @@ def alter_trace(sock, connection):
 
             # convert api_ascii_msg -> intarray
             api_intarray_msg = asciistring_to_intarray(api_ascii_msg)
-            print api_intarray_msg # print the message as an intarray for easy manipulation
+            if print_int_array:
+                print api_intarray_msg # print the message as an intarray for easy manipulation
             print '' # to give space between command and resposne pair
 
             #-----------------------------------------------------------------------------#
@@ -307,10 +308,11 @@ def alter_trace(sock, connection):
                 print 'RESPONSE'
                 # print response
                 h.hexdump(sc_ascii_response)
-                print sc_intarray_response  # print the message as an intarray for easy manipulation
+                if print_int_array:
+                    print sc_intarray_response  # print the message as an intarray for easy manipulation
                 print '' # for space to the next command
                 
-                print 'Do you want the response? (y/N)'
+                print 'Do you want to alter the response? (y/N)'
                 input_arg = raw_input()
                 if input_arg == 'y':
                     print "Enter response (spaced integers)"
@@ -341,10 +343,11 @@ def alter_trace(sock, connection):
                 print 'RESPONSE'
                 # print response
                 h.hexdump(sc_ascii_response)
-                print sc_intarray_response  # print the message as an intarray for easy manipulation
+                if print_int_array:
+                    print sc_intarray_response  # print the message as an intarray for easy manipulation
                 print '' # for space to the next command
                 
-                print 'Do you want the response? (y/N)'
+                print 'Do you want to alter the response? (y/N)'
                 input_arg = raw_input()
                 if input_arg == 'y':
                     print "Enter response (spaced integers)"
@@ -367,13 +370,16 @@ def alter_trace(sock, connection):
 # DO THIS LAST!
 # allows automated login response injection
 # "if the first 8 bytes of the response if the session handle, we can now control it!"
-def alter_inject_login_trace(sock, connection):
+def alter_inject_login_trace(sock, connection, print_int_array=False):
 
     print 'Man in the middle tool started (for printing traces) ....'
     print ''
 
     counter = 0
     flag = 0
+    challenge = []
+    response = []
+    injection = 0
 
     while True:
         try:
@@ -435,17 +441,90 @@ def alter_inject_login_trace(sock, connection):
 
             # convert api_ascii_msg -> intarray
             api_intarray_msg = asciistring_to_intarray(api_ascii_msg)
-            print api_intarray_msg # print the message as an intarray for easy manipulation
+            if print_int_array:
+                print api_intarray_msg # print the message as an intarray for easy manipulation
             print '' # to give space between command and resposne pair
 
             #-----------------------------------------------------------------------------#
 
             # HERE is where I should inject my own login script
-            # if api_intarray_msg[0:5] == [128, 32, 0, 0, 16]:
-            #   print 'Do you want to inject your own login? (Y/n)'
-            #   input_arg = raw_input()
-            #   if arg == '' or arg == 'y':
-            #       call login response method and change message!
+            if api_intarray_msg[0:5] == [0, 132, 0, 0, 8]:
+                print 'Do you want to automate the injection your own login response? (Y/n)'
+                input_arg = raw_input()
+                if input_arg == '' or input_arg == 'y':
+                    injection = 1
+
+                    # send the message from API to the smartcard
+                    data,sw1,sw2 = connection.transmit(api_intarray_msg)
+
+                    # generate sc_intarray_response
+                    sc_intarray_response = data + [sw1] + [sw2]
+
+                    #-------------------------------------------------------#
+                    # calculate a valid response with a given challenge & save it
+                    challenge = []
+                    for i in data:
+                        challenge.append(i)
+
+                    response = []
+                    response = login_response(challenge)
+                    #-------------------------------------------------------#
+
+                    # convert sc_intarray_response -> asciistring
+                    sc_ascii_response = intarray_to_asciistring(sc_intarray_response)
+
+                    print 'RESPONSE'
+                    # print response
+                    h.hexdump(sc_ascii_response)
+                    if print_int_array:
+                        print sc_intarray_response  # print the message as an intarray for easy manipulation
+                    print '' # for space to the next command
+
+                    # send to API
+                    sendToVPICC(sock, sc_ascii_response)
+                    continue
+
+            elif api_intarray_msg[0:5] == [128, 32, 0, 0, 16] and injection == 1:
+                    
+                    # inject the respose (pinrt old and injected?)
+                    injection = 0
+
+                    print 'COMMAND injected'
+                    
+                    api_intarray_msg = response
+                    response = []
+                    api_ascii_msg = intarray_to_asciistring(api_intarray_msg)
+
+                    # print hexdump of message from API
+                    h.hexdump(api_ascii_msg)
+                    if print_int_array:
+                        print api_intarray_msg # print the message as an intarray for easy manipulation
+                    print '' # to give space between command and resposne pair
+
+                    # send the message from API to the smartcard
+                    data,sw1,sw2 = connection.transmit(api_intarray_msg)
+
+                    # generate sc_intarray_response
+                    sc_intarray_response = data + [sw1] + [sw2]
+
+                    # convert sc_intarray_response -> asciistring
+                    sc_ascii_response = intarray_to_asciistring(sc_intarray_response)
+
+                    print 'RESPONSE'
+                    # print response
+                    h.hexdump(sc_ascii_response)
+                    if print_int_array:
+                        print sc_intarray_response  # print the message as an intarray for easy manipulation
+                    print '' # for space to the next command
+
+                    # send to API
+                    sendToVPICC(sock, sc_ascii_response)
+
+                    continue
+            else:
+                    pass
+
+
 
 
             #-----------------------------------------------------------------------------#
@@ -474,10 +553,11 @@ def alter_inject_login_trace(sock, connection):
                 print 'RESPONSE'
                 # print response
                 h.hexdump(sc_ascii_response)
-                print sc_intarray_response  # print the message as an intarray for easy manipulation
+                if print_int_array:
+                    print sc_intarray_response  # print the message as an intarray for easy manipulation
                 print '' # for space to the next command
                 
-                print 'Do you want the response? (y/N)'
+                print 'Do you want to alter the response? (y/N)'
                 input_arg = raw_input()
                 if input_arg == 'y':
                     print "Enter response (spaced integers)"
@@ -508,10 +588,11 @@ def alter_inject_login_trace(sock, connection):
                 print 'RESPONSE'
                 # print response
                 h.hexdump(sc_ascii_response)
-                print sc_intarray_response  # print the message as an intarray for easy manipulation
+                if print_int_array:
+                    print sc_intarray_response  # print the message as an intarray for easy manipulation
                 print '' # for space to the next command
                 
-                print 'Do you want the response? (y/N)'
+                print 'Do you want to alter the response? (y/N)'
                 input_arg = raw_input()
                 if input_arg == 'y':
                     print "Enter response (spaced integers)"
@@ -531,15 +612,8 @@ def alter_inject_login_trace(sock, connection):
 
 
 
-##################################
-# THESE STILL NEED TO BE CODED!! #
-##################################
+###############################################################################################################################
 
-# 1. standard login (print trace) [Done]
-# 2. same Nc
-# 3. different Nc
-
-# 2 more functions for printing consecutive logins
 
 def same_challenge_trace(sock, connection):
     print 'Man in the middle tool started (for printing traces) ....'
@@ -851,7 +925,8 @@ def block_injection(sock, connection):
 # Na -> determined by the user (think this is the sesion handle)
 # Nc -> card challenge, will be give as a list of integers (string)
 #Na=[5, 65, 80, 153, 3, 155, 183, 162]
-def login_response(pin, card_challenege, Na=[0,0,0,0,0,0,0,0] ):
+# This takes in the card challenge as a list of integers as a STRING
+def login_response_input_integers(pin, card_challenege, Na=[0,0,0,0,0,0,0,0] ):
 
     # first process card challenge
     Nc = []
@@ -880,8 +955,50 @@ def login_response(pin, card_challenege, Na=[0,0,0,0,0,0,0,0] ):
 
     return response
 
+
+def resposne_print(response):
+    
+
+    msg = str(response)
+    for i in msg.split('[')[1].split(']')[0].split(','):
+        sys.stdout.write(i.strip() +' ')
+    print ''
+
+
+
+
+
+def login_response(Nc, Na=[0,0,0,0,0,0,0,0], pin='0000000000000000'):
+
+    # create the password that is needed
+    hash_sha1 = hs.new('sha1')
+    hash_sha1.update(pin)
+    password = hash_sha1.digest()[0:16]
+
+    # create the message to encrypt
+    msg = []
+    for i in Na+Nc:
+        msg.append(chr(i))
+    msg = ''.join(msg)
+
+    # encrypt message
+    cipher = DES3.new(password, DES3.MODE_CBC, IV='\x00\x00\x00\x00\x00\x00\x00\x00')
+    byte_resposne = cipher.encrypt(msg)
+    hex_response = ba.hexlify(byte_resposne)
+
+    response = [128, 32, 0, 0, 16]
+    for i in hexstring_to_intarray(hex_response):
+        response.append(i)
+
+    return response
+
+
+
+
 # can be used as a direct chanage in the alter trace!!
 # DO NOT NEED -> INT ARRAY IS SENT TO CARD!
+
+# DELETE ONCE I HAVE THE OTHER Fuction working
 def login_response_ascii(pin, card_challenege, Na=[0,0,0,0,0,0,0,0]):
 
     # first process card challenge
@@ -914,16 +1031,6 @@ def login_response_ascii(pin, card_challenege, Na=[0,0,0,0,0,0,0,0]):
     return response_ascii
 
 
-def resposne_print(response):
-    
-
-    msg = str(response)
-    for i in msg.split('[')[1].split(']')[0].split(','):
-        sys.stdout.write(i.strip() +' ')
-    print ''
-
-
-
 
 ###############################################################################################################################
 
@@ -939,20 +1046,17 @@ if arg == 'print_trace':
     sock, connection = setup_socket_connection(2, 0)
     print_trace(sock, connection)
 
-elif arg == 'alter_traces':
+elif arg == 'alter_trace':
     # allows you to alter the communication of the APUD communication
     sock, connection = setup_socket_connection(2, 0)
     alter_trace(sock, connection)
 
+elif arg == 'alter_inject_response_trace':
+    # allows you to alter the communication of the APUD communication
+    sock, connection = setup_socket_connection(2, 0)
+    alter_inject_login_trace(sock, connection)
 
 #########################################################
-elif arg == 'login_response':
-    # This produces a valid response given the correct pin, and challenge.
-    challenge = sys.argv[2]
-    response = login_response('0000000000000000', challenge)
-    # print response
-    resposne_print(response)
-
 elif arg == 'same_challenge':
     sock, connection = setup_socket_connection(2, 0)
     same_challenge_trace(sock, connection)
@@ -972,4 +1076,11 @@ elif arg == 'block_injection':
     # This script will automate injecting my own key and grabbing the block cipher key thats in transit
     pass
 
-
+#########################################################
+# This produces a valid response given the correct pin, and challenge.
+elif arg == 'login_response':
+    challenge = sys.argv[2]
+    response = login_response_input_integers('0000000000000000', challenge)
+    # print response
+    resposne_print(response)
+#########################################################

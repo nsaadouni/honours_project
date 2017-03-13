@@ -1,0 +1,5 @@
+Need to block the card
+then alter the FCP that is 00 -> set to AA
+
+show that the API thinks that it is okay to contine the login process
+but then the card fails the login attempt as its in a lock
