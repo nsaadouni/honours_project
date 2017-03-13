@@ -60,7 +60,7 @@
   <component name="ProjectFrameBounds">
     <option name="y" value="21" />
     <option name="width" value="1678" />
-    <option name="height" value="1007" />
+    <option name="height" value="1027" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -452,7 +452,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="21" width="1678" height="1007" extended-state="1" />
+    <frame x="0" y="21" width="1678" height="1027" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28009534" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
