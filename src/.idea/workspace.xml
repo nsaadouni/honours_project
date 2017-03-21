@@ -31,7 +31,30 @@
     <favorites_list name="src" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="c_functions.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/tasks/api_functions/c_functions.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="216">
+              <caret line="51" column="39" selection-start-line="51" selection-start-column="39" selection-end-line="51" selection-end-column="39" />
+              <folding>
+                <marker date="1489751130009" expanded="false" signature="1489:2692" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="populateCard.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/1_rubbish/1_msc_project/python_code/populateCard.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="288">
+              <caret line="142" column="4" selection-start-line="142" selection-start-column="4" selection-end-line="162" selection-end-column="54" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -48,6 +71,8 @@
         <option value="$PROJECT_DIR$/get_trace.py" />
         <option value="$PROJECT_DIR$/c_functions.py" />
         <option value="$PROJECT_DIR$/generate_rsa.py" />
+        <option value="$PROJECT_DIR$/tasks/block_cipher_injection/rubbish/generate_rsa.py" />
+        <option value="$PROJECT_DIR$/tasks/api_functions/c_functions.py" />
       </list>
     </option>
   </component>
@@ -58,9 +83,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="21" />
-    <option name="width" value="1678" />
-    <option name="height" value="1027" />
+    <option name="y" value="1200" />
+    <option name="width" value="1364" />
+    <option name="height" value="766" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -87,6 +112,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -105,10 +132,80 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tasks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tasks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="block_cipher_injection" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tasks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="block_cipher_injection" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rubbish" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tasks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="api_functions" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -452,10 +549,10 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="21" width="1678" height="1027" extended-state="0" />
+    <frame x="0" y="1200" width="1364" height="766" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28009534" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27932552" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39940828" sideWeight="0.50292826" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -500,62 +597,17 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
+      <option name="time" value="1" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/authentication_protocol_search/find_method.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6876">
-          <caret line="382" column="59" selection-start-line="382" selection-start-column="59" selection-end-line="382" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/login.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/login.py" />
     <entry file="file://$PROJECT_DIR$/1_msc_project/python_code/delObjects.py" />
-    <entry file="file://$PROJECT_DIR$/c_functions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/login.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/c_functions.py" />
+    <entry file="file://$PROJECT_DIR$/login.py" />
     <entry file="file://$PROJECT_DIR$/1_msc_project/python_code/delObjects.py" />
-    <entry file="file://$PROJECT_DIR$/c_functions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1638">
-          <caret line="91" column="12" selection-start-line="91" selection-start-column="12" selection-end-line="91" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/login.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1_msc_project/python_code/delObjects.py" />
-    <entry file="file://$PROJECT_DIR$/c_functions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="33" column="17" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/c_functions.py" />
     <entry file="file://$PROJECT_DIR$/1_msc_project/python_code/delObjects.py" />
     <entry file="file://$PROJECT_DIR$/msc_project_NOT_MY_WORK/python_code/delObjects.py" />
     <entry file="file://$PROJECT_DIR$/msc_project_NOT_MY_WORK/python_code/delObjects.py" />
@@ -577,13 +629,6 @@
     <entry file="file://$PROJECT_DIR$/msc_project_NOT_MY_WORK/python_code/getTrace.py" />
     <entry file="file://$PROJECT_DIR$/msc_project_NOT_MY_WORK/python_code/getTrace.py" />
     <entry file="file://$PROJECT_DIR$/MiTM/get_trace.py" />
-    <entry file="file://$USER_HOME$/miniconda2/lib/python2.7/site-packages/PyKCS11-1.3.2-py2.7-linux-x86_64.egg/PyKCS11/LowLevel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40698">
-          <caret line="2902" column="56" selection-start-line="2902" selection-start-column="56" selection-end-line="2902" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MiTM/c_functions.py" />
     <entry file="file://$PROJECT_DIR$/MiTM/test.py" />
     <entry file="file://$PROJECT_DIR$/MiTM/login.py" />
@@ -597,67 +642,57 @@
     <entry file="file://$PROJECT_DIR$/MiTM/MiTM.py" />
     <entry file="file://$PROJECT_DIR$/msc_project_NOT_MY_WORK/python_code/populateCard.py" />
     <entry file="file://$PROJECT_DIR$/msc_project_NOT_MY_WORK/python_code/delObjects.py" />
-    <entry file="file://$USER_HOME$/miniconda2/lib/python2.7/site-packages/PyKCS11-1.3.2-py2.7-linux-x86_64.egg/PyKCS11/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="53">
-          <caret line="593" column="21" selection-start-line="593" selection-start-column="21" selection-end-line="593" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/1_msc_project/python_code/getTrace.py" />
     <entry file="file://$PROJECT_DIR$/1_msc_project/python_code/delObjects.py" />
     <entry file="file://$PROJECT_DIR$/generete_rsa.py" />
-    <entry file="file://$PROJECT_DIR$/generate_ecc.py">
+    <entry file="file://$PROJECT_DIR$/generate_ecc.py" />
+    <entry file="file://$PROJECT_DIR$/authentication_protocol_search/find_method.py" />
+    <entry file="file://$PROJECT_DIR$/login.py" />
+    <entry file="file://$PROJECT_DIR$/apdu_logs/apdu_parsed_logs/login1.parsed" />
+    <entry file="file://$PROJECT_DIR$/get_trace.py" />
+    <entry file="file://$PROJECT_DIR$/generate_rsa.py" />
+    <entry file="file://$PROJECT_DIR$/rsa_key.py" />
+    <entry file="file://$PROJECT_DIR$/c_functions.py" />
+    <entry file="file://$USER_HOME$/miniconda2/lib/python2.7/site-packages/PyKCS11-1.3.2-py2.7-linux-x86_64.egg/PyKCS11/LowLevel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="21" column="36" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
+        <state relative-caret-position="11700">
+          <caret line="650" column="6" selection-start-line="650" selection-start-column="6" selection-end-line="650" selection-end-column="6" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/authentication_protocol_search/find_method.py">
+    <entry file="file://$USER_HOME$/miniconda2/lib/python2.7/site-packages/PyKCS11-1.3.2-py2.7-linux-x86_64.egg/PyKCS11/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="98" column="46" selection-start-line="98" selection-start-column="46" selection-end-line="98" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tasks/block_cipher_injection/rubbish/generate_rsa.py" />
+    <entry file="file://$USER_HOME$/miniconda2/lib/python2.7/site-packages/Crypto/PublicKey/RSA.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="127" column="8" selection-start-line="127" selection-start-column="8" selection-end-line="127" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/1_rubbish/1_msc_project/python_code/populateCard.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
-          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="56" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/login.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apdu_logs/apdu_parsed_logs/login1.parsed" />
-    <entry file="file://$PROJECT_DIR$/get_trace.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+          <caret line="142" column="4" selection-start-line="142" selection-start-column="4" selection-end-line="162" selection-end-column="54" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/generate_rsa.py">
+    <entry file="file://$PROJECT_DIR$/tasks/api_functions/c_functions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rsa_key.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/c_functions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2070">
-          <caret line="174" column="22" selection-start-line="174" selection-start-column="22" selection-end-line="174" selection-end-column="22" />
-          <folding />
+        <state relative-caret-position="216">
+          <caret line="51" column="39" selection-start-line="51" selection-start-column="39" selection-end-line="51" selection-end-column="39" />
+          <folding>
+            <marker date="1489751130009" expanded="false" signature="1489:2692" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

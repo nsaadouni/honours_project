@@ -366,10 +366,10 @@ def alter_trace(sock, connection, print_int_array=False):
         # signal.signal(signal.SIGINT, stop)
 
 
+###############################################################################################################################
 
-# DO THIS LAST!
-# allows automated login response injection
-# "if the first 8 bytes of the response if the session handle, we can now control it!"
+# This allows alterations of commands and responses
+# It also autmoates the injection of a valid response for the login, that control the first 8 bytes
 def alter_inject_login_trace(sock, connection, print_int_array=False):
 
     print 'Man in the middle tool started (for printing traces) ....'
@@ -611,10 +611,39 @@ def alter_inject_login_trace(sock, connection, print_int_array=False):
         # signal.signal(signal.SIGINT, stop)
 
 
+# given the cards challenge -> Nc
+# This methed returns a valid command (integer array) to be verified
+# This method is used in the automated response injection tracing method
+def login_response(Nc, Na=[0,0,0,0,0,0,0,0], pin='0000000000000000'):
+
+    # create the password that is needed
+    hash_sha1 = hs.new('sha1')
+    hash_sha1.update(pin)
+    password = hash_sha1.digest()[0:16]
+
+    # create the message to encrypt
+    msg = []
+    for i in Na+Nc:
+        msg.append(chr(i))
+    msg = ''.join(msg)
+
+    # encrypt message
+    cipher = DES3.new(password, DES3.MODE_CBC, IV='\x00\x00\x00\x00\x00\x00\x00\x00')
+    byte_resposne = cipher.encrypt(msg)
+    hex_response = ba.hexlify(byte_resposne)
+
+    response = [128, 32, 0, 0, 16]
+    for i in hexstring_to_intarray(hex_response):
+        response.append(i)
+
+    return response
 
 ###############################################################################################################################
 
+# These methods were used to find the charactersitics of the login authentication protocol.
 
+# These method alters the cards challenge to '00 00 00 00 00 00 00 00'
+# For two logins
 def same_challenge_trace(sock, connection):
     print 'Man in the middle tool started (for printing traces) ....'
     print ''
@@ -762,7 +791,8 @@ def same_challenge_trace(sock, connection):
 
         signal.signal(signal.SIGINT, stop)
 
-
+# This method alters the cards challenge to '00 00 00 00 00 00 00 00' and then '00 00 00 00 00 00 00 01'
+# for the second time a login in completed
 def different_challenge_trace(sock, connection):
     print 'Man in the middle tool started (for printing traces) ....'
     print ''
@@ -921,11 +951,9 @@ def block_injection(sock, connection):
 
 ###############################################################################################################################
 
-# needs to return list of integers for the 16 byte response
-# Na -> determined by the user (think this is the sesion handle)
-# Nc -> card challenge, will be give as a list of integers (string)
-#Na=[5, 65, 80, 153, 3, 155, 183, 162]
-# This takes in the card challenge as a list of integers as a STRING
+
+# This method produced a response given the pin  and the cards challenge
+# It was used for manual override
 def login_response_input_integers(pin, card_challenege, Na=[0,0,0,0,0,0,0,0] ):
 
     # first process card challenge
@@ -955,80 +983,15 @@ def login_response_input_integers(pin, card_challenege, Na=[0,0,0,0,0,0,0,0] ):
 
     return response
 
-
+# This produced a printable version for use with 'alter trace'
 def resposne_print(response):
-    
-
     msg = str(response)
     for i in msg.split('[')[1].split(']')[0].split(','):
         sys.stdout.write(i.strip() +' ')
     print ''
 
+###############################################################################################################################
 
-
-
-
-def login_response(Nc, Na=[0,0,0,0,0,0,0,0], pin='0000000000000000'):
-
-    # create the password that is needed
-    hash_sha1 = hs.new('sha1')
-    hash_sha1.update(pin)
-    password = hash_sha1.digest()[0:16]
-
-    # create the message to encrypt
-    msg = []
-    for i in Na+Nc:
-        msg.append(chr(i))
-    msg = ''.join(msg)
-
-    # encrypt message
-    cipher = DES3.new(password, DES3.MODE_CBC, IV='\x00\x00\x00\x00\x00\x00\x00\x00')
-    byte_resposne = cipher.encrypt(msg)
-    hex_response = ba.hexlify(byte_resposne)
-
-    response = [128, 32, 0, 0, 16]
-    for i in hexstring_to_intarray(hex_response):
-        response.append(i)
-
-    return response
-
-
-
-
-# can be used as a direct chanage in the alter trace!!
-# DO NOT NEED -> INT ARRAY IS SENT TO CARD!
-
-# DELETE ONCE I HAVE THE OTHER Fuction working
-def login_response_ascii(pin, card_challenege, Na=[0,0,0,0,0,0,0,0]):
-
-    # first process card challenge
-    Nc = []
-    for i in card_challenege.split():
-        Nc.append(int(i))
-
-    # create the password that is needed
-    hash_sha1 = hb.new('sha1')
-    hash_sha1.update(pin)
-    password = hash_sha1.digest()[0:16]
-
-    # create the message to encrypt
-    msg = []
-    for i in Na+Nc:
-        msg.append(chr(i))
-    msg = ''.join(msg)
-
-    # encrypt message
-    cipher = DES3.new(password, DES3.MODE_CBC, IV='\x00\x00\x00\x00\x00\x00\x00\x00')
-    byte_resposne = cipher.encrypt(msg)
-    hex_response = ba.hexlify(byte_resposne)
-
-    # base of response -> add the inital 5 bytes!
-    response = []
-    for i in hexstring_to_intarray(hex_response):
-        response.append(i)
-    response_ascii = intarray_to_asciistring(response)
-
-    return response_ascii
 
 
 
@@ -1049,7 +1012,7 @@ if arg == 'print_trace':
 elif arg == 'alter_trace':
     # allows you to alter the communication of the APUD communication
     sock, connection = setup_socket_connection(2, 0)
-    alter_trace(sock, connection)
+    alter_trace(sock, connection, print_int_array=True)
 
 elif arg == 'alter_inject_response_trace':
     # allows you to alter the communication of the APUD communication

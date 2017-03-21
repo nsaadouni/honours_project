@@ -1,6 +1,5 @@
 from PyKCS11 import *
-import sys
-import time
+
 
 
 """
@@ -45,55 +44,64 @@ getAttribute_value_fragmneted (returns None value when attribute is senseitive o
 
 # incorrect at the minute
 def generateKeyPair_rsa():
-    template = (
-        (LowLevel.CKA_CLASS, LowLevel.CKO_SECRET_KEY),
-        (LowLevel.CKA_KEY_TYPE, LowLevel.CKK_AES),
-        (LowLevel.CKA_VALUE_LEN, 32),
-        (LowLevel.CKA_LABEL, label),
-        (LowLevel.CKA_ID, chr(id)),
-        (LowLevel.CKA_PRIVATE, True),
-        (LowLevel.CKA_SENSITIVE, True),
-        (LowLevel.CKA_ENCRYPT, True),
-        (LowLevel.CKA_DECRYPT, True),
-        (LowLevel.CKA_SIGN, True),
-        (LowLevel.CKA_VERIFY, True),
-        (LowLevel.CKA_TOKEN, True),
-        (LowLevel.CKA_WRAP, True),
-        (LowLevel.CKA_UNWRAP, True),
-        (LowLevel.CKA_EXTRACTABLE, False))
-    t = session._template2ckattrlist(template)
-    m = LowLevel.CK_MECHANISM()
-    m.mechanism = LowLevel.CKM_AES_KEY_GEN
-    key = LowLevel.CK_OBJECT_HANDLE()
-    rv = pkcs11.lib.C_GenerateKey(session.session, m, t, key)
-    if rv != LowLevel.CKR_OK:
-        raise PyKCS11Error(rv)
+    templatePub = (
+        (CKA_ID, '02'),
+        (CKA_LABEL, 'test'),
+        (CKA_TOKEN, False),
+        (LowLevel.CKA_DERIVE, True),
+        (LowLevel.CKA_VALUE_BITS, 521))
+    templatePriv = (
+        (CKA_ID, chr(_id)),
+        (CKA_LABEL, _label[1]),
+        (CKA_TOKEN, True),
+        (CKA_PRIVATE, True),
+        (CKA_SENSITIVE, True),
+        (CKA_DECRYPT, True),
+        (CKA_SIGN, True),
+        (CKA_UNWRAP, True),
+        (CKA_EXTRACTABLE, False))
+    session.generateKeyPair(templatePub, templatePriv)
+    return 0
 
-def generate_AES(_id, label, session):
+
+# apparently block cipher keys should not require authentication!
+# This doesnt make sense!
+# PRIVATE == FALSE -> Works perfectly
+def generate_AES(_id, label):
+    arg = 0
+    lib = "/usr/lib/x64-athena/libASEP11.so"
+    pkcs11_aes = PyKCS11Lib()
+    pkcs11_aes.load(lib)
+    pin = '0000000000000000'
+
+
+    slot = pkcs11_aes.getSlotList()[arg]
+    session = pkcs11_aes.openSession(slot, LowLevel.CKF_SERIAL_SESSION | LowLevel.CKF_RW_SESSION)
+    session.login(pin,1)
+
     template = (
         (LowLevel.CKA_CLASS, LowLevel.CKO_SECRET_KEY),
         (LowLevel.CKA_KEY_TYPE, LowLevel.CKK_AES),
         (LowLevel.CKA_VALUE_LEN, 32),
         (LowLevel.CKA_LABEL, label),
-        (LowLevel.CKA_ID, chr(_id)),
-        (LowLevel.CKA_PRIVATE, True),
+        (LowLevel.CKA_ID, _id),
+        (CKA_ALWAYS_AUTHENTICATE, chr(2)),
+        (LowLevel.CKA_PRIVATE, False),
         (LowLevel.CKA_SENSITIVE, True),
         (LowLevel.CKA_ENCRYPT, True),
         (LowLevel.CKA_DECRYPT, True),
-        (LowLevel.CKA_SIGN, True),
-        (LowLevel.CKA_VERIFY, True),
         (LowLevel.CKA_TOKEN, True),
-        (LowLevel.CKA_WRAP, True),
-        (LowLevel.CKA_UNWRAP, True),
-        (LowLevel.CKA_EXTRACTABLE, True))
+        (LowLevel.CKA_UNWRAP, False),
+        (LowLevel.CKA_EXTRACTABLE, False))
     t = session._template2ckattrlist(template) 
     ck_handle = LowLevel.CK_OBJECT_HANDLE()
     m = LowLevel.CK_MECHANISM()
     m.mechanism = LowLevel.CKM_AES_KEY_GEN
-    rv = pkcs11.lib.C_GenerateKey(session.session, m, t, ck_handle) 
+    print LowLevel.CKM_AES_KEY_GEN
+    rv = pkcs11_aes.lib.C_GenerateKey(session.session, m, t, ck_handle)
     if rv != LowLevel.CKR_OK:
         raise PyKCS11Error(rv) 
-    return ck_handle 
+    return rv
 
 
 def generate_DES(id, label):
@@ -101,16 +109,15 @@ def generate_DES(id, label):
         (LowLevel.CKA_CLASS, LowLevel.CKO_SECRET_KEY),
         (LowLevel.CKA_KEY_TYPE, LowLevel.CKK_DES),
         (LowLevel.CKA_LABEL, label),
-        (LowLevel.CKA_ID, chr(id)),
+        (CKA_ID, "1224"),
         (LowLevel.CKA_PRIVATE, True),
         (LowLevel.CKA_SENSITIVE, True),
         (LowLevel.CKA_ENCRYPT, True),
         (LowLevel.CKA_DECRYPT, True),
-        (LowLevel.CKA_SIGN, True),
-        (LowLevel.CKA_VERIFY, True),
+        (LowLevel.CKA_SIGN, False),
+        (LowLevel.CKA_VERIFY, False),
         (LowLevel.CKA_TOKEN, True),
-        (LowLevel.CKA_WRAP, True),
-        (LowLevel.CKA_UNWRAP, True),
+        (LowLevel.CKA_UNWRAP, False),
         (LowLevel.CKA_EXTRACTABLE, False))
     t = session._template2ckattrlist(template)
     m = LowLevel.CK_MECHANISM()
@@ -149,57 +156,50 @@ def unwrapKey():
 
 #--------------------------------------------------------#
 
+# do not destroy the one block cipher key on there
 def destroyAllObjects():
     objects = session.findObjects()
     for o in objects:
+        _id = session.getAttributeValue(o, [LowLevel.CKA_ID])
+        if _id[0][0] == 85:
+            continue
         session.destroyObject(o)
 
 ########################################################
 #                   Running Area                       #
 ########################################################
 
-arg = 0
-lib = "/usr/lib/x64-athena/libASEP11.so"
-pkcs11 = PyKCS11Lib()
-pkcs11.load(lib)
-pin = '0000000000000000'
+# arg = 2
+# lib = "/usr/lib/x64-athena/libASEP11.so"
+# pkcs11 = PyKCS11Lib()
+# pkcs11.load(lib)
+# pin = '0000000000000000'
+# slot = pkcs11.getSlotList()[arg]
+# session = pkcs11.openSession(slot, LowLevel.CKF_SERIAL_SESSION | LowLevel.CKF_RW_SESSION)
+# session.login(pin,1)
 
-# login
-try:
-    slot = pkcs11.getSlotList()[arg]
-    session = pkcs11.openSession(slot, LowLevel.CKF_SERIAL_SESSION | LowLevel.CKF_RW_SESSION)
-    session.login(pin)
-except PyKCS11Error as e:
-    print e
+# print pkcs11.getInfo()
+# print ''
 
-print 'login completed\n'
-# i = raw_input()
+
+
+# Problem was PRITVATE -> apprently always neesd to be false! I.E do not need to authenticate
+
+generate_AES("55", "aes_key_1")
+# generate_DES(10, "deskey")
+
+
+# print session.getSessionInfo()
+# all_mecha =  pkcs11.getMechanismList(slot)
+# for i in all_mecha:
+#     print i
 
 # destroyAllObjects()
-aes_key_handl2e = generate_AES(0, "nodz", session)
-session.closeSession()
+
 
 # objects = session.findObjects()
-# print objects
+# for i in objects:
+#     attr = session.getAttributeValue(i, [LowLevel.CKA_VALUE_LEN])
+#     print i
+#     print '\n\n'
 
-
-
-
-
-
-
-
-
-
-
-# if __name__ == '__main__':
-#
-#     functions = [login]
-#     function_names = ['login']
-#
-#     counter = 0
-#     for i in function_names:
-#         if sys.argv[2] == i:
-#             functions[counter]()
-#             break
-#         counter += 1

@@ -115,7 +115,7 @@ def generate_private_DES3_key(_id, _label):
 def generate_private_AES_key(_id, _label):
     print_header('Generated private sensitive unextractable AES secret key "' + _label + '"')
     template = (
-        (CKA_CLASS, LowLevel.CKO_PRIVATE_KEY),
+        (CKA_CLASS, CKO_SECRET_KEY),
         (CKA_KEY_TYPE, CKK_AES),
         (CKA_VALUE_LEN, 32),
         (CKA_LABEL, _label),
@@ -184,7 +184,7 @@ session.login(pin)
 
 # generate_private_DES3_key(3, 'Dionysus')
 
-generate_private_AES_key(3, 'fucking_cunt')
+generate_private_AES_key(0, 'anything')
 
 # generate_rsa_key_pair(11, ['Odysseus', 'Penelope'])
 

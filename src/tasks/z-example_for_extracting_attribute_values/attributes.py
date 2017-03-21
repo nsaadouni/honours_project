@@ -7,17 +7,18 @@ session = pkcs11.openSession(slot, PyKCS11.CKF_SERIAL_SESSION)
 
 pin = '12345'
 session.login(pin)
-objects = session.findObjects([(PyKCS11.CKA_CLASS, PyKCS11.CKO_CERTIFICATE)])
-all_attributes = [PyKCS11.CKA_SUBJECT, PyKCS11.CKA_VALUE, PyKCS11.CKA_ISSUER, PyKCS11.CKA_CERTIFICATE_CATEGORY, PyKCS11.CKA_END_DATE]
+
+
+objects = session.findObjects()
+all_attributes = [LowLevel.CKA_ALWAYS_AUTHENTICATE]
+attrbibute_names = ['Always Authenticate'] 
 
 for object in objects:
     try:
         attributes = session.getAttributeValue(object, all_attributes)
-	print attributes
+        print attributes
     except PyKCS11.PyKCS11Error as e:
-		print 'test'
-    	
-		continue
+        continue
 
     attrDict = dict(list(zip(all_attributes, attributes)))
 

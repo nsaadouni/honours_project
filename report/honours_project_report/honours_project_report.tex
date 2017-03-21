@@ -83,7 +83,19 @@ smart-cards are used due to the security they are believed to provide.\\
 
 % Note: decide on a figure to use here, 10 OR 15 years!
 % This paragraph needs to be re-written!
-\noindent In the previous 10-15 years, literature has shown a great deal of research has examined the PKCS\#11 API. But not much attention has been paid to that of the lower-level communication, in which the higher level API is broken down into. This is analogous to C code being complied down to binary data to be operated on by the CPU. In the same context, a PKCS\#11 function cannot be considered 'secure' without its corresponding APDU command/response pairs also being considered 'secure'. Much like the addition of two integers cannot be considered to be correct in a higher level lanugage such as C, unless the corresponding binary instructions sent to the CPU are correct as well. 
+\noindent In the previous 10-15 years, literature has shown a great deal of research into the examination of the PKCS\#11 API, and the security it provides. Yet little attention has been paid to that of the lower-level communication (command-response pairs), in which the higher level API is broken down into. It is this area that we wish to research within this paper. The reasoning is simple. If we cannot trust the security of the low-level commands that implement the high level API functions, then in turn we cannot trust the security of the high level API. This is analogous to C code being complied down to binary data to be operated on by the CPU. The addition of two integers cannot be considered correct in C, unless the corresponding binary instructions sent to the CPU are correct as well.  
+
+% maybe not 
+The research of the low-level communication will take two forms. 
+\begin{enumerate}
+\item An analysis of the raw communication between PC and Smart-card for all API function calls
+\item 
+\end{enumerate}
+
+
+Before we move into the above analysis, supporting material must be introduced. This the rest of this paper will be organized as follows.
+
+
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -623,6 +635,18 @@ Problem 1:\\
 I inject my own RSA-2048 public key (only the public modulus part, the injected key has the same public exponent 9 bytes).\\
 When secure messaging is starting to open straight after the communiacation of the injected key SEG\_FAULT!
 Back to square 1, do not know what the key is.
+
+RSA-1024 bit key (256 bytes public modulus)
+public exponent = 5 (1 byte)
+
+\newpage
+\begin{enumerate}
+\item Generate and save RSA-1024 bit key
+\item Inject my key instead of cards public key
+\item decrypt open secure messaging with my private key
+\item encrypt open secure messaging with cards public key
+\item See if the response is accepted!
+\end{enumerate}
 
 \section{Altering Key Object Attributes}
 - MSC's work

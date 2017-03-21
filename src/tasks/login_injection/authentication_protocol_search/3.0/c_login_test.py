@@ -97,6 +97,7 @@ def nand_join(Na, Nc):
  	return out
 
 def hash_join(hash_name, Na, Nc):
+	
 	return 0
 ###########################################
 

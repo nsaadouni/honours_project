@@ -112,3 +112,36 @@ Secret Key Object; unknown key algorithm 31
   label:      Chaos
   ID:         05
   Usage:      encrypt, decrypt, verify, wrap, unwrap
+
+
+
+Using slot 2 with a present token (0x2)
+Supported mechanisms:
+  RSA-PKCS, keySize={1024,2048}, hw, encrypt, decrypt, sign, verify, other flags=0xa
+  RSA-X-509, keySize={1024,2048}, hw, encrypt, decrypt, verify, other flags=0xa
+  SHA1-RSA-PKCS, keySize={1024,2048}, hw, sign, verify
+  RSA-PKCS-OAEP, keySize={1024,2048}, encrypt, decrypt, unwrap
+  RSA-PKCS-PSS, keySize={1024,2048}, sign, verify
+  SHA256-RSA-PKCS, keySize={1024,2048}, hw, sign, verify
+  SHA384-RSA-PKCS, keySize={1024,2048}, hw, sign, verify
+  SHA512-RSA-PKCS, keySize={1024,2048}, hw, sign, verify
+  MD5-RSA-PKCS, keySize={1024,2048}, hw, sign, verify
+  RSA-PKCS-KEY-PAIR-GEN, keySize={1024,2048}, hw, generate_key_pair
+  DES-KEY-GEN, keySize={8,8}, generate
+  DES2-KEY-GEN, keySize={16,16}, generate
+  DES3-KEY-GEN, keySize={24,24}, generate
+  DES-ECB, keySize={8,8}, hw, encrypt, decrypt, unwrap
+  DES3-ECB, keySize={16,24}, hw, encrypt, decrypt, unwrap
+  DES-CBC, keySize={8,8}, hw, encrypt, decrypt, unwrap
+  DES-MAC-GENERAL, keySize={8,24}, hw, sign, verify
+  DES-MAC, keySize={8,24}, hw, sign, verify
+  DES3-CBC, keySize={16,24}, hw, encrypt, decrypt, unwrap
+  DES3-MAC-GENERAL, keySize={16,24}, hw, sign, verify
+  DES3-MAC, keySize={16,24}, hw, sign, verify
+  SHA-1, digest
+  SHA-1-HMAC, keySize={8,24}, sign, verify
+
+
+  ECDSA-KEY-PAIR-GEN, keySize={192,521}, hw, other flags=0x1900000
+  ECDSA, keySize={192,521}, hw, sign
+  ECDH1-DERIVE, keySize={192,521}, hw, derive
