@@ -34,25 +34,40 @@
 \contentsline {chapter}{\numberline {6}PKCS\#11 Functions - APDU analysis}{17}
 \contentsline {section}{\numberline {6.1}Initialization?}{17}
 \contentsline {section}{\numberline {6.2}C\_login}{17}
-\contentsline {section}{\numberline {6.3}C\_findObjectInit}{20}
-\contentsline {section}{\numberline {6.4}C\_generateKey}{20}
-\contentsline {section}{\numberline {6.5}C\_generateKeyPair}{21}
-\contentsline {section}{\numberline {6.6}C\_createObject}{21}
-\contentsline {section}{\numberline {6.7}C\_destroyObject}{21}
-\contentsline {section}{\numberline {6.8}C\_encrypt}{21}
-\contentsline {section}{\numberline {6.9}C\_decrypt}{21}
-\contentsline {section}{\numberline {6.10}C\_sign}{21}
-\contentsline {section}{\numberline {6.11}C\_verify}{21}
-\contentsline {section}{\numberline {6.12}C\_setAttribute}{21}
-\contentsline {section}{\numberline {6.13}C\_wrap / C\_unwrap}{22}
-\contentsline {chapter}{\numberline {7}Attempts To Attack At the APDU Level}{23}
-\contentsline {section}{\numberline {7.1}Reverse Engineering PIN/password Authentication}{23}
-\contentsline {subsection}{\numberline {7.1.1}Authentication Protocol Search 1.0 (Password Storage)}{26}
-\contentsline {subsection}{\numberline {7.1.2}Authentication Protocol Search 2.0 (One Time Passwords)}{28}
-\contentsline {subsection}{\numberline {7.1.3}Authentication Protocol Search 3.0 (Triple DES Encryption)}{29}
-\contentsline {section}{\numberline {7.2}Altering File Control Parameters for Login Retry Couner}{29}
-\contentsline {section}{\numberline {7.3}Block Cipher Injection (MiTM)}{29}
-\contentsline {section}{\numberline {7.4}Altering Key Object Attributes}{30}
-\contentsline {section}{\numberline {7.5}Using Key's without Authentication}{30}
+\contentsline {section}{\numberline {6.3}C\_findObjectInit}{17}
+\contentsline {section}{\numberline {6.4}C\_generateKey}{17}
+\contentsline {section}{\numberline {6.5}C\_generateKeyPair}{18}
+\contentsline {section}{\numberline {6.6}C\_createObject}{18}
+\contentsline {section}{\numberline {6.7}C\_destroyObject}{18}
+\contentsline {section}{\numberline {6.8}C\_encrypt}{18}
+\contentsline {section}{\numberline {6.9}C\_decrypt}{18}
+\contentsline {section}{\numberline {6.10}C\_sign}{18}
+\contentsline {section}{\numberline {6.11}C\_verify}{18}
+\contentsline {section}{\numberline {6.12}C\_setAttribute}{18}
+\contentsline {section}{\numberline {6.13}C\_wrap / C\_unwrap}{19}
+\contentsline {chapter}{\numberline {7}Attempts To Attack At the APDU Level}{21}
+\contentsline {section}{\numberline {7.1}Reverse Engineering PIN/password Authentication}{21}
+\contentsline {subsection}{\numberline {7.1.1}Authentication Protocol Search 1.0 (Password Storage)}{24}
+\contentsline {subsection}{\numberline {7.1.2}Authentication Protocol Search 2.0 (One Time Passwords)}{26}
+\contentsline {subsection}{\numberline {7.1.3}Authentication Protocol Search 3.0 (Triple DES Encryption)}{27}
+\contentsline {section}{\numberline {7.2}Altering File Control Parameters for Login Retry Couner}{27}
+\contentsline {section}{\numberline {7.3}Block Cipher Injection (MiTM)}{27}
+\contentsline {section}{\numberline {7.4}Altering Key Object Attributes}{29}
+\contentsline {section}{\numberline {7.5}Using Key's without Authentication}{29}
 \contentsline {chapter}{\numberline {8}Conclusion / Results}{31}
-\contentsline {chapter}{Bibliography}{33}
+\contentsline {chapter}{Appendices}{33}
+\contentsline {chapter}{\numberline {A}API Functions - APDU}{35}
+\contentsline {section}{\numberline {A.1}C\_login}{35}
+\contentsline {section}{\numberline {A.2}C\_findObject}{37}
+\contentsline {section}{\numberline {A.3}C\_generateKey}{38}
+\contentsline {section}{\numberline {A.4}C\_createObject}{39}
+\contentsline {section}{\numberline {A.5}C\_destroyObject}{40}
+\contentsline {section}{\numberline {A.6}C\_encrypt}{41}
+\contentsline {section}{\numberline {A.7}C\_decrypt}{42}
+\contentsline {section}{\numberline {A.8}C\_sign}{43}
+\contentsline {section}{\numberline {A.9}C\_verify}{44}
+\contentsline {section}{\numberline {A.10}C\_setAttribute}{45}
+\contentsline {section}{\numberline {A.11}C\_wrap}{46}
+\contentsline {section}{\numberline {A.12}C\_unwarp}{47}
+\contentsline {chapter}{\numberline {B}Attack Traces}{49}
+\contentsline {chapter}{Bibliography}{51}

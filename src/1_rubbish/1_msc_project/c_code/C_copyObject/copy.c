@@ -10,7 +10,7 @@
 #include "pkcs11.h"
 
 #define CRYPTOKI_COMPAT 1
-#define PIN "12345"
+#define PIN "0000000000000000"
 
 void 
 check_return_value(CK_RV rv, const char *message)
@@ -118,10 +118,10 @@ find_key(CK_SESSION_HANDLE session, CK_OBJECT_CLASS class, CK_BYTE *label)
     rv = C_FindObjects(session, &object, 1, &objectCount);
     check_return_value(rv, "Find first object");
 
-    while (objectCount > 0) {
-        rv = C_FindObjects(session, &object, 1, &objectCount);
-        check_return_value(rv, "Find other objects");
-    }
+    // while (objectCount > 0) {
+    //     rv = C_FindObjects(session, &object, 1, &objectCount);
+    //     check_return_value(rv, "Find other objects");
+    // }
 
     rv = C_FindObjectsFinal(session);
     check_return_value(rv, "Find objects final");
@@ -157,8 +157,8 @@ main(int argc, char **argv)
   session = start_session(slot);
   login(session, (CK_BYTE *) PIN);
 
-  key = find_key(session, CKO_SECRET_KEY, "Hades");
-  copy_key(session, key, "Hades_copy");
+  key = find_key(session, CKO_SECRET_KEY, "maze");
+  copy_key(session, key, "maze_copy");
 
   logout(session);
   end_session(session);
