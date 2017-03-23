@@ -83,7 +83,23 @@ def generate_DES3(id, label, private=False):
 
 
 # must use find object and pass the key 
-def encrypt(keyObject, mecha=CKM_AES_ECB):
+def encrypt(id, label, mecha=CKM_DES3_ECB):
+
+    template = (
+    (CKA_CLASS, CKO_SECRET_KEY), 
+    (CKA_LABEL, label),
+    (CKA_ID, id))
+    t = session._template2ckattrlist(template)
+
+    rv = session.lib.C_FindObjectsInit(session.session, t)
+    if rv != CKR_OK:
+        raise PyKCS11Error(rv)
+
+    result = PyKCS11.LowLevel.ckobjlist(1)
+    rv = session.lib.C_FindObjects(session.session, result)
+    if rv != CKR_OK:
+        raise PyKCS11Error(rv)
+    key = result[0]
 
     m = LowLevel.CK_MECHANISM()
     m.mechanism = mecha
@@ -94,7 +110,7 @@ def encrypt(keyObject, mecha=CKM_AES_ECB):
 
     data_to_encrypt='TestString123456'
     data = ckbytelist() 
-    data.reserve(32) 
+    data.reserve(16) 
     for c in data_to_encrypt: 
         data.append(PyKCS11.byte_to_int(c))
 
@@ -104,19 +120,59 @@ def encrypt(keyObject, mecha=CKM_AES_ECB):
     if rv != CKR_OK: 
         raise PyKCS11Error(rv)
 
-    rv = session.lib.C_Encrypt(session.session, data, encrypted) 
-    print encrypted
+    # decrypted = ckbytelist()
+    rv = session.lib.C_Encrypt(session.session, data, encrypted)
     if rv != CKR_OK: 
         raise PyKCS11Error(rv)
 
     return encrypted
 
 
-def decrypt():
-    return 0
+def decrypt(id, label, mecha=CKM_DES3_ECB):
+    
+    template = (
+    (CKA_CLASS, CKO_SECRET_KEY), 
+    (CKA_LABEL, label),
+    (CKA_ID, id))
+    t = session._template2ckattrlist(template)
 
-def verify():
-    return 0
+    rv = session.lib.C_FindObjectsInit(session.session, t)
+    if rv != CKR_OK:
+        raise PyKCS11Error(rv)
+
+    result = PyKCS11.LowLevel.ckobjlist(1)
+    rv = session.lib.C_FindObjects(session.session, result)
+    if rv != CKR_OK:
+        raise PyKCS11Error(rv)
+    key = result[0]
+
+    m = LowLevel.CK_MECHANISM()
+    m.mechanism = mecha
+
+    data1 = ckbytelist() 
+    data1.reserve(32)
+    x =[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,43, 20, 89, 72, 67, 8, 141, 45, 192, 249, 72, 237, 116, 128, 79, 1]
+
+    for i in range(0, len(x)):
+        data1.append(x[i])
+
+    rv = session.lib.C_DecryptInit(session.session, m, key)
+    if rv != CKR_OK: 
+        raise PyKCS11Error(rv)
+
+    decrypted = ckbytelist() 
+    rv = session.lib.C_Decrypt(session.session, data1, decrypted)
+
+    if rv != CKR_OK: 
+        raise PyKCS11Error(rv)
+
+    rv = session.lib.C_Decrypt(session.session, data1, decrypted)
+
+    if rv != CKR_OK: 
+        raise PyKCS11Error(rv)
+
+    return decrypted
+
 
 def sign():
     return 0
@@ -153,7 +209,7 @@ def setAttribute(id, old_label, new_label):
 
 
 # step 1 to finding an object (SECRET KEY OBJECT)
-def findObjectsInit(label, id):
+def findObjectsInit(id, label):
     template = (
     (CKA_CLASS, CKO_SECRET_KEY), 
     (CKA_LABEL, label),
@@ -236,11 +292,28 @@ print '\n'
 # generate_DES3('\x01', 'des3')
 # generateKeyPair_rsa()
 
-setAttribute('\x01', 'des3', 'changed')
+# setAttribute('\x01', 'des3', 'changed')
 # setAttribute('\x01', 'changed', 'des3')
+
+# findObjectsInit('\x01', 'des3')
+# keyobject = finaliseObject()
+
+# encrypted_text= encrypt('\x00', 'aes', CKM_AES_ECB)
+# print encrypted_text
+# decrypted_text = decrypt('\x00', 'aes' , CKM_AES_ECB)
+# print decrypted_text
+
+# out = []
+# for i in decrypted_text:
+#     out.append(chr(i))
+# print ''.join(out)
+
 
 
 # destroyAllObjects()
+
+generate_DES3('\x01', 'des3')
+
 # objects = session.findObjects()
 # for i in objects:
 #     print i

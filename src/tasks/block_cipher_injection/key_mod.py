@@ -70,6 +70,8 @@ for i in SW_2:
 
 print_ints(command1)
 print_ints(command11)
+
+
 print ''
 print len(command1)
 print '\n-------------------\n\n'
@@ -167,5 +169,5 @@ for i in SW_2:
 	command11.append(i)
 
 
-print_ints(command1)
-print_ints(command11)
+# print_ints(command1)
+# print_ints(command11)

@@ -1012,7 +1012,7 @@ if arg == 'print_trace':
 elif arg == 'alter_trace':
     # allows you to alter the communication of the APUD communication
     sock, connection = setup_socket_connection(2, 0)
-    alter_trace(sock, connection, print_int_array=True)
+    alter_trace(sock, connection, print_int_array=False)
 
 elif arg == 'alter_inject_response_trace':
     # allows you to alter the communication of the APUD communication
