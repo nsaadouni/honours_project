@@ -32,21 +32,15 @@ def search_10():
 		found = d == Y_list
 
 		if found:
-			print 'FOUND YA BASTARD HAHAHAHAHAHA!'
-			print ''
+			print 'METHOD FOUND'
+			print 'output format: ' + str_outputs[out_index]
+			print 'hash name: ' + str(hash_name)
 			print Y_list
 			print d
 			print '--------------'
-		elif d[0] == Y_list [0]:
-			print 'something relevant'
-			print ''
-			print Y_list
-			print Y_list_invert
-			print d
-			print '------------'
 		c+=1
 
 print found	
 print c
 
-#search_10
+search_10

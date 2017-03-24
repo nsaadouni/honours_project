@@ -148,50 +148,6 @@ def search(pin, challenge, response, hash_functions):
 #												Running Area																  #
 ###############################################################################################################################
 
-
-
-# pin = '0000000000000000'
-# challenge = [0,0,0,0,0,0,0,0]
-# resposne = [140, 100, 107, 145, 82, 161, 108, 33, 206, 244, 196, 50, 238, 13, 191, 47]
-# hash_functions = ['md5', 'sha1', 'sha256', 'sha512']
-
-# pins = pin_possibilities(pin, hash_functions)
-# print pins
-
-
-
-"""
------ APDU command/response pair 25 -----
-
-COMMAND from API
-00000000: 00 84 00 00 08                                    .....
-[0, 132, 0, 0, 8]
-
-Do you want to to alter command? (y/N)
-
-RESPONSE
-00000000: C1 FE 87 1E 27 A2 B2 C5  90 00                    ....'.....
-[193, 254, 135, 30, 39, 162, 178, 197, 144, 0]
-
-Do you want the response? (y/N)
-y
-Enter response (int array)
-00 00 00 00 00 00 00 00 144 00
-00000000: 00 00 00 00 00 00 00 00  90 00                    ..........
-response changed!
-
------ APDU command/response pair 26 -----
-
-COMMAND from API
-00000000: 80 20 00 00 10 8C 64 6B  91 52 A1 6C 21 CE F4 C4  . ....dk.R.l!...
-00000010: 32 EE 0D BF 2F                                    2.../
-[128, 32, 0, 0, 16, 140, 100, 107, 145, 82, 161, 108, 33, 206, 244, 196, 50, 238, 13, 191, 47]
-
-
-"""
-
-
-
 # TEST 1
 
 """
@@ -291,7 +247,7 @@ hash_sha1 = hs.new('sha1')
 hash_sha1.update('0000000000000000')
 password = hash_sha1.digest()[0:16]
 
-y = '171 72 168 31 82 109 251 117 51 161 119 10 22 143 154 81'
+# y = '171 72 168 31 82 109 251 117 51 161 119 10 22 143 154 81'
 y = '95 250 221 10 148 49 54 104 193 196 219 209 218 222 82 101'
 y = y.split()
 yy = []
