@@ -472,6 +472,7 @@ def alter_inject_login_trace(sock, connection, print_int_array=False):
 
                     # convert sc_intarray_response -> asciistring
                     sc_ascii_response = intarray_to_asciistring(sc_intarray_response)
+                    # sc_ascii_response = intarray_to_asciistring([0,0,0,0,0,0,0,0,144,0])
 
                     print 'RESPONSE'
                     # print response

@@ -174,10 +174,6 @@ def decrypt(id, label, mecha=CKM_DES3_ECB):
     return decrypted
 
 
-def sign():
-    return 0
-
-
 # provide key and template to change
 def setAttribute(id, old_label, new_label):
     template = (
@@ -312,7 +308,7 @@ print '\n'
 
 # destroyAllObjects()
 
-generate_DES3('\x01', 'des3')
+# generate_AES('\x07', 'aes')
 
 # objects = session.findObjects()
 # for i in objects:

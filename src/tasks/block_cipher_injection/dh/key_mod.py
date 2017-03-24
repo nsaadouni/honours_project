@@ -1,7 +1,7 @@
 
 import sys
 
-start = [128, 1, 5]
+start = [128, 1, 0]
 
 control_2 = [129, 129, 128]
 key_1 = [247, 181, 21, 114, 7, 34, 148, 111, 196, 8, 100, 203, 189, 175, 234, 85, 125, 189, 143, 85, 54, 176, 1, 194, 139, 46, 50,
@@ -86,7 +86,7 @@ for i in control_2:
 	command1.append(i)
 
 for i in key_1:
-	command1.append(255)
+	command1.append(i)
 
 for i in control_3:
 	command1.append(i)

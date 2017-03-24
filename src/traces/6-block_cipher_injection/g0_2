@@ -163,15 +163,15 @@ COMMAND from API
 Do you want to to alter command? (y/N)
 
 RESPONSE
-00000000: 4C BC 1A 00 1E 28 7F 2C  90 00                    L....(.,..
+00000000: 65 C9 08 94 22 0E 28 39  90 00                    e...".(9..
 
 Do you want to alter the response? (y/N)
 
 ----- APDU command/response pair 13 -----
 
 COMMAND from API
-00000000: 80 20 00 00 10 2E C1 18  98 13 E0 0C 6A FB 83 DB  . ..........j...
-00000010: 51 A3 DE 28 95                                    Q..(.
+00000000: 80 20 00 00 10 A6 E7 7A  1A 16 FB 93 E6 C0 9C C9  . .....z........
+00000010: 31 B7 17 70 B6                                    1..p.
 
 Do you want to to alter command? (y/N)
 
@@ -285,15 +285,15 @@ COMMAND from API
 Do you want to to alter command? (y/N)
 
 RESPONSE
-00000000: 83 E0 39 E7 A2 05 E9 1B  90 00                    ..9.......
+00000000: EA 25 75 03 87 31 7B 0D  90 00                    .%u..1{...
 
 Do you want to alter the response? (y/N)
 
 ----- APDU command/response pair 23 -----
 
 COMMAND from API
-00000000: 80 20 00 00 10 26 6F 88  D8 CF 94 EA 6A 0F 34 48  . ...&o.....j.4H
-00000010: A4 FB 42 22 07                                    ..B".
+00000000: 80 20 00 00 10 76 91 12  E8 F7 E7 A4 30 D7 8A 35  . ...v......0..5
+00000010: 82 56 7E 9F 95                                    .V~..
 
 Do you want to to alter command? (y/N)
 
@@ -379,8 +379,8 @@ COMMAND from API
 Do you want to to alter command? (y/N)
 
 RESPONSE
-00000000: 7E 4B 40 E6 E3 B1 5D 25  2B 02 48 50 B3 63 CC 9E  ~K@...]%+.HP.c..
-00000010: 79 41 34 FC 04 B3 57 1C  06 E3 D1 36 3C 24 45 8D  yA4...W....6<$E.
+00000000: 4C 92 AD 73 D2 7E EF 47  6C 0C 99 A4 F9 30 C8 A6  L..s.~.Gl....0..
+00000010: 96 66 95 79 E9 6F A1 3C  EB F5 EF 79 F5 F9 AE 80  .f.y.o.<...y....
 00000020: 90 00                                             ..
 
 Do you want to alter the response? (y/N)
@@ -388,8 +388,8 @@ Do you want to alter the response? (y/N)
 ----- APDU command/response pair 27 -----
 
 COMMAND from API
-00000000: 0C 84 00 00 0D 97 01 20  8E 08 99 BD 52 69 31 DD  ....... ....Ri1.
-00000010: DB FD 00                                          ...
+00000000: 0C 84 00 00 0D 97 01 20  8E 08 59 64 3A 9D EF 78  ....... ..Yd:..x
+00000010: BE 86 00                                          ...
 
 Do you want to to alter command? (y/N)
 

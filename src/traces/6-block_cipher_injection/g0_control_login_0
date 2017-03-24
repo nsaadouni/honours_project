@@ -160,25 +160,23 @@ Do you want to alter the response? (y/N)
 COMMAND from API
 00000000: 00 84 00 00 08                                    .....
 
-Do you want to to alter command? (y/N)
+Do you want to automate the injection your own login response? (Y/n)
 
 RESPONSE
-00000000: 4C BC 1A 00 1E 28 7F 2C  90 00                    L....(.,..
-
-Do you want to alter the response? (y/N)
+00000000: 00 00 00 00 00 00 00 00  90 00                    ..........
 
 ----- APDU command/response pair 13 -----
 
 COMMAND from API
-00000000: 80 20 00 00 10 2E C1 18  98 13 E0 0C 6A FB 83 DB  . ..........j...
-00000010: 51 A3 DE 28 95                                    Q..(.
+00000000: 80 20 00 00 10 0B 59 DD  60 3E 54 71 22 56 C7 38  . ....Y.`>Tq"V.8
+00000010: 84 F8 3C E9 01                                    ..<..
 
-Do you want to to alter command? (y/N)
+COMMAND injected
+00000000: 80 20 00 00 10 32 5A 9F  38 CA 4F BE 44 94 A2 C0  . ...2Z.8.O.D...
+00000010: 08 4B B2 B5 D9                                    .K...
 
 RESPONSE
 00000000: 90 00                                             ..
-
-Do you want to alter the response? (y/N)
 
 ----- APDU command/response pair 14 -----
 
@@ -282,25 +280,23 @@ Do you want to alter the response? (y/N)
 COMMAND from API
 00000000: 00 84 00 00 08                                    .....
 
-Do you want to to alter command? (y/N)
+Do you want to automate the injection your own login response? (Y/n)
 
 RESPONSE
-00000000: 83 E0 39 E7 A2 05 E9 1B  90 00                    ..9.......
-
-Do you want to alter the response? (y/N)
+00000000: 00 00 00 00 00 00 00 00  90 00                    ..........
 
 ----- APDU command/response pair 23 -----
 
 COMMAND from API
-00000000: 80 20 00 00 10 26 6F 88  D8 CF 94 EA 6A 0F 34 48  . ...&o.....j.4H
-00000010: A4 FB 42 22 07                                    ..B".
+00000000: 80 20 00 00 10 CA 01 A6  34 85 40 71 7E EB 4F 53  . ......4.@q~.OS
+00000010: A7 27 C0 78 7C                                    .'.x|
 
-Do you want to to alter command? (y/N)
+COMMAND injected
+00000000: 80 20 00 00 10 32 5A 9F  38 CA 4F BE 44 FB C6 06  . ...2Z.8.O.D...
+00000010: 52 86 87 8C 1D                                    R....
 
 RESPONSE
 00000000: 90 00                                             ..
-
-Do you want to alter the response? (y/N)
 
 ----- APDU command/response pair 24 -----
 
@@ -379,8 +375,8 @@ COMMAND from API
 Do you want to to alter command? (y/N)
 
 RESPONSE
-00000000: 7E 4B 40 E6 E3 B1 5D 25  2B 02 48 50 B3 63 CC 9E  ~K@...]%+.HP.c..
-00000010: 79 41 34 FC 04 B3 57 1C  06 E3 D1 36 3C 24 45 8D  yA4...W....6<$E.
+00000000: E2 5A F6 1E 6A 6F AE 32  A2 76 25 E7 AC AA DD 17  .Z..jo.2.v%.....
+00000010: 62 90 2D CB 65 54 B7 B7  33 73 5A CA 28 94 4B BD  b.-.eT..3sZ.(.K.
 00000020: 90 00                                             ..
 
 Do you want to alter the response? (y/N)
@@ -388,8 +384,8 @@ Do you want to alter the response? (y/N)
 ----- APDU command/response pair 27 -----
 
 COMMAND from API
-00000000: 0C 84 00 00 0D 97 01 20  8E 08 99 BD 52 69 31 DD  ....... ....Ri1.
-00000010: DB FD 00                                          ...
+00000000: 0C 84 00 00 0D 97 01 20  8E 08 62 A0 EB 1A 82 3F  ....... ..b....?
+00000010: DF 7C 00                                          .|.
 
 Do you want to to alter command? (y/N)
 
