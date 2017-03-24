@@ -294,8 +294,8 @@ print '\n'
 # findObjectsInit('\x01', 'des3')
 # keyobject = finaliseObject()
 
-# encrypted_text= encrypt('\x00', 'aes', CKM_AES_ECB)
-# print encrypted_text
+encrypted_text= encrypt('\x00', 'aes', CKM_AES_ECB)
+print encrypted_text
 # decrypted_text = decrypt('\x00', 'aes' , CKM_AES_ECB)
 # print decrypted_text
 
@@ -308,7 +308,7 @@ print '\n'
 
 # destroyAllObjects()
 
-# generate_AES('\x07', 'aes')
+# generate_AES('\x00', 'aes')
 
 # objects = session.findObjects()
 # for i in objects:

@@ -241,6 +241,12 @@ Place an image here of the trace
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 \chapter{Attempts To Attack At the APDU Level}
 
+In this chapter we explain the design, implementation and results of the attacks we attempted at the APDU level. The two main attacks we focus on are reverse engineering the PIN authentication protocol, and reverse engineering the secure messaging protocol. The motivations behind this come from literature stated in chapter X.
+
+The smartcard we analyse uses a challenge-response algorithm to prevent the PIN being sent over in plain text. This is an improvement upon other card vendors implementations whereby they do send the PIN over in plain text for it to be verified. Successfully reverse engineering this challenge-response protocol will allow an attacker to calculate the victims PIN given one successful login trace. Furthermore, it will also remove the first dependency on the use of the API. Being able to communicate to the card directly gives an attacker a higher capability. But as of right now, since we are unaware of how the login occurs the API must be used.
+
+The second dependancy on the use of the API, is secure messaging. Every time a key is generated, whether it be on the card, or on the computer and transfered, secure messaging is utilised to input the key into a file on the card. Previous hardware security modules from the manufacture 'Athena- Smartcard solutions' (specifically ASE KeyPro) had vulnerabilities at the APDU layer that needlessly exported in plain text encryption keys [?]. As discussed in the analysis of this cards API functions in chapter 6, that vulnerability appears to be patched in this version of their smartcard, by using secure messaging. If this protocol can be reversed engineered, it should be possible to open files containing the keys and decrypt them. And also decrypt keys as they are being generated.
+
 
 %DO NOT FORGOT!\\
 %Need to mention somewhere in this section that I have tried:\\
@@ -521,8 +527,47 @@ This shall summarise the whole report and my findings in regard to low-level vul
 
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
+%---------------------------------------------------------------------------------------------------------------------------------------------------
+% use the following and \cite{} as above if you use BibTeX
+% otherwise generate bibtem entries
+\bibliographystyle{plain}
+%\bibliography{mybib}
+\begin{thebibliography}{}
+
+%-------------------------------------------------------------------------------
+% EXAMPLES!!
+\bibitem{latexcompanion} 
+Michel Goossens, Frank Mittelbach, and Alexander Samarin. 
+\textit{The \LaTeX\ Companion}. 
+Addison-Wesley, Reading, Massachusetts, 1993.
+ 
+\bibitem{einstein} 
+Albert Einstein. 
+\textit{Zur Elektrodynamik bewegter K{\"o}rper}. (German) 
+[\textit{On the electrodynamics of moving bodies}]. 
+Annalen der Physik, 322(10):891–921, 1905.
+ 
+\bibitem{knuthwebsite} 
+Knuth: Computers and Typesetting,
+\\\texttt{http://www-cs-faculty.stanford.edu/\~{}uno/abcde.html}
+%------------------------------------------------------------------------------
+
+\bibitem{virtual smartcard}
+Frank Morgner : Creating a Virtual Smart Card\\
+\texttt{https://frankmorgner.github.io/vsmartcard/virtualsmartcard/README.html}\\
+%\href{https://frankmorgner.github.io/vsmartcard/virtualsmartcard/README.html}{link}
+
+\bibitem{OCRA}
+Internet Engineering Task Force (IETF).\\
+\textit{OCRA: OATH Challenge-Response Algorithm}, June 2011\\
+\texttt{https://tools.ietf.org/html/rfc6287}
+
+
+\end{thebibliography}
+
+
 \begin{appendices}
-\chapter{API Functions - APDU}
+\chapter{API Function Traces}
 
 \section{C\_login}
 \begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
@@ -580,82 +625,238 @@ This shall summarise the whole report and my findings in regard to low-level vul
 00000000: 90 00                                             ..
 
 \end{Verbatim}
-\pagebreak
+%\pagebreak
 
 \section{C\_findObject}
-\pagebreak
+\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+t
+\end{Verbatim}
+%\pagebreak
 
 \section{C\_generateKey}
-\pagebreak
+\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+t
+\end{Verbatim}
+%\pagebreak
 
 \section{C\_createObject}
-\pagebreak
+\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+t
+\end{Verbatim}
+%\pagebreak
 
 \section{C\_destroyObject}
-\pagebreak
+\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+t
+\end{Verbatim}
+%\pagebreak
 
 \section{C\_encrypt}
-This will be AES key encrypt! Want to ensure it works!
-\pagebreak
+\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+t
+\end{Verbatim}
+%\pagebreak
 
 \section{C\_decrypt}
-\pagebreak
-
-\section{C\_sign}
-\pagebreak
+\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+t
+\end{Verbatim}
+%\pagebreak
 
 \section{C\_verify}
-\pagebreak
+\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+t
+\end{Verbatim}
+%\pagebreak
 
 \section{C\_setAttribute}
-\pagebreak
+\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+t
+\end{Verbatim}
+%\pagebreak
 
-\section{C\_wrap}
-\pagebreak
-
-\section{C\_unwarp}
-\pagebreak
 
 \chapter{Attack Traces}
 
-\end{appendices}
+\section{Multiple C\_login Traces}
+\subsection{Different Pin, Different Nonce}
+\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+----- APDU command/response pair 0 -----
+\textit{(Inter-Industry) Get Challenge}
+00000000: 00 84 00 00 08                                    .....
 
-%---------------------------------------------------------------------------------------------------------------------------------------------------
-% use the following and \cite{} as above if you use BibTeX
-% otherwise generate bibtem entries
-\bibliographystyle{plain}
-%\bibliography{mybib}
-\begin{thebibliography}{}
+00000000: \textbf{00 00 00 00 00 00 00 00}  90 00                    ..........
 
-%-------------------------------------------------------------------------------
-% EXAMPLES!!
-\bibitem{latexcompanion} 
-Michel Goossens, Frank Mittelbach, and Alexander Samarin. 
-\textit{The \LaTeX\ Companion}. 
-Addison-Wesley, Reading, Massachusetts, 1993.
- 
-\bibitem{einstein} 
-Albert Einstein. 
-\textit{Zur Elektrodynamik bewegter K{\"o}rper}. (German) 
-[\textit{On the electrodynamics of moving bodies}]. 
-Annalen der Physik, 322(10):891–921, 1905.
- 
-\bibitem{knuthwebsite} 
-Knuth: Computers and Typesetting,
-\\\texttt{http://www-cs-faculty.stanford.edu/\~{}uno/abcde.html}
-%------------------------------------------------------------------------------
+----- APDU command/response pair 1 -----
+\textit{(Proprietary) Verify}
+00000000: 80 20 00 00 \textbf{10 C2 29 5F  78 D1 68 29 13 78 BE 7B}  . ....)_x.h).x.\{
+00000010: \textbf{8E 61 9B 32 2E}                                    .a.2.
 
-\bibitem{virtual smartcard}
-Frank Morgner : Creating a Virtual Smart Card\\
-\texttt{https://frankmorgner.github.io/vsmartcard/virtualsmartcard/README.html}\\
-%\href{https://frankmorgner.github.io/vsmartcard/virtualsmartcard/README.html}{link}
+00000000: 63 C9                                             c.
 
-\bibitem{OCRA}
-Internet Engineering Task Force (IETF).\\
-\textit{OCRA: OATH Challenge-Response Algorithm}, June 2011\\
-\texttt{https://tools.ietf.org/html/rfc6287}
+----- APDU command/response pair 1 -----
+\textit{(Inter-Industry) Get Challenge}
+00000000: 00 84 00 00 08                                    .....
 
+00000000: \textbf{00 00 00 00 00 00 00 01}  90 00                    ..........
 
-\end{thebibliography}
+----- APDU command/response pair 1 -----
+\textit{(Proprietary) Verify}
+00000000: 80 20 00 00 10 \textbf{C4 6D 44  03 92 F3 6B EF 13 18 07}  . ....mD...k....
+00000010: \textbf{CE 5A A4 B9 27}                                    .Z..'
+
+00000000: 63 C8                                             c.
+\end{Verbatim}
+\subsection{Different Pin, Same Nonce}
+\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+----- APDU command/response pair 0 -----
+\textit{(Inter-Industry) Get Challenge}
+00000000: 00 84 00 00 08                                    .....
+
+00000000: \textbf{00 00 00 00 00 00 00 00}  90 00                    ..........
+
+----- APDU command/response pair 1 -----
+\textit{(Proprietary) Verify}
+00000000: 80 20 00 00 10 \textbf{8F 58 1B  91 BC 78 D3 37 A9 D9 FB}  . ....X...x.7...
+00000010: \textbf{9C 20 58 F6 0A}                                    . X..
+
+00000000: 63 C9                                             c.
+
+----- APDU command/response pair 1 -----
+\textit{(Inter-Industry) Get Challenge}
+00000000: 00 84 00 00 08                                    .....
+
+00000000: \textbf{00 00 00 00 00 00 00 00}  90 00                    ..........
+
+----- APDU command/response pair 1 -----
+\textit{(Proprietary) Verify}
+00000000: 80 20 00 00 10 \textbf{E0 30 33  BB 03 0F 6E 11 08 C0 8D}  . ....03...n....
+00000010: \textbf{1D 9D 85 C4 A6}                                    .....
+
+00000000: 63 C8                                             c.
+
+\end{Verbatim}
+\subsection{Same Pin, Different Nonce}
+\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+----- APDU command/response pair 0 -----
+\textit{(Inter-Industry) Get Challenge}
+00000000: 00 84 00 00 08                                    .....
+
+00000000: \textbf{00 00 00 00 00 00 00 00}  90 00                    ..........
+
+----- APDU command/response pair 1 -----
+\textit{(Proprietary) Verify}
+00000000: 80 20 00 00 10 \textbf{6E 78 D4  D5 61 AD 3C 26 D3 89 E8}  . ...nx..a.<&...
+00000010: \textbf{96 B9 92 0D 40}                                    ....@
+
+00000000: 63 C9                                             c.
+
+----- APDU command/response pair 1 -----
+\textit{(Inter-Industry) Get Challenge}
+00000000: 00 84 00 00 08                                    .....
+
+00000000: \textbf{00 00 00 00 00 00 00 01}  90 00                    ..........
+
+----- APDU command/response pair 1 -----
+\textit{(Proprietary) Verify}
+00000000: 80 20 00 00 10 \textbf{6E 78 D4  D5 61 AD 3C 26 BC C6 AA}  . ...nx..a.<&...
+00000010: \textbf{72 D3 95 2B 94}                                    r..+.
+
+00000000: 63 C8                                             c.
+
+\end{Verbatim}
+\subsection{Same Pin, Same Nonce}
+\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+----- APDU command/response pair 0 -----
+\textit{(Inter-Industry) Get Challenge}
+00000000: 00 84 00 00 08                                    .....
+
+00000000: \textbf{00 00 00 00 00 00 00 00}  90 00                    ..........
+
+----- APDU command/response pair 1 -----
+\textit{(Proprietary) Verify}
+00000000: 80 20 00 00 10 \textbf{EE D2 F1  54 07 18 8A 8F AB A3 F7}  . ......T.......
+00000010: \textbf{3E 64 17 2D 6E}                                    >d.-n
+
+00000000: 63 C9                                             c.
+
+----- APDU command/response pair 1 -----
+\textit{(Inter-Industry) Get Challenge}
+00000000: 00 84 00 00 08                                    .....
+
+00000000: \textbf{00 00 00 00 00 00 00 00}  90 00                    ..........
+
+----- APDU command/response pair 1 -----
+\textit{(Proprietary) Verify}
+00000000: 80 20 00 00 10 \textbf{EE D2 F1  54 07 18 8A 8F AB A3 F7}  . ......T.......
+00000010: \textbf{3E 64 17 2D 6E}                                    >d.-n
+
+00000000: 63 C8                                             c.
+
+\end{Verbatim}
+\subsection{Different Second}
+\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+----- APDU command/response pair 0 -----
+\textit{(Inter-Industry) Get Challenge}
+00000000: 00 84 00 00 08                                    .....
+
+00000000: \textbf{00 00 00 00 00 00 00 00}  90 00                    ..........
+
+----- APDU command/response pair 1 -----
+\textit{(Proprietary) Verify}
+00000000: 80 20 00 00 10 \textbf{61 50 65  E1 AF 05 7B C3 35 98 0D}  . ...aPe...\{.5..
+00000010: \textbf{DC 9D C5 42 96}                                    ...B.
+
+00000000: 63 C9                                             c.
+
+----- APDU command/response pair 1 -----
+\textit{(Inter-Industry) Get Challenge}
+00000000: 00 84 00 00 08                                    .....
+
+00000000: \textbf{00 00 00 00 00 00 00 00}  90 00                    ..........
+
+----- APDU command/response pair 1 -----
+\textit{(Proprietary) Verify}
+00000000: 80 20 00 00 10 \textbf{BF 73 83  F9 30 B1 74 D2 E4 98 83}  . ....s..0.t....
+00000010: \textbf{3A 9F 1F 37 BA}                                    :..7.
+
+00000000: 63 C8                                             c.
+\end{Verbatim}
+
+\section{Successful Login Injection}
+\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+----- APDU command/response pair 12 -----
+
+\textit{(Inter-Industry) Get Challenge}
+COMMAND from API
+00000000: 00 84 00 00 08                                    .....
+
+Do you want to automate the injection your own login response? (Y/n)
+
+RESPONSE
+00000000: E7 69 60 B5 C8 FC D2 02  90 00                    .i`.......
+
+----- APDU command/response pair 13 -----
+
+\textit{(Proprietary) Verify}
+COMMAND from API
+00000000: 80 20 00 00 10 \textbf{4A D1 3D  AB 98 7F C5 18 A9 B3 1F}  . ...J.=........
+00000010: \textbf{2F 96 B4 3C AF}                                    /..<.
+
+\textit{(Proprietary) Verify}
+COMMAND injected
+00000000: 80 20 00 00 10 \textbf{32 5A 9F  38 CA 4F BE 44 3A CD E1}  . ...2Z.8.O.D:..
+00000010: \textbf{C5 03 84 35 DF}                                    ...5.
+
+RESPONSE
+00000000: 90 00                                             ..
+\end{Verbatim}
+
+\section{Open Secure Messaging Traces}
+
+\end{appendices} 
 \end{document}
-%\grid
+
+%\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+%
+%\end{Verbatim}
