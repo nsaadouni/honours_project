@@ -1,0 +1,113 @@
+
+
+
+
+
+/*
+     FILE ARCHIVED ON 23:11:13 Oct 21, 2007 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 10:46:08 Mar 21, 2014.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+body {
+    padding: 0px;
+    margin: 0px;
+    color: black;
+    font-family: arial, helvetica, sans-serif;
+    font-family:"Courier New", Courier, monospace;
+    background-color: #ffffff;
+    }
+
+code {
+    font-family:"Courier New", Courier, monospace;
+    font-weight: bold;
+    }
+
+form {margin: 0px}
+
+table{
+    border-collapse: collapse;
+    border: 0px;
+    padding: 0px;
+    width: 100%;
+    }
+
+tr{ text-valign: top; }
+    
+td{ text-align: left; }
+
+a {color: #06f; text-decoration: none}
+a:hover{ text-decoration: underline}
+
+p {
+    padding-left: 12px;
+    padding-right: 12px;
+    text-align:justify;
+    }
+
+p.err{color: red; font-weight: bold;}
+
+p.ok {color: green;}
+
+p.t {padding-left: 16px; padding-right: 16px; text-align:justify;}
+
+p.tit{color: blue;font-weight: bold; padding-left: 10px; }
+
+pre{
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+ul {text-align:justify;}
+
+li {text-align:justify; padding-right: 16px;}
+
+.txt{
+    border: grey 1px solid;
+    height: 18px;
+}
+
+
+h1 {
+    font-size: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+    text-align:justify;
+    }
+
+h2 {
+    font-size: 100%;
+    padding-left: 24px;
+    padding-right: 12px;
+    text-align:justify;
+    }
+
+h3 {
+    font-size: 100%;
+    padding-left: 36px;
+    padding-right: 12px;
+    text-align:justify;
+    }
+
+h4 {
+    font-size: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+    text-align:justify;
+    }
+
+h5 {
+    font-size: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+    text-align:justify;
+    }
+
+h6 {
+    font-size: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+    text-align:justify;
+    }
