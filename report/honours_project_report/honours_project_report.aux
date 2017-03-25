@@ -8,13 +8,14 @@
 \@writefile{toc}{\contentsline {section}{\numberline {2.1}PKCS\#11}{11}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1.1}Key Object}{11}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1.2}Attributes}{11}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.3}Most Common Functions}{11}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.2}ISO 7816}{11}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}Command Structure}{11}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}Response Structure}{11}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.3}Inter-Industry/ Proprietary}{11}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.4}Most Common Commands}{11}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.5}File Structure}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.3}Most Common Functions}{12}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.2}ISO 7816}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}Command Structure}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}Response Structure}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.3}Inter-Industry/ Proprietary}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.4}Most Common Commands}{12}}
+\@writefile{lot}{\contentsline {table}{\numberline {2.1}{\ignorespaces Common APDU Commands\relax }}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.5}File Structure}{12}}
 \@writefile{toc}{\contentsline {chapter}{\numberline {3}Cryptographic Operations}{13}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
@@ -38,7 +39,7 @@
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{toc}{\contentsline {section}{\numberline {4.1}PCSC-lite}{15}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.2}Virtual Smart-Card}{15}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}Parsing $\rightarrow $ Scripts created for ease of reading}{15}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Man in The Middle (MiTM)}{15}}
 \@writefile{toc}{\contentsline {chapter}{\numberline {5}Related Work / Literature Review}{17}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
@@ -63,7 +64,7 @@
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{toc}{\contentsline {section}{\numberline {7.1}Reverse Engineering PIN/password Authentication}{24}}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{fig:sub1}{{\caption@xref {fig:sub1}{ on input line 272}}{24}}
+\newlabel{fig:sub1}{{\caption@xref {fig:sub1}{ on input line 330}}{24}}
 \newlabel{sub@fig:sub1}{{}{24}}
 \@writefile{lot}{\contentsline {table}{\numberline {7.1}{\ignorespaces Hash Functions\relax }}{25}}
 \@writefile{lot}{\contentsline {table}{\numberline {7.2}{\ignorespaces Bitwise Logical Operations (Joins)\relax }}{26}}
@@ -74,8 +75,8 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {7.1.3}Authentication Protocol Search 3.0 (Triple DES Encryption)}{30}}
 \@writefile{toc}{\contentsline {section}{\numberline {7.2}Altering File Control Parameters for Login Retry Couner}{30}}
 \@writefile{toc}{\contentsline {section}{\numberline {7.3}Block Cipher Injection (MiTM)}{30}}
-\@writefile{toc}{\contentsline {section}{\numberline {7.4}Altering Key Object Attributes}{32}}
-\@writefile{toc}{\contentsline {section}{\numberline {7.5}Using Key's without Authentication}{32}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.4}Altering Key Object Attributes}{30}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.5}Using Key's without Authentication}{31}}
 \bibstyle{plain}
 \@writefile{toc}{\contentsline {chapter}{\numberline {8}Conclusion / Results}{33}}
 \@writefile{lof}{\addvspace {10\p@ }}
@@ -87,26 +88,29 @@
 \bibcite{OCRA}{5}
 \@writefile{toc}{\contentsline {chapter}{Bibliography}{35}}
 \@writefile{toc}{\contentsline {chapter}{Appendices}{37}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {A}API Function Traces}{39}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {A}Attack Traces}{39}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {A.1}C\_login}{39}}
-\@writefile{toc}{\contentsline {section}{\numberline {A.2}C\_findObject}{40}}
-\@writefile{toc}{\contentsline {section}{\numberline {A.3}C\_generateKey}{40}}
-\@writefile{toc}{\contentsline {section}{\numberline {A.4}C\_createObject}{40}}
-\@writefile{toc}{\contentsline {section}{\numberline {A.5}C\_destroyObject}{40}}
-\@writefile{toc}{\contentsline {section}{\numberline {A.6}C\_encrypt}{41}}
-\@writefile{toc}{\contentsline {section}{\numberline {A.7}C\_decrypt}{41}}
-\@writefile{toc}{\contentsline {section}{\numberline {A.8}C\_verify}{41}}
-\@writefile{toc}{\contentsline {section}{\numberline {A.9}C\_setAttribute}{41}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {B}Attack Traces}{43}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.1}Multiple C\_login Traces}{39}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1.1}Different Pin, Different Nonce}{39}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1.2}Different Pin, Same Nonce}{40}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1.3}Same Pin, Different Nonce}{40}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1.4}Same Pin, Same Nonce}{41}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1.5}Different Second}{41}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.2}Successful Login Injection}{42}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.3}Open Secure Messaging Traces}{43}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.3.1}Generator = 5, [Not modified]}{43}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.3.2}Generator = 1}{44}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.3.3}Generator = 0}{47}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {B}API Function Traces}{51}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {B.1}Multiple C\_login Traces}{43}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.1.1}Different Pin, Different Nonce}{43}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.1.2}Different Pin, Same Nonce}{44}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.1.3}Same Pin, Different Nonce}{44}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.1.4}Same Pin, Same Nonce}{45}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.1.5}Different Second}{45}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.2}Successful Login Injection}{46}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.3}Open Secure Messaging Traces}{47}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.1}C\_login}{51}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.2}C\_findObject}{52}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.3}C\_generateKey}{52}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.4}C\_createObject}{52}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.5}C\_destroyObject}{52}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.6}C\_encrypt}{53}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.7}C\_decrypt}{53}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.8}C\_verify}{53}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.9}C\_setAttribute}{53}}
