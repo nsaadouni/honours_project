@@ -1,0 +1,8 @@
+unwrap des test -> encrypted '12345678' with RSA-PKCS (pub), unwrapped with RSA-PKCS (priv)
+
+encrpyt override -> des3 key, opened file manually and encrypted string '12345678'
+encrypt api -> failed, IT IS THE API THAT CONTROLS PREMISSIONS BASED ON ATTRIBUTES!
+
+
+wrap test -> aes key used to try and wrap '12345678'
+			6A 80 returned (wrong parameters)

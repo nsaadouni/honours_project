@@ -264,38 +264,39 @@ I shall also explain why some of the attacks are not able to be conducted on the
 
 \chapter{PKCS\#11 Functions - APDU analysis}
 
-In this chapter we will APDU traces of X functions from the API. We decided not to include some functions for these reasons.
+In this chapter we analyse the APDU traces of 9 functions from the API. C\_sign and C\_verify were not included in this analysis as from analysis of the traces from the previous work on this card it was clear that both of these functions operated in a similar manner to C\_encrypt and C\_decrypt. C\_createObject was also omitted form this analysis, as the function is not used for security operations, and rather for the creation and storing of certificates and data.
 
-Break down the traces to their main points
-e.g. login, opens files, sends challenge, verifies response. boom done
+
+%Break down the traces to their main points
+%e.g. login, opens files, sends challenge, verifies response. boom done
+
 
 \section{Initialization?}
-Might be worth separating these!
+The initialization of the card always
+
+
 \section{C\_login}
 refer to appendex A.1
-\section{C\_findObjectInit}
-Place an image here of the trace
+\section{C\_findObject}
+
 \section{C\_generateKey}
-Place an image here of the trace
+
 \section{C\_generateKeyPair}
 This saves the CRT instead of the private key.
 explain the structure 
-\section{C\_createObject}
-Place an image here of the trace
+
 \section{C\_destroyObject}
-Place an image here of the trace
+
 \section{C\_encrypt}
-Place an image here of the trace
+
 \section{C\_decrypt}
-Place an image here of the trace
-\section{C\_sign}
-Place an image here of the trace
-\section{C\_verify}
-Place an image here of the trace
+
+
 \section{C\_setAttribute}
-Place an image here of the trace
-\section{C\_wrap / C\_unwrap}
-Place an image here of the trace
+
+
+\section{C\_unwrap}
+
 
 
 
@@ -538,16 +539,14 @@ DES3-ECB $\rightarrow$ encrypt ( Na $\|$ Vac)
 
 
 
-\section{Altering File Control Parameters for Login Retry Couner}
 
 \section{Block Cipher Injection (MiTM)}
 
-\section{Altering Key Object Attributes}
-- MSC's work
 
-\section{Using Key's without Authentication}
-- MSC's work
-- there is an attribute that should prevent this!
+\section{Manually Overriding Attributes}
+This attack was found by previous literature. We simply tested to see if the same attack was feasiable on the smart card we analyse. 
+
+To test this we created a DES3 key on the card that had the encrypt attribute set to False. We asked the card to encrypt the string '12345678'. The API returned an error stating that this function was not supported due to the attribute settings. We then override the API by manually sending the command overselves. This results in the encryption taking place on the card, when in-fact it should not. 
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 \chapter{Conclusion / Results}

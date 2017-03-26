@@ -66,7 +66,7 @@ def generate_DES3(id, label, private=False):
         (CKA_ID, id),
         (CKA_PRIVATE, private),
         (CKA_SENSITIVE, True),
-        (CKA_ENCRYPT, True),
+        (CKA_ENCRYPT, False),
         (CKA_DECRYPT, True),
         (CKA_SIGN, True),
         (CKA_VERIFY, True),
@@ -294,7 +294,7 @@ print '\n'
 # findObjectsInit('\x01', 'des3')
 # keyobject = finaliseObject()
 
-# encrypted_text= encrypt('\x03', 'pub', CKM_RSA_PKCS)
+# encrypted_text= encrypt('\x05', 'ef', CKM_DES_ECB)
 # print encrypted_text
 # decrypted_text = decrypt('\x00', 'aes' , CKM_AES_ECB)
 # print decrypted_text
@@ -318,14 +318,40 @@ print '\n'
 #     (CKA_LABEL, 'pub'),
 #     (CKA_ID, '\x03'))
 # temp = session._template2ckattrlist(template)
-keys = session.findObjects()
-print session.encrypt(keys[0], '12345678')
+# keys = session.findObjects()
+# print session.encrypt(keys[0], '12345678')
 
 
 # objects = session.findObjects()
+# key_to_unwrap = session.encrypt(objects[0], '12345678')
+# template = (
+#         (CKA_CLASS, CKO_SECRET_KEY),
+#         (CKA_KEY_TYPE, CKK_DES),
+#         (CKA_LABEL, 'test3'),
+#         (CKA_ID, '\x12'),
+#         (CKA_PRIVATE, True),
+#         (CKA_SENSITIVE, True),
+#         (CKA_ENCRYPT, True),
+#         (CKA_DECRYPT, True),
+#         (CKA_SIGN, True),
+#         (CKA_VERIFY, True),
+#         (CKA_TOKEN, True),
+#         (CKA_UNWRAP, True),
+#         (CKA_EXTRACTABLE, False))
+# temp = session._template2ckattrlist(template)
+
+
+# print 'test'
+# print session.unwrapKey(objects[1],key_to_unwrap, template)
+
+# generate_DES3('\x15', 'ef')
+encrypted_text= encrypt('\x15', 'ef', CKM_DES_ECB)
+print encrypted_text
+
+# objects = session.findObjects()
 # for i in objects:
-#     print i
-#     print ''
+    # print i
+    # print ''
 
 
 
