@@ -294,7 +294,7 @@ print '\n'
 # findObjectsInit('\x01', 'des3')
 # keyobject = finaliseObject()
 
-# encrypted_text= encrypt('\x00', 'aes', CKM_AES_ECB)
+# encrypted_text= encrypt('\x03', 'pub', CKM_RSA_PKCS)
 # print encrypted_text
 # decrypted_text = decrypt('\x00', 'aes' , CKM_AES_ECB)
 # print decrypted_text
@@ -309,6 +309,18 @@ print '\n'
 # destroyAllObjects()
 
 # generate_AES('\x00', 'aes')
+
+# generateKeyPair_rsa()
+
+
+# template = (
+#     (CKA_CLASS, CKO_PUBLIC_KEY),
+#     (CKA_LABEL, 'pub'),
+#     (CKA_ID, '\x03'))
+# temp = session._template2ckattrlist(template)
+keys = session.findObjects()
+print session.encrypt(keys[0], '12345678')
+
 
 # objects = session.findObjects()
 # for i in objects:

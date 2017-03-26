@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.14)  25 MAR 2017 20:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.14)  26 MAR 2017 15:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -694,7 +694,12 @@ Chapter 6.
 ]
 Chapter 7.
 
-Overfull \hbox (8.62625pt too wide) in paragraph at lines 314--314
+Overfull \hbox (19.8223pt too wide) in paragraph at lines 318--318
+[]\T1/fvs/b/n/17.28 Reverse En-gi-neer-ing PIN Au-then-ti-ca-tion Pro-
+ []
+
+
+Overfull \hbox (8.62625pt too wide) in paragraph at lines 320--320
 []\T1/fvs/b/n/17.28 Reverse En-gi-neer-ing PIN/-pass-word Au-then-
  []
 
@@ -702,16 +707,16 @@ Overfull \hbox (8.62625pt too wide) in paragraph at lines 314--314
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [23]
-LaTeX Font Info:    Try loading font information for TS1+fve on input line 320.
+LaTeX Font Info:    Try loading font information for TS1+fve on input line 326.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/bera/ts1fve.fd
 File: ts1fve.fd 2004/09/07 scalable font definitions for TS1/fve.
 )
 LaTeX Font Info:    Font shape `TS1/fve/m/n' will be
-(Font)              scaled to size 10.79993pt on input line 320.
+(Font)              scaled to size 10.79993pt on input line 326.
 
-Underfull \hbox (badness 10000) in paragraph at lines 321--322
+Underfull \hbox (badness 10000) in paragraph at lines 327--328
 
  []
 
@@ -720,103 +725,106 @@ Underfull \hbox (badness 10000) in paragraph at lines 321--322
 File: images/section_7/7.1/authencation_method.png Graphic file (type png)
 <use images/section_7/7.1/authencation_method.png>
 Package pdftex.def Info: images/section_7/7.1/authencation_method.png used on i
-nput line 329.
+nput line 335.
 (pdftex.def)             Requested size: 412.56497pt x 247.11081pt.
- [24 <./images/section_7/7.1/authencation_method.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 337--338
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [24]
+Underfull \hbox (badness 10000) in paragraph at lines 343--344
 
  []
 
 
-Overfull \hbox (22.44135pt too wide) in paragraph at lines 339--340
+Overfull \hbox (22.44135pt too wide) in paragraph at lines 345--346
 \T1/fve/m/n/12 have been it-er-ated over and pre-formed on. For ex-am-ple TUN-R
 -CATE(HASH('this
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 339--340
+Underfull \hbox (badness 10000) in paragraph at lines 345--346
 
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [25]
-Overfull \hbox (1.95415pt too wide) in paragraph at lines 392--401
+ [25 <./images/section_7/7.1/authencation_method.png>]
+Overfull \hbox (1.95415pt too wide) in paragraph at lines 398--407
  [] 
  []
 
 [26]
-Underfull \hbox (badness 10000) in paragraph at lines 408--409
+Underfull \hbox (badness 10000) in paragraph at lines 414--415
 
  []
 
 
-Overfull \hbox (44.98962pt too wide) in paragraph at lines 414--425
+Overfull \hbox (44.98962pt too wide) in paragraph at lines 420--431
  [] 
  []
 
 
-Overfull \hbox (8.99417pt too wide) in paragraph at lines 435--435
+Overfull \hbox (8.99417pt too wide) in paragraph at lines 441--441
 []\T1/fvs/b/n/14.4 Authentication Pro-to-col Search 1.0 (Pass-word Stor-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 436--437
+Underfull \hbox (badness 10000) in paragraph at lines 442--443
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 441--442
+Underfull \hbox (badness 10000) in paragraph at lines 447--448
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 445--447
+Underfull \hbox (badness 10000) in paragraph at lines 451--453
 
  []
 
 [27]
-Underfull \hbox (badness 10000) in paragraph at lines 448--449
+Underfull \hbox (badness 10000) in paragraph at lines 454--455
 
  []
 
 LaTeX Font Info:    Font shape `T1/fve/m/it' in size <12> not available
-(Font)              Font shape `T1/fve/m/sl' tried instead on input line 462.
+(Font)              Font shape `T1/fve/m/sl' tried instead on input line 468.
 LaTeX Font Info:    Font shape `T1/fve/m/sl' will be
-(Font)              scaled to size 10.79993pt on input line 462.
+(Font)              scaled to size 10.79993pt on input line 468.
 
-Underfull \hbox (badness 10000) in paragraph at lines 464--465
+Underfull \hbox (badness 10000) in paragraph at lines 470--471
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 468--470
+Underfull \hbox (badness 10000) in paragraph at lines 474--476
 
  []
 
 [28]
-Underfull \hbox (badness 10000) in paragraph at lines 471--472
+Underfull \hbox (badness 10000) in paragraph at lines 477--478
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 480--481
+Underfull \hbox (badness 10000) in paragraph at lines 486--487
 
  []
 
 
-Overfull \hbox (9.65514pt too wide) in paragraph at lines 482--482
+Overfull \hbox (9.65514pt too wide) in paragraph at lines 488--488
 []\T1/fvs/b/n/14.4 Authentication Pro-to-col Search 2.0 (One Time Pass-
  []
 
 [29]
-Underfull \hbox (badness 10000) in paragraph at lines 499--500
+Underfull \hbox (badness 10000) in paragraph at lines 505--506
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 525--526
+Underfull \hbox (badness 10000) in paragraph at lines 531--532
 
  []
 
@@ -828,29 +836,29 @@ Chapter 8.
 
 ]
 LaTeX Font Info:    Font shape `T1/fve/m/it' in size <9> not available
-(Font)              Font shape `T1/fve/m/sl' tried instead on input line 565.
+(Font)              Font shape `T1/fve/m/sl' tried instead on input line 571.
 LaTeX Font Info:    Font shape `T1/fve/m/sl' will be
-(Font)              scaled to size 8.09995pt on input line 565.
+(Font)              scaled to size 8.09995pt on input line 571.
 
-Underfull \hbox (badness 2547) in paragraph at lines 569--573
+Underfull \hbox (badness 2547) in paragraph at lines 575--579
 []\T1/fve/m/n/12 Albert Ein-stein. \T1/fve/m/sl/12 Zur Elek-tro-dy-namik be-weg
 ter Kör-per\T1/fve/m/n/12 . (Ger-man)
  []
 
 
-Underfull \hbox (badness 2073) in paragraph at lines 569--573
+Underfull \hbox (badness 2073) in paragraph at lines 575--579
 \T1/fve/m/n/12 [\T1/fve/m/sl/12 On the elec-tro-dy-nam-ics of mov-ing bod-ies\T
 1/fve/m/n/12 ]. An-nalen der Physik,
  []
 
 
-Overfull \hbox (56.84286pt too wide) in paragraph at lines 580--583
+Overfull \hbox (56.84286pt too wide) in paragraph at lines 586--589
 \T1/fvm/m/n/12 https://frankmorgner.github.io/vsmartcard/virtualsmartcard/READM
 E.html 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 580--583
+Underfull \hbox (badness 10000) in paragraph at lines 586--589
 
  []
 
@@ -861,15 +869,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 580--583
 ] [38]
 Appendix A.
 LaTeX Font Info:    Font shape `T1/fve/m/n' will be
-(Font)              scaled to size 9.85492pt on input line 598.
+(Font)              scaled to size 9.85492pt on input line 604.
 LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 9.85492pt on input line 598.
+(Font)              scaled to size 9.85492pt on input line 604.
 LaTeX Font Info:    Font shape `T1/fvm/m/it' in size <10.95> not available
-(Font)              Font shape `T1/fvm/m/sl' tried instead on input line 600.
+(Font)              Font shape `T1/fvm/m/sl' tried instead on input line 606.
 LaTeX Font Info:    Font shape `T1/fvm/m/sl' will be
-(Font)              scaled to size 9.85492pt on input line 600.
+(Font)              scaled to size 9.85492pt on input line 606.
 LaTeX Font Info:    Font shape `T1/fvm/b/n' will be
-(Font)              scaled to size 9.85492pt on input line 603.
+(Font)              scaled to size 9.85492pt on input line 609.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
@@ -891,7 +899,11 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 ]
 Appendix B.
-[51] [52] [53] (./honours_project_report.aux) ) 
+[51] [52] [53] (./honours_project_report.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
  7536 strings out of 493085
  112284 string characters out of 6136916
@@ -900,21 +912,20 @@ Here is how much of TeX's memory you used:
  84711 words of font info for 88 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  43i,12n,40p,1221b,414s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/f
-onts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cms
-y10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/bera/fveb8a.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/bera/fver8a.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/bera/fver8a.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/bera/fvmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/bera/fvmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/bera/fv
-mro8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/bera/fvsb8a.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/public/bera/fvsr8a.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/bera/fvsro8a.pfb></usr/share/texlive/texmf-di
-st/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-urw/times/utmri8a.pfb>
-Output written on honours_project_report.pdf (53 pages, 165898 bytes).
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/bera/fveb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
+bera/fver8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/bera/fver8a.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/bera/fvmb8a.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/bera/fvmr8a.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/bera/fvmro8a.pfb></usr/share/texlive/texmf-dist/font
+s/type1/public/bera/fvsb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/bera/fvsr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/bera/fvsro8
+a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on honours_project_report.pdf (53 pages, 166084 bytes).
 PDF statistics:
  236 PDF objects out of 1000 (max. 8388607)
  163 compressed objects within 2 object streams

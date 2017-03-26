@@ -264,7 +264,10 @@ I shall also explain why some of the attacks are not able to be conducted on the
 
 \chapter{PKCS\#11 Functions - APDU analysis}
 
-Here I shall simply give a trace of each PKCS\#11, and give an analysis of each trace
+In this chapter we will APDU traces of X functions from the API. We decided not to include some functions for these reasons.
+
+Break down the traces to their main points
+e.g. login, opens files, sends challenge, verifies response. boom done
 
 \section{Initialization?}
 Might be worth separating these!
@@ -275,7 +278,8 @@ Place an image here of the trace
 \section{C\_generateKey}
 Place an image here of the trace
 \section{C\_generateKeyPair}
-Place an image here of the trace
+This saves the CRT instead of the private key.
+explain the structure 
 \section{C\_createObject}
 Place an image here of the trace
 \section{C\_destroyObject}
@@ -303,15 +307,17 @@ In this chapter we explain the design, implementation and results of the attacks
 
 The smartcard we analyse uses a challenge-response algorithm to prevent the PIN being sent over in plain text. This is an improvement upon other card vendors implementations whereby they do send the PIN over in plain text for it to be verified. Successfully reverse engineering this challenge-response protocol will allow an attacker to calculate the victims PIN given one successful login trace. Furthermore, it will also remove the first dependency on the use of the API. Being able to communicate to the card directly gives an attacker a higher capability. But as of right now, since we are unaware of how the login occurs the API must be used.
 
-The second dependancy on the use of the API, is secure messaging. Every time a key is generated, whether it be on the card, or on the computer and transfered, secure messaging is utilised to input the key into a file on the card. Previous hardware security modules from the manufacture 'Athena- Smartcard solutions' (specifically ASE KeyPro) had vulnerabilities at the APDU layer that needlessly exported in plain text encryption keys [?]. As discussed in the analysis of this cards API functions in chapter 6, that vulnerability appears to be patched in this version of their smartcard, by using secure messaging. If this protocol can be reversed engineered, it should be possible to open files containing the keys and decrypt them. And also decrypt keys as they are being generated.
-
+The second dependancy on the use of the API, is secure messaging. When the generateKey function from the API is called to create block cipher keys, it is the computer that requests the card to generate the key, send it over using secure messaging, and then use secure messaging again to place the key into a file to be stored on the card. This again is an improvement upon previous hardware security modules from the manufacture 'Athena- Smartcard solutions' (specifically ASE KeyPro), whereby this was completed without the use of secure messaging, and therefore the block cipher keys where needlessly exported over in plain text which would allow an attacker to sniff them. If this protocol is successfully reversed engineered, it will be possible to sniff the keys by decrypting the messages which contain the keys that are in transit from computer to the smart-card.
 
 %DO NOT FORGOT!\\
 %Need to mention somewhere in this section that I have tried:\\
 %delaying the response to the smart-card to test for TOTP (upto 2 hours)\\
 %Modified initialization data to test if there is a master key, which could be used to create a derived key to encrypt the PIN/Password.
 %(there are references to papers which suggest some smart-card manufactures do this!)
-\section{Reverse Engineering PIN/password Authentication}
+
+\section{Reverse Engineering PIN Authentication Protocol}
+
+\section{Reverse Engineering PIN/password Authentication 1st draft}
 
 The first attack that I decided to attempt is to reverse-engineer the PIN authentication method. The reasoning behind this is because if this can be successfully done, the PIN can then be inferred from one communication trace sniffed between smart-card and the API (on the computer). The inference comes from the fact that once the method is deduced, an attacker can simply brute force the possible combinations of a PIN, to test if a match is found. (This becomes clearer in the latter sections)
 
