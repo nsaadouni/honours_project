@@ -37,8 +37,8 @@
 \contentsline {section}{\numberline {6.3}C\_findObject}{23}
 \contentsline {section}{\numberline {6.4}C\_generateKey}{23}
 \contentsline {section}{\numberline {6.5}C\_generateKeyPair}{24}
-\contentsline {section}{\numberline {6.6}C\_destroyObject}{24}
-\contentsline {section}{\numberline {6.7}C\_encrypt}{24}
+\contentsline {section}{\numberline {6.6}C\_destroyObject}{25}
+\contentsline {section}{\numberline {6.7}C\_encrypt}{25}
 \contentsline {section}{\numberline {6.8}C\_decrypt}{25}
 \contentsline {section}{\numberline {6.9}C\_setAttribute}{25}
 \contentsline {section}{\numberline {6.10}C\_unwrap}{25}
