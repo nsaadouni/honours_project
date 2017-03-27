@@ -350,8 +350,8 @@ print encrypted_text
 
 # objects = session.findObjects()
 # for i in objects:
-    # print i
-    # print ''
+#     print i
+#     print ''
 
 
 
