@@ -302,12 +302,17 @@ While no immediate sensitive information is revealed in this trace as the challe
 
 Furthermore, if an attacker can find a method for changing the file control parameter, it might be possible to reset the retry counter at the APDU level to allow an unlimited number of attempts of logging in.
 \section{C\_findObject}
+The findObjects functions is split into 3 main components. First all the attribute files are listed that are stored on the card. The card has a file named 'cmapfile' that stores these locations. Using the data saved in this file, the API can locate the directory of each attribute file to load it into the API. A final file is opened that is zeroized, which dictates that no more attribute files for keys are present on the card. These steps are listed below:\\
 
 \begin{enumerate}
-\item Selects and opens 'cmapfile'. This stores all file locations for attributes of the keys (B.3 - command 32,33,34)
+\item Selects and opens 'cmapfile' [List files command]. This stores all file locations for attributes of the keys (B.3 - command 32, 33, 34)
 \item Based on those locations, finds and opens the attribute file for the des3 key (B.3 - command 36)
-\item And also opens the last attribute file to determine there are no more keys (B.3 - command 38,39)
+\item And also opens the last attribute file to determine there are no more keys (B.3 - command 38, 39)\\
 \end{enumerate}
+
+Due to key and attribute files being stored separately, this function call reveals no sensitive information. Only the attributes are opened and listed at the APDU layer. These same attributes can be printed at the API layer as well.
+
+A possibility for an attack is present here. As later on we see how the ISO 7816 'UPDATE BINARY' command can be used to alter a file. This will allow modification of attributes. As mentioned in the literature review, previous work on the same card was undertaken and modified the attributes of CKA\_sensitive \& CKA\_extractable from false to true. The change in this direction is forbidden by the API. However the ability for changing these at the APDU level was achieved. It still yeilded no significant results, as keys and attribute are stored in separate files. And the keys could still not be loaded.
 
 \section{C\_generateKey}
 %refer to appendex B.4
@@ -1150,7 +1155,6 @@ COMMAND from API
 
 
 \section{Overriding Attribute Controls}
-
 \section{Encrypt\_False}
 
 
@@ -1200,7 +1204,7 @@ COMMAND from API
 
 \end{Verbatim}
 
- \section{C\_login}
+\section{C\_login}
 \begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
 
 
