@@ -106,7 +106,10 @@ Before we move into the above analysis, supporting material must be introduced. 
 
 \chapter{Background}
 
+In this chapter we give background knowledge on two essential standards that are required for the use of the contact smart-card we analyse in this paper. These two standards are PKCS\#11 and ISO 7816.
+
 \section{PKCS\#11}
+This is the API that each card manufacture implements themselves.
 
 \subsection{Key Object}
 \subsection{Attributes}
@@ -131,7 +134,7 @@ template = (\\
 
 
 \section{ISO 7816}
-
+This is the international standards organization that defines the low level communication protocol between smartcards and the API on the computer.
 \subsection{Command Structure}
 \subsection{Response Structure}
 \subsection{Inter-Industry/ Proprietary}
@@ -184,6 +187,8 @@ Xc  & -   & -  & -  & -   & -          & -  & Secure Messaging (SM)\\
 
 \chapter{Cryptographic Operations}
 
+In this chapter we describe different cryptography standards, and give a brief overview of the terminology and maths used behind some of the types of cryptography. This will be used to aid our explainations in later chapters that regard the cards functionality and cryptographic operations used to attempt the secure transfer of sensitive information.
+
 \section{Hash Function}
 
 \noindent explain this in an overview term
@@ -192,9 +197,10 @@ Xc  & -   & -  & -  & -   & -          & -  & Secure Messaging (SM)\\
 
 \section{Asymmetric Encryption}
 
-\noindent explain this in an overview term
+public and private keys for communicating over an insecure channel
 
 \subsection{RSA}
+Chinese Remainder Theorem RSA Keys
 
 \section{Symmetric Encryption}
 
@@ -264,9 +270,9 @@ I shall also explain why some of the attacks are not able to be conducted on the
 
 \chapter{PKCS\#11 Functions - APDU analysis}
 
-In this chapter we analyse the APDU traces of 9 functions from the API. C\_sign and C\_verify were not included in this analysis as from analysis of the traces from the previous work on this card it was clear that both of these functions operated in a similar manner to C\_encrypt and C\_decrypt. C\_createObject was also omitted form this analysis, as the function is not used for security operations, and rather for the creation and storing of certificates and data.
+In this chapter we analyse the APDU traces of 9 functions from the API. C\_sign and C\_verify were not included in this analysis as from analysis of the traces from the previous work on this card it was clear that both of these functions operated in a similar manner to C\_encrypt and C\_decrypt. C\_createObject was also omitted form this analysis, as the function is not used for security operations, and rather for the creation and storing of certificates and data. The analysis will include a step by step guide of how the functions are broken down into command response pairs at the APDU level, and also suggest methods for attacking the card using this knowledge. 
 
-All of the traces are provided in appendix B, which will be referred to in brackets with the corresponding command number for ease of locating the steps analysed.
+All of the traces are provided in appendix B, and have been shortened to only include the parts which we deem to be the most important to the evaluation of how each function is broken down into APDU command response paris. However, the full traces for each function are given within the project directory. In the analysis to come we will refer to appendix B, with the corresponding command response pair in brackets to allow ease of locating the steps we analyse.
 
 
 \section{Initialization}
@@ -280,20 +286,27 @@ The first process before anything can occur on the card is the initialization. T
 None of these traces reveal sensitive information. But is required in order for the card to be able to operate and communicate with the API. The API is a generic library that works with many different hardware security modules created by the 'Athena smartcard solutions'. Hence this information is required by the library in order for it to operate correctly for the specific type of card.
 
 \section{C\_login}
-%refer to appendex B.2
+The login function has 5 main parts. The API locates the file control parameters to check if the retry counter is greater than 0. In the APDU trace this is highlighted in bold and has a value of AA. From there the PIN file is selected, a challenge is asked for by the card and a response is calculated from the knowledge of the PIN and the challenge. Once this is completed the security status of the card is cleared. This is done because every security operation requires a new login by the API. While the user only logs in once, at the APDU layer this occurs many times. These steps are listed below:\\
 
 \begin{enumerate}
 \item Open file control parameters for the PIN file (B.2 - command 10)
 \item Open the PIN file (B.2 command 11)
 \item Request challenge from card (B.2 - command 12)
 \item Verify PIN (B.2 - command 13)
-\item Clear security Status (B.2 - command 20)
+\item Clear security Status (B.2 - command 20)\\
 \end{enumerate}
+
+From evaluating multiple traces of the login, it is clear that the response calculated seems to have an element of randomness. From studying the traces alone, the method of calculating the response cannot be intuitively determined.
+
+While no immediate sensitive information is revealed in this trace as the challenge-response algorithm used for verifying a users PIN hides its value, successfully reverse engineering the protocol will all an attacker to calculate the users PIN given successful login trace.
+
+Furthermore, if an attacker can find a method for changing the file control parameter, it might be possible to reset the retry counter at the APDU level to allow an unlimited number of attempts of logging in.
 \section{C\_findObject}
-%refer to appendex B.3
 
 \begin{enumerate}
-\item
+\item Selects and opens 'cmapfile'. This stores all file locations for attributes of the keys (B.3 - command 32,33,34)
+\item Based on those locations, finds and opens the attribute file for the des3 key (B.3 - command 36)
+\item And also opens the last attribute file to determine there are no more keys (B.3 - command 38,39)
 \end{enumerate}
 
 \section{C\_generateKey}
@@ -1187,7 +1200,7 @@ COMMAND from API
 
 \end{Verbatim}
 
-\section{C\_login}
+ \section{C\_login}
 \begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
 
 
