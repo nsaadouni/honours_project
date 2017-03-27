@@ -298,7 +298,7 @@ The login function has 5 main components. The API locates the file control param
 
 From evaluating multiple traces of the login, it is clear that the response calculated seems to have an element of randomness. From studying the traces alone, the method of calculating the response cannot be intuitively determined.
 
-While no immediate sensitive information is revealed in this trace as the challenge-response algorithm used for verifying a users PIN hides its value, successfully reverse engineering the protocol will all an attacker to calculate the users PIN given successful login trace.
+While no immediate sensitive information is revealed in this trace as the challenge-response algorithm used for verifying a users PIN hides its value, successfully reverse engineering the protocol will allow an attacker to calculate the users PIN given successful login trace.
 
 Furthermore, if an attacker can find a method for changing the file control parameter, it might be possible to reset the retry counter at the APDU level to allow an unlimited number of attempts of logging in.
 \section{C\_findObject}
@@ -335,7 +335,7 @@ The generateKey function has 9 main components. 2 different secure messaging ses
 
 From this analysis of the communication trace it seems that the card is generating the initial bytes form a 'get challenge' request (within secure messaging) to generate the bytes which will be the key value. As both the generation of those bytes and the creation of the key file is completed using secure messaging, the value is not sent over in plain text. 
 
--- continue here!
+-- continue here! 
 
 \section{C\_generateKeyPair}
 %refer to appendex B.5

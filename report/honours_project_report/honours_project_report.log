@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.14)  27 MAR 2017 14:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.14)  27 MAR 2017 14:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -946,11 +946,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [61]
-[62] [63] (./honours_project_report.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+[62] [63] (./honours_project_report.aux) ) 
 Here is how much of TeX's memory you used:
  7536 strings out of 493085
  112284 string characters out of 6136916
@@ -959,20 +955,21 @@ Here is how much of TeX's memory you used:
  84711 words of font info for 88 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  43i,12n,40p,1221b,414s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/bera/fveb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-bera/fver8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/bera/fver8a.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/public/bera/fvmb8a.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/bera/fvmr8a.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/bera/fvmro8a.pfb></usr/share/texlive/texmf-dist/font
-s/type1/public/bera/fvsb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/bera/fvsr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/bera/fvsro8
-a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on honours_project_report.pdf (63 pages, 181657 bytes).
+{/usr/share/texlive/texmf-dist/fonts/
+enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/bera/fveb8a.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/bera/fver8a.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/bera/fver8a.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/public/bera/fvmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
+/bera/fvmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/bera/fvmro8a
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/bera/fvsb8a.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/bera/fvsr8a.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/bera/fvsro8a.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/t
+imes/utmri8a.pfb>
+Output written on honours_project_report.pdf (63 pages, 181655 bytes).
 PDF statistics:
  268 PDF objects out of 1000 (max. 8388607)
  185 compressed objects within 2 object streams
