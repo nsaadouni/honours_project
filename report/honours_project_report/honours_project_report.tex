@@ -417,27 +417,46 @@ Thus without the knowledge of the proprietary encoding of file directories we do
 
 
 \section{C\_destroyObject}
-%refer to appendex B.6
+
+we omitted the finding of the objects as that is the job of the findObject function.
+Authentication occurs before the deletion of the objects as well.
 
 \begin{enumerate}
-\item
+\item Select counter file for key attributes (B.6 - command 49)
+\item Update counter (B.6 - command 50)
+\item Select key file (B.6 - command 53)
+\item Delete key file (B.6 - command 54)
+\item Select key attribute file (B.6 - command 55)
+\item Delete key attribute file (B.6 - command 56)
 \end{enumerate}
 
+** tried opening the key file responded with '69 81' $\rightarrow$ command incompatible with file structure **\\
+commands 35, 36, 37 are present to show the key attribute file counter location, and its old value before it being updated.
 \section{C\_encrypt}
 %refer to appendex B.7
+% DES3-ECB encrypt
+
+**Authentication occurs before any security operations**
+This process actually happens twice. We omit this from the traces within the appendix. The reason for it occuring twice is because the API is written in C. The data coming back from the encryption is of an unknown size. And thus the first encryption call at the APDU level is used to find the length of the data. The second call saves the data. [This seems like a bad approach to use, but does not cause security issues]
 
 \begin{enumerate}
-\item
+\item Select key file (B.7 - command 52)
+\item Encrypt data (B.7 - command 53)
 \end{enumerate}
 
 \section{C\_decrypt}
-%refer to appendex B.8
+% DES3-ECB decrypt
+
+**Authentication occurs before any security operations**
+
+This process actually happens twice. We omit this from the traces within the appendix. The reason for it occuring twice is because the API is written in C. The data coming back from the encryption is of an unknown size. And thus the first encryption call at the APDU level is used to find the length of the data. The second call saves the data. [This seems like a bad approach to use, but does not cause security issues]
+
+There is an issue with the ECB decrypt. Removes the first 8 bytes for some reason. [this was mentioned in previous work as well.]
 
 \begin{enumerate}
-\item
+\item Select key file (B.8 - command 64)
+\item Decrypt data (B.8 - command 65)
 \end{enumerate}
-
-
 \section{C\_setAttribute}
 %refer to appendex B.9
 
@@ -1806,26 +1825,147 @@ COMMAND from API
 
 \section{C\_destroyObject}
 \begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
-t
+----- APDU command/response pair 35 -----
+00000000: 80 A4 08 00 08 3F 00 30  00 30 \textbf{01 03 40}           .....?.0.0..@
+
+00000000: 90 00                                             ..
+
+----- APDU command/response pair 36 -----
+00000000: 00 B0 00 00 00                                    .....
+
+00000000: 00 03 \textbf{03 40 01} 23 18 00  00 00 00 04 04 00 00 00  ...@.\#..........
+00000010: 00 01 00 00 01 01 00 02  00 00 01 00 00 03 10 00  ................
+00000020: 04 64 65 73 33 FF FF FF  FF FF FF FF FF FF FF FF  .des3...........
+00000030: FF FF FF FF FF FF FF FF  FF FF FF FF FF FF FF FF  ................
+00000040: FF FF FF FF FF FF FF FF  FF FF FF FF FF FF FF FF  ................
+00000050: FF FF FF FF FF FF FF FF  FF FF FF FF FF FF FF FF  ................
+00000060: FF 00 11 01 00 18 FF FF  FF FF FF FF FF FF FF FF  ................
+00000070: FF FF FF FF FF FF FF FF  FF FF FF FF FF FF 01 00  ................
+00000080: 00 00 04 15 00 00 00 01  02 10 00 01 01 FF FF FF  ................
+00000090: FF FF FF FF FF FF FF FF  FF FF FF FF FF FF FF FF  ................
+000000A0: FF FF FF FF FF FF FF FF  FF FF FF FF 01 03 30 00  ..............0.
+000000B0: 01 01 01 04 00 00 01 01  01 05 50 00 01 01 01 06  ..........P.....
+000000C0: 00 00 01 00 01 07 50 00  01 01 01 08 50 00 01 01  ......P.....P...
+000000D0: 01 0A 00 00 01 01 01 0C  10 00 01 00 01 10 10 00  ................
+000000E0: 00 FF FF FF FF FF FF FF  FF 01 11 10 00 00 FF FF  ................
+000000F0: FF FF FF FF FF FF 01 62  50 00 01 00 01 63 00 00  .......bP....c..
+00000100: 61 27                                             a'
+
+
+----- APDU command/response pair 37 -----
+00000000: 00 B0 01 00 00                                    .....
+
+00000000: 01 01 01 64 00 00 01 01  01 65 00 00 01 01 01 66  ...d.....e.....f
+00000010: 00 00 04 31 01 00 00 01  70 00 00 01 01 80 10 00  ...1....p.......
+00000020: 00 01 00 \textbf{97 03 97 03} 90  00                       .........
+
+----- APDU command/response pair 49 -----
+00000000: 80 A4 08 00 08 3F 00 30  00 30 \textbf{03 40 01}           .....?.0.0.@.
+
+00000000: 90 00 
+
+----- APDU command/response pair 50 -----
+00000000: 00 D6 00 04 04 \textbf{98 03 98  03}                       .........
+
+00000000: 90 00                                             ..
+
+----- APDU command/response pair 53 -----
+00000000: 80 A4 08 00 08 3F 00 30  00 30 \textbf{01 00 C1}           .....?.0.0...
+
+00000000: 90 00                                             ..
+
+
+----- APDU command/response pair 54 -----
+00000000: 00 E4 00 00                                       ....
+
+00000000: 90 00                                             ..
+
+
+----- APDU command/response pair 55 -----
+00000000: 80 A4 08 00 08 3F 00 30  00 30 \textbf{01 03 40}           .....?.0.0..@
+
+00000000: 90 00                                             ..
+
+
+----- APDU command/response pair 56 -----
+00000000: 00 E4 00 00                                       ....
+
+00000000: 90 00                                             ..
 \end{Verbatim}
 %\pagebreak
 
 \section{C\_encrypt}
 \begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
-t
+----- APDU command/response pair 52 -----
+00000000: 80 A4 08 00 08 3F 00 30  00 30 01 00 C1           .....?.0.0...
+
+00000000: 90 00                                             ..
+
+
+----- APDU command/response pair 53 -----
+00000000: 00 2A 82 05 13 80 81 10  54 65 73 74 53 74 72 69  .*......TestStri
+00000010: 6E 67 31 32 33 34 35 36  00                       ng123456.
+
+00000000: 82 10 B4 F0 97 B6 63 E4  68 7A 8B 00 4F DF 3A C1  ......c.hz..O.:.
+00000010: 49 9F 90 00                                       I...
 \end{Verbatim}
 %\pagebreak
 
 \section{C\_decrypt}
 \begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
-t
+----- APDU command/response pair 64 -----
+00000000: 80 A4 08 00 08 3F 00 30  00 30 01 00 C1           .....?.0.0...
+
+00000000: 90 00                                             ..
+
+
+----- APDU command/response pair 65 -----
+00000000: 00 2A 80 05 0B 82 81 08  8B 00 4F DF 3A C1 49 9F  .*........O.:.I.
+00000010: 00                                                .
+
+00000000: 80 08 6E 67 31 32 33 34  35 36 90 00              ..ng123456..
 \end{Verbatim}
 %\pagebreak
 
 
 \section{C\_setAttribute}
 \begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
-t
+----- APDU command/response pair 51 -----
+00000000: 80 A4 08 00 08 3F 00 30  00 30 01 03 40           .....?.0.0..@
+
+00000000: 90 00                                             ..
+
+
+----- APDU command/response pair 52 -----
+00000000: 90 32 00 03 FF 01 27 00  00 62 82 01 27 00 03 03  .2....'..b..'...
+00000010: 40 01 23 18 00 00 00 00  04 04 00 00 00 00 01 00  @.\#.............
+00000020: 00 01 01 00 02 00 00 01  00 00 03 10 00 07 63 68  ..............ch
+00000030: 61 6E 67 65 64 FF FF FF  FF FF FF FF FF FF FF FF  anged...........
+00000040: FF FF FF FF FF FF FF FF  FF FF FF FF FF FF FF FF  ................
+00000050: FF FF FF FF FF FF FF FF  FF FF FF FF FF FF FF FF  ................
+00000060: FF FF FF FF FF FF FF FF  FF FF FF FF FF FF 00 11  ................
+00000070: 01 00 18 FF FF FF FF FF  FF FF FF FF FF FF FF FF  ................
+00000080: FF FF FF FF FF FF FF FF  FF FF FF 01 00 00 00 04  ................
+00000090: 15 00 00 00 01 02 10 00  01 01 FF FF FF FF FF FF  ................
+000000A0: FF FF FF FF FF FF FF FF  FF FF FF FF FF FF FF FF  ................
+000000B0: FF FF FF FF FF FF FF FF  FF 01 03 30 00 01 01 01  ...........0....
+000000C0: 04 00 00 01 01 01 05 50  00 01 01 01 06 00 00 01  .......P........
+000000D0: 00 01 07 50 00 01 01 01  08 50 00 01 01 01 0A 00  ...P.....P......
+000000E0: 00 01 01 01 0C 10 00 01  00 01 10 10 00 00 FF FF  ................
+000000F0: FF FF FF FF FF FF 01 11  10 00 00 FF FF FF FF FF  ................
+00000100: FF FF FF 01                                       ....
+
+00000000: 90 00                                             ..
+
+
+----- APDU command/response pair 53 -----
+00000000: 80 32 00 03 30 62 50 00  01 00 01 63 00 00 01 01  .2..0bP....c....
+00000010: 01 64 00 00 01 01 01 65  00 00 01 01 01 66 00 00  .d.....e.....f..
+00000020: 04 31 01 00 00 01 70 00  00 01 01 80 10 00 00 01  .1....p.........
+00000030: 00 99 03 99 03                                    .....
+
+00000000: 90 00                                             ..
+
 \end{Verbatim}
 %\pagebreak
 

@@ -66,7 +66,7 @@ def generate_DES3(id, label, private=False):
         (CKA_ID, id),
         (CKA_PRIVATE, private),
         (CKA_SENSITIVE, True),
-        (CKA_ENCRYPT, False),
+        (CKA_ENCRYPT, True),
         (CKA_DECRYPT, True),
         (CKA_SIGN, True),
         (CKA_VERIFY, True),
@@ -294,8 +294,8 @@ print '\n'
 # findObjectsInit('\x01', 'des3')
 # keyobject = finaliseObject()
 
-# encrypted_text= encrypt('\x05', 'ef', CKM_DES_ECB)
-# print encrypted_text
+encrypted_text= encrypt('\x10', 'des test', CKM_DES_ECB)
+print encrypted_text
 # decrypted_text = decrypt('\x00', 'aes' , CKM_AES_ECB)
 # print decrypted_text
 
@@ -344,7 +344,7 @@ print '\n'
 # print 'test'
 # print session.unwrapKey(objects[1],key_to_unwrap, template)
 
-# generate_DES3('\x15', 'ef')
+# generate_DES3('\x10', 'des test')
 # encrypted_text= encrypt('\x15', 'ef', CKM_DES_ECB)
 # print encrypted_text
 
