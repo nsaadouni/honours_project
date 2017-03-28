@@ -269,14 +269,14 @@ def attribute_hex_values():
 #                   Running Area                       #
 ########################################################
 
-# arg = int(sys.argv[1])
-# lib = "/usr/lib/x64-athena/libASEP11.so"
-# pkcs11 = PyKCS11Lib()
-# pkcs11.load(lib)
-# pin = '0000000000000000'
-# slot = pkcs11.getSlotList()[arg]
-# session = pkcs11.openSession(slot, LowLevel.CKF_SERIAL_SESSION | LowLevel.CKF_RW_SESSION)
-# session.login(pin,1)
+arg = int(sys.argv[1])
+lib = "/usr/lib/x64-athena/libASEP11.so"
+pkcs11 = PyKCS11Lib()
+pkcs11.load(lib)
+pin = '0000000000000000'
+slot = pkcs11.getSlotList()[arg]
+session = pkcs11.openSession(slot, LowLevel.CKF_SERIAL_SESSION | LowLevel.CKF_RW_SESSION)
+session.login(pin,1)
 
 
 attribute_hex_values()
@@ -348,10 +348,10 @@ print '\n'
 # encrypted_text= encrypt('\x15', 'ef', CKM_DES_ECB)
 # print encrypted_text
 
-# objects = session.findObjects()
-# for i in objects:
-#     print i
-#     print ''
+objects = session.findObjects()
+for i in objects:
+    print i
+    print ''
 
 
 
