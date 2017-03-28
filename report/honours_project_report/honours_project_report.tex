@@ -339,13 +339,13 @@ From this analysis of the communication trace it seems that the card is requeste
 If this assumption turns out to be correct it posses as quite a significant vulnerability that could be exploited. If the protocol for secure messaging can be reversed engineered, then we can inject our own bytes when the the request challenge is sent to the card. Or simply we can use a man in the middle attack to generate two sets of session keys. One with the attacker and the API, and one with the attacker and the smartcard. The bytes can be sent to the card in the correct format, however the attacker will also be in knowledge of the key value. This should never be the case when the attribute CKA\_Extractable is set to false.
 
 \section{C\_generateKeyPair}
-%refer to appendex B.5
-This saves the CRT instead of the private key.
-explain the structure 
+\textit{[For this trace we generate an RSA-1024 public/private key pair]}
+
+We find 15 main components in this generation of the RSA public and private key pair. 7 components transfer data that are wrapped within an ASN.1 BER encoding [?]. These are to transfer public key information and what we believe to be file location parameters. The steps listed below give the ordering of the most important commands, and below that we give the decoding of the ASN.1 BER encoding of those 8 commands that we have found.\\
 
 \begin{enumerate}
 \item Create public key attribute file (B.5 - command 54)
-\item Add public key attributes to file (B.5 - commands 56, 57)
+\item Add public key attributes to file [inc. public exponent] (B.5 - commands 56, 57)
 \item Create private key attribute file (B.5 - command 59)
 \item Add private key attributes to file (B.5 - commands 61, 62)
 \item Create Private CTR RSA Key file (B.5 - command 64)
@@ -354,10 +354,32 @@ explain the structure
 \item Select temporary file (B.5 - command 67)
 \item Get RSA public key (B.5 - command 68)
 \item Select parent folder of private key attribute file (B.5 - command 69)
-\item Create new file, with public modulus and additional info (B.5 - command 70)
+\item Create new file, with public modulus and additional info (B.5 - command 70
+\item Select temporary file (B.5 - command 71)
+\item Get RSA public key (B.5 - command 72)
+\item Select public attribute file (B.5 - command 73)
+\item Add public modulus to attribute file (B.5 - command 74)
+\item The rest of the communication we believe to be resetting the temporary file, and adding file location information to file control parameters of parent files. (These commands are not included in the traces within the appendix)\\\\
 \end{enumerate}
 
-% This is command 64
+The following are the ASN.1 BER decodings of the commands that have these wrapping. An online tool was used in the aid of decoding these hexadecimal bytes [?]. We provide references to the above numbering of the commands, and the appexidx references as well.\\
+
+\textbf{1. Create public key attribute file (B.5 - command 54)}\\
+Application 2(4 elem)\\
+$[10]$ (1 byte) 04\\
+$[03]$ (2 byte) 01 40\\
+$[00]$ (2 byte) 01 A7\\
+$[06]$ (8 byte) 00 20 00 20 00 20 00 20\\
+
+\textbf{3. Create private key attribute file (B.5 - command 59)}\\
+Application 2(5 elem)\\
+$[10]$ (1 byte) 04\\
+$[03]$ (2 byte) 02 00\\
+$[00]$ (2 byte) 01 23\\
+$[04]$ kx s0\\
+$[06]$ (8 byte) 00 00 00 20 00 20 00 20\\
+
+\textbf{5. Create private CTR RSA key file (B.5 - command 64)}\\
 Application 2(6 elem)\\
 $[10]$ (1 byte) 04\\
 $[03]$ (2 byte) 00 41\\
@@ -366,7 +388,17 @@ $[05]$ (5 byte) 05 0C 20 00 A3\\
 $[06]$ (14 byte) 00 00 00 FF 00 FF 00 20 00 20 00 00 00 20\\
 Application 17(0 elem)\\
 
-% This is command 70
+\textbf{7. Generate RSA key pair (B.5 - command 66)}\\
+$[12]$ (2 elem)\\
+$[00]$ (1 byte) 06\\
+$[01]$ (3 byte) 01 00 01\\
+
+\textbf{9,13. Get RSA public key (B.5 - commands 68, 72)}\\
+Application 73(2 elem)\\
+$[01]$ (128 byte) D1 EF 7C A5 06 A1 87 FD 5F 13 5B 25 B7 16..\\
+$[02]$ (3 byte) 01 00 01\\
+
+\textbf{11. Create new file with public modulus and additional info (B.5 - command 70)}\\
 Application 2(6 elem)\\
 $[10]$ (1 byte) 04\\
 $[03]$ (2 byte) 00 81\\
@@ -375,7 +407,14 @@ $[05]$ (5 byte) 05 08 20 00 A3\\
 $[06]$ (14 byte) 00 00 00 FF 00 FF 00 20 00 20 00 00 00 20\\
 Application 17(2 elem)\\
 $[16]$ (3 byte) 01 00 01\\
-$[17]$ (128 byte) C7 8D 83 B9 FB B8 54 26 95 71 78 97 B4 09 07 1C E2 ...\\
+$[17]$ (128 byte) D1 EF 7C A5 06 A1 87 FD 5F 13 5B 25 B7...\\
+
+RSA key pair generation is supported on the card. A dedicated processor is used for this, hence the need to change to temporary files to access the generated key and then store the public information. We see no sensitive information within the traces that are outputted in plain text. We thought that the additional information provided that is wrapped within the ASN.1 BER encoding, especially for \textbf{5}, might have exported the private key and the additional parameters required for CRT RSA keys [?]. To test this theory we deleted the generated key and generated another. The public modulus did change, however the remaining parameters did not. With a change in the public modulus, a change in the private exponent and therefore CRT parameters would also occur. Thus we concluded from that the private key is not exported out in plain text.
+
+It seems these parameters that are listed above are used used to save the location of the RSA private key, and the public key for that matter. We have not been able to intuitively decode the proprietary encoding of file directories to locate the private key. As we will see later in the 'unwrap' function when we utilise the private key, this occurs within secure messaging and therefore cannot find the location of it from that either.
+
+Thus without the knowledge of the proprietary encoding of file directories we do not see any vulnerabilities within the function as of yet. Studying multiple rsa key generations (without deleting the first keys) might show differences in these decodings which could lead to finding the location of the private key.
+
 
 \section{C\_destroyObject}
 %refer to appendex B.6
