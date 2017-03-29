@@ -39,9 +39,10 @@
 \contentsline {section}{\numberline {6.5}C\_generateKeyPair}{24}
 \contentsline {section}{\numberline {6.6}C\_destroyObject}{27}
 \contentsline {section}{\numberline {6.7}C\_encrypt}{28}
-\contentsline {section}{\numberline {6.8}C\_decrypt}{28}
-\contentsline {section}{\numberline {6.9}C\_setAttribute}{28}
-\contentsline {section}{\numberline {6.10}C\_unwrap}{29}
+\contentsline {section}{\numberline {6.8}C\_decrypt}{29}
+\contentsline {section}{\numberline {6.9}C\_setAttribute}{29}
+\contentsline {section}{\numberline {6.10}C\_unwrap}{30}
+\contentsline {section}{\numberline {6.11}C\_wrap}{30}
 \contentsline {chapter}{\numberline {7}Attempts To Attack At the APDU Level}{31}
 \contentsline {section}{\numberline {7.1}Reverse Engineering PIN Authentication Protocol}{32}
 \contentsline {section}{\numberline {7.2}Reverse Engineering PIN/password Authentication 1st draft}{32}

@@ -294,8 +294,8 @@ print '\n'
 # findObjectsInit('\x01', 'des3')
 # keyobject = finaliseObject()
 
-encrypted_text= encrypt('\x10', 'des test', CKM_DES_ECB)
-print encrypted_text
+# encrypted_text= encrypt('\x10', 'des test', CKM_DES_ECB)
+# print encrypted_text
 # decrypted_text = decrypt('\x00', 'aes' , CKM_AES_ECB)
 # print decrypted_text
 
@@ -348,10 +348,15 @@ print encrypted_text
 # encrypted_text= encrypt('\x15', 'ef', CKM_DES_ECB)
 # print encrypted_text
 
-objects = session.findObjects()
-for i in objects:
-    print i
-    print ''
+
+# generate_DES3('\x10', 'des test')
+encrypted_text= encrypt('\x10', 'des test')
+print encrypted_text
+
+# objects = session.findObjects()
+# for i in objects:
+#     print i
+#     print ''
 
 
 

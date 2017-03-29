@@ -273,7 +273,7 @@ I shall also explain why some of the attacks are not able to be conducted on the
 
 In this chapter we analyse the APDU traces of 9 functions from the API. C\_sign and C\_verify were not included in this analysis as from analysis of the traces from the previous work on this card it was clear that both of these functions operated in a similar manner to C\_encrypt and C\_decrypt. C\_createObject was also omitted form this analysis, as the function is not used for security operations, and rather for the creation and storing of certificates and data. The analysis will include a step by step guide of how the functions are broken down into command response pairs at the APDU level, and also suggest methods for attacking the card using this knowledge. 
 
-All of the traces are provided in appendix B, and have been shortened to only include the parts which we deem to be the most important to the evaluation of how each function is broken down into APDU command response paris. However, the full traces for each function are given within the project directory. In the analysis to come we will refer to appendix B, with the corresponding command response pair in brackets to allow ease of locating the steps we analyse.
+All of the traces are provided in appendix B, and have been shortened to only include the parts which we deem to be the most important to the evaluation of how each function is broken down into APDU command response pairs. However, the full traces for each function are given within the project directory. In the analysis to come we will refer to appendix B, with the corresponding command response pair in brackets to allow ease of locating the steps we analyse.
 
 
 \section{Initialization}
@@ -417,9 +417,9 @@ Thus without the knowledge of the proprietary encoding of file directories we do
 
 
 \section{C\_destroyObject}
+\textit{[For this trace we delete/destroy a triple DES key and its attribute file]}
 
-we omitted the finding of the objects as that is the job of the findObject function.
-Authentication occurs before the deletion of the objects as well.
+In the analysis of the destroyObject function we omitted the finding of the objects as that is the job of the findObject function and the authentication processes. However these are both crucial parts to the functions correct operation. Once the key and attribute files have been located and the user is authenticated with the card, there are 6 main components to the destruction of the object. These are listed below:\\
 
 \begin{enumerate}
 \item Select counter file for key attributes (B.6 - command 49)
@@ -430,11 +430,29 @@ Authentication occurs before the deletion of the objects as well.
 \item Delete key attribute file (B.6 - command 56)
 \end{enumerate}
 
-** tried opening the key file responded with '69 81' $\rightarrow$ command incompatible with file structure **\\
-commands 35, 36, 37 are present to show the key attribute file counter location, and its old value before it being updated.
+We believe a counter file keeps track of how many keys have been created and deleted in a certain path within the cards operating system. We are unsure on its specific use as we have only seen it being updating upon deletion of an object, and the new counter value being appended to the new keys attributes (the one created after deleting an object). The original and updated counter value can be seen at B.6 - command 37 and 50 respectively.
+
+Once this has been done the key attribute file and the key file are selected and deleted using the inter-industry command 'DELETE FILE'. This is the first time we have seen the location of a key file been accessed without secure messaging. Thus we thought this might present a vulnerability which would allow us to open and read key values at the APDU level. 
+
+Hence we attempted to use the 'SELECT FILE' command and then 'READ BINARY' command to try and read the files data. This resulted in an error message = '69 81', meaning the command is incompatible with the file structure. With this in mind we decided to try the other command which is 'OPEN FILE CONTROL PARAMETERS' which did successfully work. The output was wrapped in an ASN.1 BER encoding, thus we decoded it which gave the following result:
+
+Application 2(6 elem)\\
+$[07]$ (1 byte) 08\\
+$[03]$ (2 byte) 00 C1\\
+$[00]$ (2 byte) 00 18\\
+$[10]$ (1 byte) 04\\
+$[06]$ (14 byte) 00 00 00 FF 00 FF 00 00 00 00 00 00 00 00\\
+$[05]$ (4 byte) 01 0C 10 00\\
+
+This seemed quite similar to what we noticed with the RSA private key analysis in the previous section. There is not present a 16 byte key that could be used for triple DES. Rather it seems that these are more pointers to more files that could hold the keys value. All security polices that we have read for 'Athena smart-card solutions' suggest that keys are held in a non-readable memory to outside actors, and only when required are encrypted internally (by the cards OS) and stored in the EEPROM for them to be used for the security operation required of them. 
+
+Thus we did not find any security vulnerabilities from this function.
+
 \section{C\_encrypt}
-%refer to appendex B.7
-% DES3-ECB encrypt
+\textit{[For this function we use a triple DES key to encrypt a string 'TestString123456'] using ECB mode}
+
+
+Just like 
 
 **Authentication occurs before any security operations**
 This process actually happens twice. We omit this from the traces within the appendix. The reason for it occuring twice is because the API is written in C. The data coming back from the encryption is of an unknown size. And thus the first encryption call at the APDU level is used to find the length of the data. The second call saves the data. [This seems like a bad approach to use, but does not cause security issues]
@@ -480,7 +498,7 @@ just state that the function is still supported by the card at the APDU level.
 If we can crack secure messaging, fully understand the commands for unwrap, then we can get wrap to work and find private key for RSA keys!
 
 \begin{enumerate}
-\item
+\item Wrap key (just entered the string '12345678') (B.11 - command 1)
 \end{enumerate}
 
 
@@ -491,6 +509,10 @@ If we can crack secure messaging, fully understand the commands for unwrap, then
 \chapter{Attempts To Attack At the APDU Level}
 
 In this chapter we explain the design, implementation and results of the attacks we attempted at the APDU level. The two main attacks we focus on are reverse engineering the PIN authentication protocol, and reverse engineering the secure messaging protocol. The motivations behind this come from literature stated in chapter X.
+
+------------------------------------------------------------------------------------------------------\\
+** Here give an overview of each functions possible vulnerabilities and present the motivations behind the attacks we choose. **\\
+------------------------------------------------------------------------------------------------------
 
 The smartcard we analyse uses a challenge-response algorithm to prevent the PIN being sent over in plain text. This is an improvement upon other card vendors implementations whereby they do send the PIN over in plain text for it to be verified. Successfully reverse engineering this challenge-response protocol will allow an attacker to calculate the victims PIN given one successful login trace. Furthermore, it will also remove the first dependency on the use of the API. Being able to communicate to the card directly gives an attacker a higher capability. But as of right now, since we are unaware of how the login occurs the API must be used.
 
