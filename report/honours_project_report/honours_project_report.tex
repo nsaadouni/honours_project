@@ -449,50 +449,83 @@ This seemed quite similar to what we noticed with the RSA private key analysis i
 Thus we did not find any security vulnerabilities from this function.
 
 \section{C\_encrypt}
-\textit{[For this function we use a triple DES key to encrypt a string 'TestString123456'] using ECB mode}
+\textit{[For this function we use a triple DES key to encrypt a string 'TestString123456'] using ECB mode]}
 
 
-Just like 
+Just like the destroyObject function we omit the APDU communication for login authentication and finding the object to use for encryption. These are still essential parts to the correct use of the encrypt function though. 
 
-**Authentication occurs before any security operations**
-This process actually happens twice. We omit this from the traces within the appendix. The reason for it occuring twice is because the API is written in C. The data coming back from the encryption is of an unknown size. And thus the first encryption call at the APDU level is used to find the length of the data. The second call saves the data. [This seems like a bad approach to use, but does not cause security issues]
+The commands given for this trace are actually repeated and therefore occur twice for one encrpytion of a given string. This is due to PKCS \#11 library being programmed in C by the card manufactures. The resulting length of the encryption is thought to be of an undetermined size. (For block ciphers and even RSA this can be pre-calculated given the input length) Therefore the implementation runs the encryption twice, the first run is to calculate the resulting length of the encryption, and the second result will save the result in a buffer that has been pre-allocated the correct amount number of bytes in a char array.
+
+This function only has two main components to it, these are listed below:\\
 
 \begin{enumerate}
 \item Select key file (B.7 - command 52)
-\item Encrypt data (B.7 - command 53)
+\item Encrypt data (B.7 - command 53)\\
 \end{enumerate}
 
+The key file is selected and then the encryption APDU command is called with the string in the data field. As stated in destroyObject function analysis, despite the key file location being revealed here. It is not a file that can be opened nor reveals the value of the key. Instead is a pointer to other locations in memory that hold the key value. We assume that only the operating system has access to these locations but are unable to verify this hypothesis.
+
+Due to this we see no vulnerabilities that could be exploited.
+
 \section{C\_decrypt}
-% DES3-ECB decrypt
+\textit{For this trace we use the same triple DES key to decrypt the message we previously encrypted}
 
-**Authentication occurs before any security operations**
+Just like the destroyObject and encrypt function we omit the APDU communication for login authentication and finding the object to use for decryption. These are still essential parts to the correct use of the decrypt function though. 
 
-This process actually happens twice. We omit this from the traces within the appendix. The reason for it occuring twice is because the API is written in C. The data coming back from the encryption is of an unknown size. And thus the first encryption call at the APDU level is used to find the length of the data. The second call saves the data. [This seems like a bad approach to use, but does not cause security issues]
-
-There is an issue with the ECB decrypt. Removes the first 8 bytes for some reason. [this was mentioned in previous work as well.]
+The decrypt function operates nearly an identical manner to the encrypt function, just simply changes one byte in command 65. The key is loaded and then the decrypt APDU command is sent, with the encrypted string placed in the data field. The commands are listed below:\\
 
 \begin{enumerate}
 \item Select key file (B.8 - command 64)
-\item Decrypt data (B.8 - command 65)
+\item Decrypt data (B.8 - command 65)\\
 \end{enumerate}
+
+As the decrypt function operates so similarly to the encrypt function, we saw no vulnerabilities present here as well. However we did notice the implementation flaw that had been picked up within previous work. For some reason the first 8 bytes are removed from the encrypted data. This therefore only decrypts and returns the second 8 bytes. As this does not present a security vulnerability, and rather is an issue with the functionality of the decrypt function, we do not analyse it any further.
+
 \section{C\_setAttribute}
-%refer to appendex B.9
-% DES3 key label changed from 'des3' -> 'changed'
-authentication and findObject steps are skipped. Both are required though.
+\textit{[For this trace we modify the label of the triple DES key from 'des3' to 'changed']}
+
+As we did in the previous 3 functions we omit the login authentication and finding of the object. We only present the commands that are used to alter the attribute we tested. There were only 2 main components for this. The first one selected the attribute file, and the following 2 commands update the whole file to include the new name of the label to the key. Command chaining was used as the number of bytes within the attribute file exceeded the limit of 256. Command chaining is indicated by the use of '90' instead of '80' as the CLA byte. The commands are listed below:\\
 
 \begin{enumerate}
 \item Select key attribute file (B.9 - command 51)
-\item Alter attribute file with the change in the label name (B.9 - commands 52,53)
+\item Alter attribute file with the change in the label name (B.9 - commands 52,53)\\
 \end{enumerate}
 
-command chaining is used in 52 to state that 53 still needs to come in order to complete the change.
+Here we notice that at the APDU level attributes can be changed as long as a user is logged in. (We have not tested doing this without being logged in, but might be possible) This is a vulnerability that was discovered in previous work. With the main focus on changing the attribute values of CKA\_sensitive and CKA\_extractable from false to true. The change in this direction is forbidden by the PKCS \#11 API, however this can be conducted at the APDU layer. As stated in the literature review, this had been carried out and due to the split between attribute files and key value files, there was no noticeable difference. Despite those attributes being set to True, the key value could still not be revealed.
+
+Thus, will there is a vulnerability present here. It does not cause a major security issue, in the sense that the key value is still stored securely.
 
 
 \section{C\_unwrap}
-%refer to appendex B.10
+\textit{[For this trace we used an RSA public key to encrypt a tripe DES key value = 12345678. With its encryption saved, we created a template and used the RSA private key to unwrap the key value and template, to save the key on the card]}
+
+We omit the RSA encryption of the key, login authentication and finding the objects from the communication traces. We only present the unwrapping of the key and its template to form a new key that will be saved on the card.
+
+There are 10 main components involved in the unwrapping of a key. 2 different secure messaging sessions are used (just like in the generateKey function). These first secure messasging session is used to unwrap the encrypted key into a temporary file. The second secure messaging session is used to save that key into a key file. This comes after the attribute file has been created in between these two. The order of the commands are listed below:\\
+
+\begin{enumerate}
+\item Open secure messaging (B.10 - command 92, 93, 94)
+\item Select a file [the file location is encrypted and therefore unknown] (B.10 - command 95)
+\item Unwrap key and attributes (B.10 - command 96)
+\item Close secure messaging (B.10 - command 97)
+\item Select key attribute file (B.10 - command 119)
+\item Add key attributes to file (B.10 - command 120, 121)
+\item Open secure messaging (B.10 - command 122, 123, 124)
+\item Select the key file directory (B.10 - command 125)
+\item Create key value file (B.10 - command 126)
+\item Close secure messaging (B.10 - command 127)\\
+\end{enumerate}
+
+In a scenario were we are not already in the knowledge of the key value, the secure messaging sessions are the main vulnerability we would wish to try and exploit here. While the key is not exported at the APDU layer in plain text. A successful reverse engineering of the secure messaging session, would allow an attacker to exploit it, inject his own session keys and decrypt the key value that is being stored. This was mentioned in the generateKey function analysis.
+
+Furthermore an attacker could also modify the attributes on the fly if the attacker was able to mount a man in the middle attack of the attributes of the key as they are being created. We did state that this made little difference to exporting the key value once the attributes had been set, however while the key is being generated is different. This would export the key. But is an attack that requires to be mounted as the key is being unwrapped, or generated in the generateKey function. The attacks that would be more useful is being able to extract the key value once it is already saved within the card.
+
+
 
 \section{C\_wrap}
 %refer to appendix B.11
+
+Do this tomorrow morning!
 
 just state that the function is still supported by the card at the APDU level.
 If we can crack secure messaging, fully understand the commands for unwrap, then we can get wrap to work and find private key for RSA keys!
@@ -2080,31 +2113,6 @@ COMMAND from API
 00000000: 90 00                                             ..
 
 
------ APDU command/response pair 115 -----
-00000000: 80 A4 08 00 08 3F 00 30  00 30 03 40 01           .....?.0.0.@.
-
-00000000: 90 00                                             ..
-
-
------ APDU command/response pair 116 -----
-00000000: 00 D6 00 04 04 B0 03 B0  03                       .........
-
-00000000: 90 00                                             ..
-
-
------ APDU command/response pair 117 -----
-00000000: 80 A4 08 00 06 3F 00 30  00 30 01                 .....?.0.0.
-
-00000000: 90 00                                             ..
-
-
------ APDU command/response pair 118 -----
-00000000: 00 E0 01 00 18 62 81 15  8A 01 04 83 02 03 41 80  .....b........A.
-00000010: 02 01 27 86 08 00 00 00  00 00 00 00 00           ..'..........
-
-00000000: 90 00                                             ..
-
-
 ----- APDU command/response pair 119 -----
 00000000: 80 A4 08 00 08 3F 00 30  00 30 01 03 41           .....?.0.0..A
 
@@ -2200,6 +2208,13 @@ COMMAND from API
 00000040: E7 B3                                             ..
 
 00000000: 99 02 90 00 8E 08 23 E5  DF 34 11 21 87 1C 90 00  ......\#..4.!....
+
+
+----- APDU command/response pair 127 -----
+00000000: 80 86 FF FF                                       ....
+
+00000000: 90 00                                             ..
+
 \end{Verbatim}
 %\pagebreak
 
