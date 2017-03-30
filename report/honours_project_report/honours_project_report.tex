@@ -525,14 +525,31 @@ Furthermore an attacker could also modify the attributes on the fly if the attac
 \section{C\_wrap}
 %refer to appendix B.11
 
-Do this tomorrow morning!
+The Tookan attack was mentioned within the literature review. It is an attack at the API level whereby one key can be given wrapping and decryption functionalities within its attributes. This allowed for any key (no matter the attributes) to be wrapped, exported out of the card, and then decrypted by the same key, and have its key value in plain text. This vulnerability bypassed all controls that the attributes of a key should provide. Due to this vulnerability discovery, we assume that 'Athena smartcard solutions' decided to remove the ability to wrap keys completely. This assumption came from that fact that requesting any key to wrap another key at the API level caused an error: \textit{CKR\_Function\_Not\_Supported}.
 
-just state that the function is still supported by the card at the APDU level.
-If we can crack secure messaging, fully understand the commands for unwrap, then we can get wrap to work and find private key for RSA keys!
+From analysing table 2.1 (section 2.24), we noticed a correlation between the P1 and P2 parameters for the APDU commands for encryption, decryption and unwrapping. These values are the following:
 
+\begin{table}[H]
+\begin{tabular}{|c|c|l|}
+\hline
+P1 & P2 & Command\\
+\hline
+82 & 0E & encrypt\\
+80 & 0E & decrypt\\
+80 & 0A & unwrap\\
+\hline
+\end{tabular}
+\end{table}
+
+The CLA and and INS bytes are identical for all of the commands. From this we inferred that if the wrap APDU command were to still exist and it is only the API that has been modified to refuse to send the wrap command and instead throw an error. That the command for wrapping at the APDU level would be: \textbf{00 2a 82 0a L Data 00}. Were L is the length of the data, and the data is the key to be wrapped. 
+
+We ran a simple test to see if this command operates on the card:
 \begin{enumerate}
-\item Wrap key (just entered the string '12345678') (B.11 - command 1)
+\item Wrap key (just entered the string '12345678') (B.11 - command 1)\\
 \end{enumerate}
+
+
+The result of the test was an APDU level error. '6A 80', meaning the parameters within the data field are incorrect. Suggesting that the command does exist and most likely corresponds to the wrap function. The data field of unwrap is encrypted, as it is used within secure messaging. However if this was reversed engineered and we could understand the data field of the unwrap command, it is highly likely that we would be able to create the correct data field for the wrap command. This would allow us to bypass all attribute controls of keys at the API level, and implement the Tookan attack at the APDU level.
 
 
 
@@ -2221,8 +2238,8 @@ COMMAND from API
 \section{C\_wrap}
 \begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
 Enter command (spaced integers)
+00 2A 82  0A 08 1E 1F 20 22 23 24 25 26 00 (hexadecimals)
 00 42 130 10 08 30 31 32 34 35 36 37 38 00 (integers)
-00 2a 82  0a 08 1e 1f 20 22 23 24 25 26 00 (hexadecimals)
 command changed!
 
 RESPONSE
