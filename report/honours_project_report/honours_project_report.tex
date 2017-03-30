@@ -271,10 +271,11 @@ I shall also explain why some of the attacks are not able to be conducted on the
 
 \chapter{PKCS \#11 Functions - APDU analysis}
 
-In this chapter we analyse the APDU traces of 9 functions from the API. C\_sign and C\_verify were not included in this analysis as from analysis of the traces from the previous work on this card it was clear that both of these functions operated in a similar manner to C\_encrypt and C\_decrypt. C\_createObject was also omitted form this analysis, as the function is not used for security operations, and rather for the creation and storing of certificates and data. The analysis will include a step by step guide of how the functions are broken down into command response pairs at the APDU level, and also suggest methods for attacking the card using this knowledge. 
+In this chapter we analyse the APDU traces of 9 functions from the PKCS \#11 API. C\_sign and C\_verify were not included in this analysis as from the traces of the previous work on this card it was clear that both of these functions operated in a similar manner to C\_encrypt and C\_decrypt. C\_createObject was also omitted form this analysis, as the function is not used for security operations, and rather for the creation and storing of certificates and data. The analysis will include a step by step guide of how the functions are broken down into command response pairs at the APDU level, and also suggest methods for attacking the card using this knowledge. 
 
 All of the traces are provided in appendix B, and have been shortened to only include the parts which we deem to be the most important to the evaluation of how each function is broken down into APDU command response pairs. However, the full traces for each function are given within the project directory. In the analysis to come we will refer to appendix B, with the corresponding command response pair in brackets to allow ease of locating the steps we analyse.
 
+\textit{To prevent repetition within each functions analysis and within the appendix, we list the dependencies (other functions that must be run before hand) at the start of each functions analysis, if it is required. And then omit the dependencies from the appendix and explanation of the given function.}
 
 \section{Initialization}
 The first process before anything can occur on the card is the initialization. This occurs as soon as a session is opened with the card. The process has the following steps:
@@ -287,6 +288,10 @@ The first process before anything can occur on the card is the initialization. T
 None of these traces reveal sensitive information. But is required in order for the card to be able to operate and communicate with the API. The API is a generic library that works with many different hardware security modules created by the 'Athena smartcard solutions'. Hence this information is required by the library in order for it to operate correctly for the specific type of card.
 
 \section{C\_login}
+
+\textit{Function dependencies $\rightarrow$ [Initialization]}\\
+
+
 The login function has 5 main components. The API locates the file control parameters to check if the retry counter is greater than 0. In the APDU trace this is highlighted in bold and has a value of AA. From there the PIN file is selected, a challenge is asked for by the card and a response is calculated from the knowledge of the PIN and the challenge. Once this is completed the security status of the card is cleared. This is done because every security operation requires a new login by the API. While the user only logs in once, at the APDU layer this occurs many times. These steps are listed below:\\
 
 \begin{enumerate}
@@ -305,20 +310,25 @@ Furthermore, if an attacker can find a method for changing the file control para
 \section{C\_findObject}
 \textit{[For this trace to show meaningful information we pre-loaded a triple des key onto the card. The label of the key was 'des3' with id '01']}
 
-The findObjects functions is split into 3 main components. First all the attribute files are listed that are stored on the card. The card has a file named 'cmapfile' that stores these locations. Using the data saved in this file, the API can locate the directory of each attribute file to load it into the API. A final file is opened that is zeroized, which dictates that no more attribute files for keys are present on the card. These steps are listed below:\\
+\textit{Function dependencies $\rightarrow$ [Initialization, Login]}\\
+
+
+The findObjects function is split into 3 main components. First a cmapfile is accessed. This file stores the location of key attribute files. Following this attribute files are accessed; They store all the information regarding a specific keys attributes (listed in section 2.1.2). And finally the last file is opened. This file is zeroized, which dictates that no more attribute files for keys are present on the card. These steps are listed below:\\
 
 \begin{enumerate}
-\item Selects and opens 'cmapfile' [List files command]. This stores all file locations for attributes of the keys (B.3 - command 32, 33, 34)
-\item Based on those locations, finds and opens the attribute file for the des3 key (B.3 - command 36)
-\item And also opens the last attribute file to determine there are no more keys (B.3 - command 38, 39)\\
+\item Select and open 'cmapfile' [List files command]. This stores all file locations for attributes of the keys (B.3 - command 32, 33, 34)
+\item Based on those locations, find and open the attribute file for the des3 key (B.3 - command 36)
+\item And also open the last attribute file to determine there are no more keys (B.3 - command 38, 39)\\
 \end{enumerate}
 
-Due to key and attribute files being stored separately, this function call reveals no sensitive information. Only the attributes are opened and listed at the APDU layer. These same attributes can be printed at the API layer as well.
+Due to key and attribute files being stored separately, this function call reveals no sensitive information. Only the attributes are opened and listed at the APDU layer. These attributes can be printed at the API layer as well.
 
-A possibility for an attack is present here. The ISO 7816 'UPDATE BINARY' command can be used to alter a file. This will allow modification of attributes. As mentioned in the literature review, previous work on the same card was undertaken and modified the attributes of CKA\_sensitive \& CKA\_extractable from false to true. The change in this direction is forbidden by the API. However the ability for changing these at the APDU level was achieved. It still yielded no significant results, as keys and attribute are stored in separate files. And the keys could still not be loaded.
+A possibility for an attack is present here. The ISO 7816 proprietary 'REALLOCATE BINARY' command can be used to modify a file. This will allow modification of attributes. As mentioned in the literature review, previous work on the same card was undertaken and modified the attributes of CKA\_sensitive \& CKA\_extractable from false to true. The change in this direction is forbidden by the API. However the ability for changing these at the APDU level was achieved. It still yielded no significant results, as keys and attribute are stored in separate files. And the keys could still not be loaded. Thus, we investigate this no further.
 
 \section{C\_generateKey}
 \textit{[For this trace we generate a triple DES key, key length of 24 bytes.]}
+
+\textit{Function dependencies $\rightarrow$ [Initialization, Login]}\\
 
 The generateKey function has 9 main components. 2 different secure messaging sessions are used to generate 24 bytes (same as the key length) on the card and send it to the API, and create the key file. The attribute file is created without the use of secure messaging as it does not contain sensitive information. The steps are listed below:\\
 
@@ -334,21 +344,27 @@ The generateKey function has 9 main components. 2 different secure messaging ses
 \item Close secure messaging (B.4 - command 47)\\
 \end{enumerate}
 
-From this analysis of the communication trace it seems that the card is requested to generate the key value from a 'get challenge' request (within secure messaging). We assume that these same bytes are used to be stored in the key file of the triple DES key we ask it to generate. We cannot verify this at this time, as two different secure messaging sessions are used, and therefore have different session keys. This causes the encryption of the generated bytes and the storing of them in a file to be different, even if the bytes are actually used as the key value. As stated in the literature review, previous hardware security modules created by 'Athena smartcard solutions' have in the past done this without the use of secure messaging. Thus that vulnerability seems to be patched in this version of the API and smartcard, by using secure messaging when creating these bytes and storing them in the key file. 
+From this analysis of the communication trace it seems that the card is requested to generate the key value from a 'get challenge' request (within secure messaging). We assume that these same bytes are used to be stored in the key file of the triple DES key we ask it to generate. We cannot verify this at this time, as two different secure messaging sessions are used, and therefore have different session keys. This causes the encryption of the generated bytes and the storing of them in a file, to be different. Despite the possibility they are in fact identical. As stated in the literature review, previous hardware security modules created by 'Athena smartcard solutions' have in the past done this without the use of secure messaging. Thus that vulnerability seems to be patched in this version of the API and smartcard, by using secure messaging when generating these bytes and storing them in the key file. 
 
-If this assumption turns out to be correct it posses as quite a significant vulnerability that could be exploited. If the protocol for secure messaging can be reversed engineered, then we can inject our own bytes when the the request challenge is sent to the card. Or simply we can use a man in the middle attack to generate two sets of session keys. One with the attacker and the API, and one with the attacker and the smartcard. The bytes can be sent to the card in the correct format, however the attacker will also be in knowledge of the key value. This should never be the case when the attribute CKA\_Extractable is set to false.
+If this assumption turns out to be correct it posses as quite a significant vulnerability that could be exploited. If the protocol for secure messaging can be reversed engineered, then we can inject our own bytes when the the request challenge is sent to the card. Or simply we can use a man in the middle attack to generate two sets of session keys. One with the attacker and the API, and one with the attacker and the smartcard. The bytes can be sent to the card in the correct format, however the attacker will also be in knowledge of the key value. This should never be the case when the attribute CKA\_Sensitive is set to true.
+
+A second vulnerability is also present here. Which is the ability to alter attributes on the fly as they are being updated within the file (step 5). Changing attribute values would allow for the key to be extracted as soon as it is created (this has been checked) however the user will be aware of it, as it is printed at the API layer. In addition they will also be able to see the modified attributes which they had not set. Thus we determine this to be a vulnerability, but not as serious as the previous one mentioned, as if it were utilised the user would most likely notice and therefore generate a new key to be used.
+
+
 
 \section{C\_generateKeyPair}
 \textit{[For this trace we generate an RSA-1024 public/private key pair]}
 
-We find 15 main components in this generation of the RSA public and private key pair. 7 components transfer data that are wrapped within an ASN.1 BER encoding [?]. These are to transfer public key information and what we believe to be file location parameters. The steps listed below give the ordering of the most important commands, and below that we give the decoding of the ASN.1 BER encoding of those 8 commands that we have found.\\
+\textit{Function dependencies $\rightarrow$ [Initialization, Login]}\\
+
+We find 15 main components in this generation of the RSA public and private key pair. 7 components transfer data that are wrapped within an ASN.1 BER encoding [?]. These are to transfer public key information and what we believe to be file location parameters. The steps listed below give the ordering of the most important commands, and below that we give the decoding of the ASN.1 BER encoding of those 7 commands that we have found.\\
 
 \begin{enumerate}
 \item Create public key attribute file (B.5 - command 54)
 \item Add public key attributes to file [inc. public exponent] (B.5 - commands 56, 57)
 \item Create private key attribute file (B.5 - command 59)
 \item Add private key attributes to file (B.5 - commands 61, 62)
-\item Create Private CTR RSA Key file (B.5 - command 64)
+\item Create Private CTR RSA Key file (B.5 - command 64) [ref crypto section] [?]
 \item Select temporary file (B.5 - command 65)
 \item Generate RSA Key Pair (B.5 - command 66)
 \item Select temporary file (B.5 - command 67)
@@ -359,7 +375,7 @@ We find 15 main components in this generation of the RSA public and private key 
 \item Get RSA public key (B.5 - command 72)
 \item Select public attribute file (B.5 - command 73)
 \item Add public modulus to attribute file (B.5 - command 74)
-\item The rest of the communication we believe to be resetting the temporary file, and adding file location information to file control parameters of parent files. (These commands are not included in the traces within the appendix)\\\\
+\item The rest of the communication we believe to be resetting the temporary file, and adding file location information to file control parameters of parent directories. (These commands are not included in the traces within the appendix)\\\\
 \end{enumerate}
 
 The following are the ASN.1 BER decodings of the commands that have these wrapping. An online tool was used in the aid of decoding these hexadecimal bytes [?]. We provide references to the above numbering of the commands, and the appexidx references as well.\\
@@ -413,13 +429,15 @@ RSA key pair generation is supported on the card. A dedicated processor is used 
 
 It seems these parameters that are listed above are used used to save the location of the RSA private key, and the public key for that matter. We have not been able to intuitively decode the proprietary encoding of file directories to locate the private key. As we will see later in the 'unwrap' function when we utilise the private key, this occurs within secure messaging and therefore cannot find the location of it from that either.
 
-Thus without the knowledge of the proprietary encoding of file directories we do not see any vulnerabilities within the function as of yet. Studying multiple rsa key generations (without deleting the first keys) might show differences in these decodings which could lead to finding the location of the private key.
+Thus without the knowledge of the proprietary encoding of file directories we do not see any vulnerabilities within the function as of yet. Studying multiple RSA key generation traces (without deleting the first keys) might show differences in these decodings which could lead to finding the location of the private key.
 
 
 \section{C\_destroyObject}
 \textit{[For this trace we delete/destroy a triple DES key and its attribute file]}
 
-In the analysis of the destroyObject function we omitted the finding of the objects as that is the job of the findObject function and the authentication processes. However these are both crucial parts to the functions correct operation. Once the key and attribute files have been located and the user is authenticated with the card, there are 6 main components to the destruction of the object. These are listed below:\\
+\textit{Function dependencies $\rightarrow$ [Initialization, Login, FindObjects]}\\
+
+Once the key and attribute files have been located and the user is authenticated with the card, there are 6 main components to the destruction of the object. These are listed below:\\
 
 \begin{enumerate}
 \item Select counter file for key attributes (B.6 - command 49)
@@ -430,7 +448,7 @@ In the analysis of the destroyObject function we omitted the finding of the obje
 \item Delete key attribute file (B.6 - command 56)
 \end{enumerate}
 
-We believe a counter file keeps track of how many keys have been created and deleted in a certain path within the cards operating system. We are unsure on its specific use as we have only seen it being updating upon deletion of an object, and the new counter value being appended to the new keys attributes (the one created after deleting an object). The original and updated counter value can be seen at B.6 - command 37 and 50 respectively.
+We believe a counter file keeps track of how many keys have been created and deleted in a certain path within the cards on board memory. We are unsure on its specific use as we have only seen it being updating upon deletion of an object, and the new counter value being appended to the new keys attributes (the one created after deleting an object). The original and updated counter value can be seen at B.6 - command 37 and 50 respectively.
 
 Once this has been done the key attribute file and the key file are selected and deleted using the inter-industry command 'DELETE FILE'. This is the first time we have seen the location of a key file been accessed without secure messaging. Thus we thought this might present a vulnerability which would allow us to open and read key values at the APDU level. 
 
@@ -444,17 +462,16 @@ $[10]$ (1 byte) 04\\
 $[06]$ (14 byte) 00 00 00 FF 00 FF 00 00 00 00 00 00 00 00\\
 $[05]$ (4 byte) 01 0C 10 00\\
 
-This seemed quite similar to what we noticed with the RSA private key analysis in the previous section. There is not present a 16 byte key that could be used for triple DES. Rather it seems that these are more pointers to more files that could hold the keys value. All security polices that we have read for 'Athena smart-card solutions' suggest that keys are held in a non-readable memory to outside actors, and only when required are encrypted internally (by the cards OS) and stored in the EEPROM for them to be used for the security operation required of them. 
+This seemed quite similar to what we noticed with the RSA private key analysis in the previous section. There is not present a 16 byte key that could be used for triple DES. Rather it seems that these are more pointers to more files that could hold the keys value. All security polices [?] that we have read for 'Athena smart-card solutions' suggest that keys are held in a non-readable memory to outside actors, and only when required are encrypted internally (by the cards OS) and stored in the EEPROM for them to be used for the security operation required of them. 
 
 Thus we did not find any security vulnerabilities from this function.
 
 \section{C\_encrypt}
 \textit{[For this function we use a triple DES key to encrypt a string 'TestString123456'] using ECB mode]}
 
+\textit{Function dependencies $\rightarrow$ [Initialization, Login, FindObjects]}\\
 
-Just like the destroyObject function we omit the APDU communication for login authentication and finding the object to use for encryption. These are still essential parts to the correct use of the encrypt function though. 
-
-The commands given for this trace are actually repeated and therefore occur twice for one encrpytion of a given string. This is due to PKCS \#11 library being programmed in C by the card manufactures. The resulting length of the encryption is thought to be of an undetermined size. (For block ciphers and even RSA this can be pre-calculated given the input length) Therefore the implementation runs the encryption twice, the first run is to calculate the resulting length of the encryption, and the second result will save the result in a buffer that has been pre-allocated the correct amount number of bytes in a char array.
+The commands given for this trace are actually repeated and therefore occur twice for one encrpytion of a given string. This is due to PKCS \#11 library being programmed in C by the card manufactures. The resulting length of the encryption is thought to be of an undetermined size. (For block ciphers and even RSA this can be pre-calculated given the input length) However the implementation runs the encryption twice, the first run is to calculate the resulting length of the encryption, and the second run will save the result in a buffer that has been pre-allocated the correct number of bytes in a char array.
 
 This function only has two main components to it, these are listed below:\\
 
@@ -465,14 +482,14 @@ This function only has two main components to it, these are listed below:\\
 
 The key file is selected and then the encryption APDU command is called with the string in the data field. As stated in destroyObject function analysis, despite the key file location being revealed here. It is not a file that can be opened nor reveals the value of the key. Instead is a pointer to other locations in memory that hold the key value. We assume that only the operating system has access to these locations but are unable to verify this hypothesis.
 
-Due to this we see no vulnerabilities that could be exploited.
+Due to this we see no other vulnerabilities that could be exploited.
 
 \section{C\_decrypt}
-\textit{For this trace we use the same triple DES key to decrypt the message we previously encrypted}
+\textit{[For this trace we use the same triple DES key to decrypt the message we previously encrypted]}
 
-Just like the destroyObject and encrypt function we omit the APDU communication for login authentication and finding the object to use for decryption. These are still essential parts to the correct use of the decrypt function though. 
+\textit{Function dependencies $\rightarrow$ [Initialization, Login, FindObjects]}\\
 
-The decrypt function operates nearly an identical manner to the encrypt function, just simply changes one byte in command 65. The key is loaded and then the decrypt APDU command is sent, with the encrypted string placed in the data field. The commands are listed below:\\
+The decrypt function operates nearly an identical manner to the encrypt function, just simply changes one byte (P1 in the APDU command header) in command 65. The key is loaded and then the decrypt APDU command is sent, with the encrypted string placed in the data field. For the same reasons stated in the encrypt function, the APDU command is sent twice. We omit this repetition. The commands are listed below:\\
 
 \begin{enumerate}
 \item Select key file (B.8 - command 64)
@@ -484,24 +501,27 @@ As the decrypt function operates so similarly to the encrypt function, we saw no
 \section{C\_setAttribute}
 \textit{[For this trace we modify the label of the triple DES key from 'des3' to 'changed']}
 
-As we did in the previous 3 functions we omit the login authentication and finding of the object. We only present the commands that are used to alter the attribute we tested. There were only 2 main components for this. The first one selected the attribute file, and the following 2 commands update the whole file to include the new name of the label to the key. Command chaining was used as the number of bytes within the attribute file exceeded the limit of 256. Command chaining is indicated by the use of '90' instead of '80' as the CLA byte. The commands are listed below:\\
+\textit{Function dependencies $\rightarrow$ [Initialization, Login, FindObjects]}\\
+
+There were only 2 main components for this function, similarly to encrypt and decrypt. The first one selected the attribute file, and the following 2 commands update the whole file to include the new name of the label to the key. Command chaining [?] was used as the number of bytes within the attribute file exceeded the limit of 256. Command chaining is indicated by the use of '90' instead of '80' as the CLA byte. The commands are listed below:\\
 
 \begin{enumerate}
 \item Select key attribute file (B.9 - command 51)
-\item Alter attribute file with the change in the label name (B.9 - commands 52,53)\\
+\item Modify attribute file with the changed in the label name (B.9 - commands 52,53)\\
 \end{enumerate}
 
 Here we notice that at the APDU level attributes can be changed as long as a user is logged in. (We have not tested doing this without being logged in, but might be possible) This is a vulnerability that was discovered in previous work. With the main focus on changing the attribute values of CKA\_sensitive and CKA\_extractable from false to true. The change in this direction is forbidden by the PKCS \#11 API, however this can be conducted at the APDU layer. As stated in the literature review, this had been carried out and due to the split between attribute files and key value files, there was no noticeable difference. Despite those attributes being set to True, the key value could still not be revealed.
 
-Thus, will there is a vulnerability present here. It does not cause a major security issue, in the sense that the key value is still stored securely.
+Thus, despite the vulnerability being present it does not cause a major security issue, in the sense that the key value is still stored securely.
 
 
 \section{C\_unwrap}
 \textit{[For this trace we used an RSA public key to encrypt a tripe DES key value = 12345678. With its encryption saved, we created a template and used the RSA private key to unwrap the key value and template, to save the key on the card]}
 
-We omit the RSA encryption of the key, login authentication and finding the objects from the communication traces. We only present the unwrapping of the key and its template to form a new key that will be saved on the card.
+\textit{Function dependencies $\rightarrow$ [Initialization, Login, FindObjects, Encrypt]}\\
 
-There are 10 main components involved in the unwrapping of a key. 2 different secure messaging sessions are used (just like in the generateKey function). These first secure messasging session is used to unwrap the encrypted key into a temporary file. The second secure messaging session is used to save that key into a key file. This comes after the attribute file has been created in between these two. The order of the commands are listed below:\\
+
+There are 10 main components involved in the unwrapping of a key. 2 different secure messaging sessions are used (just like in the generateKey function). These first secure messaging session is used to unwrap the encrypted key into a temporary file. The second secure messaging session is used to save that key into a key file. This comes after the attribute file has been created in between these two. The order of the commands are listed below:\\
 
 \begin{enumerate}
 \item Open secure messaging (B.10 - command 92, 93, 94)
@@ -512,19 +532,17 @@ There are 10 main components involved in the unwrapping of a key. 2 different se
 \item Add key attributes to file (B.10 - command 120, 121)
 \item Open secure messaging (B.10 - command 122, 123, 124)
 \item Select the key file directory (B.10 - command 125)
-\item Create key value file (B.10 - command 126)
+\item Create key file (B.10 - command 126)
 \item Close secure messaging (B.10 - command 127)\\
 \end{enumerate}
 
-In a scenario were we are not already in the knowledge of the key value, the secure messaging sessions are the main vulnerability we would wish to try and exploit here. While the key is not exported at the APDU layer in plain text. A successful reverse engineering of the secure messaging session, would allow an attacker to exploit it, inject his own session keys and decrypt the key value that is being stored. This was mentioned in the generateKey function analysis.
+In a scenario were we are not already in the knowledge of the key value, the secure messaging sessions are the main vulnerability we would wish to try and exploit here. While the key is not exported at the APDU layer in plain text. Successfully reverse engineering the secure messaging protocol, would allow an attacker to exploit it, inject his own session keys and decrypt the key value. This was mentioned in the generateKey function analysis.
 
-Furthermore an attacker could also modify the attributes on the fly if the attacker was able to mount a man in the middle attack of the attributes of the key as they are being created. We did state that this made little difference to exporting the key value once the attributes had been set, however while the key is being generated is different. This would export the key. But is an attack that requires to be mounted as the key is being unwrapped, or generated in the generateKey function. The attacks that would be more useful is being able to extract the key value once it is already saved within the card.
 
+Furthermore an attacker could also modify the attributes on the fly. But as discussed within the generatKey function analysis, this attack would make the user aware of the fact that the key has been exported and that attributes have been changed. And thus is deemed not to be as bad as a vulnerability compared to one that would expose the key in plain text at the APDU layer without the users knowledge.
 
 
 \section{C\_wrap}
-%refer to appendix B.11
-
 The Tookan attack was mentioned within the literature review. It is an attack at the API level whereby one key can be given wrapping and decryption functionalities within its attributes. This allowed for any key (no matter the attributes) to be wrapped, exported out of the card, and then decrypted by the same key, and have its key value in plain text. This vulnerability bypassed all controls that the attributes of a key should provide. Due to this vulnerability discovery, we assume that 'Athena smartcard solutions' decided to remove the ability to wrap keys completely. This assumption came from that fact that requesting any key to wrap another key at the API level caused an error: \textit{CKR\_Function\_Not\_Supported}.
 
 From analysing table 2.1 (section 2.24), we noticed a correlation between the P1 and P2 parameters for the APDU commands for encryption, decryption and unwrapping. These values are the following:
@@ -541,15 +559,20 @@ P1 & P2 & Command\\
 \end{tabular}
 \end{table}
 
-The CLA and and INS bytes are identical for all of the commands. From this we inferred that if the wrap APDU command were to still exist and it is only the API that has been modified to refuse to send the wrap command and instead throw an error. That the command for wrapping at the APDU level would be: \textbf{00 2a 82 0a L Data 00}. Were L is the length of the data, and the data is the key to be wrapped. 
+The CLA and and INS bytes are identical for all of the above commands. 
+
+Using the fact that for encrypt and decrypt P2 remains the same and only P1 alters from '80' to '82', then we inferred that is the wrap command was still supported at the APDU layer then the command would have values for P1 = \textbf{82} and P2 = \textbf{0A}. Therefore an example full command would be:\\
+\textbf{00 2a 82 0a L Data 00}. Were L is the length of the data, and the data is the key to be wrapped. 
 
 We ran a simple test to see if this command operates on the card:
 \begin{enumerate}
-\item Wrap key (just entered the string '12345678') (B.11 - command 1)\\
+\item Wrap key (string '12345678') (B.11 - command 1)\\
 \end{enumerate}
 
 
-The result of the test was an APDU level error. '6A 80', meaning the parameters within the data field are incorrect. Suggesting that the command does exist and most likely corresponds to the wrap function. The data field of unwrap is encrypted, as it is used within secure messaging. However if this was reversed engineered and we could understand the data field of the unwrap command, it is highly likely that we would be able to create the correct data field for the wrap command. This would allow us to bypass all attribute controls of keys at the API level, and implement the Tookan attack at the APDU level.
+The result of the test was an APDU level error. '6A 80', meaning the parameters within the data field are incorrect. Suggesting that the command does exist and most likely corresponds to the wrap function.
+
+The data field of unwrap is encrypted, as it is used within secure messaging. However if this was reversed engineered and we could understand the data field of the unwrap command, there is a high probability that we would be able to create the correct data field for the wrap command. This would allow us to bypass all attribute controls of keys at the API level, and implement the Tookan attack at the APDU level. Which in turn would all all keys on the card to be exported out of the card in plain text, which would be a serious violation of the PKCS \#11 standard.
 
 
 
@@ -2238,8 +2261,8 @@ COMMAND from API
 \section{C\_wrap}
 \begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
 Enter command (spaced integers)
-00 2A 82  0A 08 1E 1F 20 22 23 24 25 26 00 (hexadecimals)
-00 42 130 10 08 30 31 32 34 35 36 37 38 00 (integers)
+00 42 130 10 08 49 50 51 52 53 54 55 56 00 (integers)
+00 2A 82  0A 08 31 32 33 34 35 36 37 38 00 (hexadecimals)
 command changed!
 
 RESPONSE

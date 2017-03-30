@@ -35,11 +35,11 @@
 \contentsline {section}{\numberline {6.1}Initialization}{21}
 \contentsline {section}{\numberline {6.2}C\_login}{22}
 \contentsline {section}{\numberline {6.3}C\_findObject}{23}
-\contentsline {section}{\numberline {6.4}C\_generateKey}{23}
-\contentsline {section}{\numberline {6.5}C\_generateKeyPair}{24}
-\contentsline {section}{\numberline {6.6}C\_destroyObject}{27}
-\contentsline {section}{\numberline {6.7}C\_encrypt}{28}
-\contentsline {section}{\numberline {6.8}C\_decrypt}{29}
+\contentsline {section}{\numberline {6.4}C\_generateKey}{24}
+\contentsline {section}{\numberline {6.5}C\_generateKeyPair}{25}
+\contentsline {section}{\numberline {6.6}C\_destroyObject}{28}
+\contentsline {section}{\numberline {6.7}C\_encrypt}{29}
+\contentsline {section}{\numberline {6.8}C\_decrypt}{30}
 \contentsline {section}{\numberline {6.9}C\_setAttribute}{30}
 \contentsline {section}{\numberline {6.10}C\_unwrap}{31}
 \contentsline {section}{\numberline {6.11}C\_wrap}{32}
