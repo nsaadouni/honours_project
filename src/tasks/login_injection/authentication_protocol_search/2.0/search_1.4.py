@@ -19,7 +19,7 @@ def search_10():
 	str_outputs = ['first 16', 'last 16', 'mod out']
 
 
-	for hash_name in [hs.sha1, hs.sha224, hs.sha256, hs.sha384, hs.sha512, hs.md5]:
+	for hash_name in [hs.sha1, hs.sha256, hs.sha384, hs.sha512, hs.md5]:
 
 		
 		key = ''.join(intarray_to_asciiarray(X_list))

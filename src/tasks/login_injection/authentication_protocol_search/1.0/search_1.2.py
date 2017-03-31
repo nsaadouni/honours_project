@@ -12,7 +12,7 @@ def search_2(hash_name):
 	found = False
 	c = 0
 
-	for rounds in range(1,50001):
+	for rounds in range(1,100001):
  
 			# password -> ASCII
 			password = []
@@ -23,7 +23,7 @@ def search_2(hash_name):
 			# random number X -> ASCII
 			salt = []
 			for i in intarray_to_asciiarray(X_list)
-:p				salt.append(i)
+			salt.append(i)
 			salt = ''.join(salt)
 
 			# password based key derviation function HMAC, truncated down to 16 bytes (First 16 only, as its the common practice)
@@ -36,8 +36,6 @@ def search_2(hash_name):
 
 			if found:
 				print 'METHOD FOUND'
-				# print 'padding is at the ' + padding_str[pad_index]
-				# print 'pad char (int): ' + str(i)
 				print 'hash name: ' + str(hash_name)
 				print 'rounds: ' + str(i)
 				print ''
@@ -52,7 +50,6 @@ def search_2(hash_name):
 
 
 
-# 'sha224', 'sha256', 'sha384', 'sha512', 'md4', 'md5', 'DSA-SHA', 'DSA', 'ecdsa-with-SHA1', 'ripemd160', 'whirlpool']
-_hashes = ['sha', 'sha1', 'sha256', 'md5']
-name = Pool(2)
-name.map(search_2, _hashes)
+hash_names = ['sha1', 'sha256', 'sha384', 'sha512', 'md5']
+name = Pool(5)
+name.map(search_2, hash_names)

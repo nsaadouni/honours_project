@@ -143,6 +143,8 @@ def method_6(hash_name, pad, pad_i, out, join):
 """
 hash search using different methods of joining and truncating the output
 """
+
+hash_names = ['sha1', 'sha256', 'sha384', 'sha512', 'md5']
 def search_1():
 
 	found = False
@@ -161,7 +163,7 @@ def search_1():
 
 	for join_index, join in enumerate(joins):
 		for method_index, method in enumerate(methods):
-			for hash_name in hs.algorithms_available:
+			for hash_name in hash_names:
 				for out_index, out in enumerate(outputs):
 
 					o, print_status = method(hash_name, do_not_pad, 0, out, join)
