@@ -586,16 +586,6 @@ The data field of unwrap is encrypted, as it is used within secure messaging. Ho
 
 \chapter{Attempts To Attack At the APDU Level}
 
-%In this chapter we explain the design, implementation and results of the attacks we attempted at the APDU level. The two main attacks we focus on are reverse engineering the PIN authentication protocol, and reverse engineering the secure messaging protocol. The motivations behind this come from literature stated in chapter X.
-%
-%------------------------------------------------------------------------------------------------------\\
-%** Here give an overview of each functions possible vulnerabilities and present the motivations behind the attacks we choose. **\\
-%------------------------------------------------------------------------------------------------------
-%
-%The smartcard we analyse uses a challenge-response algorithm to prevent the PIN being sent over in plain text. This is an improvement upon other card vendors implementations whereby they do send the PIN over in plain text for it to be verified. Successfully reverse engineering this challenge-response protocol will allow an attacker to calculate the victims PIN given one successful login trace. Furthermore, it will also remove the first dependency on the use of the API. Being able to communicate to the card directly gives an attacker a higher capability. But as of right now, since we are unaware of how the login occurs the API must be used.
-%
-%The second dependancy on the use of the API, is secure messaging. When the generateKey function from the API is called to create block cipher keys, it is the computer that requests the card to generate the key, send it over using secure messaging, and then use secure messaging again to place the key into a file to be stored on the card. This again is an improvement upon previous hardware security modules from the manufacture 'Athena- Smartcard solutions' (specifically ASE KeyPro), whereby this was completed without the use of secure messaging, and therefore the block cipher keys where needlessly exported over in plain text which would allow an attacker to sniff them. If this protocol is successfully reversed engineered, it will be possible to sniff the keys by decrypting the messages which contain the keys that are in transit from computer to the smart-card.
-
 In this chapter we explain the motivations, implementation and results of the attacks we attempt as the APDU level. For clarity purposes we first give a brief overview of the API's function analysis at the APDU layer that we conducted within chapter 6. This analysis in combination with previous work completed on the same smart-card and for that matter other smart-cards as well, drove the motivations behind the attacks we selected to conduct.
 
 \section{Motivations}
@@ -614,26 +604,16 @@ The \textit{initialization} function did not present any vulnerabilities that wo
 
 From studying the traces for the \textbf{\textit{login}} function it was apparent that a challenge-response algorithm has been implemented in an attempt to provide a secure method for transporting the PIN for verifaction by the smart-card without ever revealing its value in plain text (which would be against the PKCS \#11 standard). This is an improvement implementations from other card manufactures whereby they did just send the PIN in plain text over the APDU layer for the smart-card to verify it, leaving an attacker the ability to simply sniff the communication and extract the users PIN number. However the challenge-response algorithm that 'Athena smartcard solutions' have implemented on this card still leaves the potential for an attacker to reverse engineer the protocol, and then brute force the PIN until the same response is calculated to be sent to the card. Doing this would give the attacker the knowledge of the users PIN and also remove the first dependency on the use of the API by an attacker. This is therefore the first attack that we investigate.
 
-Furthermore the use of secure messaging to encrypt and also provide an integrity check (that the commands have not been altered in transit) in the form a a message authentication code being appended to the command was found within two functions. These are \textbf{\textit{GenerateKey}} and \textbf{\textit{unwrap}}. Successfully reverse engineering the secure messaging protocol would allow for two objectives to be complete. Firstly within the generateKey function an attacker would be able to implement a man in the middle attack to either alter the key being generated with a value known to the attacker, or simply decrypt the key to find out its value. This would be possible regardless of the attributes set for the key, and therefore would violate the standard to a large extent if the attributes for CKA\_sensitive and CKA\_extractable were set to true and false respectively. Secondly is the understanding behind how the unwrap APDU command operates. (continue here)
+Furthermore the use of secure messaging to encrypt and also provide an integrity check (that the commands have not been altered in transit) in the form a a message authentication code being appended to the command was found within two functions. These are \textbf{\textit{GenerateKey}} and \textbf{\textit{unwrap}}. Successfully reverse engineering the secure messaging protocol would allow for two objectives to be complete. Firstly within the generateKey function an attacker would be able to implement a man in the middle attack to either alter the key being generated with a value known to the attacker, or simply decrypt the key to find out its value. This would be possible regardless of the attributes set for the key, and therefore would violate the standard to a large extent if the attributes for CKA\_sensitive and CKA\_extractable were set to true and false respectively. As an attacker would be able to be in the knowledge of the block cipher keys generated when the card should be the only system with said knowledge.
 
+Secondly is the understanding behind how the \textbf{\textit{Unwrap}} APDU command operates. As stated in section 6.11, despite the API removing the ability to use the \textbf{\textit{Wrap}} functionality (most likely due the Tookan attack discovery [?]), with a high probability the APDU command still exists as we managed to send what we believe to be the correct command and received back an error stating the data field parameters were incorrect. Therefore reverse engineering the secure messaging protocol would allow us to fully understand the \textbf{\textit{Unwrap}} command data field, and possibly then be able to generate the correct command for wrapping a key. If this is possible, then the Tookan attack could be implemented at the APDU level, bypassing all attribute controls and exporting any/ all keys that are stored within the card. This would be considered a serious vulnerability.
 
+All the vulnerabilities stated within this section are also all to be implemented at the APDU layer and would not provide the user the knowledge the attack is in process. This is the main reasoning behind selecting these vulnerabilities to investigate, and the fact they are far more serious compared to the others mentioned, in terms of violations of the PKCS \#11 API.
 
 
 
 \section{Reverse Engineering PIN Authentication Protocol}
-
-\section{Reverse Engineering PIN/password Authentication 1st draft}
-
-%Modified initialization data to test if there is a master key, which could be used to create a derived key to encrypt the PIN/Password.
-%(there are references to papers which suggest some smart-card manufactures do this!)
-
-The first attack that I decided to attempt is to reverse-engineer the PIN authentication method. The reasoning behind this is because if this can be successfully done, the PIN can then be inferred from one communication trace sniffed between smart-card and the API (on the computer). The inference comes from the fact that once the method is deduced, an attacker can simply brute force the possible combinations of a PIN, to test if a match is found. (This becomes clearer in the latter sections)
-
-From previous work completed on this card by an MSC student last year [?], and from the analysis conducted in section 6.2, it was quite clear that the card has the following characteristics in terms of PIN authentication. The PKCS\#11 API requests a challenge, the smart-card responds with an 8 byte challenge, the API then calculates a 16 byte response (using the 8 byte challenge, and the PIN), the smart-card verifies whether or not the response is correct. There are two response formats to that  APDU verification command:
-\begin{itemize}
-\item '90 00' $\rightarrow$ verification succeeded, correct PIN was entered
-\item '63 CX' $\rightarrow$ verification failed (where X is the number of attempts left before the card is blocked)\\
-\end{itemize}
+The first attack we investigate is the reverse engineering of the PIN authentication protocol. If this is successful an attacker will be able to brute force and/ or use a dictionary attack to calculate the users PIN. It shall also remove one dependency on the use of the API. As of right now the API is required to login into the smartcard as we are unaware of how the challenge-response algorithm is implemented. Figure 7.1 shows the procedure for logging into the smartcard at the APDU level.
 
 % IMAGE: challenge-response pin authentication
 \begin{figure}[H]
@@ -641,22 +621,23 @@ From previous work completed on this card by an MSC student last year [?], and f
 \begin{subfigure}{1\textwidth}
   \includegraphics[width=1\linewidth]
   {images/section_7/7.1/authencation_method.png}
-  \label{fig:sub1}
 \end{subfigure}
+\caption{Challenge Response Procedures}
 \end{figure}
 
+The API requests (via a 'GET CHALLENGE' command) the smartcard to generate and send back 8 random bytes. The API then calculates a 16 byte response based upon the knowledge of the challenge (8 random bytes) and the users PIN. The 16 byte response is sent to the smartcard (via a 'VERIFY' command), which will return one of two possible outcomes:
+\begin{enumerate}
+\item '90 00' $\rightarrow$ Verification of users PIN succeeded
+\item '63 CX' $\rightarrow$ Verification of users PIN failed. (X = number of attempts left before the card is blocked)\\
+\end{enumerate}
 
-The following sections are explanations of the searches that we conducted to try and reverse-engineer the protocol showed above. To give a full understanding of how challenging this part of the project was, we will explain the combinations of possibilities we checked, and the reasoning behind each of them. These will be split up into different 'searches', and increment in terms of new findings and understanding of how the protocol may be implemented.
+The following sections give explanations of the searches that we conducted to try and reverse-engineer the protocol showed above. To give a full understanding of how challenging this part of the project was, we will explain the combinations of possibilities we checked, and the reasoning behind each of them. These will be split up into different 'searches', and increment in terms of new findings and understanding of how the protocol may be implemented.
 
-To aid these explanations, we introduce here 3 key sub-functionalities that most of the conducted searches use. Table 7.1 lists all the hash functions (see section 3.1) that were used, and provides the output length in bits \& bytes. Those hash functions were all supported by openSSL and the python package 'hashlib'. Table 7.2 provides the names of the bitwise logical operations that were used to 'join' two bytes together. And table 7.3 provides the description of truncation methods used to reduce the output size of a search down to 16 bytes to match the response provided by the API. \\
+To aid these explanations, we introduce here 3 key sub-functionalities that most of the conducted searches use. Table 7.1 lists all the hash functions (see section 3.1) that were used, and provides the output length in bits \& bytes. Those hash functions were all supported by openSSL and the smartcard. Table 7.2 provides the names of the bitwise logical operations that were used to 'join' two bytes together. And table 7.3 provides the description of truncation methods used to reduce the output size of a search down to 16 bytes to match the response provided by the API. \\
 
-From here on, in the explanation of the searches I will just refer to HASH, JOIN \& TRUNCATE which will suggest that all of the elements in the tables have been iterated over and preformed on. For example TUNRCATE(HASH('this is a string')), means the string, 'this is a string', is to be hashed with all the functions in table 7.1, and then truncated to 16 bytes using all the methods listed in table 7.3.\\
+From here on, in the explanation of the searches I will just refer to \textbf{\textit{hash}}, \textbf{\textit{join}} \& \textbf{\textit{truncate}} which will suggest that all of the elements in the tables have been iterated over and preformed on. For example \textbf{\textit{truncate(hash('example'))}}, means the string, 'example', is to be hashed with all the functions in table 7.1, and then truncated to 16 bytes using all the methods listed in table 7.3.\\
 
 
-%DSA & 0 & 0\\
-%DSA-SHA & 0 & 0 \\
-%dsaEncryption & 0 & 0 \\
-%ecdsa-with-SHA1 & 0 & 0\\
 % TABLE: Hash functions
 \begin{table}[H]
 \begin{center}
@@ -664,20 +645,15 @@ From here on, in the explanation of the searches I will just refer to HASH, JOIN
 \hline
 Hash Name & Output Length (bits) & Output Length (Bytes)\\
 \hline
-MD4 & 128 & 16\\
+
 MD5 & 128 &16\\
-MDC2 & 128 & 16\\
-RIPEMD160 & 160 & 20\\
-SHA & 160 & 20\\
 SHA1 & 160 & 20\\
-SHA224 & 224 & 28\\
 SHA256 & 256 & 32\\
 SHA384 & 384 & 48\\
 SHA512 & 512 & 64\\
-WHIRLPOOL & 512 & 64\\
 \hline
 \end{tabular}
-\caption{Hash Functions}
+\caption{Hash Functions \textit{(supported by the card)}}
 \end{center}
 \end{table}
 
@@ -716,10 +692,7 @@ mod\_16 & Truncates the output by taking modulus $2^{128}$ [We use 128 because t
 \caption{Truncation Methods}
 \end{table}
 
-\newpage
-
-
-\noindent Before any searches could be conducted, the first task was to extract the values of the 8 byte challenge (denoted X), and the 16 byte response (denoted Y), from a communication trace of C\_login. Table 7.4 provides the values for the PIN, X and Y in hexadecimal format.\\
+Before any searches could be conducted, the first task was to extract the values of the 8 byte challenge (denoted X), and the 16 byte response (denoted Y), from a communication trace of C\_login. Table 7.4 provides the values for the PIN, X and Y in hexadecimal format.\\
 
  
 % TABLE: PIN, X, Y
@@ -740,28 +713,24 @@ X & N/A & 68 F1 E4 92 85 36 39 A3\\
 \caption{}
 \end{table}
 
-
-In the very first original experiments, we made assumptions as did previous work on this card [ref Msc] that the PIN number was only numerical characters, only had 4-8 digits and if the PIN was less than 8 characters, it was padded using a special character to form 8 bytes. These assumptions turned out to be false, and thus the elementary experiments were all flawed from the beginning. I have not included a description of those experiments in the following sections, as many of them were in fact very similar to those explained below, just with different assumptions of the PIN. They also used a PIN for the card that was '12345', and hence there was an exponential explosion in the number of experiments for a particular search, due to needing to test for different padding schemes and characters. Hence why in these following experiments the PIN had been set to '0000000000000000' (16 zeros, no need for padding).
-
-
+In the very first original experiments, we made assumptions that the PIN number was only numerical characters, only had 4-8 digits and if the PIN was less than 8 characters, it was padded using a special character to form 8 bytes. Some of these assumptions turned out to be false, and thus the elementary experiments were all flawed from the beginning. I have not included a description of those experiments in the following sections, as many of them were in fact very similar to those explained below, just with different assumptions of the PIN. They also used a PIN for the card that was '12345', and hence there was an exponential explosion in the number of experiments for a particular search, due to needing to test for different padding schemes and characters. Hence why in these following experiments the PIN had been set to '0000000000000000' (16 zeros, no need for padding). We found that 16 characters was the upper limit to what a user can set the PIN to be by changing the PIN and incrementing its length until the API returned an error.
 
 
 \subsection{Authentication Protocol Search 1.0 (Password Storage)}
-Assumptions:\\
+Assumptions:
 \begin{itemize}
 \item PIN consists of alpha - numeric characters
 \item PIN is a maximum of 16 bytes
-\item PIN is encoded in ASCII characters
-\item For any PIN that is less than 16 bytes long, there is padding character used to pad the PIN to 16 bytes\\
+\item PIN is encoded in ASCII characters\\
 \end{itemize}
 
 %--------------------------------------
 \textbf{\underline{Search 1 - Hash functions}}\\
-\noindent In this initial stages we thought that there is a large possibility that the 16 byte response was generated by hashing a combination of the PIN and the 8 byte challenge. This was partly due to common practices used in industry whereby users passwords are often hashed, and in most cases salted (see section 3.1), before storing them in databases. This practice is more secure than storing plain text passwords, as if an attacker were to gain access to the back end databases storing said passwords, the password itself would not be available to see. For authentication the password is just hashed (and salted, if a salt is used), and then compared against to the stored value. The fact that from multiple traces the 16 byte response seemed to be uniformly random, it supported this hypothesis.\\
+In this initial stages we thought that there is a large possibility that the 16 byte response was generated by hashing a combination of the PIN and the 8 byte challenge. This was partly due to common practices used in industry whereby users passwords are often hashed, and in most cases salted (see section 3.1), before storing them in databases. This practice is more secure than storing plain text passwords, as if an attacker were to gain access to the back end databases storing said passwords, the password itself would not be available to see. For authenticating a user on a website the password is just hashed (and salted, if a salt is used), and then compared against to the stored value. 
 
-Thus the first search that we completed focused on the fact that a hash function was used to produce the 16 byte response. Below we have listed the methods tested in expirments to generate a 16 bytes, given X and the PIN.\\
+The fact that from multiple traces the 16 byte response seemed to be uniformly random, it supported this hypothesis. Thus the first search that we completed focused on the fact that a hash function was used to produce the 16 byte response. Below we have listed the methods tested in experiments to generate 16 bytes, given X and the PIN.
 
-We donote $\|$ as the concatination function. Thus for two strings 'string1 ' $\|$ 'string2' = 'string1 string2'.
+\textit{[We denote $\|$ as the concatenation function. Thus for two strings 'string1 ' $\|$ 'string2' = 'string1 string2']}\\
 
 \textbf{\underline{Methods tested that produced a 16 byte output using X and the PIN}}
 \begin{itemize}
@@ -775,11 +744,14 @@ We donote $\|$ as the concatination function. Thus for two strings 'string1 ' $\
 
 \textit{[The methods should be read from the most inner brackets, outward. Therefore this means that the first method dictates that X is first hashed using one of the hash functions listed in the table 7.1. The output of that is then truncated to 16 bytes using one of the functions from table 7.3. All iterations of the functions in the tables were tested.]}
 
-The following experiment resulted in 2592 individual tests, but did not find a match to the response generated by the API [Y in table 7.4]. Thus we moved onto search 2.\\
+The following experiment did not result in finding a match to the response generated by the API. Thus we moved onto search 2.\\
 
 
 %--------------------------------------
 \textbf{\underline{Search 2 - PBKDF2}}\\
+
+- - - - -  editing still in progress from here on - - - - - -
+
 Following the failure of search 1, but still assuming there is a large possibility of a hash function being used due to the common practices mentioned in search 1, and the characteristics known so far of the 16 byte response Y. Then we decided to look at the password-based key derivation function (PBKDF2), which was created as part of PKCS \#5 by RSA laboratories [?]. It has been mentioned in literature [?], and started to be used for more secure password storage as well as for key derivation. Essentially PBKDF2 takes as input, a password (the PIN), a salt (the 8 byte challenge X), a hash function, and the number of iterative rounds. If the number of iterative round is set to 10, then the salted password would be hashed once, and the output of that would be the input for the next round of hashing. This would be completed 10 times. Literature [?] has shown that the standard for the number of iterative rounds used to be 10,000, back in 2008 (check this date). Now it is suggested to use as many rounds as is computationally feasible by the device. Due to the processing power of a smart-card I assumed that this would not exceed 100,000 rounds, in the case that PBKDF2 was used.\\
 
 Hence this search generated experiments that ran through 1 $\rightarrow$ 100,000 rounds of PBKDF2. As the default of PBKDF2 is to truncate the output by taking the first X (X here is a variable) bytes only 'first\_16' truncation method was used.\\
@@ -792,6 +764,18 @@ Hence this search generated experiments that ran through 1 $\rightarrow$ 100,000
 This generated 100,000 experiments per hash function. With 12 hash functions, this resulted in 1.2 million tests being run. Due to the sheer computational power required for this search I decided to parallelize the search based on the hash function, and run them on separate cores of a server. Even by improving the efficiency of this search, it still took 2 weeks to conduct.
 
 Again this unfortunately did not result in a match between the 16 byte responses calculated and Y (the API's response). Hence we move onto search 3.\\
+
+
+
+
+\section{Reverse Engineering PIN/password Authentication 1st draft}
+
+%Modified initialization data to test if there is a master key, which could be used to create a derived key to encrypt the PIN/Password.
+%(there are references to papers which suggest some smart-card manufactures do this!)
+
+
+
+
 
 \subsection{Authentication Protocol Search 2.0 (One Time Passwords)}
 
