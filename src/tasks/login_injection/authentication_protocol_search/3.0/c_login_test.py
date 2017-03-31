@@ -4,6 +4,71 @@ from CryptoPlus.Cipher import DES3
 import binascii as ba 
 import hashlib as hs
 
+# input: array of characters (string)
+# output: array of integers
+def asciiarray_to_intarray(x):
+
+	out = []
+	for i in x:
+		out.append(ord(i))
+	return out
+
+# input: array of integers
+# output: array of ascii characters
+def intarray_to_asciiarray(x):
+
+	out = []
+	for i in x:
+		out.append(chr(i))
+	return out
+
+# input: array of integers
+# output: string of hexidecimals
+def intarray_to_hexstring(x):
+	out = []
+	for i in x:
+
+		if i < 16:
+			out.append('0'+hex(i)[2:])
+		else:
+			out.append(hex(i)[2:])
+
+	# if out[-1] == 'L':
+	# 	out = out[0:-1]
+	return ''.join(out)
+
+def hexstring_to_intarray(x):
+	out = []
+	if len(x) % 2 != 0:
+		x = '0' + x
+
+	for i in range(0,len(x), 2):
+		out.append(int((x[i]+x[i+1]),16))
+		# ba.unhexlify(x[i]+x[i+1])
+	return out
+
+"""
+Returns all possibilites for the pin
+pin, md5(pin), sha(pin), sha256(pin), sha512(pin)
+truncated taking the first 16 bytes
+"""
+def pin_possibilities(pin, hash_functions):
+
+	poss = []
+	poss.append(pin)
+
+	pin_int_array = asciiarray_to_intarray(pin)
+
+	for i in hash_functions:
+		h = hs.new(i)
+		h.update(pin)
+		poss.append(h.digest()[:16])
+
+	return poss
+
+
+
+
 # TEST 1
 # pin1 = 0000000000000000
 # pin2 = 1111111111111111
@@ -51,6 +116,7 @@ e0 5f fa a7 e6 bd 72 75 90 00
 63 c8
 """
 
+print '\n\n'
 
 hash_functions = ['md5', 'sha1', 'sha256', 'sha512']
 c = [0,0,0,0,0,0,0,0]
@@ -97,6 +163,7 @@ for i in range(5):
 
 
 
+############################################################################
 
 hash_sha1 = hs.new('sha1')
 hash_sha1.update('0000000000000000')
@@ -114,8 +181,8 @@ cipher = DES3.new(password, DES3.MODE_CBC, IV='\x00\x00\x00\x00\x00\x00\x00\x00'
 a = ba.hexlify(cipher.decrypt(yy)[0:8])
 b = ba.hexlify(cipher.decrypt(yy)[8:16])
 
-print hexstring_to_intarray(a)
-print hexstring_to_intarray(b)
+# print hexstring_to_intarray(a)
+# print hexstring_to_intarray(b)
 
 
 
