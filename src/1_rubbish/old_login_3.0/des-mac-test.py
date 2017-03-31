@@ -178,7 +178,7 @@ def test_2():
 	p2 = ciphertext1[8:16]
 
 	print 'decrypted A: ' + ba.hexlify(p1)
-	print 'decrypted B: ' +ba.hexlify(p2)
+	print 'decrypted B: ' + ba.hexlify(p2)
 	# print msg+conf
 
 	# cipher1 = DES3.new(key1_3des, DES3.MODE_CMAC)
@@ -194,22 +194,5 @@ def test_2():
 
 
 
+# test_1()
 test_2()
-
-
-"""
-3DES-ECB(key=pin, msg=Y) [decrypt] = [A||B]
-
-3DES-CBC(key=pin, IV=A, msg=X) [encrypt] = A
-
-
-"""
-
-
-"""
-SKID? -> was doing someting with that
-
-DES && DES3 key = pin
-Decrypt(16 bytes [Y]) -> ECB, CBC -> should give [conf, MAC]
-Reproduce MAC using -> pin, X, conf!
-"""

@@ -3,152 +3,10 @@
 from CryptoPlus.Cipher import DES3
 import binascii as ba 
 import hashlib as hs
-"""
-There is no cipher names DES2 -> therefore will have to use DES2 via key sizes!
-What I am doign should defualt to DES due every character in the key being equal
-"""
-
-# input: array of characters (string)
-# output: array of integers
-def asciiarray_to_intarray(x):
-
-	out = []
-	for i in x:
-		out.append(ord(i))
-	return out
-
-# input: array of integers
-# output: array of ascii characters
-def intarray_to_asciiarray(x):
-
-	out = []
-	for i in x:
-		out.append(chr(i))
-	return out
-
-# input: array of integers
-# output: string of hexidecimals
-def intarray_to_hexstring(x):
-	out = []
-	for i in x:
-
-		if i < 16:
-			out.append('0'+hex(i)[2:])
-		else:
-			out.append(hex(i)[2:])
-
-	# if out[-1] == 'L':
-	# 	out = out[0:-1]
-	return ''.join(out)
-
-def hexstring_to_intarray(x):
-	out = []
-	if len(x) % 2 != 0:
-		x = '0' + x
-
-	for i in range(0,len(x), 2):
-		out.append(int((x[i]+x[i+1]),16))
-		# ba.unhexlify(x[i]+x[i+1])
-	return out
-
-############################################
-
-# These take in 2 array's of integers
-def xor_join(Na, Nc):
- 	out = []
- 	for i in range(len(pin_array)):
- 		out.append(pin_array[i] ^ x_array[i])
-
- 	return out
-
-def nxor_join(Na, Nc):
- 	out = []
- 	for i in range(len(pin_array)):
- 		out.append(~(pin_array[i] ^ x_array[i]) & 255)
-
- 	return out
-
-def or_join(Na, Nc):
- 	out = []
- 	for i in range(len(pin_array)):
- 		out.append(pin_array[i] | x_array[i])
-
- 	return out
-
-def nor_join(Na, Nc):
- 	out = []
- 	for i in range(len(pin_array)):
- 		out.append( (~(pin_array[i] | x_array[i])) & 255)
-
- 	return out
-
-def and_join(Na, Nc):
- 	out = []
- 	for i in range(len(pin_array)):
- 		out.append(pin_array[i] & x_array[i])
-
- 	return out
-
-def nand_join(Na, Nc):
- 	out = []
- 	for i in range(len(pin_array)):
- 		out.append(~(pin_array[i] & x_array[i]) & 255)
-
- 	return out
-
-def hash_join(hash_name, Na, Nc):
-	
-	return 0
-###########################################
-
-
-
-
-"""
-Returns all possibilites for the pin
-pin, md5(pin), sha(pin), sha256(pin), sha512(pin)
-truncated taking the first 16 bytes
-"""
-def pin_possibilities(pin, hash_functions):
-
-	poss = []
-	poss.append(pin)
-
-	pin_int_array = asciiarray_to_intarray(pin)
-
-	for i in hash_functions:
-		h = hs.new(i)
-		h.update(pin)
-		poss.append(h.digest()[:16])
-
-	return poss
-
-
-
-"""
-In this search we assumpe the following:
-response = DES3-ECB(pin, msg=( Na|| Vnc ))
-"""
-def search(pin, challenge, response, hash_functions):
-	
-	all_pins = pin_possibilities(pin, hash_functions)
-	all_bitwise_joins = [xor_join, xor_join, or_join, nor_join, and_join, nand_join]
-
-	# 1. decrypt response -> Na || Vac
-	# 2. 
-
-	return 0
-
-
-
-
-
-
-###############################################################################################################################
-#												Running Area																  #
-###############################################################################################################################
 
 # TEST 1
+# pin1 = 0000000000000000
+# pin2 = 1111111111111111
 
 """
 00 00 00 00 00 00 00 00 90 00
@@ -163,9 +21,7 @@ ab a9 02 a5 e1 10 ea 44 90 00
 80 20 00 00 10 31 9c e9 78 1b bd d2 43 a6 8c e9 41 59 ff 70 c7
 63 c8
 
-###################################################################
-pin1 = 0000000000000000
-pin2 = 1111111111111111
+#------------------------------------------------------------------#
 
 00 00 00 00 00 00 00 00 90 00
 5b ab e8 bf a5 e9 c7 3e 90 00
@@ -178,7 +34,6 @@ pin2 = 1111111111111111
 
 80 20 00 00 10 bd 2e e8 f6 0e 42 92 26 76 e4 5b 2d 9e 8a e7 30
 63 c6
-
 """
 
 # Test 2

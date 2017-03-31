@@ -31,6 +31,7 @@
 \contentsline {section}{\numberline {4.2}Virtual Smart-Card}{17}
 \contentsline {section}{\numberline {4.3}Man in The Middle (MiTM)}{17}
 \contentsline {chapter}{\numberline {5}Related Work / Literature Review}{19}
+\contentsline {section}{\numberline {5.1}Manually Overriding Attributes}{19}
 \contentsline {chapter}{\numberline {6}PKCS \#11 Functions - APDU analysis}{21}
 \contentsline {section}{\numberline {6.1}Initialization}{21}
 \contentsline {section}{\numberline {6.2}C\_login}{22}
@@ -44,40 +45,42 @@
 \contentsline {section}{\numberline {6.10}C\_unwrap}{31}
 \contentsline {section}{\numberline {6.11}C\_wrap}{32}
 \contentsline {chapter}{\numberline {7}Attempts To Attack At the APDU Level}{35}
-\contentsline {section}{\numberline {7.1}Reverse Engineering PIN Authentication Protocol}{36}
-\contentsline {section}{\numberline {7.2}Reverse Engineering PIN/password Authentication 1st draft}{36}
-\contentsline {subsection}{\numberline {7.2.1}Authentication Protocol Search 1.0 (Password Storage)}{39}
-\contentsline {subsection}{\numberline {7.2.2}Authentication Protocol Search 2.0 (One Time Passwords)}{41}
-\contentsline {subsection}{\numberline {7.2.3}Authentication Protocol Search 3.0 (Triple DES Encryption)}{42}
-\contentsline {section}{\numberline {7.3}Block Cipher Injection (MiTM)}{42}
-\contentsline {section}{\numberline {7.4}Manually Overriding Attributes}{42}
-\contentsline {chapter}{\numberline {8}Conclusion / Results}{43}
-\contentsline {chapter}{\numberline {9}Future work}{45}
-\contentsline {chapter}{Bibliography}{47}
-\contentsline {chapter}{Appendices}{49}
-\contentsline {chapter}{\numberline {A}Attack Traces}{51}
-\contentsline {section}{\numberline {A.1}Multiple C\_login Traces}{51}
-\contentsline {subsection}{\numberline {A.1.1}Different Pin, Different Nonce}{51}
-\contentsline {subsection}{\numberline {A.1.2}Different Pin, Same Nonce}{52}
-\contentsline {subsection}{\numberline {A.1.3}Same Pin, Different Nonce}{52}
-\contentsline {subsection}{\numberline {A.1.4}Same Pin, Same Nonce}{53}
-\contentsline {subsection}{\numberline {A.1.5}Different Second}{53}
-\contentsline {section}{\numberline {A.2}Successful Login Injection}{54}
-\contentsline {section}{\numberline {A.3}Open Secure Messaging Traces}{55}
-\contentsline {subsection}{\numberline {A.3.1}Generator = 5, [Not modified]}{55}
-\contentsline {subsection}{\numberline {A.3.2}Generator = 1}{56}
-\contentsline {subsection}{\numberline {A.3.3}Generator = 0}{59}
-\contentsline {section}{\numberline {A.4}Overriding Attribute Controls}{61}
-\contentsline {section}{\numberline {A.5}Encrypt\_False}{61}
-\contentsline {chapter}{\numberline {B}API Function Traces}{63}
-\contentsline {section}{\numberline {B.1}Initialization}{63}
-\contentsline {section}{\numberline {B.2}C\_login}{64}
-\contentsline {section}{\numberline {B.3}C\_findObject}{65}
-\contentsline {section}{\numberline {B.4}C\_generateKey}{67}
-\contentsline {section}{\numberline {B.5}C\_generateKeyPair}{70}
-\contentsline {section}{\numberline {B.6}C\_destroyObject}{74}
-\contentsline {section}{\numberline {B.7}C\_encrypt}{76}
-\contentsline {section}{\numberline {B.8}C\_decrypt}{76}
-\contentsline {section}{\numberline {B.9}C\_setAttribute}{76}
-\contentsline {section}{\numberline {B.10}C\_unwrap}{77}
-\contentsline {section}{\numberline {B.11}C\_wrap}{81}
+\contentsline {section}{\numberline {7.1}Motivations}{35}
+\contentsline {subsection}{\numberline {7.1.1}Vulnerabilities not investigated}{35}
+\contentsline {subsection}{\numberline {7.1.2}Vulnerabilities to investigate}{36}
+\contentsline {section}{\numberline {7.2}Reverse Engineering PIN Authentication Protocol}{37}
+\contentsline {section}{\numberline {7.3}Reverse Engineering PIN/password Authentication 1st draft}{37}
+\contentsline {subsection}{\numberline {7.3.1}Authentication Protocol Search 1.0 (Password Storage)}{40}
+\contentsline {subsection}{\numberline {7.3.2}Authentication Protocol Search 2.0 (One Time Passwords)}{42}
+\contentsline {subsection}{\numberline {7.3.3}Authentication Protocol Search 3.0 (Triple DES Encryption)}{43}
+\contentsline {section}{\numberline {7.4}Block Cipher Injection (MiTM)}{43}
+\contentsline {chapter}{\numberline {8}Conclusion / Results}{45}
+\contentsline {chapter}{\numberline {9}Future work}{47}
+\contentsline {chapter}{Bibliography}{49}
+\contentsline {chapter}{Appendices}{51}
+\contentsline {chapter}{\numberline {A}Attack Traces}{53}
+\contentsline {section}{\numberline {A.1}Multiple C\_login Traces}{53}
+\contentsline {subsection}{\numberline {A.1.1}Different Pin, Different Nonce}{53}
+\contentsline {subsection}{\numberline {A.1.2}Different Pin, Same Nonce}{54}
+\contentsline {subsection}{\numberline {A.1.3}Same Pin, Different Nonce}{54}
+\contentsline {subsection}{\numberline {A.1.4}Same Pin, Same Nonce}{55}
+\contentsline {subsection}{\numberline {A.1.5}Different Second}{55}
+\contentsline {section}{\numberline {A.2}Successful Login Injection}{56}
+\contentsline {section}{\numberline {A.3}Open Secure Messaging Traces}{57}
+\contentsline {subsection}{\numberline {A.3.1}Generator = 5, [Not modified]}{57}
+\contentsline {subsection}{\numberline {A.3.2}Generator = 1}{58}
+\contentsline {subsection}{\numberline {A.3.3}Generator = 0}{61}
+\contentsline {section}{\numberline {A.4}Overriding Attribute Controls}{63}
+\contentsline {section}{\numberline {A.5}Encrypt\_False}{63}
+\contentsline {chapter}{\numberline {B}API Function Traces}{65}
+\contentsline {section}{\numberline {B.1}Initialization}{65}
+\contentsline {section}{\numberline {B.2}C\_login}{66}
+\contentsline {section}{\numberline {B.3}C\_findObject}{67}
+\contentsline {section}{\numberline {B.4}C\_generateKey}{69}
+\contentsline {section}{\numberline {B.5}C\_generateKeyPair}{72}
+\contentsline {section}{\numberline {B.6}C\_destroyObject}{76}
+\contentsline {section}{\numberline {B.7}C\_encrypt}{78}
+\contentsline {section}{\numberline {B.8}C\_decrypt}{78}
+\contentsline {section}{\numberline {B.9}C\_setAttribute}{78}
+\contentsline {section}{\numberline {B.10}C\_unwrap}{79}
+\contentsline {section}{\numberline {B.11}C\_wrap}{83}
