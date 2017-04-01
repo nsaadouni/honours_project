@@ -766,10 +766,7 @@ Hence this search generated experiments that ran through 1 $\rightarrow$ 100,000
 
 This generated 100,000 experiments per hash function. With 5 hash functions, this resulted in half a million tests being run. Due to the sheer computational power required for this search I decided to parallelize the search based on the hash function, and run them on separate cores of a server. Even by improving the efficiency of this search, it still took 2 weeks to conduct.
 
-Again this unfortunately did not result in a match between the 16 byte responses calculated and Y (the API's response). Hence we move onto search 3.\\
-
-
-
+Again this unfortunately did not result in a match between the 16 byte responses calculated and Y (the API's response). Hence we move onto search 3.
 
 \subsection{Authentication Protocol Search 2.0 (One Time Passwords)}
 
@@ -866,12 +863,46 @@ Same & Different & Different & $\chi$ & $\chi$ & A.1.5\\
 
 Table 7.5 shows that changing the second the separate logins occur within, or changing the PIN causes the whole 16 bytes to alter. If both login attempts are within the same second, and the same PIN and challenge are given to the API then the exact same 16 byte response is calculated. However the most interesting characteristic discovered within these experiments is when the logins occur within the same second, with the same PIN but different challenge. This causes the first 8 bytes to remain the same, but the second 8 bytes to differ, within the 16 byte response. 
 
-This is the characteristic that provides the evidence to support our theory that the 16 byte resposne is in-fact split into to 8 byte sections.
+This is the characteristic that provides the evidence to support our theory that the 16 byte response is in-fact split into to 8 byte sections. This also shows that that the second 8 bytes is a function that utilises the challenge. As a different challenge causes it to change. Based on these facts we assume the following:\\
 
+\begin{enumerate}
+\item The first 8 bytes is a random number $N_A$ = Nonce API, which is seeded with time (in seconds)
+\item The second 8 bytes is a another number that verifies the knowledge of both the challenge and $N_A$. We denote this as $V_{AC}$
+\item A block cipher (see section 3.3) is used to encrypt both of these numbers, to send over to the card for PIN verification
+\item A function of the PIN, is the password to the block cipher
+\item The PIN is still of maximum length 16 bytes
+\item The PIN is still in ASCII format
+\end{enumerate}
 
+To sum up we assume at this stage the challenge-response algorithm uses a function of the PIN to be the password to a block cipher which encrypts a message in this format:\\
+$$ block\_cipher\_encrypt(N_A || V_{AC})$$
 
-\textbf{\underline{Search 5 - DES2-ECB}}\\
-\textbf{\underline{Search 6 - DES2-CBC}}\\
+The block ciphers that are supported by the card are listed below:
+\begin{table}[H]
+\begin{tabular}{|l|c|c|c|}
+\hline
+Block Cipher & Key Size & Block Size\\
+\hline
+AES & 16 & 16\\
+DES & 8 & 8\\
+\textbf{Triple DES  \textit{(key option 2)}} & \textbf{16} & \textbf{8}\\
+Triple DES  \textit{(key option 3)} & 24 & 8\\
+\hline
+\end{tabular}
+\end{table}
+
+The use of the block cipher AES is ruled out as a possibility as if it was used the characteristic that we found would not be present. A change to the challenge, within the same second and given the same PIN would result in a different encryption of both 8 bytes because AES would operate over the entire 16 byte block. This leaves only DES and triple DES as a viable option. 
+
+We eliminated the possibility of standard DES being used due to its key size. It would not make logical sense to use a function of the password and then truncate it down to 8 bytes from 16 bytes. This would drop the security of the login from 256 bits to 128 bits for no reason, as other options are available.
+
+This therefore only left us with triple DES key options 2 and 3. With the fact in mind that the PIN for the user is of maximum length 16 bytes we decided to focus on key option 2 which has 16 byte password. There is a possibility that the password is hashed for example and 24 bytes are used with key option 3, but we decided to first test key option 2 before moving onto 3 in the case that 2 fails.
+
+Due to the assumption that the second 8 bytes is a verification (possible join, or hashing) of both the cards challenge and $N_A$, then we could not simply just decrypt the 16 byte response and analyse it. As both number could be completely unknown to us, therefore we would have no method of verifying we have the correct protocol. To mitigate this we decided to get 2 different responses, within the same second and with the same challenge, but using different PIN's. If the password to the block cipher is in-fact a function of the PIN, then the correct decryption of both responses with different passwords should evaluate to the same 16 bytes. This is how we will verify if we have found the correct protocol.\\
+
+\textbf{\underline{Search 5 - Triple DES \textit{(Key option 2)}-ECB}}\\
+Experimental setup.
+
+\textbf{\underline{Search 6 - Triple DES \textit{(Key option 2)}-CBC}}\\
 
 
 
