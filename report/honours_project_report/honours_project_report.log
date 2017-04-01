@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.14)  1 APR 2017 14:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.14)  1 APR 2017 14:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -603,12 +603,12 @@ Overfull \hbox (18.11429pt too wide) in paragraph at lines 25--25
 [5
 
 ] [6]
-Overfull \hbox (0.26993pt too wide) detected at line 85
+Overfull \hbox (0.26993pt too wide) detected at line 84
 \T1/fve/m/n/12 B.10 
  []
 
 
-Overfull \hbox (0.26993pt too wide) detected at line 86
+Overfull \hbox (0.26993pt too wide) detected at line 85
 \T1/fve/m/n/12 B.11 
  []
 
@@ -1009,12 +1009,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 818--819
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 826--827
+Underfull \hbox (badness 10000) in paragraph at lines 823--824
 
  []
 
 [43]
-Underfull \hbox (badness 10000) in paragraph at lines 839--840
+Underfull \hbox (badness 10000) in paragraph at lines 838--840
 
  []
 
@@ -1151,7 +1151,7 @@ exlive/texmf-dist/fonts/type1/public/bera/fvsb8a.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/public/bera/fvsr8a.pfb></usr/share/texlive/texmf-dist/fonts/ty
 pe1/public/bera/fvsro8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/time
 s/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on honours_project_report.pdf (83 pages, 225622 bytes).
+Output written on honours_project_report.pdf (83 pages, 226740 bytes).
 PDF statistics:
  337 PDF objects out of 1000 (max. 8388607)
  232 compressed objects within 3 object streams

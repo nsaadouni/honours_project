@@ -818,25 +818,25 @@ With no luck of deducing the challenge-response algorithm, we decided to look in
 In the previous section of the paper they explain that OCRA in the instance of this protcol stands for a generic variable to state which form of HOTP is to be used. HOTP (see section 3.5.1 of this paper) can take on different formula's due to using different hash functions. The generic formula is:\\
 $$HOTP(K,C) = Truncate(HMAC(K,C)) \quad \&\& \quad 0x7FFFFFFF$$
 
-where K and C stand for something and something respectively.
+where K and C stands for the password (secret key) and is a counter (the challenge) respectively.
+
+We ran experiments using the 5 hash functions listed in table 7.1, and even inter-changed K and C to have each others values instead. This did not result in finding a matching response to the one the API had calculated.\\
 
 \textbf{\underline{Search 4 - TOTP}}\\
-With the above in mind, I also wanted to rule out TOTP. This was completed by halting communication between the smart-card and API using the man-in-the-middle tool (see section 4.2). I did this for upto 2 hours. We were looking for a failed verifaction, despite having the correct PIN. The failure should have been caused by the delay in the response if TOTP was used. This was not found and therefore ruled out the possibility of TOTP. 
+With the above in mind, I also wanted to rule out the possible use of \textit{time based one time passwords} (see section 3.5.2). TOTP algorithms are rarely used within smartcards due to the complexity of syncing the clocks between the computer and the smart-cards processors, and then also accounting for any lag. Despite the low probability of it being used it was worth checking.
 
-This section will be explained better, and will also include reasoning behind why TOTP is not often used (time sync problems). \\
-
-
-
-
+This was completed by halting communication between the smart-card and API using the man-in-the-middle tool (see section 4.2). I did this for upto 2 hours. We were looking for a failed verification, despite having the correct PIN. The failure should have been caused by the delay in the response if TOTP was used. This was not found and therefore ruled out that possibility.
 
 \subsection{Authentication Protocol Search 3.0 (Triple DES Encryption)}
 
-here\\
-explain how we wanted to ensure that for the same challenge the same response is calculated. (this was not possible up until this time as it had taken a while to get the man in the middle tool to operate correctly)
+With none of the above searches concluding any useful results, and instead just ruling out them as possibilities we moved onto checking an assumption that we were not 100\% sure was accurate. This would have been done earlier, however it had taken a while to get the code for the man in the middle attack to be operational, and was required for this. The assumption in question was that \textit{for a given challenge and PIN, the API will calculate only 1 corresponding response}. 
 
-This is when we noticed the 4 characterstics that are within the appendix
+To verify this assumption we used the man in the middle tool to inject our own challenge (that the card normally sends) and set it to '00 00 00 00 00 00 00 00'. Completing this multiple times, we noticed that this assumption was in-fact wrong. Over multiple attempts we saw different responses being calculated by the API, despite the PIN and the challenge being the same. 
 
-\textbf{\underline{Search 5}}\\
+
+
+\textbf{\underline{Search 5 - DES2-ECB}}\\
+\textbf{\underline{Search 6 - DES2-CBC}}\\
 
 
 
@@ -1394,7 +1394,7 @@ COMMAND from API
 
 
 \section{Overriding Attribute Controls}
-\section{Encrypt\_False}
+\subsection{Encrypt\_False}
 
 
 \chapter{API Function Traces}

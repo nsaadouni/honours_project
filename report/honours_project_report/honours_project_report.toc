@@ -70,7 +70,7 @@
 \contentsline {subsection}{\numberline {A.3.2}Generator = 1}{58}
 \contentsline {subsection}{\numberline {A.3.3}Generator = 0}{61}
 \contentsline {section}{\numberline {A.4}Overriding Attribute Controls}{63}
-\contentsline {section}{\numberline {A.5}Encrypt\_False}{63}
+\contentsline {subsection}{\numberline {A.4.1}Encrypt\_False}{63}
 \contentsline {chapter}{\numberline {B}API Function Traces}{65}
 \contentsline {section}{\numberline {B.1}Initialization}{65}
 \contentsline {section}{\numberline {B.2}C\_login}{66}
