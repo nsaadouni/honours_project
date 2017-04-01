@@ -9,6 +9,7 @@
 \usepackage{subcaption}
 \usepackage{tabulary}
 \usepackage{listings}
+\usepackage{ wasysym }
 %\usepackage{hyperref}
 
 % This is for the Verbatim package
@@ -829,9 +830,43 @@ This was completed by halting communication between the smart-card and API using
 
 \subsection{Authentication Protocol Search 3.0 (Triple DES Encryption)}
 
-With none of the above searches concluding any useful results, and instead just ruling out them as possibilities we moved onto checking an assumption that we were not 100\% sure was accurate. This would have been done earlier, however it had taken a while to get the code for the man in the middle attack to be operational, and was required for this. The assumption in question was that \textit{for a given challenge and PIN, the API will calculate only 1 corresponding response}. 
+With none of the above searches concluding any useful results, and instead just ruling out them as possibilities we moved onto checking an assumption that we were not 100\% sure was accurate. This would have been done earlier, however it had taken a while to get the code for the man in the middle attack to be operational, and was required for this. The assumption in question was, that \textit{for a given challenge and PIN, the API will calculate only 1 corresponding response}. 
 
-To verify this assumption we used the man in the middle tool to inject our own challenge (that the card normally sends) and set it to '00 00 00 00 00 00 00 00'. Completing this multiple times, we noticed that this assumption was in-fact wrong. Over multiple attempts we saw different responses being calculated by the API, despite the PIN and the challenge being the same. 
+To verify this assumption we used the man in the middle tool to inject our own challenge (that the card normally sends) and set it to '00 00 00 00 00 00 00 00'. Completing this multiple times, we noticed that this assumption was in-fact wrong. Over multiple attempts we saw different responses being calculated by the API, despite the PIN and the challenge being the same. However we also noticed that logins with quick successions of one an other had the same value for the response when the same PIN and challenge were present, and in some cases only the last 8 bytes changed with the first 8 bytes remaining the same.
+
+Due to these observations we decided to run multiple experiments to find characteristics of the 16 bytes response \textit{(which we now believe to be split into two 8 byte parts)}. We did this by logging into the card twice each time, and altering the three parameters \textit{(one at a time)} that we determined to cause the response to alter. The parameters we alter are \textbf{\textit{time, PIN}} and the \textbf{\textit{challenge}}. The results of the experiments are tabulated below:
+
+% Table up bitch
+\textit{[To make the explanation of this clearer we have placed the actual traces of these experiments within \textbf{appendix A}. And use variable names for the two 8 byte sections of the 16 byte response. These are denoted below as A and B]}
+
+\begin{tabular}{|l|c|c|}
+\hline
+16 byte response & \quad\quad\quad\quad 1st 8 bytes \quad\quad\quad\quad & \quad\quad\quad\quad 2nd 8 bytes \quad\quad\quad\quad\\
+\hline
+Y =  & A & B\\
+\hline
+\end{tabular}
+
+%\checked & $\chi$
+
+\begin{table}[H]
+\begin{tabular}{|l|l|l|c|c|c|}
+\hline
+Time & PIN & Challenge & \quad\quad A \quad\quad & \quad\quad\ B \quad\quad & Appendix \\
+\hline
+Different & - & - & $\chi$ & $\chi$ & A.1.1\\
+Same & Same & Same & \checked & \checked & A.1.2\\
+\textbf{Same} & \textbf{Same} & \textbf{Different} & \textbf{\checked} & \textbf{$\chi$} & \textbf{A.1.3}\\
+Same & Different & Same & $\chi$ & $\chi$ & A.1.4\\
+Same & Different & Different & $\chi$ & $\chi$ & A.1.5\\
+\hline
+\end{tabular}
+\caption{Multiple logins with different parameters}
+\end{table}
+
+Table 7.5 shows that changing the second the separate logins occur within, or changing the PIN causes the whole 16 bytes to alter. If both login attempts are within the same second, and the same PIN and challenge are given to the API then the exact same 16 byte response is calculated. However the most interesting characteristic discovered within these experiments is when the logins occur within the same second, with the same PIN but different challenge. This causes the first 8 bytes to remain the same, but the second 8 bytes to differ, within the 16 byte response. 
+
+This is the characteristic that provides the evidence to support our theory that the 16 byte resposne is in-fact split into to 8 byte sections.
 
 
 
@@ -914,121 +949,6 @@ Internet Engineering Task Force (IETF).\\
 \chapter{Attack Traces}
 
 \section{Multiple C\_login Traces}
-\subsection{Different Pin, Different Nonce}
-\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
------ APDU command/response pair 0 -----
-\textit{(Inter-Industry) Get Challenge}
-00000000: 00 84 00 00 08                                    .....
-
-00000000: \textbf{00 00 00 00 00 00 00 00}  90 00                    ..........
-
------ APDU command/response pair 1 -----
-\textit{(Proprietary) Verify}
-00000000: 80 20 00 00 \textbf{10 C2 29 5F  78 D1 68 29 13 78 BE 7B}  . ....)_x.h).x.\{
-00000010: \textbf{8E 61 9B 32 2E}                                    .a.2.
-
-00000000: 63 C9                                             c.
-
------ APDU command/response pair 1 -----
-\textit{(Inter-Industry) Get Challenge}
-00000000: 00 84 00 00 08                                    .....
-
-00000000: \textbf{00 00 00 00 00 00 00 01}  90 00                    ..........
-
------ APDU command/response pair 1 -----
-\textit{(Proprietary) Verify}
-00000000: 80 20 00 00 10 \textbf{C4 6D 44  03 92 F3 6B EF 13 18 07}  . ....mD...k....
-00000010: \textbf{CE 5A A4 B9 27}                                    .Z..'
-
-00000000: 63 C8                                             c.
-\end{Verbatim}
-\subsection{Different Pin, Same Nonce}
-\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
------ APDU command/response pair 0 -----
-\textit{(Inter-Industry) Get Challenge}
-00000000: 00 84 00 00 08                                    .....
-
-00000000: \textbf{00 00 00 00 00 00 00 00}  90 00                    ..........
-
------ APDU command/response pair 1 -----
-\textit{(Proprietary) Verify}
-00000000: 80 20 00 00 10 \textbf{8F 58 1B  91 BC 78 D3 37 A9 D9 FB}  . ....X...x.7...
-00000010: \textbf{9C 20 58 F6 0A}                                    . X..
-
-00000000: 63 C9                                             c.
-
------ APDU command/response pair 1 -----
-\textit{(Inter-Industry) Get Challenge}
-00000000: 00 84 00 00 08                                    .....
-
-00000000: \textbf{00 00 00 00 00 00 00 00}  90 00                    ..........
-
------ APDU command/response pair 1 -----
-\textit{(Proprietary) Verify}
-00000000: 80 20 00 00 10 \textbf{E0 30 33  BB 03 0F 6E 11 08 C0 8D}  . ....03...n....
-00000010: \textbf{1D 9D 85 C4 A6}                                    .....
-
-00000000: 63 C8                                             c.
-
-\end{Verbatim}
-\subsection{Same Pin, Different Nonce}
-\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
------ APDU command/response pair 0 -----
-\textit{(Inter-Industry) Get Challenge}
-00000000: 00 84 00 00 08                                    .....
-
-00000000: \textbf{00 00 00 00 00 00 00 00}  90 00                    ..........
-
------ APDU command/response pair 1 -----
-\textit{(Proprietary) Verify}
-00000000: 80 20 00 00 10 \textbf{6E 78 D4  D5 61 AD 3C 26 D3 89 E8}  . ...nx..a.<&...
-00000010: \textbf{96 B9 92 0D 40}                                    ....@
-
-00000000: 63 C9                                             c.
-
------ APDU command/response pair 1 -----
-\textit{(Inter-Industry) Get Challenge}
-00000000: 00 84 00 00 08                                    .....
-
-00000000: \textbf{00 00 00 00 00 00 00 01}  90 00                    ..........
-
------ APDU command/response pair 1 -----
-\textit{(Proprietary) Verify}
-00000000: 80 20 00 00 10 \textbf{6E 78 D4  D5 61 AD 3C 26 BC C6 AA}  . ...nx..a.<&...
-00000010: \textbf{72 D3 95 2B 94}                                    r..+.
-
-00000000: 63 C8                                             c.
-
-\end{Verbatim}
-\subsection{Same Pin, Same Nonce}
-\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
------ APDU command/response pair 0 -----
-\textit{(Inter-Industry) Get Challenge}
-00000000: 00 84 00 00 08                                    .....
-
-00000000: \textbf{00 00 00 00 00 00 00 00}  90 00                    ..........
-
------ APDU command/response pair 1 -----
-\textit{(Proprietary) Verify}
-00000000: 80 20 00 00 10 \textbf{EE D2 F1  54 07 18 8A 8F AB A3 F7}  . ......T.......
-00000010: \textbf{3E 64 17 2D 6E}                                    >d.-n
-
-00000000: 63 C9                                             c.
-
------ APDU command/response pair 1 -----
-\textit{(Inter-Industry) Get Challenge}
-00000000: 00 84 00 00 08                                    .....
-
-00000000: \textbf{00 00 00 00 00 00 00 00}  90 00                    ..........
-
------ APDU command/response pair 1 -----
-\textit{(Proprietary) Verify}
-00000000: 80 20 00 00 10 \textbf{EE D2 F1  54 07 18 8A 8F AB A3 F7}  . ......T.......
-00000010: \textbf{3E 64 17 2D 6E}                                    >d.-n
-
-00000000: 63 C8                                             c.
-
-\end{Verbatim}
 \subsection{Different Second}
 \begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
 ----- APDU command/response pair 0 -----
@@ -1057,7 +977,121 @@ Internet Engineering Task Force (IETF).\\
 
 00000000: 63 C8                                             c.
 \end{Verbatim}
+\subsection{Same Pin, Same Challenge}
+\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+----- APDU command/response pair 0 -----
+\textit{(Inter-Industry) Get Challenge}
+00000000: 00 84 00 00 08                                    .....
 
+00000000: \textbf{00 00 00 00 00 00 00 00}  90 00                    ..........
+
+----- APDU command/response pair 1 -----
+\textit{(Proprietary) Verify}
+00000000: 80 20 00 00 10 \textbf{EE D2 F1  54 07 18 8A 8F AB A3 F7}  . ......T.......
+00000010: \textbf{3E 64 17 2D 6E}                                    >d.-n
+
+00000000: 63 C9                                             c.
+
+----- APDU command/response pair 1 -----
+\textit{(Inter-Industry) Get Challenge}
+00000000: 00 84 00 00 08                                    .....
+
+00000000: \textbf{00 00 00 00 00 00 00 00}  90 00                    ..........
+
+----- APDU command/response pair 1 -----
+\textit{(Proprietary) Verify}
+00000000: 80 20 00 00 10 \textbf{EE D2 F1  54 07 18 8A 8F AB A3 F7}  . ......T.......
+00000010: \textbf{3E 64 17 2D 6E}                                    >d.-n
+
+00000000: 63 C8                                             c.
+
+\end{Verbatim}
+\subsection{Same Pin, Different Challenge}
+\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+----- APDU command/response pair 0 -----
+\textit{(Inter-Industry) Get Challenge}
+00000000: 00 84 00 00 08                                    .....
+
+00000000: \textbf{00 00 00 00 00 00 00 00}  90 00                    ..........
+
+----- APDU command/response pair 1 -----
+\textit{(Proprietary) Verify}
+00000000: 80 20 00 00 10 \textbf{6E 78 D4  D5 61 AD 3C 26 D3 89 E8}  . ...nx..a.<&...
+00000010: \textbf{96 B9 92 0D 40}                                    ....@
+
+00000000: 63 C9                                             c.
+
+----- APDU command/response pair 1 -----
+\textit{(Inter-Industry) Get Challenge}
+00000000: 00 84 00 00 08                                    .....
+
+00000000: \textbf{00 00 00 00 00 00 00 01}  90 00                    ..........
+
+----- APDU command/response pair 1 -----
+\textit{(Proprietary) Verify}
+00000000: 80 20 00 00 10 \textbf{6E 78 D4  D5 61 AD 3C 26 BC C6 AA}  . ...nx..a.<&...
+00000010: \textbf{72 D3 95 2B 94}                                    r..+.
+
+00000000: 63 C8                                             c.
+
+\end{Verbatim}
+\subsection{Different Pin, Same Challenge}
+\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+----- APDU command/response pair 0 -----
+\textit{(Inter-Industry) Get Challenge}
+00000000: 00 84 00 00 08                                    .....
+
+00000000: \textbf{00 00 00 00 00 00 00 00}  90 00                    ..........
+
+----- APDU command/response pair 1 -----
+\textit{(Proprietary) Verify}
+00000000: 80 20 00 00 10 \textbf{8F 58 1B  91 BC 78 D3 37 A9 D9 FB}  . ....X...x.7...
+00000010: \textbf{9C 20 58 F6 0A}                                    . X..
+
+00000000: 63 C9                                             c.
+
+----- APDU command/response pair 1 -----
+\textit{(Inter-Industry) Get Challenge}
+00000000: 00 84 00 00 08                                    .....
+
+00000000: \textbf{00 00 00 00 00 00 00 00}  90 00                    ..........
+
+----- APDU command/response pair 1 -----
+\textit{(Proprietary) Verify}
+00000000: 80 20 00 00 10 \textbf{E0 30 33  BB 03 0F 6E 11 08 C0 8D}  . ....03...n....
+00000010: \textbf{1D 9D 85 C4 A6}                                    .....
+
+00000000: 63 C8                                             c.
+
+\end{Verbatim}
+\subsection{Different Pin, Different Challenge}
+\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+----- APDU command/response pair 0 -----
+\textit{(Inter-Industry) Get Challenge}
+00000000: 00 84 00 00 08                                    .....
+
+00000000: \textbf{00 00 00 00 00 00 00 00}  90 00                    ..........
+
+----- APDU command/response pair 1 -----
+\textit{(Proprietary) Verify}
+00000000: 80 20 00 00 \textbf{10 C2 29 5F  78 D1 68 29 13 78 BE 7B}  . ....)_x.h).x.\{
+00000010: \textbf{8E 61 9B 32 2E}                                    .a.2.
+
+00000000: 63 C9                                             c.
+
+----- APDU command/response pair 1 -----
+\textit{(Inter-Industry) Get Challenge}
+00000000: 00 84 00 00 08                                    .....
+
+00000000: \textbf{00 00 00 00 00 00 00 01}  90 00                    ..........
+
+----- APDU command/response pair 1 -----
+\textit{(Proprietary) Verify}
+00000000: 80 20 00 00 10 \textbf{C4 6D 44  03 92 F3 6B EF 13 18 07}  . ....mD...k....
+00000010: \textbf{CE 5A A4 B9 27}                                    .Z..'
+
+00000000: 63 C8                                             c.
+\end{Verbatim}
 \section{Successful Login Injection}
 \begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
 ----- APDU command/response pair 12 -----

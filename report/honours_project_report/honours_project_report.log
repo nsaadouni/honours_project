@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.14)  1 APR 2017 14:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.14)  1 APR 2017 19:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -264,6 +264,12 @@ File: listings.cfg 2015/06/04 1.6 listings configuration
 ))
 Package: listings 2015/06/04 1.6 (Carsten Heinz)
 
+(/usr/share/texlive/texmf-dist/tex/latex/wasysym/wasysym.sty
+Package: wasysym 2003/10/30 v2.0 Wasy-2 symbol support package
+\symwasy=\mathgroup6
+LaTeX Font Info:    Overwriting symbol font `wasy' in version `bold'
+(Font)                  U/wasy/m/n --> U/wasy/b/n on input line 90.
+)
 (/usr/share/texlive/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
 Package: fancyvrb 2008/02/07
 
@@ -392,31 +398,31 @@ Package: appendix 2009/09/02 v1.2b extra appendix facilities
 (./honours_project_report.aux)
 \openout1 = `honours_project_report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMS/pzccm/m/n on input line 20.
-LaTeX Font Info:    Try loading font information for OMS+pzccm on input line 20
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMS/pzccm/m/n on input line 21.
+LaTeX Font Info:    Try loading font information for OMS+pzccm on input line 21
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omspzccm.fd
 File: omspzccm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/pzccm.
 )
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 20.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 20.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 21.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 21.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    ... okay on input line 21.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -516,57 +522,57 @@ Package caption Info: End \AtBeginDocument code.
 \AtBeginShipoutBox=\box34
 \c@lstlisting=\count121
 LaTeX Font Info:    Font shape `T1/fve/m/n' will be
-(Font)              scaled to size 18.66588pt on input line 58.
+(Font)              scaled to size 18.66588pt on input line 59.
 LaTeX Font Info:    Font shape `T1/fve/b/n' will be
-(Font)              scaled to size 18.66588pt on input line 58.
-LaTeX Font Info:    Try loading font information for T1+fvs on input line 58.
+(Font)              scaled to size 18.66588pt on input line 59.
+LaTeX Font Info:    Try loading font information for T1+fvs on input line 59.
 
 (/usr/share/texlive/texmf-dist/tex/latex/bera/t1fvs.fd
 File: t1fvs.fd 2004/09/07 scalable font definitions for T1/fvs.
 )
 LaTeX Font Info:    Font shape `T1/fvs/b/n' will be
-(Font)              scaled to size 18.66588pt on input line 58.
+(Font)              scaled to size 18.66588pt on input line 59.
 LaTeX Font Info:    Font shape `T1/fve/m/n' will be
-(Font)              scaled to size 15.55188pt on input line 58.
+(Font)              scaled to size 15.55188pt on input line 59.
 LaTeX Font Info:    Font shape `T1/fve/m/it' in size <17.28> not available
-(Font)              Font shape `T1/fve/m/sl' tried instead on input line 58.
+(Font)              Font shape `T1/fve/m/sl' tried instead on input line 59.
 LaTeX Font Info:    Font shape `T1/fve/m/sl' will be
-(Font)              scaled to size 15.55188pt on input line 58.
+(Font)              scaled to size 15.55188pt on input line 59.
 LaTeX Font Info:    Font shape `T1/fve/m/n' will be
-(Font)              scaled to size 12.9599pt on input line 58.
+(Font)              scaled to size 12.9599pt on input line 59.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2
 
 ]
 LaTeX Font Info:    Font shape `T1/fvs/m/n' will be
-(Font)              scaled to size 10.79993pt on input line 58.
+(Font)              scaled to size 10.79993pt on input line 59.
 LaTeX Font Info:    Font shape `T1/fvs/b/n' will be
-(Font)              scaled to size 10.79993pt on input line 58.
+(Font)              scaled to size 10.79993pt on input line 59.
 
-Underfull \hbox (badness 10000) in paragraph at lines 58--58
+Underfull \hbox (badness 10000) in paragraph at lines 59--59
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 58--58
+Underfull \hbox (badness 10000) in paragraph at lines 59--59
 
  []
 
 LaTeX Font Info:    Font shape `T1/fvs/m/it' will be
-(Font)              scaled to size 10.79993pt on input line 58.
+(Font)              scaled to size 10.79993pt on input line 59.
 [3]
 LaTeX Font Info:    Font shape `T1/fve/b/n' will be
-(Font)              scaled to size 15.55188pt on input line 61.
+(Font)              scaled to size 15.55188pt on input line 62.
 LaTeX Font Info:    Font shape `T1/fvs/b/n' will be
-(Font)              scaled to size 15.55188pt on input line 61.
+(Font)              scaled to size 15.55188pt on input line 62.
  [4]
 LaTeX Font Info:    Font shape `T1/fve/m/n' will be
-(Font)              scaled to size 22.39185pt on input line 66.
+(Font)              scaled to size 22.39185pt on input line 67.
 LaTeX Font Info:    Font shape `T1/fve/b/n' will be
-(Font)              scaled to size 22.39185pt on input line 66.
+(Font)              scaled to size 22.39185pt on input line 67.
 LaTeX Font Info:    Font shape `T1/fvs/b/n' will be
-(Font)              scaled to size 22.39185pt on input line 66.
+(Font)              scaled to size 22.39185pt on input line 67.
  (./honours_project_report.toc
 LaTeX Font Info:    Font shape `T1/fve/b/n' will be
 (Font)              scaled to size 10.79993pt on input line 1.
@@ -594,7 +600,11 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
+LaTeX Font Info:    Try loading font information for U+wasy on input line 3.
 
+(/usr/share/texlive/texmf-dist/tex/latex/wasysym/uwasy.fd
+File: uwasy.fd 2003/10/30 v2.0 Wasy-2 symbol font definitions
+)
 Overfull \hbox (18.11429pt too wide) in paragraph at lines 25--25
  [][] []\T1/fve/m/n/12 Cryptographic Based - Mes-sage Au-then-ti-ca-tion Codes 
 (CMAC) [][]  
@@ -621,40 +631,40 @@ Overfull \hbox (0.26993pt too wide) detected at line 85
 ]
 Chapter 1.
 
-Underfull \hbox (badness 10000) in paragraph at lines 73--74
+Underfull \hbox (badness 10000) in paragraph at lines 74--75
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 75--84
+Underfull \hbox (badness 10000) in paragraph at lines 76--85
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 86--87
+Underfull \hbox (badness 10000) in paragraph at lines 87--88
 
  []
 
 [9] [10]
 Chapter 2.
 LaTeX Font Info:    Font shape `T1/fve/b/n' will be
-(Font)              scaled to size 12.9599pt on input line 114.
+(Font)              scaled to size 12.9599pt on input line 115.
 LaTeX Font Info:    Font shape `T1/fvs/b/n' will be
-(Font)              scaled to size 12.9599pt on input line 114.
-LaTeX Font Info:    Try loading font information for T1+fvm on input line 116.
+(Font)              scaled to size 12.9599pt on input line 115.
+LaTeX Font Info:    Try loading font information for T1+fvm on input line 117.
 (/usr/share/texlive/texmf-dist/tex/latex/bera/t1fvm.fd
 File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
 )
 LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 10.79993pt on input line 116.
+(Font)              scaled to size 10.79993pt on input line 117.
 
-Overfull \hbox (94.55643pt too wide) in paragraph at lines 132--132
+Overfull \hbox (94.55643pt too wide) in paragraph at lines 133--133
 []\T1/fvm/m/n/12 (CKA\_CLASS, LowLevel.CKO\_SECRET\_KEY), [private, public, dat
 a, cert (X.509)][] 
  []
 
 
-Overfull \hbox (49.04553pt too wide) in paragraph at lines 132--132
+Overfull \hbox (49.04553pt too wide) in paragraph at lines 133--133
 []\T1/fvm/m/n/12 (CKA\_EXTRACTABLE, False)) [is allowed to be extracted from th
 e device][] 
  []
@@ -662,7 +672,7 @@ e device][]
 [11
 
 ]
-Overfull \hbox (29.01071pt too wide) in paragraph at lines 144--179
+Overfull \hbox (29.01071pt too wide) in paragraph at lines 145--180
 [] [] 
  []
 
@@ -675,12 +685,12 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 ]
 Chapter 3.
 [15]
-Overfull \hbox (15.92776pt too wide) in paragraph at lines 224--224
+Overfull \hbox (15.92776pt too wide) in paragraph at lines 225--225
 []\T1/fvs/b/n/14.4 Hash Based - Mes-sage Au-then-ti-ca-tion Codes (HMAC) 
  []
 
 
-Overfull \hbox (24.98671pt too wide) in paragraph at lines 225--225
+Overfull \hbox (24.98671pt too wide) in paragraph at lines 226--226
 []\T1/fvs/b/n/14.4 Cryptographic Based - Mes-sage Au-then-ti-ca-tion Codes
  []
 
@@ -697,42 +707,42 @@ Chapter 5.
 ]
 Chapter 6.
 
-Overfull \hbox (17.54901pt too wide) in paragraph at lines 277--278
+Overfull \hbox (17.54901pt too wide) in paragraph at lines 278--279
 \T1/fve/m/n/12 tions op-er-ated in a sim-i-lar man-ner to C_encrypt and C_decry
 pt. C_createObject
  []
 
 LaTeX Font Info:    Font shape `T1/fve/m/it' in size <12> not available
-(Font)              Font shape `T1/fve/m/sl' tried instead on input line 281.
+(Font)              Font shape `T1/fve/m/sl' tried instead on input line 282.
 LaTeX Font Info:    Font shape `T1/fve/m/sl' will be
-(Font)              scaled to size 10.79993pt on input line 281.
+(Font)              scaled to size 10.79993pt on input line 282.
 [21]
-Underfull \hbox (badness 10000) in paragraph at lines 295--296
+Underfull \hbox (badness 10000) in paragraph at lines 296--297
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 298--299
+Underfull \hbox (badness 10000) in paragraph at lines 299--300
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 305--306
+Underfull \hbox (badness 10000) in paragraph at lines 306--307
 
  []
 
 [22]
-Underfull \hbox (badness 10000) in paragraph at lines 316--317
+Underfull \hbox (badness 10000) in paragraph at lines 317--318
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 319--320
+Underfull \hbox (badness 10000) in paragraph at lines 320--321
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 324--325
+Underfull \hbox (badness 10000) in paragraph at lines 325--326
 
  []
 
@@ -740,158 +750,158 @@ Underfull \hbox (badness 10000) in paragraph at lines 324--325
 Underfull \vbox (badness 3199) has occurred while \output is active []
 
  [23]
-Underfull \hbox (badness 10000) in paragraph at lines 334--335
+Underfull \hbox (badness 10000) in paragraph at lines 335--336
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 336--337
+Underfull \hbox (badness 10000) in paragraph at lines 337--338
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 347--348
+Underfull \hbox (badness 10000) in paragraph at lines 348--349
 
  []
 
 [24]
-Underfull \hbox (badness 10000) in paragraph at lines 361--362
+Underfull \hbox (badness 10000) in paragraph at lines 362--363
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 363--364
+Underfull \hbox (badness 10000) in paragraph at lines 364--365
 
  []
 
 [25]
-Underfull \hbox (badness 10000) in paragraph at lines 381--382
+Underfull \hbox (badness 10000) in paragraph at lines 382--383
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 381--382
+Underfull \hbox (badness 10000) in paragraph at lines 382--383
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 384--385
+Underfull \hbox (badness 10000) in paragraph at lines 385--386
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 386--392
+Underfull \hbox (badness 10000) in paragraph at lines 387--393
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 393--400
+Underfull \hbox (badness 10000) in paragraph at lines 394--401
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 401--409
+Underfull \hbox (badness 10000) in paragraph at lines 402--410
 
  []
 
 [26]
-Underfull \hbox (badness 10000) in paragraph at lines 410--414
+Underfull \hbox (badness 10000) in paragraph at lines 411--415
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 415--419
+Underfull \hbox (badness 10000) in paragraph at lines 416--420
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 420--430
+Underfull \hbox (badness 10000) in paragraph at lines 421--431
 
  []
 
 [27]
-Underfull \hbox (badness 10000) in paragraph at lines 441--442
+Underfull \hbox (badness 10000) in paragraph at lines 442--443
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 443--444
+Underfull \hbox (badness 10000) in paragraph at lines 444--445
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 460--467
+Underfull \hbox (badness 10000) in paragraph at lines 461--468
 
  []
 
 [28]
-Overfull \hbox (24.07478pt too wide) in paragraph at lines 473--474
+Overfull \hbox (24.07478pt too wide) in paragraph at lines 474--475
 \T1/fve/m/sl/12 [For this func-tion we use a triple DES key to en-crypt a strin
 g 'Test-String123456']
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 475--476
+Underfull \hbox (badness 10000) in paragraph at lines 476--477
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 479--480
+Underfull \hbox (badness 10000) in paragraph at lines 480--481
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 483--484
+Underfull \hbox (badness 10000) in paragraph at lines 484--485
 
  []
 
 [29]
-Underfull \hbox (badness 10000) in paragraph at lines 493--494
+Underfull \hbox (badness 10000) in paragraph at lines 494--495
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 495--496
+Underfull \hbox (badness 10000) in paragraph at lines 496--497
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 499--500
+Underfull \hbox (badness 10000) in paragraph at lines 500--501
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 507--508
+Underfull \hbox (badness 10000) in paragraph at lines 508--509
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 509--510
+Underfull \hbox (badness 10000) in paragraph at lines 510--511
 
  []
 
 [30]
-Underfull \hbox (badness 10000) in paragraph at lines 513--514
+Underfull \hbox (badness 10000) in paragraph at lines 514--515
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 524--525
+Underfull \hbox (badness 10000) in paragraph at lines 525--526
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 527--528
+Underfull \hbox (badness 10000) in paragraph at lines 528--529
 
  []
 
 [31]
-Underfull \hbox (badness 10000) in paragraph at lines 539--540
+Underfull \hbox (badness 10000) in paragraph at lines 540--541
 
  []
 
 [32]
-Underfull \hbox (badness 10000) in paragraph at lines 572--573
+Underfull \hbox (badness 10000) in paragraph at lines 573--574
 
  []
 
@@ -901,11 +911,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 572--573
 Chapter 7.
 [35]
 LaTeX Font Info:    Font shape `T1/fve/b/it' in size <12> not available
-(Font)              Font shape `T1/fve/b/sl' tried instead on input line 607.
+(Font)              Font shape `T1/fve/b/sl' tried instead on input line 608.
 LaTeX Font Info:    Font shape `T1/fve/b/sl' will be
-(Font)              scaled to size 10.79993pt on input line 607.
+(Font)              scaled to size 10.79993pt on input line 608.
  [36]
-Overfull \hbox (19.8223pt too wide) in paragraph at lines 617--617
+Overfull \hbox (19.8223pt too wide) in paragraph at lines 618--618
 []\T1/fvs/b/n/17.28 Reverse En-gi-neer-ing PIN Au-then-ti-ca-tion Pro-
  []
 
@@ -915,83 +925,83 @@ Overfull \hbox (19.8223pt too wide) in paragraph at lines 617--617
 File: images/section_7/7.2/authencation_method.png Graphic file (type png)
  <use images/section_7/7.2/authencation_method.png>
 Package pdftex.def Info: images/section_7/7.2/authencation_method.png used on i
-nput line 625.
+nput line 626.
 (pdftex.def)             Requested size: 412.56497pt x 247.11081pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 633--634
+Underfull \hbox (badness 10000) in paragraph at lines 634--635
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 638--639
+Underfull \hbox (badness 10000) in paragraph at lines 639--640
 
  []
 
 [38 <./images/section_7/7.2/authencation_method.png>]
-Overfull \hbox (55.42426pt too wide) in paragraph at lines 640--641
+Overfull \hbox (55.42426pt too wide) in paragraph at lines 641--642
 \T1/fve/m/n/12 have been it-er-ated over and pre-formed on. For ex-am-ple \T1/f
 ve/b/sl/12 trun-cate(hash('example'))\T1/fve/m/n/12 ,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 640--641
+Underfull \hbox (badness 10000) in paragraph at lines 641--642
 
  []
 
 
-Overfull \hbox (1.95415pt too wide) in paragraph at lines 684--693
+Overfull \hbox (1.95415pt too wide) in paragraph at lines 685--694
  [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 697--698
+Underfull \hbox (badness 10000) in paragraph at lines 698--699
 
  []
 
 
-Overfull \hbox (44.98962pt too wide) in paragraph at lines 703--714
+Overfull \hbox (44.98962pt too wide) in paragraph at lines 704--715
  [] 
  []
 
 [39]
-Overfull \hbox (8.99417pt too wide) in paragraph at lines 721--721
+Overfull \hbox (8.99417pt too wide) in paragraph at lines 722--722
 []\T1/fvs/b/n/14.4 Authentication Pro-to-col Search 1.0 (Pass-word Stor-
  []
 
-LaTeX Font Info:    Try loading font information for TS1+fve on input line 724.
+LaTeX Font Info:    Try loading font information for TS1+fve on input line 725.
 
 (/usr/share/texlive/texmf-dist/tex/latex/bera/ts1fve.fd
 File: ts1fve.fd 2004/09/07 scalable font definitions for TS1/fve.
 )
 LaTeX Font Info:    Font shape `TS1/fve/m/n' will be
-(Font)              scaled to size 10.79993pt on input line 724.
+(Font)              scaled to size 10.79993pt on input line 725.
 
-Underfull \hbox (badness 10000) in paragraph at lines 727--728
+Underfull \hbox (badness 10000) in paragraph at lines 728--729
 
  []
 
 [40]
-Underfull \hbox (badness 10000) in paragraph at lines 736--737
+Underfull \hbox (badness 10000) in paragraph at lines 737--738
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 750--751
+Underfull \hbox (badness 10000) in paragraph at lines 751--752
 
  []
 
 [41]
-Underfull \hbox (badness 10000) in paragraph at lines 759--760
+Underfull \hbox (badness 10000) in paragraph at lines 760--761
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 768--769
+Underfull \hbox (badness 10000) in paragraph at lines 769--770
 
  []
 
 
-Overfull \hbox (9.65514pt too wide) in paragraph at lines 773--773
+Overfull \hbox (9.65514pt too wide) in paragraph at lines 774--774
 []\T1/fvs/b/n/14.4 Authentication Pro-to-col Search 2.0 (One Time Pass-
  []
 
@@ -1000,141 +1010,146 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [42]
 LaTeX Font Info:    Font shape `T1/fve/m/n' will be
-(Font)              scaled to size 9.85492pt on input line 783.
+(Font)              scaled to size 9.85492pt on input line 784.
 LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 9.85492pt on input line 783.
+(Font)              scaled to size 9.85492pt on input line 784.
 
-Underfull \hbox (badness 10000) in paragraph at lines 818--819
+Underfull \hbox (badness 10000) in paragraph at lines 819--820
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 823--824
+Underfull \hbox (badness 10000) in paragraph at lines 824--825
 
  []
 
 [43]
-Underfull \hbox (badness 10000) in paragraph at lines 838--840
-
+Overfull \hbox (0.397pt too wide) in paragraph at lines 842--849
+[][] 
  []
 
 [44]
-Chapter 8.
-[45
+Underfull \hbox (badness 10000) in paragraph at lines 873--875
 
-] [46
+ []
+
+[45] [46
 
 ]
-Chapter 9.
+Chapter 8.
 [47] [48
 
 ]
-LaTeX Font Info:    Font shape `T1/fve/m/it' in size <9> not available
-(Font)              Font shape `T1/fve/m/sl' tried instead on input line 885.
-LaTeX Font Info:    Font shape `T1/fve/m/sl' will be
-(Font)              scaled to size 8.09995pt on input line 885.
+Chapter 9.
+[49] [50
 
-Underfull \hbox (badness 2547) in paragraph at lines 889--893
+]
+LaTeX Font Info:    Font shape `T1/fve/m/it' in size <9> not available
+(Font)              Font shape `T1/fve/m/sl' tried instead on input line 920.
+LaTeX Font Info:    Font shape `T1/fve/m/sl' will be
+(Font)              scaled to size 8.09995pt on input line 920.
+
+Underfull \hbox (badness 2547) in paragraph at lines 924--928
 []\T1/fve/m/n/12 Albert Ein-stein. \T1/fve/m/sl/12 Zur Elek-tro-dy-namik be-weg
 ter Kör-per\T1/fve/m/n/12 . (Ger-man)
  []
 
 
-Underfull \hbox (badness 2073) in paragraph at lines 889--893
+Underfull \hbox (badness 2073) in paragraph at lines 924--928
 \T1/fve/m/n/12 [\T1/fve/m/sl/12 On the elec-tro-dy-nam-ics of mov-ing bod-ies\T
 1/fve/m/n/12 ]. An-nalen der Physik,
  []
 
 
-Overfull \hbox (56.84286pt too wide) in paragraph at lines 900--903
+Overfull \hbox (56.84286pt too wide) in paragraph at lines 935--938
 \T1/fvm/m/n/12 https://frankmorgner.github.io/vsmartcard/virtualsmartcard/READM
 E.html 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 900--903
+Underfull \hbox (badness 10000) in paragraph at lines 935--938
 
  []
 
-[49] [50
+[51] [52
 
-] [51
+] [53
 
-] [52]
+] [54]
 Appendix A.
 LaTeX Font Info:    Font shape `T1/fvm/m/it' in size <10.95> not available
-(Font)              Font shape `T1/fvm/m/sl' tried instead on input line 920.
+(Font)              Font shape `T1/fvm/m/sl' tried instead on input line 955.
 LaTeX Font Info:    Font shape `T1/fvm/m/sl' will be
-(Font)              scaled to size 9.85492pt on input line 920.
+(Font)              scaled to size 9.85492pt on input line 955.
 LaTeX Font Info:    Font shape `T1/fvm/b/n' will be
-(Font)              scaled to size 9.85492pt on input line 923.
+(Font)              scaled to size 9.85492pt on input line 958.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [53
+ [55
 
 ]
-[54] [55] [56] [57] [58]
+[56] [57] [58] [59] [60]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [59]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [60]
-[61]
+ [61]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [62]
-[63] [64
+[63]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [64]
+[65] [66
 
 ]
 Appendix B.
-[65]
-Underfull \vbox (badness 3690) has occurred while \output is active []
-
- [66]
 [67]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 3690) has occurred while \output is active []
 
  [68]
 [69]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [70]
+[71]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [71]
-[72]
+ [72]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [73]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [74]
+[74]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [75]
-[76]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [76]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [77]
-[78] [79]
+[78]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [80]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [81]
+ [79]
+[80] [81]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [82]
-[83] (./honours_project_report.aux) ) 
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [83]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [84]
+[85] (./honours_project_report.aux) ) 
 Here is how much of TeX's memory you used:
- 7539 strings out of 493085
- 112309 string characters out of 6136916
- 189571 words of memory out of 5000000
- 10839 multiletter control sequences out of 15000+600000
- 88153 words of font info for 90 fonts, out of 8000000 for 9000
+ 7722 strings out of 493085
+ 114174 string characters out of 6136916
+ 191183 words of memory out of 5000000
+ 11011 multiletter control sequences out of 15000+600000
+ 89008 words of font info for 94 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  43i,12n,40p,1118b,414s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/d
@@ -1149,12 +1164,15 @@ st/fonts/type1/public/bera/fver8a.pfb></usr/share/texlive/texmf-dist/fonts/type
 /usr/share/texlive/texmf-dist/fonts/type1/public/bera/fvmro8a.pfb></usr/share/t
 exlive/texmf-dist/fonts/type1/public/bera/fvsb8a.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/public/bera/fvsr8a.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/bera/fvsro8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/time
-s/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on honours_project_report.pdf (83 pages, 226740 bytes).
+pe1/public/bera/fvsro8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symb
+ol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/wasy2-ps/wasy10.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/wasy2-ps/wasyb10.pfb>
+Output written on honours_project_report.pdf (85 pages, 236330 bytes).
 PDF statistics:
- 337 PDF objects out of 1000 (max. 8388607)
- 232 compressed objects within 3 object streams
+ 356 PDF objects out of 1000 (max. 8388607)
+ 246 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
