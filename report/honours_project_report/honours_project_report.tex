@@ -592,6 +592,8 @@ In this chapter we explain the motivations, implementation and results of the at
 \subsection{Vulnerabilities not investigated}
 The \textit{initialization} function did not present any vulnerabilities that would be able to be exploited and was just needed in order for the API to correctly operate.
 
+We did mention in the \textit{Login} function analysis it might be possible to either use 'REALLOCATE BINARY' or 'DELETE FILE' and 'CREATE FILE' in order to modify the parent directories file control parameters for the PIN file that is stored on the card. The aim of this would be to change the retry counter before it reached 0, which would cause the card to be in a blocked state. If this is possible then an unlimited number of attempts at guessing the users PIN would be possible. We decided to not focus on this attack as it would not be particularly useful without the knowledge of the challenge-response algorithm that is used to verify the users PIN.
+
 \textit{FindObject} function did present the possibility to locate the object and at the APDU level modify any attribute. The two that have the most significance would be CKA\_extractable and CKA\_sensitive. This had been completed within previous work [?] and revealed no significant vulnerability. This was due to the fact that once the attributes had been set as part of the key generation process, the attribute file and key key file are separated and thus prevent the key from being exposed in plain text. Since this attack had already been investigated we did not see it fit to investigate it any further.
 
 \textit{GenerateKey} and \textit{GenerateKeyPair} functions both provided a vulnerability whereby attributes could be modified on the fly as the key was being generated. This did leave the possibility of the key value being exposed as the key had not been generated yet. And effectively the card would be told to generate the key with the attributes the attacker sets. This vulnerability would always have to be exploited upon key generation and would be visible at the API level and therefore the user of the smart-card. Therefore while it is a viable attack to investigate, we decided to look into methods that would allow all keys to be exported in plain text regardless of whether or not the key was already generated and saved on the card.
@@ -721,7 +723,8 @@ Assumptions:
 \begin{itemize}
 \item PIN consists of alpha - numeric characters
 \item PIN is a maximum of 16 bytes
-\item PIN is encoded in ASCII characters\\
+\item PIN is encoded in ASCII characters
+\item For a given challenge and PIN there is only one corresponding response that API will calculate\\
 \end{itemize}
 
 %--------------------------------------
@@ -753,25 +756,16 @@ Following the failure of search 1, but still assuming there is a large possibili
 
 PBKDF2 was created as part of PKCS \#5 by RSA laboratories [?] and is starting to be used for more secure password storage as well as for key derivation. Essentially PBKDF2 takes as input, a password (the PIN), a salt (the 8 byte challenge X), a hash function, and the number of iterative rounds. If the number of iterative round is set to 10, then the salted password would be hashed once, and the output of that would be the input for the next round of hashing. This would be completed 10 times. Literature [?] has shown that the standard for the number of iterative rounds used to be 10,000, back in 2008 (check this date). Now it is suggested to use as many rounds as is computationally feasible by the device. Due to the processing power of a smart-card I assumed that this would not exceed 100,000 rounds, in the case that PBKDF2 was used.
 
-Hence this search generated experiments that ran through 1 $\rightarrow$ 100,000 rounds of PBKDF2. As the default of PBKDF2 is to truncate the output by taking the first \textit{i} number of bytes, the only truncation method used was 'first\_16'.\\
+Hence this search generated experiments that ran through 1 $\rightarrow$ 100,000 rounds of PBKDF2. As the default of PBKDF2 is to truncate the output by taking the first \textit{i} number of bytes, therefore the only truncation method used was 'first\_16' (table 7.3).\\
 
 \underline{\textbf{Methods tested that produced a 16 byte output using X and the PIN}}
 \begin{itemize}
 \item PBKDF2( hash\_function, PIN, X, number\_of\_rounds)
 \end{itemize}
 
-This generated 100,000 experiments per hash function. With 12 hash functions, this resulted in 1.2 million tests being run. Due to the sheer computational power required for this search I decided to parallelize the search based on the hash function, and run them on separate cores of a server. Even by improving the efficiency of this search, it still took 2 weeks to conduct.
+This generated 100,000 experiments per hash function. With 5 hash functions, this resulted in half a million tests being run. Due to the sheer computational power required for this search I decided to parallelize the search based on the hash function, and run them on separate cores of a server. Even by improving the efficiency of this search, it still took 2 weeks to conduct.
 
 Again this unfortunately did not result in a match between the 16 byte responses calculated and Y (the API's response). Hence we move onto search 3.\\
-
-
-
-
-\section{Reverse Engineering PIN/password Authentication 1st draft}
-
-%Modified initialization data to test if there is a master key, which could be used to create a derived key to encrypt the PIN/Password.
-%(there are references to papers which suggest some smart-card manufactures do this!)
-
 
 
 
@@ -781,14 +775,50 @@ Again this unfortunately did not result in a match between the 16 byte responses
 %--------------------------------------
 % source is OCRA!!!
 \textbf{\underline{Search 3 - OCRA: OATH Challenge-Response Algorithm}}\\
-With no luck of deducing the method the authentication protocol uses, we decided to look into more complex standards that exist and used in different parts of the computing industry for challenge response protocols, rather than password storage techniques. The international engineering task force (IETF) released a paper in 2011 [?]. Section 7.1 of the paper gives a one-way challenge response algorithm which fitted the characteristics of the authentication that takes between the API and the smart-card.
+With no luck of deducing the challenge-response algorithm, we decided to look into more complex standards that exist and used in different parts of the computing industry for challenge response protocols, rather than password storage techniques. The international engineering task force (IETF) released a paper in 2011 [?]. Section 7.1 of the paper gives a one-way challenge response algorithm which fitted the characteristics of the authentication that takes between the API and the smart-card. We have extracted out the protocol and provided it below:
 
-%Explain the one - way challenege response algorithm
-Section 3.5.1 explains hash based one time passwords. But in essence HTOP is:\\
-$HOTP(K,C) = Truncate(HMAC(K,C)) \& 0x7FFFFFFF$ [?-wiki ]
 
-Still to complete.
 
+\pagebreak
+\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+
+	      CLIENT                                   SERVER
+             (PROVER)                                 (VERIFIER)
+                |                                        |
+                |   Verifier sends challenge to prover   |
+                |   Challenge = Q                        |
+                |<---------------------------------------|
+                |                                        |
+                |   Prover Computes Response             |
+                |   R = OCRA(K, {[C] | Q | [P | S | T]})   |
+                |   Prover sends Response = R            |
+                |--------------------------------------->|
+                |                                        |
+                |  Verifier Validates Response           |
+                |  If Response is valid, Server sends OK |
+                |  If Response is not,  Server sends NOK |
+                |<---------------------------------------|
+                |                                        |
+
+
+
+      C - Counter, optional.
+
+      Q - Challenge question, mandatory, supplied by the verifier.
+
+      P - Hashed version of PIN/password, optional.
+
+      S - Session information, optional.
+
+      T - Timestamp, optional.\\\\\\
+            
+\end{Verbatim}
+
+
+In the previous section of the paper they explain that OCRA in the instance of this protcol stands for a generic variable to state which form of HOTP is to be used. HOTP (see section 3.5.1 of this paper) can take on different formula's due to using different hash functions. The generic formula is:\\
+$$HOTP(K,C) = Truncate(HMAC(K,C)) \quad \&\& \quad 0x7FFFFFFF$$
+
+where K and C stand for something and something respectively.
 
 \textbf{\underline{Search 4 - TOTP}}\\
 With the above in mind, I also wanted to rule out TOTP. This was completed by halting communication between the smart-card and API using the man-in-the-middle tool (see section 4.2). I did this for upto 2 hours. We were looking for a failed verifaction, despite having the correct PIN. The failure should have been caused by the delay in the response if TOTP was used. This was not found and therefore ruled out the possibility of TOTP. 
@@ -797,29 +827,16 @@ This section will be explained better, and will also include reasoning behind wh
 
 
 
+
+
 \subsection{Authentication Protocol Search 3.0 (Triple DES Encryption)}
 
-Need to explain multiple logins and the characteristics found!\\
-That lead me to believe DES3 encryption was used. Tabulate and cross out other possibilites!
+here\\
+explain how we wanted to ensure that for the same challenge the same response is calculated. (this was not possible up until this time as it had taken a while to get the man in the middle tool to operate correctly)
 
-%Note there are 4 more searches conducted that included the use of block ciphers.\\
-%After that I will move onto explain how I thought there was a possibility of the use of a derived key from a globally known master key (this is due to a paper I read, on zero knowledge protocols). And hence used MiTM tool to change the serial number of the smart-card to see if an incorrect response would be produced by the API, despite having the correct PIN.\\
-%
-%Finally I will explain the 4 charactersistics I found by verifying with the card one after the other very quickly\\
-%let Y = Y1 $\|$ Y2\\
-%same PIN and X: same Y1 and Y2\\
-%same PIN, different X: same Y1 different Y2\\
-%different PIN, same X \& different PIN and different X: different Y1 and different Y2\\
-%
-%These characteristics are only present if the 'logins' happen within the same second. If the second changes then we have a different Y for the same PIN and same X. This suggests the use of a nonce (calculated by API on the computer), as well as X. My assumption is:  encrpyt(nonce$\|$X) [using a block cipher the PIN is the password]
-
+This is when we noticed the 4 characterstics that are within the appendix
 
 \textbf{\underline{Search 5}}\\
-Need to decrypt two different encryptions with different PINs in order to find out if this is the method used!\\
-Raw ASCII password and MD5 hash (due to output size = 16 bytes)\\
-DES3-ECB $\rightarrow$ encrypt ( Na $\|$ Vac)
-
-\textbf{\underline{Search 6}}\\
 
 
 
