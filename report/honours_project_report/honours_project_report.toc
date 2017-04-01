@@ -52,34 +52,34 @@
 \contentsline {subsection}{\numberline {7.2.1}Authentication Protocol Search 1.0 (Password Storage)}{40}
 \contentsline {subsection}{\numberline {7.2.2}Authentication Protocol Search 2.0 (One Time Passwords)}{42}
 \contentsline {subsection}{\numberline {7.2.3}Authentication Protocol Search 3.0 (Triple DES Encryption)}{44}
-\contentsline {section}{\numberline {7.3}Block Cipher Injection (MiTM)}{46}
-\contentsline {chapter}{\numberline {8}Conclusion / Results}{47}
-\contentsline {chapter}{\numberline {9}Future work}{49}
-\contentsline {chapter}{Bibliography}{51}
-\contentsline {chapter}{Appendices}{53}
-\contentsline {chapter}{\numberline {A}Attack Traces}{55}
-\contentsline {section}{\numberline {A.1}Multiple C\_login Traces}{55}
-\contentsline {subsection}{\numberline {A.1.1}Different Second}{55}
-\contentsline {subsection}{\numberline {A.1.2}Same Pin, Same Challenge}{56}
-\contentsline {subsection}{\numberline {A.1.3}Same Pin, Different Challenge}{56}
-\contentsline {subsection}{\numberline {A.1.4}Different Pin, Same Challenge}{57}
-\contentsline {subsection}{\numberline {A.1.5}Different Pin, Different Challenge}{57}
-\contentsline {section}{\numberline {A.2}Successful Login Injection}{58}
-\contentsline {section}{\numberline {A.3}Open Secure Messaging Traces}{59}
-\contentsline {subsection}{\numberline {A.3.1}Generator = 5, [Not modified]}{59}
-\contentsline {subsection}{\numberline {A.3.2}Generator = 1}{60}
-\contentsline {subsection}{\numberline {A.3.3}Generator = 0}{63}
-\contentsline {section}{\numberline {A.4}Overriding Attribute Controls}{65}
-\contentsline {subsection}{\numberline {A.4.1}Encrypt\_False}{65}
-\contentsline {chapter}{\numberline {B}API Function Traces}{67}
-\contentsline {section}{\numberline {B.1}Initialization}{67}
-\contentsline {section}{\numberline {B.2}C\_login}{68}
-\contentsline {section}{\numberline {B.3}C\_findObject}{69}
-\contentsline {section}{\numberline {B.4}C\_generateKey}{71}
-\contentsline {section}{\numberline {B.5}C\_generateKeyPair}{74}
-\contentsline {section}{\numberline {B.6}C\_destroyObject}{78}
-\contentsline {section}{\numberline {B.7}C\_encrypt}{80}
-\contentsline {section}{\numberline {B.8}C\_decrypt}{80}
-\contentsline {section}{\numberline {B.9}C\_setAttribute}{80}
-\contentsline {section}{\numberline {B.10}C\_unwrap}{81}
-\contentsline {section}{\numberline {B.11}C\_wrap}{85}
+\contentsline {section}{\numberline {7.3}Block Cipher Injection (MiTM)}{47}
+\contentsline {chapter}{\numberline {8}Conclusion / Results}{49}
+\contentsline {chapter}{\numberline {9}Future work}{51}
+\contentsline {chapter}{Bibliography}{53}
+\contentsline {chapter}{Appendices}{55}
+\contentsline {chapter}{\numberline {A}Attack Traces}{57}
+\contentsline {section}{\numberline {A.1}Multiple C\_login Traces}{57}
+\contentsline {subsection}{\numberline {A.1.1}Different Second}{57}
+\contentsline {subsection}{\numberline {A.1.2}Same Pin, Same Challenge}{58}
+\contentsline {subsection}{\numberline {A.1.3}Same Pin, Different Challenge}{58}
+\contentsline {subsection}{\numberline {A.1.4}Different Pin, Same Challenge}{59}
+\contentsline {subsection}{\numberline {A.1.5}Different Pin, Different Challenge}{59}
+\contentsline {section}{\numberline {A.2}Successful Login Injection}{60}
+\contentsline {section}{\numberline {A.3}Open Secure Messaging Traces}{61}
+\contentsline {subsection}{\numberline {A.3.1}Generator = 5, [Not modified]}{61}
+\contentsline {subsection}{\numberline {A.3.2}Generator = 1}{62}
+\contentsline {subsection}{\numberline {A.3.3}Generator = 0}{65}
+\contentsline {section}{\numberline {A.4}Overriding Attribute Controls}{67}
+\contentsline {subsection}{\numberline {A.4.1}Encrypt\_False}{67}
+\contentsline {chapter}{\numberline {B}API Function Traces}{69}
+\contentsline {section}{\numberline {B.1}Initialization}{69}
+\contentsline {section}{\numberline {B.2}C\_login}{70}
+\contentsline {section}{\numberline {B.3}C\_findObject}{71}
+\contentsline {section}{\numberline {B.4}C\_generateKey}{73}
+\contentsline {section}{\numberline {B.5}C\_generateKeyPair}{76}
+\contentsline {section}{\numberline {B.6}C\_destroyObject}{80}
+\contentsline {section}{\numberline {B.7}C\_encrypt}{82}
+\contentsline {section}{\numberline {B.8}C\_decrypt}{82}
+\contentsline {section}{\numberline {B.9}C\_setAttribute}{82}
+\contentsline {section}{\numberline {B.10}C\_unwrap}{83}
+\contentsline {section}{\numberline {B.11}C\_wrap}{87}

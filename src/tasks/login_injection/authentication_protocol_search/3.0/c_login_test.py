@@ -131,7 +131,7 @@ y1 = ''.join(y1)
 pin1 = '0000000000000000'
 
 # calculate all possible version of the pin that could be used
-all_pin1 = pin_possibilities(pin1, hash_functions)
+all_pin1 = pin_possibilities(pin1, hash_names)
 
 
 # Response 2 -> pin == 1111111111111111
@@ -146,7 +146,7 @@ y2 = ''.join(y2)
 pin2 = '1111111111111111'
 
 # calculate all possible version of the pin that could be used
-all_pin2 = pin_possibilities(pin2, hash_functions)
+all_pin2 = pin_possibilities(pin2, hash_names)
 
 
 _names = ['normal', 'sha1', 'sha256', 'sha384', 'sha512', 'md5']

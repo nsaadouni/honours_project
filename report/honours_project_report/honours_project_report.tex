@@ -900,14 +900,25 @@ This therefore only left us with triple DES key options 2 and 3. With the fact i
 Due to the assumption that the second 8 bytes is a verification (possible join, or hashing) of both the cards challenge and $N_A$, then we could not simply just decrypt the 16 byte response and analyse it. As both number could be completely unknown to us, therefore we would have no method of verifying we have the correct protocol. To mitigate this we decided to get 2 different responses, within the same second and with the same challenge, but using different PIN's. If the password to the block cipher is in-fact a function of the PIN, then the correct decryption of both responses with different passwords should evaluate to the same 16 bytes. This is how we will verify if we have found the correct protocol.\\
 
 \textbf{\underline{Search 5 - Triple DES \textit{(Key option 2)}-ECB}}\\
-Experimental setup.
+Experimental setup.\\
+
+\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+\textbf{fe5dbea8ecab2f86} 9357f75342a3273c
+\textbf{fe5dbea8ecab2f86} 906a74d1bd2c752f
+
+pin method: sha1
+
+\end{Verbatim}
 
 \textbf{\underline{Search 6 - Triple DES \textit{(Key option 2)}-CBC}}\\
 
 
+\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+fe5dbea8ecab2f86 0000000000000001
+fe5dbea8ecab2f86 0000000000000001
 
-
-
+pin method: sha1
+\end{Verbatim}
 
 
 
