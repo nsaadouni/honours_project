@@ -52,7 +52,7 @@
 \contentsline {subsection}{\numberline {7.2.1}Authentication Protocol Search 1.0 (Password Storage)}{40}
 \contentsline {subsection}{\numberline {7.2.2}Authentication Protocol Search 2.0 (One Time Passwords)}{42}
 \contentsline {subsection}{\numberline {7.2.3}Authentication Protocol Search 3.0 (Triple DES Encryption)}{44}
-\contentsline {section}{\numberline {7.3}Block Cipher Injection (MiTM)}{47}
+\contentsline {section}{\numberline {7.3}Block Cipher Injection (MiTM)}{48}
 \contentsline {chapter}{\numberline {8}Conclusion / Results}{49}
 \contentsline {chapter}{\numberline {9}Future work}{51}
 \contentsline {chapter}{Bibliography}{53}

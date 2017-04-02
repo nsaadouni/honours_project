@@ -946,9 +946,11 @@ SHA512(PIN$_2$)& 2 & 1C202A831098546D 8EF674B4A0B0D7AD \\
 \caption{\textit{Decryption Results}}
 \end{table}
 
-The results are interesting. While we did not find an exact match of the entire responses when decrypting both of them, we did find a match for the first 8 bytes.
+The results are interesting. While we did not find an exact match of the entire responses when decrypting both of them, we did find a match for the first 8 bytes. This suggests we have found the correct formatting of the PIN, but the wrong decryption methodology. A change in the second 8 bytes suggest cipher block chaining is used. Hence we move onto search 6.\\
 
 \textbf{\underline{Search 6 - Triple DES \textit{(Key option 2)}-CBC}}\\
+Triple DES block cipher using cipher block chaining (CBC) requires an initialization vector (IV) to be used (see section 3.3). The IV is 8 bytes in length. Common practice is to send this in plain text along with the encryption of a message. However it is quite clear that this does not occur. The only other possibility is that the card and the API already have agreed upon a value to use, and always use this same value. The most common practice is too use an IV = 00 00 00 00 00 00 00 00. Despite it being a bad an insecure practice, this still does occur. Hence, in the following experiment we only test the pin method for SHA1(PIN$_{1,2}$) and decrypt the corresponding responses using triple DES-CBC with an IV of zeros.
+
 
 \begin{table}[H]
 \begin{tabular}{|l|c|l|}
@@ -959,8 +961,27 @@ SHA1(PIN) & 1 & FE5DBEA8ECAB2F86 0000000000000001\\
 SHA1(PIN) & 2 & FE5DBEA8ECAB2F86 0000000000000001\\
 \hline
 \end{tabular}
+\caption{Decryption Results}
 \end{table}
 
+Table 7.8 lists shows the results of both decryption's. The result is better than what we had originally assumed. The second 8 bytes, which we thought would have been a verification number (join or hash) (showing knowledge of both nonces), is in fact just the cards challenge. This almost completes our attack. As now we can produce a 16 byte response, given the cards challenge, the PIN and a nonce to place at the start of the message to encrypt.
+
+The issue is we are not sure if we can just place any 8 byte nonce at the start of message to be encrypted. As the API might be expecting some sort of counter, and might refuse invalid values. Hence we conduct the final stage of this attack to test if we can place any value there, and hence will have fully reversed engineered the PIN authentication protocol.
+
+To sum up so far this is the protocol we believe to be in place:
+\begin{itemize}
+\item Request and get an 8 byte challenge from the card, denoted \textbf{N$_c$}
+\item Password for encryption = Truncate\_First\_16( SHA1 ( PIN ) ) )
+\item Block cipher used = Triple-DES-CBC
+\item Initialization Vector = 00 00 00 00 00 00 00 00 
+\item Calculate the response as the following:
+$$ Encrypt(N_a || N_c) $$
+\item were \textbf{N$_a$} is a nonce determined by the API.
+\end{itemize}
+
+We set N$_a$ to equal 00 00 00 00 00 00 00 00 00 00, calculate what we believe to be a valid response and send it the the API. This experiment is shown within appendix A.2. The result of it is an APDU response of '90 00', successful login!
+
+Thus concluding this attack.
 
 
 \section{Block Cipher Injection (MiTM)}
