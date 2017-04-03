@@ -170,25 +170,25 @@ for i in range(len(_names)):
 
 # This was testing a differenttwo different challenges
 
-hash_sha1 = hs.new('sha1')
-hash_sha1.update('0000000000000000')
-password = hash_sha1.digest()[0:16]
+# hash_sha1 = hs.new('sha1')
+# hash_sha1.update('0000000000000000')
+# password = hash_sha1.digest()[0:16]
 
-# y = '171 72 168 31 82 109 251 117 51 161 119 10 22 143 154 81'
-y = '95 250 221 10 148 49 54 104 193 196 219 209 218 222 82 101'
-y = y.split()
-yy = []
-for i in y:
-	yy.append(chr(int(i)))
-yy = ''.join(yy)
+# # y = '171 72 168 31 82 109 251 117 51 161 119 10 22 143 154 81'
+# y = '95 250 221 10 148 49 54 104 193 196 219 209 218 222 82 101'
+# y = y.split()
+# yy = []
+# for i in y:
+# 	yy.append(chr(int(i)))
+# yy = ''.join(yy)
 
-cipher = DES3.new(password, DES3.MODE_CBC, IV='\x00\x00\x00\x00\x00\x00\x00\x00')
-a = ba.hexlify(cipher.decrypt(yy)[0:8])
-b = ba.hexlify(cipher.decrypt(yy)[8:16])
+# cipher = DES3.new(password, DES3.MODE_CBC, IV='\x00\x00\x00\x00\x00\x00\x00\x00')
+# a = ba.hexlify(cipher.decrypt(yy)[0:8])
+# b = ba.hexlify(cipher.decrypt(yy)[8:16])
 
 # print hexstring_to_intarray(a)
 # print hexstring_to_intarray(b)
 
 
 
-
+######################################################################################

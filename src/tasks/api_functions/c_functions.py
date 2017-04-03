@@ -308,7 +308,7 @@ print '\n'
 
 # destroyAllObjects()
 
-# generate_AES('\x00', 'aes')
+generate_AES('\x00', 'aes')
 
 # generateKeyPair_rsa()
 
@@ -350,13 +350,13 @@ print '\n'
 
 
 # generate_DES3('\x10', 'des test')
-encrypted_text= encrypt('\x10', 'des test')
-print encrypted_text
+# encrypted_text= encrypt('\x10', 'des test')
+# print encrypted_text
 
-# objects = session.findObjects()
-# for i in objects:
-#     print i
-#     print ''
+objects = session.findObjects()
+for i in objects:
+    print i
+    print ''
 
 
 

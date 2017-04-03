@@ -51,7 +51,7 @@ for i in control_2:
 	command1.append(i)
 
 for i in key_1:
-	command1.append(i)
+	command1.append(0)
 
 for i in control_3:
 	command1.append(i)
@@ -70,6 +70,8 @@ for i in SW_2:
 
 print_ints(command1)
 print_ints(command11)
+
+print ''
 
 
 print ''
@@ -94,19 +96,19 @@ for i in control_3:
 # command1.append(1)
 
 for i in range(119):
-	command1.append(255)
+	command1.append(0)
 
 for i in SW_1:
 	command1.append(i)
 
 for i in range(9):
-	command11.append(255)
+	command11.append(0)
 
 for i in SW_2:
 	command11.append(i)
 
-# print_ints(command1)
-# print_ints(command11)
+print_ints(command1)
+print_ints(command11)
 
 
 
