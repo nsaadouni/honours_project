@@ -1064,10 +1064,14 @@ Elliptic Curve Field & P-192 & P-256 & P521\\
 Global Parameter Length & 233 & 233 & 233\\
 Public Key Length & 48 & 64 & 131-132\\
 \hline
-Total & 281 & 297 & 364\\
+Total & \textbf{281} & \textbf{297} & \textbf{364}\\
 \hline
 \end{tabular}
+\caption{Number of bytes required for ECCDH [Card to API]}
 \end{table}
+
+As shown in table 7.10 non of the curves for ECCDH have a value of 257 bytes in total that would be sent from the card to the API to begin the protocol. Thus we conclude here that ECCDH is not used.
+
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 \chapter{Conclusion / Results}
