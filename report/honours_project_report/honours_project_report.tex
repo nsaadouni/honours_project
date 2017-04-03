@@ -1125,9 +1125,61 @@ Appendix & A.3.3 & A.3.2 \\
 As shown within table 7.12 what we would expect from RSA encryption did not occur. The value of the cipher text when the public exponent was 0 was 0, and 1 when it was 1. This should have been 1 and the value of the un-encrypted message respectively. This does however lead onto our final search for the protocol that is used, and fits the mathematics of the diffie hellman protocol exactly.\\
 
 \underline{\textbf{Diffie Hellman - Key Agreement Protocol}}\\
+As stated within section 3 the diffie hellman protocol relies on the fact that the global parameters are known by both parties, then they each share their own respective public keys which allows them to derive a shared secret without ever revealing it in plain text. As a reminder this is the diffie hellman protocol:\\
 
+\textbf{Public Parameters}\\
+\textit{[G must be a primitive root modulo p]}\\
+Generator = G\\
+Public modulus = p\\
+ 
 
+From here private keys (a number between 1 and p-1) are selected by each individual entity and generate the public keys as follows:
+$$ public\_key_1 = G ^{private\_key_1} \quad mod \quad p $$
+$$ public\_key_2 = G ^{private\_key_2} \quad mod \quad p $$
 
+From here a shared secret \textbf{S} can be calculated by each entity with the following formula:\\
+$$ S_1 = public\_key_1 ^ {public\_key_2} \quad mod \quad p $$
+$$ S_2 = public\_key_2 ^ {public\_key_1} \quad mod \quad p $$
+$$ S = S_1 = S_2 $$
+
+Thus if the generator were set to be \textbf{0}, then the public key calculated by the API would in fact be 0 as well. And in the case the generator is set to \textbf{1}, the API would calculate its public key as 1. Therefore we conclude due to the mathematical properties presented that, the secure messaging initialization process is the diffie hellman protcol. Whereby the cards 257 bytes of data sent from the card to the API consists of three elements:
+\begin{enumerate}
+\item Generator = 5
+\item Public modulo = 1 of the 128 bytes of data
+\item Cards public key = the other 128 bytes of data
+\end{enumerate}
+
+And the 128 bytes sent by the API (during open secure messaging command) is the cards public key. And finally the 32 bytes sent by the card at the end must be used for calculating the final session keys. With this knowledge we move onto implementing a man in the middle attack on the diffie hellman protocol to give the API, the card and an attacker the knowledge of the shared secret \textbf{S}.
+
+\subsection{Man in the middle attack - Diffie Hellman Key Agreement Protocol}
+The standard man in the middle attack for diffie hellman would require two diffie hellman key agreements to occur. One between the API and the attacker, and one between the attack and the smartcard. From the tests run (when we thought the public keys were RSA based) we noticed we can force the API's public key to be 0, by setting the generator to be 0. However we can also force the shared secret to be zero, if we alter the cards public key to be 0 as well. Then the card, the API and the attacker would all be in the knowledge of the shared secret which is simply just zero. 
+
+% IMAGE: Secure Messaging Protocol
+\begin{figure}[H]
+\centering
+\begin{subfigure}{1\textwidth}
+  \includegraphics[width=1\linewidth]
+  {images/section_7/7.3/dh_attack.png}
+\end{subfigure}
+\caption{Diffie Hellman - Man in The Middle Attack}
+\end{figure}
+
+This is verified by the mathematics behind the diffie hellman protocol.
+
+\begin{table}[H]
+\begin{tabular}{|l|c|c|}
+\hline
+ & API & Smartcard\\
+\hline
+Generator & 0 & 5\\
+\hline
+Modulo & $p$ & $p$ \\
+\hline
+Public Key & $0^{private\_api} \quad mod \quad p$ & test\\
+
+\hline
+\end{tabular}
+\end{table}
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 \chapter{Conclusion / Results}
