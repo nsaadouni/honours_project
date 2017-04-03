@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.14)  3 APR 2017 11:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.14)  3 APR 2017 14:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -613,12 +613,12 @@ Overfull \hbox (18.11429pt too wide) in paragraph at lines 25--25
 [5
 
 ] [6]
-Overfull \hbox (0.26993pt too wide) detected at line 84
+Overfull \hbox (0.26993pt too wide) detected at line 86
 \T1/fve/m/n/12 B.10 
  []
 
 
-Overfull \hbox (0.26993pt too wide) detected at line 85
+Overfull \hbox (0.26993pt too wide) detected at line 87
 \T1/fve/m/n/12 B.11 
  []
 
@@ -1043,117 +1043,124 @@ Underfull \hbox (badness 10000) in paragraph at lines 949--950
 Underfull \vbox (badness 3989) has occurred while \output is active []
 
  [47]
-[48]
-Chapter 8.
-[49
-
-] [50
+[48] [49] [50
 
 ]
-Chapter 9.
+Chapter 8.
 [51] [52
 
 ]
-LaTeX Font Info:    Font shape `T1/fve/m/it' in size <9> not available
-(Font)              Font shape `T1/fve/m/sl' tried instead on input line 1020.
-LaTeX Font Info:    Font shape `T1/fve/m/sl' will be
-(Font)              scaled to size 8.09995pt on input line 1020.
+Chapter 9.
+[53] [54
 
-Underfull \hbox (badness 2547) in paragraph at lines 1024--1028
+]
+LaTeX Font Info:    Font shape `T1/fve/m/it' in size <9> not available
+(Font)              Font shape `T1/fve/m/sl' tried instead on input line 1022.
+LaTeX Font Info:    Font shape `T1/fve/m/sl' will be
+(Font)              scaled to size 8.09995pt on input line 1022.
+
+Underfull \hbox (badness 2547) in paragraph at lines 1026--1030
 []\T1/fve/m/n/12 Albert Ein-stein. \T1/fve/m/sl/12 Zur Elek-tro-dy-namik be-weg
 ter Kör-per\T1/fve/m/n/12 . (Ger-man)
  []
 
 
-Underfull \hbox (badness 2073) in paragraph at lines 1024--1028
+Underfull \hbox (badness 2073) in paragraph at lines 1026--1030
 \T1/fve/m/n/12 [\T1/fve/m/sl/12 On the elec-tro-dy-nam-ics of mov-ing bod-ies\T
 1/fve/m/n/12 ]. An-nalen der Physik,
  []
 
 
-Overfull \hbox (56.84286pt too wide) in paragraph at lines 1035--1038
+Overfull \hbox (56.84286pt too wide) in paragraph at lines 1037--1040
 \T1/fvm/m/n/12 https://frankmorgner.github.io/vsmartcard/virtualsmartcard/READM
 E.html 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1035--1038
+Underfull \hbox (badness 10000) in paragraph at lines 1037--1040
 
  []
 
-[53] [54
+[55] [56
 
-] [55
+] [57
 
-] [56]
+] [58]
 Appendix A.
 LaTeX Font Info:    Font shape `T1/fvm/m/it' in size <10.95> not available
-(Font)              Font shape `T1/fvm/m/sl' tried instead on input line 1055.
+(Font)              Font shape `T1/fvm/m/sl' tried instead on input line 1057.
 LaTeX Font Info:    Font shape `T1/fvm/m/sl' will be
-(Font)              scaled to size 9.85492pt on input line 1055.
+(Font)              scaled to size 9.85492pt on input line 1057.
 LaTeX Font Info:    Font shape `T1/fvm/b/n' will be
-(Font)              scaled to size 9.85492pt on input line 1058.
+(Font)              scaled to size 9.85492pt on input line 1060.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [57
+ [59
 
 ]
-[58] [59] [60] [61] [62]
+[60] [61] [62] [63] [64]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [63]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [64]
-[65]
+ [65]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [66]
-[67] [68
+[67]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-]
-Appendix B.
-[69]
-Underfull \vbox (badness 3690) has occurred while \output is active []
+ [68]
+[69] [70]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [70]
-[71]
+ [71]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [72]
-[73]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+[73] [74
 
- [74]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+]
+Appendix B.
+[75]
+Underfull \vbox (badness 3690) has occurred while \output is active []
 
- [75]
-[76]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [77]
+ [76]
+[77]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [78]
+[79]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [79]
-[80]
+ [80]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [81]
-[82] [83]
+[82]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [83]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [84]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [85]
+[86]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [86]
-[87] (./honours_project_report.aux) ) 
+ [87]
+[88] [89]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [90]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [91]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [92]
+[93] (./honours_project_report.aux) ) 
 Here is how much of TeX's memory you used:
  7724 strings out of 493085
  114187 string characters out of 6136916
@@ -1179,10 +1186,10 @@ ol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/wasy2-ps/wasy10.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/public/wasy2-ps/wasyb10.pfb>
-Output written on honours_project_report.pdf (87 pages, 247575 bytes).
+Output written on honours_project_report.pdf (93 pages, 255137 bytes).
 PDF statistics:
- 362 PDF objects out of 1000 (max. 8388607)
- 250 compressed objects within 3 object streams
+ 381 PDF objects out of 1000 (max. 8388607)
+ 263 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
