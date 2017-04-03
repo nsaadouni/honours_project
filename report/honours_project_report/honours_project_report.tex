@@ -1054,15 +1054,16 @@ The card we analyse supports the key generation of elliptic curve public and pri
 \underline{\textbf{Elliptic Curve Cofactor Diffie Hellman}}\\
 The smartcard we analyse only supports curves P-192, and P-521 for ECCDH [see section 3]. The security polices state that curve P-256 is used. This is our first indication that the smartcard we analyse is not using ECCDH. However we continue with the investigation in case one of the above curves is used.
 
-The first step we take is to calculate the number of bytes that are required in order to setup the global parameters that must be sent from the card to the API for ECCDH, and also the number of bytes of each public key. A match between these calculations and the number of bytes that are in fact sent across could suggest this protocol is being utilised for secure messaging initialization. 
+The first step we take is to calculate the number of bytes that are required in order to setup the global parameters that must be sent from the card to the API for ECCDH, and also the number of bytes of each public key. A match between these calculations and the number of bytes that are in fact sent across could suggest this protocol is being utilised for secure messaging initialization. \textit{We used OpenSSL to generate the following different public and private keys, along with the global parameters and outputted them in DER format to find the length of the corresponding data.}\\
 
 \begin{table}[H]
-\begin{tabular}{|l|c|c|c|}
+\hskip+2.0cm\begin{tabular}{|l|c|c|c|}
 \hline
 Elliptic Curve Field & P-192 & P-256 & P521\\
 \hline
 Global Parameter Length & 233 & 233 & 233\\
-Public Key Length & 48 & 64 & 131-132\\
+\hline
+Public Key Length & 48 & 64 & 131\\
 \hline
 Total & \textbf{281} & \textbf{297} & \textbf{364}\\
 \hline
@@ -1070,7 +1071,62 @@ Total & \textbf{281} & \textbf{297} & \textbf{364}\\
 \caption{Number of bytes required for ECCDH [Card to API]}
 \end{table}
 
-As shown in table 7.10 non of the curves for ECCDH have a value of 257 bytes in total that would be sent from the card to the API to begin the protocol. Thus we conclude here that ECCDH is not used.
+As shown in table 7.10 non of the curves for ECCDH have a value of 257 bytes in total that would be sent from the card to the API to begin the protocol. None of the public key sizes match 128 bytes which is what the API returns to the card as well. Thus we conclude here that ECCDH is not used and move onto the possibility that RSA is used.\\\\
+
+
+\underline{\textbf{RSA Public Key Encryption of Block Cipher Keys}}\\
+If RSA is used the only method of deriving keys between the API and the smartcard is for the API to use the public key of the smartcard to encrypt session keys created by the API. The card will then use its private RSA key to decrypt the session keys. Considering that there is 32 bytes sent by the card at the end of the secure messaging initialization process, it is likely that they are XOR'd with the bytes encrypted via RSA, to generate the final session keys to be used.
+
+We will complete the same analysis that we did for ECCDH and calculate the number of bytes required to see if they match the corresponding bytes sent via the API and the smartcard. These are tabulated below:
+
+\begin{table}[H]
+\hskip+1.5cm\begin{tabular}{|l|c|c|}
+\hline
+RSA & 1024-bit & 2048-bit\\
+\hline
+Public Modulus length & 128 bytes & 256 bytes\\
+\hline
+Public Exponent length & 1 byte = 5 & 1 byte = 5\\
+\hline
+Encryption length of 32 bytes & 128 bytes & 256 bytes\\
+\hline
+\end{tabular}
+\caption{Number of bytes required for RSA}
+\end{table}
+
+As we can see from table 7.11 the key option of 2048-bit fits the size of the public key perfectly for the smartcards public key \textit{(This is on the basis that the public exponent is set to 5)}. However the encryption of the 32 bytes by the API would result in 256 bytes not 128 bytes. This therefore rules out the possibility that RSA-2048 is used, leaving the other possibility to two RSA-1024 keys. 
+
+Literature has shown that some manufactures have implemented cards with multiple asymmetric keys, and certain versions of the PKCS \#11 API that the card vendor implements will only use one of them. Thus the first test we ran was editing the first bytes of each 128 bytes to see if one or both of the suspected keys were used. For each test we ran, the secure messaging initialization completed, but then upon the first instance of encrypted communication an APDU error was raided 'error with secure messaging'. Thus we found that both 128 byte keys must be used.
+
+The only case that this could be (assuming RSA-1024 is the protocol) is if the session keys were encrypted twice with the two different keys, and both keys have a public exponent of 5. This seemed fairly unreasonable, as in any case two RSA-1024 bit keys are no more secure than just using one. And it would of made more logical sense to implement RSA-2048. 
+
+However we continue to check if RSA is in fact used. The next test we run is changing the public exponent. Due to how messages are encrypted with RSA, setting the public exponent to 1 should reveal the message itself, and setting the public exponent to 0 should return a value of 1. This is verified by the following formula:\\
+
+$$ ciphertext = message^{e} \quad mod \quad n $$
+
+Where \textit{e} is the public exponent, and \textit{n} is the public modulus (128 bytes).\\
+
+
+\begin{table}[H]
+\begin{tabular}{|l|c|c|}
+\hline
+& public exponent = 0 & public exponent = 1\\
+\hline
+cipher text & &\\
+\textit{(128 bytes sent from API to card)} & \textbf{0} & \textbf{1} \\
+
+\hline
+Appendix & A.3.3 & A.3.2 \\
+\hline
+\end{tabular}
+\caption{Results from altering public exponent}
+\end{table}
+
+As shown within table 7.12 what we would expect from RSA encryption did not occur. The value of the cipher text when the public exponent was 0 was 0, and 1 when it was 1. This should have been 1 and the value of the un-encrypted message respectively. This does however lead onto our final search for the protocol that is used, and fits the mathematics of the diffie hellman protocol exactly.\\
+
+\underline{\textbf{Diffie Hellman - Key Agreement Protocol}}\\
+
+
 
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------

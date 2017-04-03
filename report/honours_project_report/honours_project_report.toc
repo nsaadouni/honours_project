@@ -55,35 +55,35 @@
 \contentsline {section}{\numberline {7.3}Reverse Engineering Secure Messaging}{48}
 \contentsline {subsection}{\numberline {7.3.1}Raw byte analysis of the data fields}{50}
 \contentsline {subsection}{\numberline {7.3.2}Protocol search}{51}
-\contentsline {chapter}{\numberline {8}Conclusion / Results}{53}
-\contentsline {chapter}{\numberline {9}Future work}{55}
-\contentsline {chapter}{Bibliography}{57}
-\contentsline {chapter}{Appendices}{59}
-\contentsline {chapter}{\numberline {A}Attack Traces}{61}
-\contentsline {section}{\numberline {A.1}Multiple C\_login Traces}{61}
-\contentsline {subsection}{\numberline {A.1.1}Different Second}{61}
-\contentsline {subsection}{\numberline {A.1.2}Same Pin, Same Challenge}{62}
-\contentsline {subsection}{\numberline {A.1.3}Same Pin, Different Challenge}{62}
-\contentsline {subsection}{\numberline {A.1.4}Different Pin, Same Challenge}{63}
-\contentsline {subsection}{\numberline {A.1.5}Different Pin, Different Challenge}{63}
-\contentsline {section}{\numberline {A.2}Successful Login Injection}{64}
-\contentsline {section}{\numberline {A.3}Open Secure Messaging Traces}{65}
-\contentsline {subsection}{\numberline {A.3.1}Generator = 5, [Not modified]}{65}
-\contentsline {subsection}{\numberline {A.3.2}Generator = 1}{66}
-\contentsline {subsection}{\numberline {A.3.3}Generator = 0}{69}
-\contentsline {subsection}{\numberline {A.3.4}First 128 bytes set to zero and generator 0}{71}
-\contentsline {subsection}{\numberline {A.3.5}Second 128 bytes set to zero and generator 0}{72}
-\contentsline {section}{\numberline {A.4}Overriding Attribute Controls}{75}
-\contentsline {subsection}{\numberline {A.4.1}Encrypt\_False}{75}
-\contentsline {chapter}{\numberline {B}API Function Traces}{77}
-\contentsline {section}{\numberline {B.1}Initialization}{77}
-\contentsline {section}{\numberline {B.2}C\_login}{78}
-\contentsline {section}{\numberline {B.3}C\_findObject}{79}
-\contentsline {section}{\numberline {B.4}C\_generateKey}{81}
-\contentsline {section}{\numberline {B.5}C\_generateKeyPair}{84}
-\contentsline {section}{\numberline {B.6}C\_destroyObject}{88}
-\contentsline {section}{\numberline {B.7}C\_encrypt}{90}
-\contentsline {section}{\numberline {B.8}C\_decrypt}{90}
-\contentsline {section}{\numberline {B.9}C\_setAttribute}{90}
-\contentsline {section}{\numberline {B.10}C\_unwrap}{91}
-\contentsline {section}{\numberline {B.11}C\_wrap}{95}
+\contentsline {chapter}{\numberline {8}Conclusion / Results}{55}
+\contentsline {chapter}{\numberline {9}Future work}{57}
+\contentsline {chapter}{Bibliography}{59}
+\contentsline {chapter}{Appendices}{61}
+\contentsline {chapter}{\numberline {A}Attack Traces}{63}
+\contentsline {section}{\numberline {A.1}Multiple C\_login Traces}{63}
+\contentsline {subsection}{\numberline {A.1.1}Different Second}{63}
+\contentsline {subsection}{\numberline {A.1.2}Same Pin, Same Challenge}{64}
+\contentsline {subsection}{\numberline {A.1.3}Same Pin, Different Challenge}{64}
+\contentsline {subsection}{\numberline {A.1.4}Different Pin, Same Challenge}{65}
+\contentsline {subsection}{\numberline {A.1.5}Different Pin, Different Challenge}{65}
+\contentsline {section}{\numberline {A.2}Successful Login Injection}{66}
+\contentsline {section}{\numberline {A.3}Open Secure Messaging Traces}{67}
+\contentsline {subsection}{\numberline {A.3.1}Generator = 5, [Not modified]}{67}
+\contentsline {subsection}{\numberline {A.3.2}Generator = 1}{68}
+\contentsline {subsection}{\numberline {A.3.3}Generator = 0}{71}
+\contentsline {subsection}{\numberline {A.3.4}First 128 bytes set to zero and generator 0}{73}
+\contentsline {subsection}{\numberline {A.3.5}Second 128 bytes set to zero and generator 0}{74}
+\contentsline {section}{\numberline {A.4}Overriding Attribute Controls}{77}
+\contentsline {subsection}{\numberline {A.4.1}Encrypt\_False}{77}
+\contentsline {chapter}{\numberline {B}API Function Traces}{79}
+\contentsline {section}{\numberline {B.1}Initialization}{79}
+\contentsline {section}{\numberline {B.2}C\_login}{80}
+\contentsline {section}{\numberline {B.3}C\_findObject}{81}
+\contentsline {section}{\numberline {B.4}C\_generateKey}{83}
+\contentsline {section}{\numberline {B.5}C\_generateKeyPair}{86}
+\contentsline {section}{\numberline {B.6}C\_destroyObject}{90}
+\contentsline {section}{\numberline {B.7}C\_encrypt}{92}
+\contentsline {section}{\numberline {B.8}C\_decrypt}{92}
+\contentsline {section}{\numberline {B.9}C\_setAttribute}{92}
+\contentsline {section}{\numberline {B.10}C\_unwrap}{93}
+\contentsline {section}{\numberline {B.11}C\_wrap}{97}
