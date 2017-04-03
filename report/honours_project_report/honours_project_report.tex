@@ -986,11 +986,27 @@ Thus concluding this attack.
 
 \section{Reverse Engineering Secure Messaging}
 
-The second attack we investigate is the reverse engineering of the secure messaging protocol used by the card. As stated within section 2.2, and within public 'Athena smart-card solutions' security policies [?] for several different cards the vendor produces, the secure messaging initialization is used to derive 2 session keys. S$_{Enc}$, S$_{Mac}$ are used to encrypt and compute a message authentication code (MAC) of the messages within a secure messaging session respectively. This provides confidentiality and data integrity of the messages.
+The second attack we investigate is the reverse engineering of the secure messaging protocol used by the card. As stated within section 2.2, and within public 'Athena smart-card solutions' security policies [?] for several different cards the vendor produces, the secure messaging initialization is used to derive 2 session keys. S$_{Enc}$, S$_{Mac}$ are used to encrypt and compute a message authentication code (MAC) of the messages within a secure messaging session respectively. This provides confidentiality and data integrity of the messages. The decision for how to derive these keys is left entirely upto the card vendor. Which makes this particularly difficult as there are several methods that could be used.
 
-The secure messaging sessions have seen to be used within the \textbf{\textit{GenerateKey}} and \textbf{\textit{Unwrap}} in the analysis conducted within chapter 6. And also seen to be used within \textbf{\textit{CreateObject}} seen in the analysis conducted by an MSC student (place name here) last year [?]. In every case it is used to keep secret the CKA\_value of block cipher keys. We also hope to be able to learn how the \textbf{\textit{unwrap}} command data field is built and then build the correct command for \textbf{\textit{wrap}} at the APDU level. This should allow the Tookan attack [?] to take place on the card regardless of whether or not the API has removed the wrap functionality. And will therefore allow the exporting of all keys including RSA private keys which are generated on the card and thought to be securely stored.
+The secure messaging sessions have seen to be used within the \textbf{\textit{GenerateKey}} and \textbf{\textit{Unwrap}} in the analysis conducted within chapter 6. And also seen to be used within \textbf{\textit{CreateObject}} seen in the analysis conducted by an MSC student (place name here) last year [?]. In every case it is used to provide confidentiality of the CKA\_value of block cipher keys. Successfully reverse engineering the secure messaging protocol would allow an attacker to use a man in the middle attack to derive two sets of session keys (one with the API and one with the card) which would allow the correct keys to be sent to the card, but also allow the attacker to decrypt them and find out the value is said keys. This would violate the PKCS \#11 standard if the keys were set to be sensitive and un-extractable. In addition, it would also be an attack whereby the user would be completely unaware it had taken place. This is considerably worse than previously analysed attacks were there is a large possibility of the user finding out, and therefore changing the keys before an attacker is able to utilise them for malicious purposes.
 
+We also hope to be able to learn how the \textbf{\textit{unwrap}} command data field is built and then build the correct command for \textbf{\textit{wrap}} at the APDU level. This should be able to be completed by decrypting the data field of the unwarp command when used via the API. With this knowledge it should be possible to implement the Tookan attack [?] at the APDU level, and will therefore allow the exporting of all keys including RSA private keys which are generated on the card and thought to be securely stored.
 
+To begin with we use the API to call the function \textbf{\textit{GenerateKey}}, as we know that secure messaging is utilised within this function. This gives us an overview of how the secure messaging protocol works. Below is a diagram that visually shows what exactly occurs at the APDU level. (The actual APDU commands are stored within appendix A.3.1)
+
+% IMAGE: Secure Messaging Protocol
+\begin{figure}[H]
+\centering
+\begin{subfigure}{1\textwidth}
+  \includegraphics[width=1\linewidth]
+  {images/section_7/7.3/secure_messasing.png}
+\end{subfigure}
+\caption{Secure Messaging Initialization}
+\end{figure}
+
+As shown in figure 7.2 the API first requests the public key of the card. In total (split between two messages due to the size exceeding 256 bytes) the card sends back \textit{265} bytes worth of data, which is its public key. The API then proceeds to send back to the card 131 bytes worth of data \textit{(from multiple traces we have found that these 131 bytes of data change every single time, a new secure messaging session is opened)}. Finally the card sends 32 bytes of data, which concludes the initialization of secure messaging. Now the card and the API are both aware of two sets of block cipher keys S$_{Enc}$ and S$_{Mac}$ which are used to encrypt all of the following communication.
+
+The first step we took was to analyse the raw bytes within the data field that are being sent over. 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 \chapter{Conclusion / Results}
 
