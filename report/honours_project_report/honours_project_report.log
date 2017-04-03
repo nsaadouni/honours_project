@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.14)  3 APR 2017 18:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.14)  3 APR 2017 18:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -613,12 +613,12 @@ Overfull \hbox (18.11429pt too wide) in paragraph at lines 25--25
 [5
 
 ] [6]
-Overfull \hbox (0.26993pt too wide) detected at line 86
+Overfull \hbox (0.26993pt too wide) detected at line 88
 \T1/fve/m/n/12 B.10 
  []
 
 
-Overfull \hbox (0.26993pt too wide) detected at line 87
+Overfull \hbox (0.26993pt too wide) detected at line 89
 \T1/fve/m/n/12 B.11 
  []
 
@@ -1056,123 +1056,133 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [49]
 [50 <./images/section_7/7.3/secure_messasing.png>]
-Chapter 8.
-[51
+Underfull \hbox (badness 10000) in paragraph at lines 1014--1018
 
-] [52
+ []
+
+
+Overfull \hbox (38.4109pt too wide) in paragraph at lines 1026--1042
+[][] 
+ []
+
+[51] [52
 
 ]
-Chapter 9.
+Chapter 8.
 [53] [54
 
 ]
-LaTeX Font Info:    Font shape `T1/fve/m/it' in size <9> not available
-(Font)              Font shape `T1/fve/m/sl' tried instead on input line 1038.
-LaTeX Font Info:    Font shape `T1/fve/m/sl' will be
-(Font)              scaled to size 8.09995pt on input line 1038.
+Chapter 9.
+[55] [56
 
-Underfull \hbox (badness 2547) in paragraph at lines 1042--1046
+]
+LaTeX Font Info:    Font shape `T1/fve/m/it' in size <9> not available
+(Font)              Font shape `T1/fve/m/sl' tried instead on input line 1077.
+LaTeX Font Info:    Font shape `T1/fve/m/sl' will be
+(Font)              scaled to size 8.09995pt on input line 1077.
+
+Underfull \hbox (badness 2547) in paragraph at lines 1081--1085
 []\T1/fve/m/n/12 Albert Ein-stein. \T1/fve/m/sl/12 Zur Elek-tro-dy-namik be-weg
 ter Kör-per\T1/fve/m/n/12 . (Ger-man)
  []
 
 
-Underfull \hbox (badness 2073) in paragraph at lines 1042--1046
+Underfull \hbox (badness 2073) in paragraph at lines 1081--1085
 \T1/fve/m/n/12 [\T1/fve/m/sl/12 On the elec-tro-dy-nam-ics of mov-ing bod-ies\T
 1/fve/m/n/12 ]. An-nalen der Physik,
  []
 
 
-Overfull \hbox (56.84286pt too wide) in paragraph at lines 1053--1056
+Overfull \hbox (56.84286pt too wide) in paragraph at lines 1092--1095
 \T1/fvm/m/n/12 https://frankmorgner.github.io/vsmartcard/virtualsmartcard/READM
 E.html 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1053--1056
+Underfull \hbox (badness 10000) in paragraph at lines 1092--1095
 
  []
 
-[55] [56
+[57] [58
 
-] [57
+] [59
 
-] [58]
+] [60]
 Appendix A.
 LaTeX Font Info:    Font shape `T1/fvm/m/it' in size <10.95> not available
-(Font)              Font shape `T1/fvm/m/sl' tried instead on input line 1073.
+(Font)              Font shape `T1/fvm/m/sl' tried instead on input line 1112.
 LaTeX Font Info:    Font shape `T1/fvm/m/sl' will be
-(Font)              scaled to size 9.85492pt on input line 1073.
+(Font)              scaled to size 9.85492pt on input line 1112.
 LaTeX Font Info:    Font shape `T1/fvm/b/n' will be
-(Font)              scaled to size 9.85492pt on input line 1076.
+(Font)              scaled to size 9.85492pt on input line 1115.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [59
+ [61
 
 ]
-[60] [61] [62] [63] [64]
+[62] [63] [64] [65] [66]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [65]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [66]
-[67]
+ [67]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [68]
-[69] [70]
+[69]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [71]
+ [70]
+[71] [72]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [72]
-[73] [74
+ [73]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [74]
+[75] [76
 
 ]
 Appendix B.
-[75]
-Underfull \vbox (badness 3690) has occurred while \output is active []
-
- [76]
 [77]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 3690) has occurred while \output is active []
 
  [78]
 [79]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [80]
+[81]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [81]
-[82]
+ [82]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [83]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [84]
+[84]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [85]
-[86]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [86]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [87]
-[88] [89]
+[88]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [90]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [91]
+ [89]
+[90] [91]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [92]
-[93] (./honours_project_report.aux) ) 
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [93]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [94]
+[95] (./honours_project_report.aux) ) 
 Here is how much of TeX's memory you used:
  7730 strings out of 493085
  114411 string characters out of 6136916
@@ -1198,10 +1208,10 @@ ol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/wasy2-ps/wasy10.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/public/wasy2-ps/wasyb10.pfb>
-Output written on honours_project_report.pdf (93 pages, 273972 bytes).
+Output written on honours_project_report.pdf (95 pages, 276455 bytes).
 PDF statistics:
- 383 PDF objects out of 1000 (max. 8388607)
- 263 compressed objects within 3 object streams
+ 389 PDF objects out of 1000 (max. 8388607)
+ 267 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1007,6 +1007,47 @@ To begin with we use the API to call the function \textbf{\textit{GenerateKey}},
 As shown in figure 7.2 the API first requests the public key of the card. In total (split between two messages due to the size exceeding 256 bytes) the card sends back \textit{265} bytes worth of data, which is its public key. The API then proceeds to send back to the card 131 bytes worth of data \textit{(from multiple traces we have found that these 131 bytes of data change every single time, a new secure messaging session is opened)}. Finally the card sends 32 bytes of data, which concludes the initialization of secure messaging. Now the card and the API are both aware of two sets of block cipher keys S$_{Enc}$ and S$_{Mac}$ which are used to encrypt all of the following communication.
 
 The first step we took was to analyse the raw bytes within the data field that are being sent over. 
+
+\subsection{Raw byte analysis of the data fields}
+From multiple traces whereby we opened a secure messaging session we found 9 bytes within the data sent from the card $\rightarrow$ API that remained constant. This made us think the data might be wrapped in an ASN.1 BER encoding. Using the online tool [?] we had utilised before (within chapter 6) we found 3 distinctive sets of data within the 265 bytes. 
+
+\textbf{Send 265 bytes of data (cards public key) (A.3.1 - commands 24, 25)}\\
+$[00]$ (1 byte) 05\\
+$[01]$ (128 byte) F7 B5  15 72 07 22 94 6F C4 08 ...\\
+$[02]$ (128 byte) 3C 52 D2 06 89 28 92 2C AB E6 ...\\
+
+\textit{These command bytes in the BER encoding of the data have been highlighted in bold within the commands in the appendix to make it clear how the data is split.}
+
+%Thus we now know that the public key of the card is actually one bytes of value 5, followed by 2 lots of 128 bytes worth of data.
+
+We did not find any of the other data fields wrapped in an ASN.1 BER encoding. Thus now we know the following:
+
+\begin{table}[H]
+\begin{tabular}{|l|l|}
+\hline
+Data & Explanation\\
+\hline
+Cards public key & (1 byte) = 05\\
+(static key)    & (128 bytes) = F7 B5  15 72 07 22 94 6F C4 08 ...\\
+                 & (128 bytes) = 3C 52 D2 06 89 28 92 2C AB E6 ...\\
+\hline
+API data & (128 bytes) = 08 9F EA  A1 DC 8F C3 43 ...\\
+\textit{public key or encrypted data} & \\
+(Not static) & \\
+\hline
+Card random challenge & (32 bytes) = 66 56 36 31 16 42 8D 8A ...\\
+(Not static) & \\
+\hline
+\end{tabular}
+\caption{Data organization within secure messaging initialization process}
+\end{table}
+
+Using the information within table 7.9 we now begin finding protocols that would allow session keys to be derived, and also match the amount of data being sent across from the API to the card and vice versa.
+
+\subsection{Protocol search}
+There are three main protocols that would support session keys being derived that would remain a secret between the API and the card. These are: RSA, elliptic curve cofactor diffie hellman (ECCDH) and diffie hellman (DH) [see section 3]. Within security policies for 'Athena smartcard solutions' it states that ECCDH is used for cards from 2012 onwards. The card we analyse supports the key generation of elliptic curve public and private keys for this exact purpose, and for signing and verifying data. Thus the first protocol we look into is ECCDH.
+
+
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 \chapter{Conclusion / Results}
 
