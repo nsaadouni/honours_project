@@ -1018,8 +1018,6 @@ $[02]$ (128 byte) 3C 52 D2 06 89 28 92 2C AB E6 ...\\
 
 \textit{These command bytes in the BER encoding of the data have been highlighted in bold within the commands in the appendix to make it clear how the data is split.}
 
-%Thus we now know that the public key of the card is actually one bytes of value 5, followed by 2 lots of 128 bytes worth of data.
-
 We did not find any of the other data fields wrapped in an ASN.1 BER encoding. Thus now we know the following:
 
 \begin{table}[H]
@@ -1045,8 +1043,31 @@ Card random challenge & (32 bytes) = 66 56 36 31 16 42 8D 8A ...\\
 Using the information within table 7.9 we now begin finding protocols that would allow session keys to be derived, and also match the amount of data being sent across from the API to the card and vice versa.
 
 \subsection{Protocol search}
-There are three main protocols that would support session keys being derived that would remain a secret between the API and the card. These are: RSA, elliptic curve cofactor diffie hellman (ECCDH) and diffie hellman (DH) [see section 3]. Within security policies for 'Athena smartcard solutions' it states that ECCDH is used for cards from 2012 onwards. The card we analyse supports the key generation of elliptic curve public and private keys for this exact purpose, and for signing and verifying data. Thus the first protocol we look into is ECCDH.
+There are three main protocols that would support session keys being derived that would remain a secret between the API and the card. These are: RSA encryption, elliptic curve cofactor diffie hellman (ECCDH) and diffie hellman (DH) [see section 3]. 
 
+Within security policies for 'Athena smartcard solutions' [?] it states that ECCDH is used for some of their smartcards. And that the 32 bytes of random data sent by the card is used to XOR with the shared secret derived from ECCDH to create the 2 session keys. 
+
+\textit{[The same documentation stated that the shared secret dervied from ECCDH was 32 bytes in length, and the session keys were 2 x  \textbf{Triple DES (key option 2)} 16 byte keys]}
+
+The card we analyse supports the key generation of elliptic curve public and private keys for this exact purpose, and for signing and verifying data. Thus the first protocol we look into is ECCDH.\\
+
+\underline{\textbf{Elliptic Curve Cofactor Diffie Hellman}}\\
+The smartcard we analyse only supports curves P-192, and P-521 for ECCDH [see section 3]. The security polices state that curve P-256 is used. This is our first indication that the smartcard we analyse is not using ECCDH. However we continue with the investigation in case one of the above curves is used.
+
+The first step we take is to calculate the number of bytes that are required in order to setup the global parameters that must be sent from the card to the API for ECCDH, and also the number of bytes of each public key. A match between these calculations and the number of bytes that are in fact sent across could suggest this protocol is being utilised for secure messaging initialization. 
+
+\begin{table}[H]
+\begin{tabular}{|l|c|c|c|}
+\hline
+Elliptic Curve Field & P-192 & P-256 & P521\\
+\hline
+Global Parameter Length & 233 & 233 & 233\\
+Public Key Length & 48 & 64 & 131-132\\
+\hline
+Total & 281 & 297 & 364\\
+\hline
+\end{tabular}
+\end{table}
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 \chapter{Conclusion / Results}
