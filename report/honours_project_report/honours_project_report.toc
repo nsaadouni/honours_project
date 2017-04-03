@@ -14,12 +14,12 @@
 \contentsline {section}{\numberline {3.1}Hash Function}{15}
 \contentsline {section}{\numberline {3.2}Asymmetric Encryption}{15}
 \contentsline {subsection}{\numberline {3.2.1}RSA}{15}
-\contentsline {section}{\numberline {3.3}Symmetric Encryption}{15}
-\contentsline {subsection}{\numberline {3.3.1}DES}{16}
-\contentsline {subsection}{\numberline {3.3.2}Triple DES}{16}
-\contentsline {subsection}{\numberline {3.3.3}AES}{16}
-\contentsline {subsection}{\numberline {3.3.4}ECB Mode}{16}
-\contentsline {subsection}{\numberline {3.3.5}CBC Mode}{16}
+\contentsline {subsection}{\numberline {3.2.2}Diffie Hellman}{15}
+\contentsline {subsection}{\numberline {3.2.3}ECC}{15}
+\contentsline {section}{\numberline {3.3}Symmetric Encryption}{16}
+\contentsline {subsection}{\numberline {3.3.1}Block Ciphers}{16}
+\contentsline {subsection}{\numberline {3.3.2}ECB Mode}{16}
+\contentsline {subsection}{\numberline {3.3.3}CBC Mode}{16}
 \contentsline {section}{\numberline {3.4}Message Authentication Codes}{16}
 \contentsline {subsection}{\numberline {3.4.1}Hash Based - Message Authentication Codes (HMAC)}{16}
 \contentsline {subsection}{\numberline {3.4.2}Cryptographic Based - Message Authentication Codes (CMAC)}{16}
@@ -56,35 +56,35 @@
 \contentsline {subsection}{\numberline {7.3.1}Raw byte analysis of the data fields}{50}
 \contentsline {subsection}{\numberline {7.3.2}Protocol search}{51}
 \contentsline {subsection}{\numberline {7.3.3}Man in the middle attack - Diffie Hellman Key Agreement Protocol}{55}
-\contentsline {chapter}{\numberline {8}Conclusion / Results}{57}
-\contentsline {chapter}{\numberline {9}Future work}{59}
-\contentsline {chapter}{Bibliography}{61}
-\contentsline {chapter}{Appendices}{63}
-\contentsline {chapter}{\numberline {A}Attack Traces}{65}
-\contentsline {section}{\numberline {A.1}Multiple C\_login Traces}{65}
-\contentsline {subsection}{\numberline {A.1.1}Different Second}{65}
-\contentsline {subsection}{\numberline {A.1.2}Same Pin, Same Challenge}{66}
-\contentsline {subsection}{\numberline {A.1.3}Same Pin, Different Challenge}{66}
-\contentsline {subsection}{\numberline {A.1.4}Different Pin, Same Challenge}{67}
-\contentsline {subsection}{\numberline {A.1.5}Different Pin, Different Challenge}{67}
-\contentsline {section}{\numberline {A.2}Successful Login Injection}{68}
-\contentsline {section}{\numberline {A.3}Open Secure Messaging Traces}{69}
-\contentsline {subsection}{\numberline {A.3.1}Generator = 5, [Not modified]}{69}
-\contentsline {subsection}{\numberline {A.3.2}Generator = 1}{70}
-\contentsline {subsection}{\numberline {A.3.3}Generator = 0}{73}
-\contentsline {subsection}{\numberline {A.3.4}First 128 bytes set to zero and generator 0}{75}
-\contentsline {subsection}{\numberline {A.3.5}Second 128 bytes set to zero and generator 0}{76}
-\contentsline {section}{\numberline {A.4}Overriding Attribute Controls}{79}
-\contentsline {subsection}{\numberline {A.4.1}Encrypt\_False}{79}
-\contentsline {chapter}{\numberline {B}API Function Traces}{81}
-\contentsline {section}{\numberline {B.1}Initialization}{81}
-\contentsline {section}{\numberline {B.2}C\_login}{82}
-\contentsline {section}{\numberline {B.3}C\_findObject}{83}
-\contentsline {section}{\numberline {B.4}C\_generateKey}{85}
-\contentsline {section}{\numberline {B.5}C\_generateKeyPair}{88}
-\contentsline {section}{\numberline {B.6}C\_destroyObject}{92}
-\contentsline {section}{\numberline {B.7}C\_encrypt}{94}
-\contentsline {section}{\numberline {B.8}C\_decrypt}{94}
-\contentsline {section}{\numberline {B.9}C\_setAttribute}{94}
-\contentsline {section}{\numberline {B.10}C\_unwrap}{95}
-\contentsline {section}{\numberline {B.11}C\_wrap}{99}
+\contentsline {chapter}{\numberline {8}Conclusion / Results}{59}
+\contentsline {chapter}{\numberline {9}Future work}{61}
+\contentsline {chapter}{Bibliography}{63}
+\contentsline {chapter}{Appendices}{65}
+\contentsline {chapter}{\numberline {A}Attack Traces}{67}
+\contentsline {section}{\numberline {A.1}Multiple C\_login Traces}{67}
+\contentsline {subsection}{\numberline {A.1.1}Different Second}{67}
+\contentsline {subsection}{\numberline {A.1.2}Same Pin, Same Challenge}{68}
+\contentsline {subsection}{\numberline {A.1.3}Same Pin, Different Challenge}{68}
+\contentsline {subsection}{\numberline {A.1.4}Different Pin, Same Challenge}{69}
+\contentsline {subsection}{\numberline {A.1.5}Different Pin, Different Challenge}{69}
+\contentsline {section}{\numberline {A.2}Successful Login Injection}{70}
+\contentsline {section}{\numberline {A.3}Open Secure Messaging Traces}{71}
+\contentsline {subsection}{\numberline {A.3.1}Generator = 5, [Not modified]}{71}
+\contentsline {subsection}{\numberline {A.3.2}Generator = 1}{72}
+\contentsline {subsection}{\numberline {A.3.3}Generator = 0}{75}
+\contentsline {subsection}{\numberline {A.3.4}First 128 bytes set to zero and generator 0}{77}
+\contentsline {subsection}{\numberline {A.3.5}Second 128 bytes set to zero and generator 0}{78}
+\contentsline {section}{\numberline {A.4}Overriding Attribute Controls}{81}
+\contentsline {subsection}{\numberline {A.4.1}Encrypt\_False}{81}
+\contentsline {chapter}{\numberline {B}API Function Traces}{83}
+\contentsline {section}{\numberline {B.1}Initialization}{83}
+\contentsline {section}{\numberline {B.2}C\_login}{84}
+\contentsline {section}{\numberline {B.3}C\_findObject}{85}
+\contentsline {section}{\numberline {B.4}C\_generateKey}{87}
+\contentsline {section}{\numberline {B.5}C\_generateKeyPair}{90}
+\contentsline {section}{\numberline {B.6}C\_destroyObject}{94}
+\contentsline {section}{\numberline {B.7}C\_encrypt}{96}
+\contentsline {section}{\numberline {B.8}C\_decrypt}{96}
+\contentsline {section}{\numberline {B.9}C\_setAttribute}{96}
+\contentsline {section}{\numberline {B.10}C\_unwrap}{97}
+\contentsline {section}{\numberline {B.11}C\_wrap}{101}

@@ -22,12 +22,12 @@
 \@writefile{toc}{\contentsline {section}{\numberline {3.1}Hash Function}{15}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.2}Asymmetric Encryption}{15}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}RSA}{15}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}Symmetric Encryption}{15}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}DES}{16}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Triple DES}{16}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}AES}{16}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.4}ECB Mode}{16}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.5}CBC Mode}{16}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Diffie Hellman}{15}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}ECC}{15}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Symmetric Encryption}{16}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Block Ciphers}{16}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}ECB Mode}{16}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}CBC Mode}{16}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.4}Message Authentication Codes}{16}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}Hash Based - Message Authentication Codes (HMAC)}{16}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}Cryptographic Based - Message Authentication Codes (CMAC)}{16}}
@@ -85,13 +85,14 @@
 \@writefile{lot}{\contentsline {table}{\numberline {7.10}{\ignorespaces Number of bytes required for ECCDH [Card to API]\relax }}{52}}
 \@writefile{lot}{\contentsline {table}{\numberline {7.11}{\ignorespaces Number of bytes required for RSA\relax }}{53}}
 \@writefile{lot}{\contentsline {table}{\numberline {7.12}{\ignorespaces Results from altering public exponent\relax }}{54}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.13}{\ignorespaces Data organization within secure messaging initialization process\relax }}{55}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {7.3.3}Man in the middle attack - Diffie Hellman Key Agreement Protocol}{55}}
 \@writefile{lof}{\contentsline {figure}{\numberline {7.3}{\ignorespaces Diffie Hellman - Man in The Middle Attack\relax }}{56}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {8}Conclusion / Results}{57}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {8}Conclusion / Results}{59}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \bibstyle{plain}
-\@writefile{toc}{\contentsline {chapter}{\numberline {9}Future work}{59}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {9}Future work}{61}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \bibcite{latexcompanion}{1}
@@ -99,37 +100,37 @@
 \bibcite{knuthwebsite}{3}
 \bibcite{virtual smartcard}{4}
 \bibcite{OCRA}{5}
-\@writefile{toc}{\contentsline {chapter}{Bibliography}{61}}
-\@writefile{toc}{\contentsline {chapter}{Appendices}{63}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {A}Attack Traces}{65}}
+\@writefile{toc}{\contentsline {chapter}{Bibliography}{63}}
+\@writefile{toc}{\contentsline {chapter}{Appendices}{65}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {A}Attack Traces}{67}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {A.1}Multiple C\_login Traces}{65}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.1.1}Different Second}{65}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.1.2}Same Pin, Same Challenge}{66}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.1.3}Same Pin, Different Challenge}{66}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.1.4}Different Pin, Same Challenge}{67}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.1.5}Different Pin, Different Challenge}{67}}
-\@writefile{toc}{\contentsline {section}{\numberline {A.2}Successful Login Injection}{68}}
-\@writefile{toc}{\contentsline {section}{\numberline {A.3}Open Secure Messaging Traces}{69}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.3.1}Generator = 5, [Not modified]}{69}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.3.2}Generator = 1}{70}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.3.3}Generator = 0}{73}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.3.4}First 128 bytes set to zero and generator 0}{75}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.3.5}Second 128 bytes set to zero and generator 0}{76}}
-\@writefile{toc}{\contentsline {section}{\numberline {A.4}Overriding Attribute Controls}{79}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.4.1}Encrypt\_False}{79}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {B}API Function Traces}{81}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.1}Multiple C\_login Traces}{67}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1.1}Different Second}{67}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1.2}Same Pin, Same Challenge}{68}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1.3}Same Pin, Different Challenge}{68}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1.4}Different Pin, Same Challenge}{69}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1.5}Different Pin, Different Challenge}{69}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.2}Successful Login Injection}{70}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.3}Open Secure Messaging Traces}{71}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.3.1}Generator = 5, [Not modified]}{71}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.3.2}Generator = 1}{72}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.3.3}Generator = 0}{75}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.3.4}First 128 bytes set to zero and generator 0}{77}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.3.5}Second 128 bytes set to zero and generator 0}{78}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.4}Overriding Attribute Controls}{81}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.4.1}Encrypt\_False}{81}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {B}API Function Traces}{83}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {B.1}Initialization}{81}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.2}C\_login}{82}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.3}C\_findObject}{83}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.4}C\_generateKey}{85}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.5}C\_generateKeyPair}{88}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.6}C\_destroyObject}{92}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.7}C\_encrypt}{94}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.8}C\_decrypt}{94}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.9}C\_setAttribute}{94}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.10}C\_unwrap}{95}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.11}C\_wrap}{99}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.1}Initialization}{83}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.2}C\_login}{84}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.3}C\_findObject}{85}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.4}C\_generateKey}{87}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.5}C\_generateKeyPair}{90}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.6}C\_destroyObject}{94}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.7}C\_encrypt}{96}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.8}C\_decrypt}{96}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.9}C\_setAttribute}{96}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.10}C\_unwrap}{97}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.11}C\_wrap}{101}}

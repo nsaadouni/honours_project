@@ -204,13 +204,21 @@ public and private keys for communicating over an insecure channel
 \subsection{RSA}
 Chinese Remainder Theorem RSA Keys
 
+\subsection{Diffie Hellman}
+
+\subsection{ECC}
+also explain ECCDH
+
 \section{Symmetric Encryption}
 
 \noindent explain this in an overview term
 
-\subsection{DES}
-\subsection{Triple DES}
-\subsection{AES}
+\subsection{Block Ciphers}
+\begin{enumerate}
+\item AES
+\item DES
+\item Triple DES
+\end{enumerate}
 
 % might go against those headings and just list them in the explanations
 \subsection{ECB Mode}
@@ -1142,14 +1150,29 @@ $$ S_1 = public\_key_1 ^ {public\_key_2} \quad mod \quad p $$
 $$ S_2 = public\_key_2 ^ {public\_key_1} \quad mod \quad p $$
 $$ S = S_1 = S_2 $$
 
-Thus if the generator were set to be \textbf{0}, then the public key calculated by the API would in fact be 0 as well. And in the case the generator is set to \textbf{1}, the API would calculate its public key as 1. Therefore we conclude due to the mathematical properties presented that, the secure messaging initialization process is the diffie hellman protcol. Whereby the cards 257 bytes of data sent from the card to the API consists of three elements:
-\begin{enumerate}
-\item Generator = 5
-\item Public modulo = 1 of the 128 bytes of data
-\item Cards public key = the other 128 bytes of data
-\end{enumerate}
+Thus if the generator were set to be \textbf{0}, then the public key calculated by the API would in fact be 0 as well. And in the case the generator is set to \textbf{1}, the API would calculate its public key as 1. This matches the properties described in table 7.12. Therefore we conclude due to the mathematical properties presented that, the secure messaging initialization process is the diffie hellman protcol. Whereby the data sent during the initialization of secure messaging is the following:
 
-And the 128 bytes sent by the API (during open secure messaging command) is the cards public key. And finally the 32 bytes sent by the card at the end must be used for calculating the final session keys. With this knowledge we move onto implementing a man in the middle attack on the diffie hellman protocol to give the API, the card and an attacker the knowledge of the shared secret \textbf{S}.
+\begin{table}[H]
+\hskip-2.5cm\begin{tabular}{|l|l|l|}
+\hline
+Data & Explanation & DH Parameters\\
+\hline
+Cards public key & (1 byte) = 05 & Generator\\
+(static key)    & (128 bytes) =  & public key or modulo\\
+                 & (128 bytes) = & public key or modulo\\
+\hline
+API data & (128 bytes) = & API's public key\\
+\textit{public key or encrypted data} & &\\
+(Not static) & & \\
+\hline
+Card random challenge & (32 bytes) = & Used for session key derivation (not part of DH)\\
+(Not static) & & \\
+\hline
+\end{tabular}
+\caption{Data organization within secure messaging initialization process}
+\end{table}
+
+The 32 bytes sent at the end of the secure messaging initialization we assume to be used like those stated as part for ECCDH in the security polices we analysed. They will some how be utilised to generate the final session keys S$_{Enc}$ and S$_{Mac}$. Later we show documentation that suggests methods for doing this. For now the next process is to implement a man in the middle attack for the diffie hellman key agreement so that an attacker is also in the knowledge of the shared secret.
 
 \subsection{Man in the middle attack - Diffie Hellman Key Agreement Protocol}
 The standard man in the middle attack for diffie hellman would require two diffie hellman key agreements to occur. One between the API and the attacker, and one between the attack and the smartcard. From the tests run (when we thought the public keys were RSA based) we noticed we can force the API's public key to be 0, by setting the generator to be 0. However we can also force the shared secret to be zero, if we alter the cards public key to be 0 as well. Then the card, the API and the attacker would all be in the knowledge of the shared secret which is simply just zero. 
@@ -1175,11 +1198,23 @@ Generator & 0 & 5\\
 \hline
 Modulo & $p$ & $p$ \\
 \hline
-Public Key & $0^{private\_api} \quad mod \quad p$ & test\\
-
+Public Key & 0 = $0^{private\_api} \quad mod \quad p$  & $x_{actual}$ = $5^{private\_card} \quad mod \quad p$\\
+ & & \\
+ & & $x_{injected}$ = 0\\
+\hline
+Shared Secret & $x_{injected}^{private\_api} \quad mod \quad p$ & $ public\_key_{API}^{private\_card} \quad mod \quad p$ \\
+$pub_1^{pub_2} \quad mod \quad p$ & \textbf{0} = $0^{private\_api} \quad mod \quad p$ &\textbf{0} = $0^{private\_card} \quad mod \quad p$\\
 \hline
 \end{tabular}
 \end{table}
+
+As we did not know which 128 bytes was the modulus, and which was the public key of the smart-card we had to complete two experiments setting each of the 128 bytes to be zero to test our hypothesis and also setting the generator to be 0. These two tests can be seen within appendix \textbf{A.3.4} and \textbf{A.3.5}.
+
+As can be seen the first test caused the API to halt. This suggested that this was the modulus and that by setting it 0 caused OpenSSL to try and create a public key with a modulo value of zero which is not should cause OpenSSL to crash. The second test succeeded!
+
+ - - continue here - -
+ 
+ Next task if KDF(S) and then re-computing the MAC for 'get challenge' command. Once we have done that we know how to calculate the session keys which will conclude the reverse engineering!
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 \chapter{Conclusion / Results}
