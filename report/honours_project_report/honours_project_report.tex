@@ -53,7 +53,7 @@
 \abstract{
 Basic example of an abstract (this will be changed)\\
 
-Smart cards are used commercially and within industry for authentication, encryption, decryption, signing and verifying data. This paper aims to look into how the smart card interacts with an application at the lower level. PKCS\#11 (public key cryptography system?) is the standard that is implemented at the higher level and then broken down into command/response pairs sent as APDU traffic to and from the smart card. It is the APDU low-level protocol that will be analysed to see if any vulnerabilities are present with regard to the smart cards tested.\\
+Smartcards are used commercially and within industry for authentication, encryption, decryption, signing and verifying data. This paper aims to look into how the smartcard interacts with an application at the lower level. PKCS\#11 (public key cryptography system?) is the standard that is implemented at the higher level and then broken down into command/response pairs sent as APDU traffic to and from the smart card. It is the APDU low-level protocol that will be analysed to see if any vulnerabilities are present with regard to the smart cards tested.\\
 }
 
 \maketitle
@@ -71,9 +71,9 @@ Acknowledgements go here.
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 
 \chapter{Introduction}
-Smart-cards are formally known as integrated circuit cards (ICC), and are universally thought to be secure, tamper-resistant devices. They store and process, cryptographic keys, authentication and user sensitive data. They are utilised to preform operations where confidentiality, data integrity and authentication are key to the security of a system.\\
+Smartcards are formally known as integrated circuit cards (ICC), and are universally thought to be secure, tamper-resistant devices. They store and process, cryptographic keys, authentication and user sensitive data. They are utilised to preform operations where confidentiality, data integrity and authentication are key to the security of a system.\\
 
-\noindent Smart-cards offer what seems to be more secure methods for using cryptographic operations. (And should still provide the same level of security that would be offered to un-compromised systems, compared to those that are compromised by an attacker). This is partly due to the fact that the majority of modern smart-cards have their own on-board micro-controller, to allow all of these operations to take place on the card itself, with keys that are unknown to the outside world and stored securely on the device. Meaning the only actor that should be able to preform such operations would need to be in possession of the smart-card and the PIN/password. In many industries, for applications such as, banking/ payment systems, telecommunications, healthcare and public sector transport, 
+Smartcards offer what seems to be more secure methods for using cryptographic operations. (And should still provide the same level of security that would be offered to un-compromised systems, compared to those that are compromised by an attacker). This is partly due to the fact that the majority of modern smartcards have their own on-board micro-controller, to allow all of these operations to take place on the smartcard itself, with keys that are unknown to the outside world and stored securely on the device. Meaning the only actor that should be able to preform such operations would need to be in possession of the smartcard and the PIN/password. In many industries, for applications such as, banking/ payment systems, telecommunications, healthcare and public sector transport, 
 %\begin{itemize}
 %\item Banking/ payment
 %\item E-commerce
@@ -81,10 +81,10 @@ Smart-cards are formally known as integrated circuit cards (ICC), and are univer
 %\item Healthcare
 %\item Public transport
 %\end{itemize}
-smart-cards are used due to the security they are believed to provide.\\
+smartcards are used due to the security they are believed to provide.\\
 
 
-\noindent The most common API (application programming interface) that is used to communicate with smart-cards is the RSA defined PKCS\#11 (Public Key Cryptography Standard). Also known as 'Cryptoki' (cryptographic token interface, pronounced as 'crypto-key'). The standard defines a platform-independent API to smart-cards and hardware security modules (HSM). PKCS\#11 originated from RSA security, but has since been placed into the hands of OASIS PKCS\#11 Technical Committee to continue its work (since 2013). [reference wikipedia PKCS\#11].\\
+The most common API (application programming interface) that is used to communicate with smartcards is the RSA defined PKCS\#11 (Public Key Cryptography Standard). Also known as 'Cryptoki' (cryptographic token interface, pronounced as 'crypto-key'). The standard defines a platform-independent API to smartcards and hardware security modules (HSM). PKCS\#11 originated from RSA security, but has since been placed into the hands of OASIS PKCS\#11 Technical Committee to continue its work (since 2013). [reference wikipedia PKCS\#11].\\
 
 
 % Note: decide on a figure to use here, 10 OR 15 years!
@@ -94,7 +94,7 @@ smart-cards are used due to the security they are believed to provide.\\
 % maybe not 
 The research of the low-level communication will take two forms. 
 \begin{enumerate}
-\item An analysis of the raw communication between PC and Smart-card for all API function calls
+\item An analysis of the raw communication between PC and smartcard for all API function calls
 \item 
 \end{enumerate}
 
@@ -107,7 +107,7 @@ Before we move into the above analysis, supporting material must be introduced. 
 
 \chapter{Background}
 
-In this chapter we give background knowledge on two essential standards that are required for the use of the contact smart-card we analyse in this paper. These two standards are PKCS\#11 and ISO 7816.
+In this chapter we give background knowledge on two essential standards that are required for the use of the contact smartcard we analyse in this paper. These two standards are PKCS\#11 and ISO 7816.
 
 \section{PKCS\#11}
 This is the API that each card manufacture implements themselves.
@@ -135,7 +135,7 @@ template = (\\
 
 
 \section{ISO 7816}
-This is the international standards organization that defines the low level communication protocol between smartcards and the API on the computer.
+This is the international standards organization that defines the low level communication protocol between smartcard's and the API on the computer.
 \subsection{Command Structure}
 \subsection{Response Structure}
 \subsection{Inter-Industry/ Proprietary}
@@ -251,7 +251,7 @@ also explain ECCDH
 
 \section{PCSC-lite}
 
-\section{Virtual Smart-Card}
+\section{Virtual Smartcard}
 frank something
 Explain how this creates a virtual smartcard reader
 This is then used to run API functions, and the commands are relayed to the actual card reader and therefore card.
@@ -338,7 +338,7 @@ No immediate sensitive information is revealed in this trace, due to the use of 
 \textit{Function dependencies $\rightarrow$ [Initialization, Login]}\\
 
 
-The findObjects function is split into 3 main components. (These are listed below).
+The findObjects function is split into 3 main components (these are listed below).
 
 \begin{enumerate}
 \item Select and open 'cmapfile' [List files command]. This stores all file locations for attributes of the keys (B.3 - command 32, 33, 34)
@@ -360,7 +360,7 @@ As reported in the literature review, the work by (name) 2015 [?] on the same ca
 
 \textit{Function dependencies $\rightarrow$ [Initialization, Login]}\\
 
-The generateKey function has 9 main components. 2 different secure messaging sessions are used to generate 24 bytes (same as the key length) on the card and send it to the API, and create the key file. The attribute file is created without the use of secure messaging as it does not contain sensitive information. The steps are listed below:\\
+The generateKey function has 9 main components (these are listed below).
 
 \begin{enumerate}
 \item Open secure messaging (B.4 - commands 26, 27, 28)
@@ -374,11 +374,19 @@ The generateKey function has 9 main components. 2 different secure messaging ses
 \item Close secure messaging (B.4 - command 47)\\
 \end{enumerate}
 
-From this analysis of the communication trace it seems that the card is requested to generate the key value from a 'get challenge' request (within secure messaging). We assume that these same bytes are used to be stored in the key file of the triple DES key we ask it to generate. We cannot verify this at this time, as two different secure messaging sessions are used, and therefore have different session keys. This causes the encryption of the generated bytes and the storing of them in a file, to be different. Despite the possibility they are in fact identical. As stated in the literature review, previous hardware security modules created by 'Athena smartcard solutions' have in the past done this without the use of secure messaging. Thus that vulnerability seems to be patched in this version of the API and smartcard, by using secure messaging when generating these bytes and storing them in the key file. 
+Secure messaging session have an initialization process whereby the API and smartcard generate 2 session keys S$_{Enc}$ and S$_{Mac}$. Once the initialization is completed the following communications data fields are encrypted with S$_{Enc}$ and a checksum is computed via C-MAC (see section 3.4.2) using S$_{Mac}$. They provide confidentiality and integrity of the data being sent within the data fields of the commands during a secure messaging session.
 
-If this assumption turns out to be correct it posses as quite a significant vulnerability that could be exploited. If the protocol for secure messaging can be reversed engineered, then we can inject our own bytes when the the request challenge is sent to the card. Or simply we can use a man in the middle attack to generate two sets of session keys. One with the attacker and the API, and one with the attacker and the smartcard. The bytes can be sent to the card in the correct format, however the attacker will also be in knowledge of the key value. This should never be the case when the attribute CKA\_Sensitive is set to true.
+Two different secure messaging sessions are used. The first is to request the card to generate 24 bytes (same as the key length) and send it to the API. The second is to place the key value into the key file. The attribute file is created without the use of secure messaging as it does not contain sensitive information.
 
-A second vulnerability is also present here. Which is the ability to alter attributes on the fly as they are being updated within the file (step 5). Changing attribute values would allow for the key to be extracted as soon as it is created (this has been checked) however the user will be aware of it, as it is printed at the API layer. In addition they will also be able to see the modified attributes which they had not set. Thus we determine this to be a vulnerability, but not as serious as the previous one mentioned, as if it were utilised the user would most likely notice and therefore generate a new key to be used.
+The analysis of the communication trace suggests that the card is requested to generate the key value from a 'get challenge' request (within secure messaging). We assume that the generated bytes are used to be stored in the key file as the key value. At this stage it is not possible to verify this. The reason being that two different secure messaging sessions are used, and therefore have different session keys. This causes the encryption of the generated bytes and the storing of them in a file, to be different. Despite the possibility they might be identical. 
+
+As discussed in the literature review chapter, previous hardware security modules created by 'Athena smartcard solutions' have in the past requested the card to generate random bytes and use them as the key value (when generateKey function is called). This was completed without the use of secure messaging. Thus, it appears that they might be using a similar approach but with the use of secure messaging (to prevent revealing the encryption keys in plain text at the APDU layer) on this smartcard.
+
+If the assumption of the generated bytes being used as the key value holds, it may result in a significant vulnerability that could be exploited. This will only be valid if the secure messaging protocol (that is a proprietary implementation by the card vendor) can be reversed engineered. This should allow an attacker to inject a new key value or decrypt the key value to be stored. This would be in breach of the PKCS \#11 standard, depending on attribute values set.
+
+A second vulnerability is also present. Unlike previous attacks whereby attributes are modified after a key has been created. An attacker could modify the attributes during the key generation process (this would take place at step 5, in the component list above). Changing attribute values would allow for the key to be extracted as soon as it is created (this has been checked). It is worth noting that the user will be aware of it, as it is printed at the API layer. In addition they will also be able to see the modified attributes which they had not set. Thus we determine this to be a vulnerability, but not as serious as the previous one mentioned. As if it were utilised, the user would most likely notice and therefore generate a new key to be used.
+
+Both of these possible vulnerabilities are discussed in chapter 7.
 
 
 
@@ -387,7 +395,7 @@ A second vulnerability is also present here. Which is the ability to alter attri
 
 \textit{Function dependencies $\rightarrow$ [Initialization, Login]}\\
 
-We find 15 main components in this generation of the RSA public and private key pair. 7 components transfer data that are wrapped within an ASN.1 BER encoding [?]. These are to transfer public key information and what we believe to be file location parameters. The steps listed below give the ordering of the most important commands, and below that we give the decoding of the ASN.1 BER encoding of those 7 commands that we have found.\\
+We find 15 main components in this generation of the RSA public and private key pair (these are listed below).
 
 \begin{enumerate}
 \item Create public key attribute file (B.5 - command 54)
@@ -404,23 +412,24 @@ We find 15 main components in this generation of the RSA public and private key 
 \item Select temporary file (B.5 - command 71)
 \item Get RSA public key (B.5 - command 72)
 \item Select public attribute file (B.5 - command 73)
-\item Add public modulus to attribute file (B.5 - command 74)
-\item The rest of the communication we believe to be resetting the temporary file, and adding file location information to file control parameters of parent directories. (These commands are not included in the traces within the appendix)\\\\
+\item Add public modulus to attribute file (B.5 - command 74)\\\\
 \end{enumerate}
 
-The following are the ASN.1 BER decodings of the commands that have these wrapping. An online tool was used in the aid of decoding these hexadecimal bytes [?]. We provide references to the above numbering of the commands, and the appexidx references as well.\\
+\textit{The rest of the communication we believe to be resetting the temporary file, and adding file location information to file control parameters of parent directories. (These commands are not included in the traces within the appendix)}
+
+Components 1, 3, 5, 7, 9, 11, and 13 transfer data that are wrapped within an ASN.1 BER encoding [?]. We have used an online tool [?] to decode the data fields. The following are the ASN.1 BER decodings of the commands that have these wrapping. 
 
 \textbf{1. Create public key attribute file (B.5 - command 54)}\\
 Application 2(4 elem)\\
 $[10]$ (1 byte) 04\\
-$[03]$ (2 byte) 01 40\\
+$[03]$ (2 byte) \textbf{01 40}\\
 $[00]$ (2 byte) 01 A7\\
 $[06]$ (8 byte) 00 20 00 20 00 20 00 20\\
 
 \textbf{3. Create private key attribute file (B.5 - command 59)}\\
 Application 2(5 elem)\\
 $[10]$ (1 byte) 04\\
-$[03]$ (2 byte) 02 00\\
+$[03]$ (2 byte) \textbf{02 00}\\
 $[00]$ (2 byte) 01 23\\
 $[04]$ kx s0\\
 $[06]$ (8 byte) 00 00 00 20 00 20 00 20\\
@@ -428,7 +437,7 @@ $[06]$ (8 byte) 00 00 00 20 00 20 00 20\\
 \textbf{5. Create private CTR RSA key file (B.5 - command 64)}\\
 Application 2(6 elem)\\
 $[10]$ (1 byte) 04\\
-$[03]$ (2 byte) 00 41\\
+$[03]$ (2 byte) \textbf{00 41}\\
 $[00]$ (2 byte) 00 80\\
 $[05]$ (5 byte) 05 0C 20 00 A3\\
 $[06]$ (14 byte) 00 00 00 FF 00 FF 00 20 00 20 00 00 00 20\\
@@ -447,7 +456,7 @@ $[02]$ (3 byte) 01 00 01\\
 \textbf{11. Create new file with public modulus and additional info (B.5 - command 70)}\\
 Application 2(6 elem)\\
 $[10]$ (1 byte) 04\\
-$[03]$ (2 byte) 00 81\\
+$[03]$ (2 byte) \textbf{00 81}\\
 $[00]$ (2 byte) 00 80\\
 $[05]$ (5 byte) 05 08 20 00 A3\\
 $[06]$ (14 byte) 00 00 00 FF 00 FF 00 20 00 20 00 00 00 20\\
@@ -455,15 +464,29 @@ Application 17(2 elem)\\
 $[16]$ (3 byte) 01 00 01\\
 $[17]$ (128 byte) D1 EF 7C A5 06 A1 87 FD 5F 13 5B 25 B7...\\
 
-RSA key pair generation is supported on the card. A dedicated processor is used for this, hence the need to change to temporary files to access the generated key and then store the public information. We see no sensitive information within the traces that are outputted in plain text. We thought that the additional information provided that is wrapped within the ASN.1 BER encoding, especially for \textbf{5}, might have exported the private key and the additional parameters required for CRT RSA keys [?]. To test this theory we deleted the generated key and generated another. The public modulus did change, however the remaining parameters did not. With a change in the public modulus, a change in the private exponent and therefore CRT parameters would also occur. Thus we concluded from that the private key is not exported out in plain text.
+RSA key pair generation occurs on the card. A dedicated processor is used for this, hence the need to change to temporary files to access the generated key and then store the public information. We notice no sensitive information being revealed within the traces in plain text. We are of the opinion that the information provided that is wrapped within the ASN.1 BER encoding, especially for \textbf{5}, might have exported the private key and the additional parameters required for CRT RSA keys [?]. To test this theory we have deleted the generated key and generated another RSA key. This resulted in the public modulus of the RSA key to change, but the remaining parameters did not. A change in the public modulus would cause a change in both the private exponent and CRT parameters. This leads us to conclude that no part of the private key is exported in plain text within the communication traces.
 
-It seems these parameters that are listed above are used used to save the location of the RSA private key, and the public key for that matter. We have not been able to intuitively decode the proprietary encoding of file directories to locate the private key. As we will see later in the 'unwrap' function when we utilise the private key, this occurs within secure messaging and therefore cannot find the location of it from that either.
+As we will explain in the destroyObject function analysis, when a key is deleted from the card, the location in memory where the keys are securely stored (i.e. cannot be read) is revealed. We have used the destroyObject function to delete both RSA public and private keys. This enabled us to find the locations of the key and attribute files for both keys. These results are reported below:
 
-Thus without the knowledge of the proprietary encoding of file directories we do not see any vulnerabilities within the function as of yet. Studying multiple RSA key generation traces (without deleting the first keys) might show differences in these decodings which could lead to finding the location of the private key.
+\begin{table}[H]
+\begin{tabular}{|l|c|c|}
+\hline
+ & Key File & Attribute File\\
+\hline
+RSA public key & 3F0030003002 \textbf{00 81} (11. [03]) & 3F0030003002 \textbf{01 40} (1. [03])\\
+\hline
+RSA private key & 3F0030003002 \textbf{02 00} (3. [03]) & 3F0030003002 \textbf{00 41} (5. [03])\\
+\hline
+\end{tabular}
+\caption{File Location Table}
+\end{table}
 
+Our work shows that components 1, 3, 5, and 11 (listed above) are used to save the details of the location in the smartcard's memory of the RSA public \& private attribute and key files. The corresponding componenets with the file location parameters are reported in brackets in the table 6.1. Components 9 and 13 reveal the RSA public exponent and modulus used to be saved into attribute and key files. Finally, component 7 is used to give the size of the RSA key and its public exponent for key pair generation on the card.
+
+Therefore, the only vulnerabilities we notice are, the ability to modify attributes as the key is being generated (components 2 and 4). This was discussed within generateKey function analysis and did not prove to be a vulnerability that would not be noticed by the user. The second vulnerability is the disclosure of the file location of the private key. The opening and possible reading of the key value is discussed as part of the destroyObject function analysis and also in chapter 7.
 
 \section{C\_destroyObject}
-\textit{[For this trace we delete/destroy a triple DES key and its attribute file]}
+\textit{[For this trace we delete/destroy a triple DES (key option 2) 16 byte key and its attribute file]}
 
 \textit{Function dependencies $\rightarrow$ [Initialization, Login, FindObjects]}\\
 
@@ -478,23 +501,25 @@ Once the key and attribute files have been located and the user is authenticated
 \item Delete key attribute file (B.6 - command 56)
 \end{enumerate}
 
-We believe a counter file keeps track of how many keys have been created and deleted in a certain path within the cards on board memory. We are unsure on its specific use as we have only seen it being updating upon deletion of an object, and the new counter value being appended to the new keys attributes (the one created after deleting an object). The original and updated counter value can be seen at B.6 - command 37 and 50 respectively.
+Work conducted by (name) 2015 [?] did show that the counter file maintains track of how many keys have been created and deleted in a certain path within the smartcard's memory. We are unsure about its specific use (except for maintaining track of the number of keys) as we have only seen it being updated upon deletion of an object, and the new counter value being appended to the new keys attributes (the one created after deleting an object). The original and updated counter value is reported in appendix B.6 - command 37 and 50 respectively.
 
-Once this has been done the key attribute file and the key file are selected and deleted using the inter-industry command 'DELETE FILE'. This is the first time we have seen the location of a key file been accessed without secure messaging. Thus we thought this might present a vulnerability which would allow us to open and read key values at the APDU level. 
+Once the counter file has been updated, the key attribute file and the key file are selected and deleted using the inter-industry command 'DELETE FILE'. This is the first finding where the location of a key file  is accessed without the use of secure messaging. The finding is consistent with the earlier work [?]. Thus we think that this may present a vulnerability which would allow us to open and read key values at the APDU level. 
 
-Hence we attempted to use the 'SELECT FILE' command and then 'READ BINARY' command to try and read the files data. This resulted in an error message = '69 81', meaning the command is incompatible with the file structure. With this in mind we decided to try the other command which is 'OPEN FILE CONTROL PARAMETERS' which did successfully work. The output was wrapped in an ASN.1 BER encoding, thus we decoded it which gave the following result:
+We attempt to use the 'SELECT FILE' command and then 'READ BINARY' command to try and read the files data. This resulted in an error message = '69 81', meaning the command is incompatible with the file structure. In out next step, we try the other command which is 'OPEN FILE CONTROL PARAMETERS'. This did successfully work. We find that the output is wrapped in an ASN.1 BER encoding, thus we decoded it this gave the following result:
 
 Application 2(6 elem)\\
 $[07]$ (1 byte) 08\\
-$[03]$ (2 byte) 00 C1\\
+$[03]$ (2 byte) \textbf{00 C1}\\
 $[00]$ (2 byte) 00 18\\
 $[10]$ (1 byte) 04\\
 $[06]$ (14 byte) 00 00 00 FF 00 FF 00 00 00 00 00 00 00 00\\
 $[05]$ (4 byte) 01 0C 10 00\\
 
-This seemed quite similar to what we noticed with the RSA private key analysis in the previous section. There is not present a 16 byte key that could be used for triple DES. Rather it seems that these are more pointers to more files that could hold the keys value. All security polices [?] that we have read for 'Athena smart-card solutions' suggest that keys are held in a non-readable memory to outside actors, and only when required are encrypted internally (by the cards OS) and stored in the EEPROM for them to be used for the security operation required of them. 
+The above decoding is similar to what we have reported for the RSA private key analysis in section 6.5. The 16 byte key that would be used for triple DES is not present. There is however pointers to the file that we just read the parameters of \textit{(00 C1)}, and other additional parameters that we are unsure of their use. 
 
-Thus we did not find any security vulnerabilities from this function.
+All security policies [?] that we have reviewed concerning 'Athena smartcard solutions' suggest that keys are held in a non-readable memory to outside actors, and only when required are encrypted internally (by the smartcard's OS) and stored in the EEPROM (electrically erasable programmable read only memory) for them to be used for the security operation required of them. 
+
+Thus we did not find any security vulnerabilities from this function. And also eliminates one of the vulnerabilities we suggested within the generateKeyPair function analysis. We discuss further in chapter 7.
 
 \section{C\_encrypt}
 \textit{[For this function we use a triple DES key to encrypt a string 'TestString123456'] using ECB mode]}
@@ -613,7 +638,7 @@ The data field of unwrap is encrypted, as it is used within secure messaging. Ho
 
 \chapter{Attempts To Attack At the APDU Level (change)}
 
-In this chapter we explain the motivations, implementation and results of the attacks we attempt as the APDU level. For clarity purposes we first give a brief overview of the API's function analysis at the APDU layer that we conducted within chapter 6. This analysis in combination with previous work completed on the same smart-card and for that matter other smart-cards as well, drove the motivations behind the attacks we selected to conduct.
+In this chapter we explain the motivations, implementation and results of the attacks we attempt as the APDU level. For clarity purposes we first give a brief overview of the API's function analysis at the APDU layer that we conducted within chapter 6. This analysis in combination with previous work completed on the same smartcard and for that matter other smartcards as well, drove the motivations behind the attacks we selected to conduct.
 
 \section{Motivations}
 List a table of all attacks, tick and cross them, then go on to explain them in the following two sub sections.
@@ -624,15 +649,15 @@ We did mention in the \textit{Login} function analysis it might be possible to e
 
 \textit{FindObject} function did present the possibility to locate the object and at the APDU level modify any attribute. The two that have the most significance would be CKA\_extractable and CKA\_sensitive. This had been completed within previous work [?] and revealed no significant vulnerability. This was due to the fact that once the attributes had been set as part of the key generation process, the attribute file and key key file are separated and thus prevent the key from being exposed in plain text. Since this attack had already been investigated we did not see it fit to investigate it any further.
 
-\textit{GenerateKey} and \textit{GenerateKeyPair} functions both provided a vulnerability whereby attributes could be modified on the fly as the key was being generated. This did leave the possibility of the key value being exposed as the key had not been generated yet. And effectively the card would be told to generate the key with the attributes the attacker sets. This vulnerability would always have to be exploited upon key generation and would be visible at the API level and therefore the user of the smart-card. Therefore while it is a viable attack to investigate, we decided to look into methods that would allow all keys to be exported in plain text regardless of whether or not the key was already generated and saved on the card.
+\textit{GenerateKey} and \textit{GenerateKeyPair} functions both provided a vulnerability whereby attributes could be modified on the fly as the key was being generated. This did leave the possibility of the key value being exposed as the key had not been generated yet. And effectively the card would be told to generate the key with the attributes the attacker sets. This vulnerability would always have to be exploited upon key generation and would be visible at the API level and therefore the user of the smartcard. Therefore while it is a viable attack to investigate, we decided to look into methods that would allow all keys to be exported in plain text regardless of whether or not the key was already generated and saved on the card.
 
-\textit{Encrypt, Decrypt, GenerateKeyPair (private key)} and \textit{DestroyObject} functions all exported in plain text the directory of the key file. As we discussed in chapter 6 we thought that this might have provided the ability to open the file and read the key value in plain text. This hypothesises turned out to be incorrect, and instead seemed like the pointers to the cards memory were wrapped in an ASN.1 BER encoding. Decoding them did not give more insight, as a proprietary file directory organization was used. We also discussed that it is plausible that the keys are stored within memory that is only accessible by the smart-cards operating system. Thus, decided to not investigate this possible vulnerability due to the large possibility of not being able to open the files even if the correct directories were located.
+\textit{Encrypt, Decrypt, GenerateKeyPair (private key)} and \textit{DestroyObject} functions all exported in plain text the directory of the key file. As we discussed in chapter 6 (destroyObject analysis) we thought that this might have provided the ability to open the file and read the key value in plain text. This hypothesises turned out to be incorrect, and instead the files stored data wrapped in an ASN.1 BER encoding, that had pointers to locations within the cards memory where the key values are stored securely (non-readable to outside actors).
 
 \textit{Unwrap} function did not provide any major vulnerabilities either. Instead we would like to know exactly how the data field is built, but this cannot be inferred from traces as the command is only ever used within secure messaging. Therefore the data field is encrypted. The reason for wanting to understand how the command works is explained in the next section.
 
 \subsection{Vulnerabilities to investigate}
 
-From studying the traces for the \textbf{\textit{login}} function it was apparent that a challenge-response algorithm has been implemented in an attempt to provide a secure method for transporting the PIN for verifaction by the smart-card without ever revealing its value in plain text (which would be against the PKCS \#11 standard). This is an improvement implementations from other card manufactures whereby they did just send the PIN in plain text over the APDU layer for the smart-card to verify it, leaving an attacker the ability to simply sniff the communication and extract the users PIN number. However the challenge-response algorithm that 'Athena smartcard solutions' have implemented on this card still leaves the potential for an attacker to reverse engineer the protocol, and then brute force the PIN until the same response is calculated to be sent to the card. Doing this would give the attacker the knowledge of the users PIN and also remove the first dependency on the use of the API by an attacker. This is therefore the first attack that we investigate.
+From studying the traces for the \textbf{\textit{login}} function it was apparent that a challenge-response algorithm has been implemented in an attempt to provide a secure method for transporting the PIN for verifaction by the smartcard without ever revealing its value in plain text (which would be against the PKCS \#11 standard). This is an improvement implementations from other card manufactures whereby they did just send the PIN in plain text over the APDU layer for the smartcard to verify it, leaving an attacker the ability to simply sniff the communication and extract the users PIN number. However the challenge-response algorithm that 'Athena smartcard solutions' have implemented on this card still leaves the potential for an attacker to reverse engineer the protocol, and then brute force the PIN until the same response is calculated to be sent to the card. Doing this would give the attacker the knowledge of the users PIN and also remove the first dependency on the use of the API by an attacker. This is therefore the first attack that we investigate.
 
 Furthermore the use of secure messaging to encrypt and also provide an integrity check (that the commands have not been altered in transit) in the form a a message authentication code being appended to the command was found within two functions. These are \textbf{\textit{GenerateKey}} and \textbf{\textit{unwrap}}. Successfully reverse engineering the secure messaging protocol would allow for two objectives to be complete. Firstly within the generateKey function an attacker would be able to implement a man in the middle attack to either alter the key being generated with a value known to the attacker, or simply decrypt the key to find out its value. This would be possible regardless of the attributes set for the key, and therefore would violate the standard to a large extent if the attributes for CKA\_sensitive and CKA\_extractable were set to true and false respectively. As an attacker would be able to be in the knowledge of the block cipher keys generated when the card should be the only system with said knowledge.
 
@@ -782,7 +807,7 @@ The following experiment did not result in finding a match to the response gener
 \textbf{\underline{Search 2 - PBKDF2}}\\
 Following the failure of search 1, but still assuming there is a large possibility of a hash function being used, due to the common practices mentioned in search 1, and the characteristics known so far of the 16 bytes calculated by the API we decided to look at the password-based key derivation function.  
 
-PBKDF2 was created as part of PKCS \#5 by RSA laboratories [?] and is starting to be used for more secure password storage as well as for key derivation. Essentially PBKDF2 takes as input, a password (the PIN), a salt (the 8 byte challenge X), a hash function, and the number of iterative rounds. If the number of iterative round is set to 10, then the salted password would be hashed once, and the output of that would be the input for the next round of hashing. This would be completed 10 times. Literature [?] has shown that the standard for the number of iterative rounds used to be 10,000, back in 2008 (check this date). Now it is suggested to use as many rounds as is computationally feasible by the device. Due to the processing power of a smart-card I assumed that this would not exceed 100,000 rounds, in the case that PBKDF2 was used.
+PBKDF2 was created as part of PKCS \#5 by RSA laboratories [?] and is starting to be used for more secure password storage as well as for key derivation. Essentially PBKDF2 takes as input, a password (the PIN), a salt (the 8 byte challenge X), a hash function, and the number of iterative rounds. If the number of iterative round is set to 10, then the salted password would be hashed once, and the output of that would be the input for the next round of hashing. This would be completed 10 times. Literature [?] has shown that the standard for the number of iterative rounds used to be 10,000, back in 2008 (check this date). Now it is suggested to use as many rounds as is computationally feasible by the device. Due to the processing power of a smartcard I assumed that this would not exceed 100,000 rounds, in the case that PBKDF2 was used.
 
 Hence this search generated experiments that ran through 1 $\rightarrow$ 100,000 rounds of PBKDF2. As the default of PBKDF2 is to truncate the output by taking the first \textit{i} number of bytes, therefore the only truncation method used was 'first\_16' (table 7.3).\\
 
@@ -800,7 +825,7 @@ Again this unfortunately did not result in a match between the 16 byte responses
 %--------------------------------------
 % source is OCRA!!!
 \textbf{\underline{Search 3 - OCRA: OATH Challenge-Response Algorithm}}\\
-With no luck of deducing the challenge-response algorithm, we decided to look into more complex standards that exist and used in different parts of the computing industry for challenge response protocols, rather than password storage techniques. The international engineering task force (IETF) released a paper in 2011 [?]. Section 7.1 of the paper gives a one-way challenge response algorithm which fitted the characteristics of the authentication that takes between the API and the smart-card. We have extracted out the protocol and provided it below:
+With no luck of deducing the challenge-response algorithm, we decided to look into more complex standards that exist and used in different parts of the computing industry for challenge response protocols, rather than password storage techniques. The international engineering task force (IETF) released a paper in 2011 [?]. Section 7.1 of the paper gives a one-way challenge response algorithm which fitted the characteristics of the authentication that takes between the API and the smartcard. We have extracted out the protocol and provided it below:
 
 
 
@@ -848,9 +873,9 @@ where K and C stands for the password (secret key) and is a counter (the challen
 We ran experiments using the 5 hash functions listed in table 7.1, and even inter-changed K and C to have each others values instead. This did not result in finding a matching response to the one the API had calculated.\\
 
 \textbf{\underline{Search 4 - TOTP}}\\
-With the above in mind, I also wanted to rule out the possible use of \textit{time based one time passwords} (see section 3.5.2). TOTP algorithms are rarely used within smartcards due to the complexity of syncing the clocks between the computer and the smart-cards processors, and then also accounting for any lag. Despite the low probability of it being used it was worth checking.
+With the above in mind, I also wanted to rule out the possible use of \textit{time based one time passwords} (see section 3.5.2). TOTP algorithms are rarely used within smartcard's due to the complexity of syncing the clocks between the computer and the smartcards processors, and then also accounting for any lag. Despite the low probability of it being used it was worth checking.
 
-This was completed by halting communication between the smart-card and API using the man-in-the-middle tool (see section 4.2). I did this for upto 2 hours. We were looking for a failed verification, despite having the correct PIN. The failure should have been caused by the delay in the response if TOTP was used. This was not found and therefore ruled out that possibility.
+This was completed by halting communication between the smartcard and API using the man-in-the-middle tool (see section 4.2). I did this for upto 2 hours. We were looking for a failed verification, despite having the correct PIN. The failure should have been caused by the delay in the response if TOTP was used. This was not found and therefore ruled out that possibility.
 
 \subsection{Authentication Protocol Search 3.0 (Triple DES Encryption)}
 
@@ -1013,7 +1038,7 @@ Thus concluding this attack.
 
 \section{Reverse Engineering Secure Messaging}
 
-The second attack we investigate is the reverse engineering of the secure messaging protocol used by the card. As stated within section 2.2, and within public 'Athena smart-card solutions' security policies [?] for several different cards the vendor produces, the secure messaging initialization is used to derive 2 session keys. S$_{Enc}$, S$_{Mac}$ are used to encrypt and compute a message authentication code (MAC) of the messages within a secure messaging session respectively. This provides confidentiality and data integrity of the messages. The decision for how to derive these keys is left entirely upto the card vendor. Which makes this particularly difficult as there are several methods that could be used.
+The second attack we investigate is the reverse engineering of the secure messaging protocol used by the card. As stated within section 2.2, and within public 'Athena smartcard solutions' security policies [?] for several different cards the vendor produces, the secure messaging initialization is used to derive 2 session keys. S$_{Enc}$, S$_{Mac}$ are used to encrypt and compute a message authentication code (MAC) of the messages within a secure messaging session respectively. This provides confidentiality and data integrity of the messages. The decision for how to derive these keys is left entirely upto the card vendor. Which makes this particularly difficult as there are several methods that could be used.
 
 The secure messaging sessions have seen to be used within the \textbf{\textit{GenerateKey}} and \textbf{\textit{Unwrap}} in the analysis conducted within chapter 6. And also seen to be used within \textbf{\textit{CreateObject}} seen in the analysis conducted by an MSC student (place name here) last year [?]. In every case it is used to provide confidentiality of the CKA\_value of block cipher keys. Successfully reverse engineering the secure messaging protocol would allow an attacker to use a man in the middle attack to derive two sets of session keys (one with the API and one with the card) which would allow the correct keys to be sent to the card, but also allow the attacker to decrypt them and find out the value is said keys. This would violate the PKCS \#11 standard if the keys were set to be sensitive and un-extractable. In addition, it would also be an attack whereby the user would be completely unaware it had taken place. This is considerably worse than previously analysed attacks were there is a large possibility of the user finding out, and therefore changing the keys before an attacker is able to utilise them for malicious purposes.
 
@@ -1072,7 +1097,7 @@ Using the information within table 7.9 we now begin finding protocols that would
 \subsection{Protocol search}
 There are three main protocols that would support session keys being derived that would remain a secret between the API and the card. These are: RSA encryption, elliptic curve cofactor diffie hellman (ECCDH) and diffie hellman (DH) [see section 3]. 
 
-Within security policies for 'Athena smartcard solutions' [?] it states that ECCDH is used for some of their smartcards. And that the 32 bytes of random data sent by the card is used to XOR with the shared secret derived from ECCDH to create the 2 session keys. 
+Within security policies for 'Athena smartcard solutions' [?] it states that ECCDH is used for some of their smartcard's. And that the 32 bytes of random data sent by the card is used to XOR with the shared secret derived from ECCDH to create the 2 session keys. 
 
 \textit{[The same documentation stated that the shared secret dervied from ECCDH was 32 bytes in length, and the session keys were 2 x  \textbf{Triple DES (key option 2)} 16 byte keys]}
 
@@ -1121,7 +1146,7 @@ Encryption length of 32 bytes & 128 bytes & 256 bytes\\
 \caption{Number of bytes required for RSA}
 \end{table}
 
-As we can see from table 7.11 the key option of 2048-bit fits the size of the public key perfectly for the smartcards public key \textit{(This is on the basis that the public exponent is set to 5)}. However the encryption of the 32 bytes by the API would result in 256 bytes not 128 bytes. This therefore rules out the possibility that RSA-2048 is used, leaving the other possibility to two RSA-1024 keys. 
+As we can see from table 7.11 the key option of 2048-bit fits the size of the public key perfectly for the smartcard's public key \textit{(This is on the basis that the public exponent is set to 5)}. However the encryption of the 32 bytes by the API would result in 256 bytes not 128 bytes. This therefore rules out the possibility that RSA-2048 is used, leaving the other possibility to two RSA-1024 keys. 
 
 Literature has shown that some manufactures have implemented cards with multiple asymmetric keys, and certain versions of the PKCS \#11 API that the card vendor implements will only use one of them. Thus the first test we ran was editing the first bytes of each 128 bytes to see if one or both of the suspected keys were used. For each test we ran, the secure messaging initialization completed, but then upon the first instance of encrypted communication an APDU error was raided 'error with secure messaging'. Thus we found that both 128 byte keys must be used.
 
@@ -1227,7 +1252,7 @@ $pub_1^{pub_2} \quad mod \quad p$ & \textbf{0} = $0^{private\_api} \quad mod \qu
 \end{tabular}
 \end{table}
 
-As we did not know which 128 bytes was the modulus, and which was the public key of the smart-card we had to complete two experiments setting each of the 128 bytes to be zero to test our hypothesis and also setting the generator to be 0. These two tests can be seen within appendix \textbf{A.3.4} and \textbf{A.3.5}.
+As we did not know which 128 bytes was the modulus, and which was the public key of the smartcard we had to complete two experiments setting each of the 128 bytes to be zero to test our hypothesis and also setting the generator to be 0. These two tests can be seen within appendix \textbf{A.3.4} and \textbf{A.3.5}.
 
 As can be seen the first test caused the API to halt. This suggested that this was the modulus and that by setting it 0 caused OpenSSL to try and create a public key with a modulo value of zero which is not should cause OpenSSL to crash. The second test succeeded!
 
