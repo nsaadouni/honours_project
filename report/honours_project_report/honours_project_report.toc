@@ -33,7 +33,7 @@
 \contentsline {chapter}{\numberline {5}Related Work / Literature Review}{19}
 \contentsline {section}{\numberline {5.1}Manually Overriding Attributes}{19}
 \contentsline {chapter}{\numberline {6}PKCS \#11 Functions - APDU analysis}{21}
-\contentsline {section}{\numberline {6.1}Initialization}{21}
+\contentsline {section}{\numberline {6.1}Initialization}{22}
 \contentsline {section}{\numberline {6.2}C\_login}{22}
 \contentsline {section}{\numberline {6.3}C\_findObject}{23}
 \contentsline {section}{\numberline {6.4}C\_generateKey}{24}
@@ -41,14 +41,14 @@
 \contentsline {section}{\numberline {6.6}C\_destroyObject}{28}
 \contentsline {section}{\numberline {6.7}C\_encrypt}{29}
 \contentsline {section}{\numberline {6.8}C\_decrypt}{30}
-\contentsline {section}{\numberline {6.9}C\_setAttribute}{30}
+\contentsline {section}{\numberline {6.9}C\_setAttribute}{31}
 \contentsline {section}{\numberline {6.10}C\_unwrap}{31}
 \contentsline {section}{\numberline {6.11}C\_wrap}{32}
-\contentsline {chapter}{\numberline {7}Attempts To Attack At the APDU Level}{35}
+\contentsline {chapter}{\numberline {7}Attempts To Attack At the APDU Level (change)}{35}
 \contentsline {section}{\numberline {7.1}Motivations}{35}
 \contentsline {subsection}{\numberline {7.1.1}Vulnerabilities not investigated}{35}
 \contentsline {subsection}{\numberline {7.1.2}Vulnerabilities to investigate}{36}
-\contentsline {section}{\numberline {7.2}Reverse Engineering PIN Authentication Protocol}{37}
+\contentsline {section}{\numberline {7.2}Reverse Engineering PIN Authentication Protocol}{38}
 \contentsline {subsection}{\numberline {7.2.1}Authentication Protocol Search 1.0 (Password Storage)}{40}
 \contentsline {subsection}{\numberline {7.2.2}Authentication Protocol Search 2.0 (One Time Passwords)}{42}
 \contentsline {subsection}{\numberline {7.2.3}Authentication Protocol Search 3.0 (Triple DES Encryption)}{44}

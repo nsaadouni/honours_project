@@ -283,28 +283,36 @@ To test this we created a DES3 key on the card that had the encrypt attribute se
 
 \chapter{PKCS \#11 Functions - APDU analysis}
 
-In this chapter we analyse the APDU traces of 9 functions from the PKCS \#11 API. C\_sign and C\_verify were not included in this analysis as from the traces of the previous work on this card it was clear that both of these functions operated in a similar manner to C\_encrypt and C\_decrypt. C\_create-Object was also omitted from this analysis, because of how similar it operates to generateKey and generateKeyPair. With the only difference is that the key values are provided by the user instead. The analysis will include a step by step guide of how the functions are broken down into command response pairs at the APDU level, and also suggest methods for attacking the card using this knowledge. 
+As discussed in chapter 2, PKCS \#11 API functions are broken down into multiple ISO 7816 command-response pairs via the use of the card vendors middleware \textit{(their implementation of the PKCS \#11 API)}. This implementation is  at the manufacturer's discretion, who may wish to use proprietary commands. The aim of this chapter is to analyse the APDU traces of 9 PKCS \#11 functions, and how the card manufacturer has decided to split them into command-response pairs. 
 
-All of the traces are provided in appendix B, and have been shortened to only include the parts which we deem to be the most important to the evaluation of how each function is broken down into APDU command response pairs. However, the full traces for each function are given within the project directory. In the analysis to come we will refer to appendix B, with the corresponding command response pair in brackets to allow ease of locating the steps we analyse.
+This is because previous literature has shown that some poor implemenations has revealed PIN's and encryption keys at the APDU layer which heavily violate the PKCS \#11 standard. Our analysis will include a step by step guide as to how the functions are broken down into command response pairs at the APDU level.  In addition, the analysis will provide explanations of how the implementation operates and therefore be able to suggest possible vulnerabilities, some of which will be investigated in chapter 7. 
 
-\textit{To prevent repetition within each functions analysis and within the appendix, we list the dependencies (other functions that must be run before hand) at the start of each functions analysis, if it is required. And then omit the dependencies from the appendix and explanation of the given function.}
+All the traces are reported in appendix B. These traces have been shortened to only include the command-response pairs which are deemed to be the most important to the evaluation of a function. However, the full traces for each function are given within the project directory. We will refer to appendix B including the corresponding command response pair which are given in brackets to allow ease of locating the steps throughout our analysis.
+
+\textit{C\_sign} and \textit{C\_verify} are not included in this analysis as earlier work [?] on this card show that both of these functions operate in a similar manner to C\_encrypt and C\_decrypt. \textit{C\_createObject} is also not included in this analysis, because it operates in a similar fashion to \textit{C\_generateKey} and \textit{C\_generateKeyPair}. The only difference is that the key values are provided by the user rather than being computer generated.
+
+To prevent repetition we list the dependencies (other functions that must be run before hand) at the start of each section when necessary.
+
+It is worth stressing that chapter 6 will only provide explanations of the possible vulnerabilities that might be present. We leave all the investigations of them to chapter 7.
+
 
 \section{Initialization}
-The first process before anything can occur on the card is the initialization. This occurs as soon as a session is opened with the card. The process has the following steps:
+
+Initialization is process whereby the smart-card sends 2 serial numbers to the API, in order for the API to have the knowledge of which model of smartcard it is to communicate with. This occurs as soon as a session is opened with the card. The process has the following steps:
 \begin{enumerate}
 \item Open the laser PKI file and select the applet (B.1 - command 1)
-\item Open the file and send to the API the cards serial number (B.1 - command 4,5)
-\item Open a second file and send to the API another serial number (B.1 - command 8,9)
+\item Send to the API the card serial number (B.1 - command 4,5)
+\item Send to the API the 2nd serial number (B.1 - command 8,9)
 \end{enumerate}
 
-None of these traces reveal sensitive information. But is required in order for the card to be able to operate and communicate with the API. The API is a generic library that works with many different hardware security modules created by the 'Athena smartcard solutions'. Hence this information is required by the library in order for it to operate correctly for the specific type of card.
+The trace doesn't reveal sensitive information. These steps are required in order for the card to operate and communicate with the API. The API is a generic library that works with many different hardware security modules created by the 'Athena smartcard solutions'. Hence the serial numbers are required by the library in order for it to operate correctly for the specific type of card.
 
 \section{C\_login}
 
 \textit{Function dependencies $\rightarrow$ [Initialization]}\\
 
 
-The login function has 5 main components. The API locates the file control parameters to check if the retry counter is greater than 0. In the APDU trace this is highlighted in bold and has a value of AA. From there the PIN file is selected, a challenge is asked for by the card and a response is calculated from the knowledge of the PIN and the challenge. Once this is completed the security status of the card is cleared. This is done because every security operation requires a new login by the API. While the user only logs in once, at the APDU layer this occurs many times. These steps are listed below:\\
+The login function has 5 main components (these are listed below). The API locates the file control parameters to check if the retry counter is greater than 0. In the APDU trace this is highlighted in bold and has a value of AA. From there the PIN file is selected, a challenge is asked for by the card and a response is calculated from the knowledge of the PIN and the challenge. Once this is completed the security status of the card is cleared. This is done because every security operation requires a new login by the API. While the user only logs in once, at the APDU layer this occurs many times.\\
 
 \begin{enumerate}
 \item Open file control parameters for the PIN file (B.2 - command 10)
@@ -593,11 +601,12 @@ The data field of unwrap is encrypted, as it is used within secure messaging. Ho
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-\chapter{Attempts To Attack At the APDU Level}
+\chapter{Attempts To Attack At the APDU Level (change)}
 
 In this chapter we explain the motivations, implementation and results of the attacks we attempt as the APDU level. For clarity purposes we first give a brief overview of the API's function analysis at the APDU layer that we conducted within chapter 6. This analysis in combination with previous work completed on the same smart-card and for that matter other smart-cards as well, drove the motivations behind the attacks we selected to conduct.
 
 \section{Motivations}
+List a table of all attacks, tick and cross them, then go on to explain them in the following two sub sections.
 \subsection{Vulnerabilities not investigated}
 The \textit{initialization} function did not present any vulnerabilities that would be able to be exploited and was just needed in order for the API to correctly operate.
 
