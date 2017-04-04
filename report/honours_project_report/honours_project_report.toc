@@ -46,16 +46,16 @@
 \contentsline {section}{\numberline {6.11}C\_wrap}{34}
 \contentsline {chapter}{\numberline {7}Attempts To Attack At the APDU Level (change)}{37}
 \contentsline {section}{\numberline {7.1}Motivations}{37}
-\contentsline {subsection}{\numberline {7.1.1}Vulnerabilities not investigated}{37}
-\contentsline {subsection}{\numberline {7.1.2}Vulnerabilities to investigate}{38}
-\contentsline {section}{\numberline {7.2}Reverse Engineering PIN Authentication Protocol}{39}
-\contentsline {subsection}{\numberline {7.2.1}Authentication Protocol Search 1.0 (Password Storage)}{42}
-\contentsline {subsection}{\numberline {7.2.2}Authentication Protocol Search 2.0 (One Time Passwords)}{44}
-\contentsline {subsection}{\numberline {7.2.3}Authentication Protocol Search 3.0 (Triple DES Encryption)}{46}
-\contentsline {section}{\numberline {7.3}Reverse Engineering Secure Messaging}{50}
-\contentsline {subsection}{\numberline {7.3.1}Raw byte analysis of the data fields}{52}
-\contentsline {subsection}{\numberline {7.3.2}Protocol search}{53}
-\contentsline {subsection}{\numberline {7.3.3}Man in the middle attack - Diffie Hellman Key Agreement Protocol}{57}
+\contentsline {subsection}{\numberline {7.1.1}Vulnerabilities not investigated}{38}
+\contentsline {subsection}{\numberline {7.1.2}Vulnerabilities to investigate}{39}
+\contentsline {section}{\numberline {7.2}Reverse Engineering PIN Authentication Protocol}{40}
+\contentsline {subsection}{\numberline {7.2.1}Authentication Protocol Search 1.0 (Password Storage)}{43}
+\contentsline {subsection}{\numberline {7.2.2}Authentication Protocol Search 2.0 (One Time Passwords)}{45}
+\contentsline {subsection}{\numberline {7.2.3}Authentication Protocol Search 3.0 (Triple DES Encryption)}{47}
+\contentsline {section}{\numberline {7.3}Reverse Engineering Secure Messaging}{51}
+\contentsline {subsection}{\numberline {7.3.1}Raw byte analysis of the data fields}{53}
+\contentsline {subsection}{\numberline {7.3.2}Protocol search}{54}
+\contentsline {subsection}{\numberline {7.3.3}Man in the middle attack - Diffie Hellman Key Agreement Protocol}{58}
 \contentsline {chapter}{\numberline {8}Conclusion / Results}{61}
 \contentsline {chapter}{\numberline {9}Future work}{63}
 \contentsline {chapter}{Bibliography}{65}
