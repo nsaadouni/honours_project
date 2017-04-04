@@ -575,12 +575,12 @@ Thus, despite the vulnerability being present it does not appear to cause a majo
 
 
 \section{C\_unwrap}
-\textit{[For this trace we used an RSA public key to encrypt a tripe DES key value = 12345678. With its encryption saved, we created a template and used the RSA private key to unwrap the key value and template, to save the key on the card]}
+\textit{[For this trace we used an RSA public key to encrypt a triple DES key value = 12345678. With its encryption saved, we then create a template for the key attributes and used the RSA private key to unwrap the key value and template, to save the key on the card]}
 
 \textit{Function dependencies $\rightarrow$ [Initialization, Login, FindObjects, Encrypt]}\\
 
 
-There are 10 main components involved in the unwrapping of a key. 2 different secure messaging sessions are used (just like in the generateKey function). These first secure messaging session is used to unwrap the encrypted key into a temporary file. The second secure messaging session is used to save that key into a key file. This comes after the attribute file has been created in between these two. The order of the commands are listed below:\\
+There are 10 main components involved in the unwrapping of a key. 2 different secure messaging sessions are used (just like in the generateKey function). The first secure messaging session is used to unwrap the encrypted key into a temporary file. The second secure messaging session is used to save the triple DES key into a key file. This follows after the attribute file has been created in between these 2 secure messaging sessions. The order of the components are listed below:\\
 
 \begin{enumerate}
 \item Open secure messaging (B.10 - command 92, 93, 94)
@@ -595,16 +595,16 @@ There are 10 main components involved in the unwrapping of a key. 2 different se
 \item Close secure messaging (B.10 - command 127)\\
 \end{enumerate}
 
-In a scenario were we are not already in the knowledge of the key value, the secure messaging sessions are the main vulnerability we would wish to try and exploit here. While the key is not exported at the APDU layer in plain text. Successfully reverse engineering the secure messaging protocol, would allow an attacker to exploit it, inject his own session keys and decrypt the key value. This was mentioned in the generateKey function analysis.
+In a scenario where we are not already in the knowledge of the key value, the secure messaging sessions are the main vulnerability that we will aim to try and exploit. While the key is not exported at the APDU layer in plain text. Successfully reverse engineering the secure messaging protocol, would allow an attacker to exploit it. This can be achieved by injecting our own session keys and decrypt the key value. This was discussed in analysis of the generateKey function.
 
 
-Furthermore an attacker could also modify the attributes on the fly. But as discussed within the generatKey function analysis, this attack would make the user aware of the fact that the key has been exported and that attributes have been changed. And thus is deemed not to be as bad as a vulnerability compared to one that would expose the key in plain text at the APDU layer without the users knowledge.
+Furthermore, an attacker can also modify the attributes as the key is saved within the card for the first time. But as discussed in the generatKey function analysis, this attack would make the user aware of the fact that the key has been exported and the attributes have been changed. This cannot be deemed as serious a vulnerability compared to one that would expose the key in plain text at the APDU layer without the user's knowledge. These possible vulnerabilities are discussed further in chapter 7.
 
 
 \section{C\_wrap}
-The Tookan attack was mentioned within the literature review. It is an attack at the API level whereby one key can be given wrapping and decryption functionalities within its attributes. This allowed for any key (no matter the attributes) to be wrapped, exported out of the card, and then decrypted by the same key, and have its key value in plain text. This vulnerability bypassed all controls that the attributes of a key should provide. Due to this vulnerability discovery, we assume that 'Athena smartcard solutions' decided to remove the ability to wrap keys completely. This assumption came from that fact that requesting any key to wrap another key at the API level caused an error: \textit{CKR\_Function\_Not\_Supported}.
+As discussed in section [?] of the literature, the wrap/decrypt attack is carried out at the API level whereby one key can be given wrapping and decryption functionalities within its attributes. This allows for any key (regardless of the attributes) to be wrapped, exported out of the card, and then decrypted by the same key. This would reveal its key value in plain text. This vulnerability bypassed all controls that the attributes of a key are expected to provide. Due to this vulnerability discovery, it is reasonable to assume that 'Athena smartcard solutions' decided to remove the ability to wrap keys completely in an attempt to prevent this type of attack. This reasoning is based on the fact that requesting any key to wrap another key at the API level causes an error: \textit{CKR\_Function\_Not\_Supported}.
 
-From analysing table 2.1 (section 2.24), we noticed a correlation between the P1 and P2 parameters for the APDU commands for encryption, decryption and unwrapping. These values are the following:
+From the analysis of table 2.1 (see section 2.2.4), we find a correlation between the P1 and P2 parameters for the APDU commands for encryption, decryption and unwrapping. These values are tabulated below:
 
 \begin{table}[H]
 \begin{tabular}{|c|c|l|}
@@ -614,14 +614,14 @@ P1 & P2 & Command\\
 82 & 05 & encrypt\\
 80 & 05 & decrypt\\
 80 & 0A & unwrap\\
+? & ? & wrap\\
 \hline
 \end{tabular}
 \end{table}
 
-The CLA and and INS bytes are identical for all of the above commands. 
+\textit{The CLA and INS bytes are identical for all of the above commands.} 
 
-Using the fact that for encrypt and decrypt P2 remains the same and only P1 alters from '80' to '82', then we inferred that is the wrap command was still supported at the APDU layer then the command would have values for P1 = \textbf{82} and P2 = \textbf{0A}. Therefore an example full command would be:\\
-\textbf{00 2a 82 0a L Data 00}. Were L is the length of the data, and the data is the key to be wrapped. 
+Given the fact that for encrypt and decrypt, P2 remains the same and only P1 alters from '82' to '80', we infer that if the wrap command still exists at the APDU layer, then the values for P1 and P2 would be \textbf{82} and \textbf{0A} respectively. Therefore, an example full command would be: \textbf{00 2a 82 0a L Data 00}. Were L is the length of the data, and the data is the key to be wrapped. 
 
 We ran a simple test to see if this command operates on the card:
 \begin{enumerate}
@@ -629,9 +629,9 @@ We ran a simple test to see if this command operates on the card:
 \end{enumerate}
 
 
-The result of the test was an APDU level error. '6A 80', meaning the parameters within the data field are incorrect. Suggesting that the command does exist and most likely corresponds to the wrap function.
+The result of the test shows an error at the APDU level. The error value was '6A 80', meaning the parameters within the data field are incorrect. This suggests that the command does exist and most likely corresponds to the wrap function.
 
-The data field of unwrap is encrypted, as it is used within secure messaging. However if this was reversed engineered and we could understand the data field of the unwrap command, there is a high probability that we would be able to create the correct data field for the wrap command. This would allow us to bypass all attribute controls of keys at the API level, and implement the Tookan attack at the APDU level. Which in turn would all all keys on the card to be exported out of the card in plain text, which would be a serious violation of the PKCS \#11 standard.
+The data field of unwrap is encrypted, as it is used within secure messaging. However if this was reversed engineered and we are able to understand the data field of the unwrap command, it will be highly likely that we would be able to create the correct data field for the wrap command. This would allow us to bypass all attribute controls of keys at the API level, and implement the wrap/decrypt attack at the APDU level. This in turn would allow all keys on the card to be exported out of the card in plain text. This would be a serious violation of the PKCS \#11 standard.
 
 
 
@@ -665,7 +665,7 @@ From studying the traces for the \textbf{\textit{login}} function it was apparen
 
 Furthermore the use of secure messaging to encrypt and also provide an integrity check (that the commands have not been altered in transit) in the form a a message authentication code being appended to the command was found within two functions. These are \textbf{\textit{GenerateKey}} and \textbf{\textit{unwrap}}. Successfully reverse engineering the secure messaging protocol would allow for two objectives to be complete. Firstly within the generateKey function an attacker would be able to implement a man in the middle attack to either alter the key being generated with a value known to the attacker, or simply decrypt the key to find out its value. This would be possible regardless of the attributes set for the key, and therefore would violate the standard to a large extent if the attributes for CKA\_sensitive and CKA\_extractable were set to true and false respectively. As an attacker would be able to be in the knowledge of the block cipher keys generated when the card should be the only system with said knowledge.
 
-Secondly is the understanding behind how the \textbf{\textit{Unwrap}} APDU command operates. As stated in section 6.11, despite the API removing the ability to use the \textbf{\textit{Wrap}} functionality (most likely due the Tookan attack discovery [?]), with a high probability the APDU command still exists as we managed to send what we believe to be the correct command and received back an error stating the data field parameters were incorrect. Therefore reverse engineering the secure messaging protocol would allow us to fully understand the \textbf{\textit{Unwrap}} command data field, and possibly then be able to generate the correct command for wrapping a key. If this is possible, then the Tookan attack could be implemented at the APDU level, bypassing all attribute controls and exporting any/ all keys that are stored within the card. This would be considered a serious vulnerability.
+Secondly is the understanding behind how the \textbf{\textit{Unwrap}} APDU command operates. As stated in section 6.11, despite the API removing the ability to use the \textbf{\textit{Wrap}} functionality (most likely due the wrap/decrypt attack discovery [?]), with a high probability the APDU command still exists as we managed to send what we believe to be the correct command and received back an error stating the data field parameters were incorrect. Therefore reverse engineering the secure messaging protocol would allow us to fully understand the \textbf{\textit{Unwrap}} command data field, and possibly then be able to generate the correct command for wrapping a key. If this is possible, then the wrap/decrypt attack could be implemented at the APDU level, bypassing all attribute controls and exporting any/ all keys that are stored within the card. This would be considered a serious vulnerability.
 
 All the vulnerabilities stated within this section are also all to be implemented at the APDU layer and would not provide the user the knowledge the attack is in process. This is the main reasoning behind selecting these vulnerabilities to investigate, and the fact they are far more serious compared to the others mentioned, in terms of violations of the PKCS \#11 API.
 
@@ -1046,7 +1046,7 @@ The second attack we investigate is the reverse engineering of the secure messag
 
 The secure messaging sessions have seen to be used within the \textbf{\textit{GenerateKey}} and \textbf{\textit{Unwrap}} in the analysis conducted within chapter 6. And also seen to be used within \textbf{\textit{CreateObject}} seen in the analysis conducted by an MSC student (place name here) last year [?]. In every case it is used to provide confidentiality of the CKA\_value of block cipher keys. Successfully reverse engineering the secure messaging protocol would allow an attacker to use a man in the middle attack to derive two sets of session keys (one with the API and one with the card) which would allow the correct keys to be sent to the card, but also allow the attacker to decrypt them and find out the value is said keys. This would violate the PKCS \#11 standard if the keys were set to be sensitive and un-extractable. In addition, it would also be an attack whereby the user would be completely unaware it had taken place. This is considerably worse than previously analysed attacks were there is a large possibility of the user finding out, and therefore changing the keys before an attacker is able to utilise them for malicious purposes.
 
-We also hope to be able to learn how the \textbf{\textit{unwrap}} command data field is built and then build the correct command for \textbf{\textit{wrap}} at the APDU level. This should be able to be completed by decrypting the data field of the unwarp command when used via the API. With this knowledge it should be possible to implement the Tookan attack [?] at the APDU level, and will therefore allow the exporting of all keys including RSA private keys which are generated on the card and thought to be securely stored.
+We also hope to be able to learn how the \textbf{\textit{unwrap}} command data field is built and then build the correct command for \textbf{\textit{wrap}} at the APDU level. This should be able to be completed by decrypting the data field of the unwarp command when used via the API. With this knowledge it should be possible to implement the wrap/decrypt attack [?] at the APDU level, and will therefore allow the exporting of all keys including RSA private keys which are generated on the card and thought to be securely stored.
 
 To begin with we use the API to call the function \textbf{\textit{GenerateKey}}, as we know that secure messaging is utilised within this function. This gives us an overview of how the secure messaging protocol works. Below is a diagram that visually shows what exactly occurs at the APDU level. (The actual APDU commands are stored within appendix A.3.1)
 
@@ -1275,7 +1275,7 @@ This shall summarise the whole report and my findings in regard to low-level vul
 \item Complete the reverse engineering secure messaging
 \item Decrypt and understand the unwrap command
 \item Test and get the wrap command to work (hopefully)
-\item Implement the Tookan attack at the APDU level.
+\item Implement the wrap/decrypt attack at the APDU level.
 
 \item Try using 'reallocate binary' and/or 'delete file' then 'create file' (must be done with caution! could brick card) to alter the retry counter for logging in. (Then a successful login trace is not required!)
 \end{enumerate}
