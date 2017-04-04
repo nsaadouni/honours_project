@@ -526,48 +526,52 @@ Thus we did not find any security vulnerabilities from this function. And also e
 
 \textit{Function dependencies $\rightarrow$ [Initialization, Login, FindObjects]}\\
 
-The commands given for this trace are actually repeated and therefore occur twice for one encrpytion of a given string. This is due to PKCS \#11 library being programmed in C by the card manufactures. The resulting length of the encryption is thought to be of an undetermined size. (For block ciphers and even RSA this can be pre-calculated given the input length) However the implementation runs the encryption twice, the first run is to calculate the resulting length of the encryption, and the second run will save the result in a buffer that has been pre-allocated the correct number of bytes in a char array.
+The commands given for this trace are actually repeated and therefore occur twice for one encrpytion of a given string. This is due to PKCS \#11 library being programmed in C by the card's manufacturer. The resulting length of the encryption is assumed to be of an undetermined size (for block ciphers and even RSA this can be pre-calculated given the input length). However the implementation runs the encryption twice, the first run is to calculate the resulting length of the encryption, and the second run saves the result in a buffer that has been pre-allocated the correct number of bytes in a char array.
 
-This function only has two main components to it, these are listed below:\\
+This function only has only 2 main components (these are listed below).\\
 
 \begin{enumerate}
 \item Select key file (B.7 - command 52)
 \item Encrypt data (B.7 - command 53)\\
 \end{enumerate}
 
-The key file is selected and then the encryption APDU command is called with the string in the data field. As stated in destroyObject function analysis, despite the key file location being revealed here. It is not a file that can be opened nor reveals the value of the key. Instead is a pointer to other locations in memory that hold the key value. We assume that only the operating system has access to these locations but are unable to verify this hypothesis.
+The key file is selected and then the encryption APDU command is called with the string in the data field. As explained in destroyObject function analysis, despite the key file location being revealed here, it does not present a vulnerability. The key file can neither be opened nor reveal the value of the key. Instead it provides pointers to other locations in the smartcard's memory that hold the key value securely. It is reasonable to assume (though unable to test or verify) that only the smartcard's operating system has access to these locations.
 
-Due to this we see no other vulnerabilities that could be exploited.
+Therefore we find no evidence of other vulnerabilities that can be exploited.
 
 \section{C\_decrypt}
 \textit{[For this trace we use the same triple DES key to decrypt the message we previously encrypted]}
 
 \textit{Function dependencies $\rightarrow$ [Initialization, Login, FindObjects]}\\
 
-The decrypt function operates nearly an identical manner to the encrypt function, just simply changes one byte (P1 in the APDU command header) in command 65. The key is loaded and then the decrypt APDU command is sent, with the encrypted string placed in the data field. For the same reasons stated in the encrypt function, the APDU command is sent twice. We omit this repetition. The commands are listed below:\\
+The decrypt function operates nearly in an identical manner to the encrypt function. The only difference is that it simply changes one byte (P1 in the APDU command header) in command 65. The key is loaded and then the decrypt APDU command is sent, with the encrypted string placed in the data field. For the same reasons stated in the encrypt function, the APDU command is sent twice. 
+
+It also has 2 main components (these are listed below).\\
 
 \begin{enumerate}
 \item Select key file (B.8 - command 64)
 \item Decrypt data (B.8 - command 65)\\
 \end{enumerate}
 
-As the decrypt function operates so similarly to the encrypt function, we saw no vulnerabilities present here as well. However we did notice the implementation flaw that had been picked up within previous work. For some reason the first 8 bytes are removed from the encrypted data. This therefore only decrypts and returns the second 8 bytes. As this does not present a security vulnerability, and rather is an issue with the functionality of the decrypt function, we do not analyse it any further.
+As the decrypt function operates in a similar fashion to the encrypt function, we find no vulnerabilities here either. However we did find a similar implementation flaw that has been reported in earlier work [?] regarding decryption using an AES block cipher key in ECB mode. For an unknown reason the first 8 bytes are removed from the encrypted data. This only decrypts and returns the second 8 bytes. As this does not present a security vulnerability, but it is rather an issue with the functionality of the decrypt function. Therefore for this reason we do not analyse it any further.
 
 \section{C\_setAttribute}
 \textit{[For this trace we modify the label of the triple DES key from 'des3' to 'changed']}
 
 \textit{Function dependencies $\rightarrow$ [Initialization, Login, FindObjects]}\\
 
-There were only 2 main components for this function, similarly to encrypt and decrypt. The first one selected the attribute file, and the following 2 commands update the whole file to include the new name of the label to the key. Command chaining [?] was used as the number of bytes within the attribute file exceeded the limit of 256. Command chaining is indicated by the use of '90' instead of '80' as the CLA byte. The commands are listed below:\\
+Similar to encrypt and decrypt, this function has only 2 main components. The first one selects the attribute file, and the following 2 commands update the whole file to include the new name of the label to the key. The components are listed below:\\
 
 \begin{enumerate}
 \item Select key attribute file (B.9 - command 51)
-\item Modify attribute file with the changed in the label name (B.9 - commands 52,53)\\
+\item Modify attribute file to change the label name from 'des3' to  'changed' (B.9 - commands 52,53)\\
 \end{enumerate}
 
-Here we notice that at the APDU level attributes can be changed as long as a user is logged in. (We have not tested doing this without being logged in, but might be possible) This is a vulnerability that was discovered in previous work. With the main focus on changing the attribute values of CKA\_sensitive and CKA\_extractable from false to true. The change in this direction is forbidden by the PKCS \#11 API, however this can be conducted at the APDU layer. As stated in the literature review, this had been carried out and due to the split between attribute files and key value files, there was no noticeable difference. Despite those attributes being set to True, the key value could still not be revealed.
+Command chaining (see section 2.2) was used as the number of bytes within the attribute file exceeded the limit of 256. Command chaining is indicated by the use of '90' instead of '80' as the CLA byte. This was seen in the 'REALLOCATE BINARY' command that was used to modify the attribute file.
 
-Thus, despite the vulnerability being present it does not cause a major security issue, in the sense that the key value is still stored securely.
+We notice that at the APDU layer attributes can be changed  via the 'REALLOCATE BINARY' command. This is a vulnerability that was discovered and tested in previous work [?]. With the main focus on changing the attribute values of CKA\_sensitive and CKA\_extractable from true to false and false to true respectively. The change in this direction is not permitted by the PKCS \#11 standard. However, this was conducted at the APDU layer. The tests carried out in the literature found that due to the split between attribute files and key value files, the key value could still not be extracted despite the modification to the attributes.
+
+Thus, despite the vulnerability being present it does not appear to cause a major security issue, in the sense that the key value is still stored securely. We discuss this further in chapter 7.
 
 
 \section{C\_unwrap}
