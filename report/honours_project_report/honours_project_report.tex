@@ -333,22 +333,27 @@ The evaluation of multiple traces of the login function shows that the response 
 No immediate sensitive information is revealed in this trace, due to the use of the challenge-response algorithm used for verifying a user's PIN. However, if an attacker can successfully reverse engineer the challenge-response protocol, the PIN can be calculated given 1 successful login trace. Furthermore, if an attacker can find a method for changing the file control parameters, they might be able to reset the retry counter at the APDU level to allow an unlimited number of attempts of logging in. These possible vulnerabilities will be discussed in detail in chapter 7.
 
 \section{C\_findObject}
-\textit{[For this trace to show meaningful information we pre-loaded a triple des key onto the card. The label of the key was 'des3' with id '01']}
+\textit{[For this trace to show meaningful information we have generated and stored a triple DES key onto the card, before running the findObject function. The label of the key was 'des3' with id '01']}
 
 \textit{Function dependencies $\rightarrow$ [Initialization, Login]}\\
 
 
-The findObjects function is split into 3 main components. First a cmapfile is accessed. This file stores the location of key attribute files. Following this attribute files are accessed; They store all the information regarding a specific keys attributes (listed in section 2.1.2). And finally the last file is opened. This file is zeroized, which dictates that no more attribute files for keys are present on the card. These steps are listed below:\\
+The findObjects function is split into 3 main components. (These are listed below).
 
 \begin{enumerate}
 \item Select and open 'cmapfile' [List files command]. This stores all file locations for attributes of the keys (B.3 - command 32, 33, 34)
-\item Based on those locations, find and open the attribute file for the des3 key (B.3 - command 36)
-\item And also open the last attribute file to determine there are no more keys (B.3 - command 38, 39)\\
+\item Using the data from 'cmapfile', Open the first attribute key file (B.3 - command 36)
+\item Open the next attribute key file. (Which is empty) (B.3 - command 38, 39)\\
 \end{enumerate}
 
-Due to key and attribute files being stored separately, this function call reveals no sensitive information. Only the attributes are opened and listed at the APDU layer. These attributes can be printed at the API layer as well.
 
-A possibility for an attack is present here. The ISO 7816 proprietary 'REALLOCATE BINARY' command can be used to modify a file. This will allow modification of attributes. As mentioned in the literature review, previous work on the same card was undertaken and modified the attributes of CKA\_sensitive \& CKA\_extractable from false to true. The change in this direction is forbidden by the API. However the ability for changing these at the APDU level was achieved. It still yielded no significant results, as keys and attribute are stored in separate files. And the keys could still not be loaded. Thus, we investigate this no further.
+First, a cmapfile is accessed. This file stores the location of key attribute files. Following this, attribute files are accessed. The attribute files store all the information regarding a specific keys attributes (listed in section 2.1.2). Finally the next (and last) file is opened. In the case more than one key was stored on the card at the time of running this function the next file would contain the attributes of the next key. However, since there is only 1 key, the next file is empty (containing all zero's) thus determining there are no more key objects to be found.
+
+Due to key and attribute files being stored separately, this function call reveals no sensitive information. This finding was reported by (name) 2015 [?] and is stated within our literature review. Only the attributes are opened and listed at the APDU layer. These attributes can be printed at the API layer as well.
+
+A possibility for an attack is present here. The ISO 7816 proprietary 'REALLOCATE BINARY' and the inter-industry 'UPDATE BINARY' commands can be used to modify a file. This will allow modification of attributes. 
+
+As reported in the literature review, the work by (name) 2015 [?] on the same card shows that they were able to modify any attributes. They tested the modification of CKA\_sensitive \& CKA\_extractable from false to true. The change in this direction is not permitted by the PKCS \#11 standard. However the ability to change these at the APDU level was achieved. This approach still yielded no significant results, as keys and attribute are stored in separate files, thus the keys could still not be loaded. This is discussed in chapter 7.
 
 \section{C\_generateKey}
 \textit{[For this trace we generate a triple DES key, key length of 24 bytes.]}
