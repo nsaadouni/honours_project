@@ -312,21 +312,26 @@ The trace doesn't reveal sensitive information. These steps are required in orde
 \textit{Function dependencies $\rightarrow$ [Initialization]}\\
 
 
-The login function has 5 main components (these are listed below). The API locates the file control parameters to check if the retry counter is greater than 0. In the APDU trace this is highlighted in bold and has a value of AA. From there the PIN file is selected, a challenge is asked for by the card and a response is calculated from the knowledge of the PIN and the challenge. Once this is completed the security status of the card is cleared. This is done because every security operation requires a new login by the API. While the user only logs in once, at the APDU layer this occurs many times.\\
+The login function has 5 main components (these are listed below). 
 
 \begin{enumerate}
-\item Open file control parameters for the PIN file (B.2 - command 10)
-\item Open the PIN file (B.2 command 11)
-\item Request challenge from card (B.2 - command 12)
-\item Verify PIN (B.2 - command 13)
+\item Open file control parameters for file X$_1$ (B.2 - command 10)
+\item Select file X$_2$ (B.2 command 11)
+\item Request challenge from the card (B.2 - command 12)
+\item Use the proprietary VERIFY command for verification of PIN value (B.2 - command 13)
 \item Clear security Status (B.2 - command 20)\\
 \end{enumerate}
 
-From evaluating multiple traces of the login, it is clear that the response calculated seems to have an element of randomness. From studying the traces alone, the method of calculating the response cannot be intuitively determined.
+The API requests to view the file control parameters for file X$_1$. The file location as stated within the trace is at '3F 00 00  20 00'. This holds the retry counter value, which dictates how many attempts are left before the card is blocked \textit{(A value of 'A0' states the card is currently in a blocked status)}. To make it easier to locate within the trace we have highlighted the current value in bold which is of 'AA', meaning there is 10 attempts left.
 
-While no immediate sensitive information is revealed in this trace as the challenge-response algorithm used for verifying a users PIN hides its value, successfully reverse engineering the protocol will allow an attacker to calculate the users PIN given successful login trace.
+Following this check, file X$_2$ is selected. We assume that this file holds a pointer to EEPROM memory where the PIN is securely stored by the smartcard. This file cannot be accessed with the inter-industry command 'READ BINARY' nor the proprietary command 'READ FILE CONTROL PARAMETERS'. However if this file is not selected PIN verification fails despite having the correct PIN value. This finding was reported by (enter name) last year [?].
 
-Furthermore, if an attacker can find a method for changing the file control parameter, it might be possible to reset the retry counter at the APDU level to allow an unlimited number of attempts of logging in.
+After file X$_2$ has been selected, the API requests the smartcard to send an 8 byte challenge. Upon receiving said challenge, the API then responds with a 16 bytes of data for PIN verification using the proprietary 'VERIFY' command. Assuming the correct PIN has been supplied the user is now authenticated with the card, and the last step clears the security status.
+
+The evaluation of multiple traces of the login function shows that the response calculated appears to have an element of randomness. From studying the traces alone, the method of calculating the value of the response, given the PIN and the smartcards challenge, cannot be intuitively determined.
+
+No immediate sensitive information is revealed in this trace, due to the use of the challenge-response algorithm used for verifying a user's PIN. However, if an attacker can successfully reverse engineer the challenge-response protocol, the PIN can be calculated given 1 successful login trace. Furthermore, if an attacker can find a method for changing the file control parameters, they might be able to reset the retry counter at the APDU level to allow an unlimited number of attempts of logging in. These possible vulnerabilities will be discussed in detail in chapter 7.
+
 \section{C\_findObject}
 \textit{[For this trace to show meaningful information we pre-loaded a triple des key onto the card. The label of the key was 'des3' with id '01']}
 
