@@ -688,7 +688,7 @@ Secondly is the understanding behind how the \textbf{\textit{Unwrap}} APDU comma
 All of the vulnerabilities discussed within this section are to be implemented at the APDU layer and would not provide the user the knowledge that an attack is taking place. This is the main reasoning behind selecting these vulnerabilities for further investigation, and the fact they are far more serious compared to the vulnerabilities discussed earlier, in terms of violations of the PKCS \#11 API. Furthermore the attacks suggested for further investigation also remove the dependencies on the use of the API, which will allow an attacker to send commands at the APDU layer independently. This gives an attacker a higher capability.
 
 \section{Reverse Engineering PIN Authentication Protocol}
-The first attack we investigate is the reverse engineering of the PIN authentication protocol. If this is successful an attacker will be able to brute force and/ or use a dictionary attack to calculate the users PIN. It shall also remove one dependency on the use of the API. As of right now the API is required to login into the smartcard as we are unaware of how the challenge-response algorithm is implemented. Figure 7.1 shows the procedure for logging into the smartcard at the APDU level.
+The first attack we investigate is the reverse engineering of the PIN authentication protocol. If this is successful, an attacker will be able to brute force and/ or use a dictionary attack to calculate the users PIN. The attack shall also remove one dependency on the use of the API. At this stage the API is required to login into the smartcard as we are unaware of how the challenge-response algorithm is implemented. Figure 7.1 shows the procedure for logging into the smartcard at the APDU level.
 
 % IMAGE: challenge-response pin authentication
 \begin{figure}[H]
@@ -700,17 +700,17 @@ The first attack we investigate is the reverse engineering of the PIN authentica
 \caption{Challenge Response Procedures}
 \end{figure}
 
-The API requests (via a 'GET CHALLENGE' command) the smartcard to generate and send back 8 random bytes. The API then calculates a 16 byte response based upon the knowledge of the challenge (8 random bytes) and the users PIN. The 16 byte response is sent to the smartcard (via a 'VERIFY' command), which will return one of two possible outcomes:
+The API requests (via a 'GET CHALLENGE' command) the smartcard to generate and send back 8 random bytes. Based upon the knowledge of the challenge (8 random bytes) and the user's PIN, the API then calculates the 16 byte response. The 16 byte response is sent to the smartcard (via a 'VERIFY' command), which returns one of two possible outcomes:
 \begin{enumerate}
-\item '90 00' $\rightarrow$ Verification of users PIN succeeded
-\item '63 CX' $\rightarrow$ Verification of users PIN failed. (X = number of attempts left before the card is blocked)\\
+\item '90 00' $\rightarrow$ Verification of user's PIN succeeded
+\item '63 CX' $\rightarrow$ Verification of user's PIN failed. (X = number of attempts left before the card is blocked)\\
 \end{enumerate}
 
-The following sections give explanations of the searches that we conducted to try and reverse-engineer the protocol showed above. To give a full understanding of how challenging this part of the project was, we will explain the combinations of possibilities we checked, and the reasoning behind each of them. These will be split up into different 'searches', and increment in terms of new findings and understanding of how the protocol may be implemented.
+The following sections provide explanations of the searches that we have conducted in trying to reverse-engineer the protocol shown above. To give a good understanding of how challenging this part of the project is, we will explain the combinations of different possibilities that we have tested, and the reasoning behind each of them. These are divided into different 'searches', with the findings of each 'search' being incorporated into the next one.
 
-To aid these explanations, we introduce here 3 key sub-functionalities that most of the conducted searches use. Table 7.1 lists all the hash functions (see section 3.1) that were used, and provides the output length in bits \& bytes. Those hash functions were all supported by openSSL and the smartcard. Table 7.2 provides the names of the bitwise logical operations that were used to 'join' two bytes together. And table 7.3 provides the description of truncation methods used to reduce the output size of a search down to 16 bytes to match the response provided by the API. \\
+To facilitate these explanations, we first introduce here 3 sub-functionalities that have been used throughout the majority of our searches. Table 7.1 lists all of the hash functions (see section 3.1 of chapter 3) that are used. The table also provides the output length in bits \& bytes. These hash functions are all supported by openSSL and the smartcard. Table 7.2 provides the names of the bitwise logical operations that are used to 'join' two bytes together. Table 7.3 provides the description of truncation methods that are used to reduce the output size of a search down to 16 bytes to match the response provided by the API. \\
 
-From here on, in the explanation of the searches I will just refer to \textbf{\textit{hash}}, \textbf{\textit{join}} \& \textbf{\textit{truncate}} which will suggest that all of the elements in the tables have been iterated over and preformed on. For example \textbf{\textit{truncate(hash('example'))}}, means the string, 'example', is to be hashed with all the functions in table 7.1, and then truncated to 16 bytes using all the methods listed in table 7.3.\\
+In the explanation of the searches, I will just refer to \textbf{\textit{hash}}, \textbf{\textit{join}} \& \textbf{\textit{truncate}} which will suggest that all of the elements in the tables 7.1, 7,2 and 7.3 have been iterated over and preformed on. For example, \textbf{\textit{truncate(hash('example'))}}, means the string, 'example', is to be hashed with all the functions in table 7.1, and then truncated to 16 bytes using all the methods listed in table 7.3.\\
 
 
 % TABLE: Hash functions
@@ -767,7 +767,7 @@ mod\_16 & Truncates the output by taking modulus $2^{128}$ [We use 128 because t
 \caption{Truncation Methods}
 \end{table}
 
-Before any searches could be conducted, the first task was to extract the values of the 8 byte challenge (denoted X), and the 16 byte response (denoted Y), from a communication trace of C\_login. Table 7.4 provides the values for the PIN, X and Y in hexadecimal format.\\
+Before conducting any searches, we need to carry out the first task which is to extract the values of the 8 byte challenge (denoted X), and the 16 byte response (denoted Y), from a communication trace of C\_login. Table 7.4 reports the values for the PIN, X and Y in hexadecimal format.\\
 
  
 % TABLE: PIN, X, Y
@@ -788,7 +788,7 @@ X & N/A & 68 F1 E4 92 85 36 39 A3\\
 \caption{}
 \end{table}
 
-In the very first original experiments, we made assumptions that the PIN number was only numerical characters, only had 4-8 digits and if the PIN was less than 8 characters, it was padded using a special character to form 8 bytes. Some of these assumptions turned out to be false, and thus the elementary experiments were all flawed from the beginning. I have not included a description of those experiments in the following sections, as many of them were in fact very similar to those explained below, just with different assumptions of the PIN. They also used a PIN for the card that was '12345', and hence there was an exponential explosion in the number of experiments for a particular search, due to needing to test for different padding schemes and characters. Hence why in these following experiments the PIN had been set to '0000000000000000' (16 zeros, no need for padding). We found that 16 characters was the upper limit to what a user can set the PIN to be by changing the PIN and incrementing its length until the API returned an error.
+In the very original experiments, we have assumed that the PIN number was only numerical characters, had 4-8 digits and if the PIN was less than 8 characters, it was padded using a special character to form 8 bytes. Our tests show that none of these assumptions hold. Thus our preliminary experiments are flawed and do not provide any meaningful results that are worth reporting. It is for this reason that we have not included a description of these experiments. In addition many of these experiments are in fact similar to those ones that are to be explained below, but with different assumptions of the PIN. These experiments also use a PIN for the card that was '12345', and hence there was an exponential explosion in the number of experiments for a particular search, due to the need to testing for different padding schemes and characters. This provides justifications as to why in the following experiments the PIN had been set to '0000000000000000' (16 zeros, no need for padding). We found that 16 characters was the upper limit to what a user can set the PIN to be by changing the PIN and incrementing its length until the API returned an error.
 
 
 \subsection{Authentication Protocol Search 1.0 (Password Storage)}
@@ -801,10 +801,10 @@ Assumptions:
 \end{itemize}
 
 %--------------------------------------
-\textbf{\underline{Search 1 - Hash functions}}\\
-In this initial stages we thought that there is a large possibility that the 16 byte response was generated by hashing a combination of the PIN and the 8 byte challenge. This was partly due to common practices used in industry whereby users passwords are often hashed, and in most cases salted (see section 3.1), before storing them in databases. This practice is more secure than storing plain text passwords, as if an attacker were to gain access to the back end databases storing said passwords, the password itself would not be available to see. For authenticating a user on a website the password is just hashed (and salted, if a salt is used), and then compared against to the stored value. 
+\textbf{\underline{Search 1.1 - Hash functions}}\\
+In the early stage of this project we were of the opinion that there is a high chance that the 16 byte response is generated by hashing a combination of the PIN and the 8 byte challenge. This is partly due to common practices that are used by the industry whereby users passwords are often hashed, and in most cases salted (see section 3.1), before storing them in databases. This practice is more secure than storing plain text passwords. If an attacker were to gain access to the back end databases  where passwords are stored, these passwords would not be available to in plain text. For authenticating a user on a website, the password is just hashed (and salted, if a salt is used), and then compared against to the stored value (correct password hashed) within the database. 
 
-The fact that from multiple traces the 16 byte response seemed to be uniformly random, it supported this hypothesis. Thus the first search that we completed focused on the fact that a hash function was used to produce the 16 byte response. Below we have listed the methods tested in experiments to generate 16 bytes, given X and the PIN.
+The fact that from multiple traces the 16 byte response seemed to be uniformly random, this provides support to our hypothesis that the PIN is hashed to provide the 16 byte response. Thus, our first completed search has focused on the use of different hash functions. Below we list the methods we have tested in our experiments to generate 16 bytes, given X and the PIN.
 
 \textit{[We denote $\|$ as the concatenation function. Thus for two strings 'string1 ' $\|$ 'string2' = 'string1 string2']}\\
 
@@ -818,34 +818,34 @@ The fact that from multiple traces the 16 byte response seemed to be uniformly r
 \item truncate(hash(join(pin, square(X))))
 \end{itemize}
 
-\textit{[The methods should be read from the most inner brackets, outward. Therefore this means that the first method dictates that X is first hashed using one of the hash functions listed in the table 7.1. The output of that is then truncated to 16 bytes using one of the functions from table 7.3. All iterations of the functions in the tables were tested.]}
+\textit{[The methods should be read from the most inner brackets, outward. Therefore, this means that the first method dictates that X is first hashed using one of the hash functions listed in table 7.1. The output is then truncated to 16 bytes using one of the functions from table 7.3. All iterations of the functions in the tables were tested.]}
 
-The following experiment did not result in finding a match to the response generated by the API. Thus we moved onto search 2.\\
+This experiment did not result in finding a match to the response generated by the API. Thus, we move onto our search 1.2.\\
 
 
 %--------------------------------------
-\textbf{\underline{Search 2 - PBKDF2}}\\
-Following the failure of search 1, but still assuming there is a large possibility of a hash function being used, due to the common practices mentioned in search 1, and the characteristics known so far of the 16 bytes calculated by the API we decided to look at the password-based key derivation function.  
+\textbf{\underline{Search 1.2 - PBKDF2}}\\
+Following the failure of search 1, but still assuming there is a high chance of a hash function being used, due to the common practices discussed under search 1, and the characteristics known so far of the 16 bytes as calculated by the API, we have decided to test the password-based key derivation function.  
 
-PBKDF2 was created as part of PKCS \#5 by RSA laboratories [?] and is starting to be used for more secure password storage as well as for key derivation. Essentially PBKDF2 takes as input, a password (the PIN), a salt (the 8 byte challenge X), a hash function, and the number of iterative rounds. If the number of iterative round is set to 10, then the salted password would be hashed once, and the output of that would be the input for the next round of hashing. This would be completed 10 times. Literature [?] has shown that the standard for the number of iterative rounds used to be 10,000, back in 2008 (check this date). Now it is suggested to use as many rounds as is computationally feasible by the device. Due to the processing power of a smartcard I assumed that this would not exceed 100,000 rounds, in the case that PBKDF2 was used.
+PBKDF2 has been created as part of PKCS \#5 by RSA laboratories [?] and more recently is being used for more secure password storage as well as for key derivation. Essentially PBKDF2 takes as input, a password (the PIN), a salt (the 8 byte challenge X), a hash function, and the number of iterative rounds. If the number of iterative round is set to 10, then the salted password would be hashed once, and the output of that would be the input for the next round of hashing. This would be completed 10 times. The evidence reported in the literature [?] in 2008 (check date) has shown that the standard for the number of iterative rounds used to be 10,000. The literature also suggests the use of as many rounds as is computationally feasible by any device. Due to the processing power of a smartcard, we assume that the number of iterative rounds does not exceed 100,000 rounds.
 
-Hence this search generated experiments that ran through 1 $\rightarrow$ 100,000 rounds of PBKDF2. As the default of PBKDF2 is to truncate the output by taking the first \textit{i} number of bytes, therefore the only truncation method used was 'first\_16' (table 7.3).\\
+Search 2 generates experiments that ran through 1 $\rightarrow$ 100,000 rounds of PBKDF2. As the default of PBKDF2 is to truncate the output by taking the first \textit{i} number of bytes, therefore the only truncation method used is 'first\_16' (see table 7.3).\\
 
 \underline{\textbf{Methods tested that produced a 16 byte output using X and the PIN}}
 \begin{itemize}
-\item PBKDF2( hash\_function, PIN, X, number\_of\_rounds)
+\item 16 byte response = PBKDF2( hash\_function, PIN, X, number\_of\_rounds)
 \end{itemize}
 
-This generated 100,000 experiments per hash function. With 5 hash functions, this resulted in half a million tests being run. Due to the sheer computational power required for this search I decided to parallelize the search based on the hash function, and run them on separate cores of a server. Even by improving the efficiency of this search, it still took 2 weeks to conduct.
+The above experiment has generated 100,000 different tests per hash function. With 5 hash functions, this hash resulted in half a million tests being run. Due to the substantial computational power required for this search, we have decided to parallelize the search based on the hash function, and run them on separate cores of a server. Despite the significant improvement of the efficiency of this search, the search still undertook 2 weeks to conduct.
 
-Again this unfortunately did not result in a match between the 16 byte responses calculated and Y (the API's response). Hence we move onto search 3.
+Unfortunately, this did not result in a match between the 16 byte responses calculated and Y (the API's response). Therefore, we move onto the search 2.1.
 
 \subsection{Authentication Protocol Search 2.0 (One Time Passwords)}
 
 %--------------------------------------
 % source is OCRA!!!
-\textbf{\underline{Search 3 - OCRA: OATH Challenge-Response Algorithm}}\\
-With no luck of deducing the challenge-response algorithm, we decided to look into more complex standards that exist and used in different parts of the computing industry for challenge response protocols, rather than password storage techniques. The international engineering task force (IETF) released a paper in 2011 [?]. Section 7.1 of the paper gives a one-way challenge response algorithm which fitted the characteristics of the authentication that takes between the API and the smartcard. We have extracted out the protocol and provided it below:
+\textbf{\underline{Search 2.1 - OCRA: OATH Challenge-Response Algorithm}}\\
+With no success in deducing the challenge-response algorithm, we have decided to examine more complex standards that already exist and are used in different sectors of the computing industry for challenge response protocols, rather than password storage techniques. The international engineering task force (IETF) released a paper in 2011 [?]. This paper provides details of a one-way challenge response algorithm which fitted the characteristics of the authentication that takes place between the API and the smartcard. We have extracted the protocol and provided it below:
 
 
 
@@ -880,33 +880,35 @@ With no luck of deducing the challenge-response algorithm, we decided to look in
 
       S - Session information, optional.
 
-      T - Timestamp, optional.\\\\\\
+      T - Timestamp, optional.
+      
+      (source) [?]\\\\\\
             
 \end{Verbatim}
 
 
-In the previous section of the paper they explain that OCRA in the instance of this protcol stands for a generic variable to state which form of HOTP is to be used. HOTP (see section 3.5.1 of this paper) can take on different formula's due to using different hash functions. The generic formula is:\\
+The paper also explains that 'OCRA' (in the instance of this protcol) stands for a generic variable to state which form of HOTP is to be used. HOTP (see section 3.5.1 of this paper) can take on different formula's due to using different hash functions. The generic formula is:\\
 $$HOTP(K,C) = Truncate(HMAC(K,C)) \quad \&\& \quad 0x7FFFFFFF$$
 
 where K and C stands for the password (secret key) and is a counter (the challenge) respectively.
 
-We ran experiments using the 5 hash functions listed in table 7.1, and even inter-changed K and C to have each others values instead. This did not result in finding a matching response to the one the API had calculated.\\
+We ran experiments using the 5 hash functions listed in table 7.1, and even inter-changed K and C using each others values. This did not result in finding a matching response to the one the API has calculated.\\
 
-\textbf{\underline{Search 4 - TOTP}}\\
-With the above in mind, I also wanted to rule out the possible use of \textit{time based one time passwords} (see section 3.5.2). TOTP algorithms are rarely used within smartcard's due to the complexity of syncing the clocks between the computer and the smartcards processors, and then also accounting for any lag. Despite the low probability of it being used it was worth checking.
+\textbf{\underline{Search 2.2 - TOTP}}\\
+Following search 2.1, we thought it would be appropriate to rule out the possible use of \textit{time based one time passwords} (see section 3.5.2). TOTP algorithms are rarely used within smartcard's due to the complexity of syncing the clocks between the computer and the smartcards processors, and then also accounting for any lag. Despite the low chance of TOTP being used it was worth testing.
 
-This was completed by halting communication between the smartcard and API using the man-in-the-middle tool (see section 4.2). I did this for upto 2 hours. We were looking for a failed verification, despite having the correct PIN. The failure should have been caused by the delay in the response if TOTP was used. This was not found and therefore ruled out that possibility.
+This was completed by halting communication between the smartcard and API using the man-in-the-middle tool (see section 4.2). We halted the communication for upto 2 hours. Our primary objective is to look for a failed verification, despite having the correct PIN. The failure should have been caused by the delay in the response if TOTP is used. This was not found to be the case and therefore we ruled out as a possibility that TOTP is used.
 
 \subsection{Authentication Protocol Search 3.0 (Triple DES Encryption)}
 
-With none of the above searches concluding any useful results, and instead just ruling out them as possibilities we moved onto checking an assumption that we were not 100\% sure was accurate. This would have been done earlier, however it had taken a while to get the code for the man in the middle attack to be operational, and was required for this. The assumption in question was, that \textit{for a given challenge and PIN, the API will calculate only 1 corresponding response}. 
+With none of the above searches yielding a match to the API calculated response, we decided to focus on verifying the 4th assumption (given the PIN and challenge the API only calculates 1 response) made at the beginning of section 7.2.1. Our preference is to have carried out this test at an earlier stage. This was not possible as it took longer to make the code for the man in the middle attack (which is required for this task) operational. 
 
-To verify this assumption we used the man in the middle tool to inject our own challenge (that the card normally sends) and set it to '00 00 00 00 00 00 00 00'. Completing this multiple times, we noticed that this assumption was in-fact wrong. Over multiple attempts we saw different responses being calculated by the API, despite the PIN and the challenge being the same. However we also noticed that logins with quick successions of one an other had the same value for the response when the same PIN and challenge were present, and in some cases only the last 8 bytes changed with the first 8 bytes remaining the same.
+To verify this assumption we have used the man in the middle tool to inject our own challenge (that the card normally sends) and set it to '00 00 00 00 00 00 00 00'. Completing this several times, we have found that this assumption does not hold. Following these multiple attempts, we have found different responses being calculated by the API, despite the fact that the PIN and the challenge remain the same. We have also found that logins with quick successions of one an other had the same value for the response when the same PIN and challenge were present, and in some cases only the last 8 bytes have changed with the first 8 bytes remaining the same.
 
-Due to these observations we decided to run multiple experiments to find characteristics of the 16 bytes response \textit{(which we now believe to be split into two 8 byte parts)}. We did this by logging into the card twice each time, and altering the three parameters \textit{(one at a time)} that we determined to cause the response to alter. The parameters we alter are \textbf{\textit{time, PIN}} and the \textbf{\textit{challenge}}. The results of the experiments are tabulated below:
+Because of these findings we have decided to run multiple experiments to find characteristics of the 16 bytes response \textit{(which we now believe to be split into two 8 byte parts)}. We have done this by logging into the card twice, and altering the three parameters \textit{(one at a time)} that we have found to cause the response to alter. The parameters we alter are \textbf{\textit{time, PIN}} and the \textbf{\textit{challenge}}. The results of the experiments are in table 7.5.
 
 % Table up bitch
-\textit{[To make the explanation of this clearer we have placed the actual traces of these experiments within \textbf{appendix A}. And use variable names for the two 8 byte sections of the 16 byte response. These are denoted below as A and B]}
+\textit{[For further clarification, we have placed the actual traces of these experiments within \textbf{appendix A}. We use variable names for the two 8 byte sections of the 16 byte response. These are denoted below as A and B]}
 
 \begin{tabular}{|l|c|c|}
 \hline
@@ -933,9 +935,9 @@ Same & Different & Different & $\chi$ & $\chi$ & A.1.5\\
 \caption{Multiple logins with different parameters}
 \end{table}
 
-Table 7.5 shows that changing the second the separate logins occur within, or changing the PIN causes the whole 16 bytes to alter. If both login attempts are within the same second, and the same PIN and challenge are given to the API then the exact same 16 byte response is calculated. However the most interesting characteristic discovered within these experiments is when the logins occur within the same second, with the same PIN but different challenge. This causes the first 8 bytes to remain the same, but the second 8 bytes to differ, within the 16 byte response. 
+Table 7.5 shows that changing the time by 1 second between the two seperate logins, or changing the PIN causes the whole 16 bytes to alter. If both login attempts are within the same second, and the same PIN and challenge are given to the API then the exact same 16 byte response is calculated. The most interesting characteristic we have found within these experiments arises when the logins occur within the same second, with the same PIN but with different challenges. This causes the first 8 bytes of the responses of the two logins to be identical, but the second 8 bytes to differ.
 
-This is the characteristic that provides the evidence to support our theory that the 16 byte response is in-fact split into to 8 byte sections. This also shows that that the second 8 bytes is a function that utilises the challenge. As a different challenge causes it to change. Based on these facts we assume the following:\\
+These characteristics provide evidence to support the fact that the 16 byte response is in-fact split into two 8 byte sections. The first 8 bytes (denoted A) appears to be a nonce (random number) generated by the API. This nonce changes each second, and thus we assume a random number generator is used within the API and is seeded with time. This also shows that the second 8 bytes (denoted B) is most likely to be a function that utilises the challenge. As a different challenge causes it to change. Based on these facts we hypothesise the following:\\
 
 \begin{enumerate}
 \item The first 8 bytes is a random number $N_A$ = Nonce API, which is seeded with time (in seconds)
@@ -963,16 +965,16 @@ Triple DES  \textit{(key option 3)} & 24 & 8\\
 \end{tabular}
 \end{table}
 
-The use of the block cipher AES is ruled out as a possibility as if it was used the characteristic that we found would not be present. A change to the challenge, within the same second and given the same PIN would result in a different encryption of both 8 bytes because AES would operate over the entire 16 byte block. This leaves only DES and triple DES as a viable option. 
+The use of the block cipher AES is ruled out as a possibility. As if it were used the characteristic whereby the second 8 bytes (denoted B) alters between two separate logins within the same second, using the same PIN but with different challenges, would not be present. In this scenario the use of AES would alter the entire 16 bytes due to the block cipher operating on a block size of 16  bytes. This leaves only DES and triple DES as a viable option. 
 
-We eliminated the possibility of standard DES being used due to its key size. It would not make logical sense to use a function of the password and then truncate it down to 8 bytes from 16 bytes. This would drop the security of the login from 256 bits to 128 bits for no reason, as other options are available.
+We have been able to eliminate the possibility of the standard DES being used due to its key size. It would not be logical to use a function of the password and then truncate it down to 8 bytes from 16 bytes. This would result in the security of the login to drop from 256 bits to 128 bits for no apparent reason, as other options are available.
 
-This therefore only left us with triple DES key options 2 and 3. With the fact in mind that the PIN for the user is of maximum length 16 bytes we decided to focus on key option 2 which has 16 byte password. There is a possibility that the password is hashed for example and 24 bytes are used with key option 3, but we decided to first test key option 2 before moving onto 3 in the case that 2 fails.
+Therefore, this leaves us with triple DES key options 2 and 3. Given the fact that the PIN for the user is of maximum length 16 bytes, we have decided to focus on key option 2 which has 16 byte password. It is a possible that the password is hashed for example and 24 bytes are used with key option 3, but we have decided to first test key option 2 before testing 3 in the case that 2 fails.
 
-Due to the assumption that the second 8 bytes is a verification (possible join, or hashing) of both the cards challenge and $N_A$, then we could not simply just decrypt the 16 byte response and analyse it. As both number could be completely unknown to us, therefore we would have no method of verifying we have the correct protocol. To mitigate this we decided to get 2 different responses, within the same second and with the same challenge, but using different PIN's. If the password to the block cipher is in-fact a function of the PIN, then the correct decryption of both responses with different passwords should evaluate to the same 16 bytes. This is how we will verify if we have found the correct protocol.\\
+Based on the assumption that the second 8 bytes is a verification (possible join, or hashing) of both the cards challenge and $N_A$, then we cannot simply just decrypt the 16 byte response and analyse it. As both numbers (A \& B) could be completely unknown. Therefore, we would have no method of verifying whether we have the correct protocol. To mitigate this we decided to obtain 2 different responses, within the same second, with the same challenge, but using different PINs. In the case the hypothesised protocol is used and the password to the block cipher is in-fact a function of the PIN, then the correct decryption of both responses with different passwords should be identical. This is the approach we have followed to verify our hypothesis.\\
 
-\textbf{\underline{Search 5 - Triple DES \textit{(Key option 2)}-ECB}}\\
-Table 7.6 shows the data for two logins that occurred within the same second, with the same challenge (that we injected), but using two different PINs. We then generate 6 different possible passwords for the encryption using the PIN. The first is simply the PIN in ascii format at 16 bytes (all zeros). The following 5 are the PIN hashed with the hash functions in table 7.1, and truncated only using the first\_16 truncation method within table 7.3. Using the generated passwords we decrypt the 16 byte responses using triple DES key option 2, and list the results in table 7.7.
+\textbf{\underline{Search 3.1 - Triple DES \textit{(Key option 2)}-ECB}}\\
+Table 7.6 reports the data for two logins that have occurred within the same second, with the same challenge (that we injected), but using two different PINs. We then generate 6 different possible passwords for the encryption using the PIN. The first is simply the PIN in ascii format at 16 bytes (all zeros). The following 5 are the PIN hashed with the hash functions that are reported in table 7.1, and truncated using only 'first\_16' truncation method in table 7.3. Using the generated passwords we decrypt the 16 byte responses using triple DES key option 2, and the results are reported in table 7.7.
 
 \begin{table}[H]
 \begin{tabular}{|l|l|}
@@ -1018,10 +1020,10 @@ SHA512(PIN$_2$)& 2 & 1C202A831098546D 8EF674B4A0B0D7AD \\
 \caption{\textit{Decryption Results}}
 \end{table}
 
-The results are interesting. While we did not find an exact match of the entire responses when decrypting both of them, we did find a match for the first 8 bytes. This suggests we have found the correct formatting of the PIN, but the wrong decryption methodology. A change in the second 8 bytes suggest cipher block chaining is used. Hence we move onto search 6.\\
+The results are interesting. While we do not find an exact match of the entire responses when decrypting both of them, we do find a match for the first 8 bytes. This suggests that we have found the correct protocol and formatting of the PIN, but the wrong decryption methodology. A change in the second 8 bytes suggests that cipher block chaining is used. Next we move onto search 3.2.\\
 
-\textbf{\underline{Search 6 - Triple DES \textit{(Key option 2)}-CBC}}\\
-Triple DES block cipher using cipher block chaining (CBC) requires an initialization vector (IV) to be used (see section 3.3). The IV is 8 bytes in length. Common practice is to send this in plain text along with the encryption of a message. However it is quite clear that this does not occur. The only other possibility is that the card and the API already have agreed upon a value to use, and always use this same value. The most common practice is too use an IV = 00 00 00 00 00 00 00 00. Despite it being a bad an insecure practice, this still does occur. Hence, in the following experiment we only test the pin method for SHA1(PIN$_{1,2}$) and decrypt the corresponding responses using triple DES-CBC with an IV of zeros.
+\textbf{\underline{Search 3.2 - Triple DES \textit{(Key option 2)}-CBC}}\\
+Triple DES block cipher using cipher block chaining (CBC) requires an initialization vector (IV) to be used (see section 3.3, chapter 3). The IV is 8 bytes in length. It is Common practice is to send this in plain text along with the encryption of a message. It is evident from our results that this is not the case. The only other possibility is that the card and the API already have agreed upon a value to use, and always use this same value. The most common practice is to use an IV = 00 00 00 00 00 00 00 00. Despite it being a an insecure practice, this still does occur. Hence, in the following experiment we only test the pin method for SHA1(PIN$_{1,2}$) and decrypt the corresponding responses using triple DES-CBC with an IV of zeros.
 
 
 \begin{table}[H]
@@ -1036,9 +1038,9 @@ SHA1(PIN) & 2 & FE5DBEA8ECAB2F86 0000000000000001\\
 \caption{Decryption Results}
 \end{table}
 
-Table 7.8 lists shows the results of both decryption's. The result is better than what we had originally assumed. The second 8 bytes, which we thought would have been a verification number (join or hash) (showing knowledge of both nonces), is in fact just the cards challenge. This almost completes our attack. As now we can produce a 16 byte response, given the cards challenge, the PIN and a nonce to place at the start of the message to encrypt.
+Table 7.8 reports the results of both decryptions. The results show the second 8 bytes, which we thought would have been a verification number (join or hash) (showing knowledge of both nonces), is in fact just the smartcard's challenge. The is better than what we had expected in our hypothesis. This almost completes our attack. As now we can produce a 16 byte response, given the cards challenge, the PIN and a nonce to place at the start of the message to encrypt.
 
-The issue is we are not sure if we can just place any 8 byte nonce at the start of message to be encrypted. As the API might be expecting some sort of counter, and might refuse invalid values. Hence we conduct the final stage of this attack to test if we can place any value there, and hence will have fully reversed engineered the PIN authentication protocol.
+Now our main issue is that we are not sure if we can just place any 8 byte nonce at the start of the message to be encrypted. This is because the API might be expecting a counter value, and might refuse invalid values. Hence we conduct the final stage of this attack to test if we can place any value for N$_A$, and hence will have fully reversed engineered the PIN authentication protocol.
 
 To sum up so far this is the protocol we believe to be in place:
 \begin{itemize}
@@ -1051,7 +1053,7 @@ $$ Encrypt(N_a || N_c) $$
 \item were \textbf{N$_a$} is a nonce determined by the API.
 \end{itemize}
 
-We set N$_a$ to equal 00 00 00 00 00 00 00 00 00 00, calculate what we believe to be a valid response and send it the the API. This experiment is shown within appendix A.2. The result of it is an APDU response of '90 00', successful login!
+We set N$_a$ to equal 00 00 00 00 00 00 00 00 00 00, calculate what we believe to be a valid response and send it the the API. This experiment is reported in appendix A.2. The result of the experiment is an APDU response of '90 00', successful login, with our injected response.
 
 Thus concluding this attack.
 

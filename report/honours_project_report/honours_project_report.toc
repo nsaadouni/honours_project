@@ -52,7 +52,7 @@
 \contentsline {subsection}{\numberline {7.2.1}Authentication Protocol Search 1.0 (Password Storage)}{43}
 \contentsline {subsection}{\numberline {7.2.2}Authentication Protocol Search 2.0 (One Time Passwords)}{45}
 \contentsline {subsection}{\numberline {7.2.3}Authentication Protocol Search 3.0 (Triple DES Encryption)}{47}
-\contentsline {section}{\numberline {7.3}Reverse Engineering Secure Messaging}{51}
+\contentsline {section}{\numberline {7.3}Reverse Engineering Secure Messaging}{52}
 \contentsline {subsection}{\numberline {7.3.1}Raw byte analysis of the data fields}{53}
 \contentsline {subsection}{\numberline {7.3.2}Protocol search}{54}
 \contentsline {subsection}{\numberline {7.3.3}Man in the middle attack - Diffie Hellman Key Agreement Protocol}{58}
