@@ -660,9 +660,9 @@ Reverse engineering PIN authentication protocol & C\_Login & \checked\\
 \hline
 Reverse engineering secure messaging protocol & C\_generateKey, C\_unwrap & \checked\\
 \hline
-Wrap/Decrypt attack at the APDU layer & - & \checked\\
+Wrap/Decrypt attack at the APDU layer & - & future work\\
 \hline
-Modifying the retry counter & C\_login & \checked\\
+Modifying the retry counter & C\_login & future work\\
 \hline
 \end{tabular}
 \end{table}
@@ -671,7 +671,7 @@ The \textit{initialization} function does not reveal any vulnerabilities that ca
 
 We have highlighted in the \textit{Login} function analysis that it might be possible to use either 'REALLOCATE BINARY' or 'DELETE FILE' and 'CREATE FILE' in order to modify the retry counter. The aim of this would be to allow an unlimited number of attempts at guessing the user's PIN. We argue that is it not advisable to focus on this attack as it would not be particularly useful without the knowledge of the challenge-response algorithm that is used to verify the user's PIN.
 
-The vulnerability discussed in the \textit{FindObject} function analysis presents the possibility to locate the attribute files at the APDU level, and modify them using 'REALLOCATE BINARY'. The two attributes that have the most significance would be CKA\_extractable and CKA\_sensitive. Previous work [?] has analysed this vulnerability and the findings did not reveal any significant security concerns. This was due to the fact that once the attributes had been set as part of the key generation process, the attribute file and the key file are separated and thus prevent the key from being exposed in plain text. Since this attack had already been investigated we did not feel that it would be appropriate to investigate it any further.
+The vulnerability discussed in the \textit{FindObject} function analysis presents the possibility to locate the attribute files at the APDU level, and modify them using 'REALLOCATE BINARY'. The two attributes that have the most significance would be CKA\_extractable and CKA\_sensitive. Previous work [?] has analysed this vulnerability and the findings did not reveal any significant security concerns. This was due to the fact that once the attributes had been set as part of the key generation process, the attribute file and the key file are separated and thus prevent the key from being exposed in plain text. Since this attack had already been investigated we did not feel that it would be appropriate to investigate it any further at this stage and leave it to future work.
 
 \textit{GenerateKey} and \textit{GenerateKeyPair} function analysis both suggest a vulnerability whereby attributes can be modified as the attribute file is being created for the first time. This leaves the possibility of the key value being exposed at the API layer. This effectively could result in the card being instructed to generate the key with the attributes the attacker sets. Setting the key attributes to have CKA\_sensitive set to false and CKA\_extractable set to true, will allow for key value exposure at the API level. This vulnerability would always have to be exploited upon key generation and would be visible to the user of the smartcard. Although this might be a viable attack to investigate, we have decided that it would be better to look into methods that would allow all keys to be exported in plain text regardless of whether the key was already generated and saved on the card without informing the user.
 
@@ -1292,7 +1292,7 @@ With the shared secret from the diffie hellman key agreement protocol now set to
 \underline{\textbf{Experiment 1}}\\
 We selected a particular secure messaging session to run an experiment to find the result of the first step listed above. The secure messaging session that we analyse is the first session that the \textit{generateKey} function creates. Within the session the only encrypted communication is the ISO 7816 command 'GET CHALLENGE'. This is particularly useful as the command has an empty data field. This means that the S$_{Enc}$ key derived from secure messaging initialization is not utilised. Thus, this allows us to modify parts of the 32 byte challenge to eliminate the bytes that are used for S$_{Enc}$ key derivation, leaving us with the knowledge of which bytes are used for both session keys.
 
-The experiment consists of two tests. Both of the tests implement the above man in the middle attack setting on the diffie hellman protocol to set the shared secret value to 0. Test 1 sets the first 16 bytes of the 32 bytes the card sends to 0. Test 2 sets the second 16 bytes to 0.
+The experiment consists of two tests. Both of the tests implement the above man in the middle attack on the diffie hellman protocol to set the shared secret value to 0. Test 1 sets the first 16 bytes of the 32 bytes the card sends to 0. Test 2 sets the second 16 bytes to 0.
 
 \begin{table}[H]
 \begin{tabular}{|l|c|c|c|}
@@ -1309,17 +1309,17 @@ Test 2 & '69 88' & $\chi$ & A.3.7\\
 
 The results reported within table 7.14 prove that the second 16 bytes of the 32 bytes sent from that smartcard are used in the derivation of S$_{Mac}$. We therefore make the logical step in assuming that the first 16 bytes are used for the derivation of S$_{Enc}$.
 
-\underline{\textbf{Experiment 2}}\\
+\underline{\textbf{Experiment 2  (Final Experiment)}}\\
 The second step is more challenging. In order to be able to test whether or not a certain key derivation function is the one used for generating the S$_{Enc}$ and S$_{Mac}$ secure messaging session keys, we need to do the following:
 \begin{enumerate}
-\item Obtain the knowledge of the encrpyted and unencrypted command4
+\item Obtain the knowledge of the encrpyted and unencrypted command
 \item Obtain the knowledge of how to build the encrypted command
-\item Build the encrypted command with keys we generate from a certain key derivation function \textbf{KDF} (using both the shared secret and the 32 bytes from the smartcard)
-\item Test keys with different block ciphers
+\item Generate session keys S$_{Enc}$, S$_{Mac}$ using the shared secret (0), the 32 bytes from the card and a key derviation function \textbf{KDF}.
+\item Build the encrypted command with keys we generate, and different block ciphers.
 \item Compare the encrypted command generate by the API to the command we generate. If they match we have found the KDF, and block cipher.
 \end{enumerate}
 
-The first step is simple, we already know the ISO 7816 inter-industry 'GET CHALLENGE' command. We have seen this within the reverse engineering of the pin authentication protocol and is also in table 2.1 (chapter 2). And we have traces of the encrypted version of the command. (The commands reported below are for generating 24 bytes (24 = '18' hexadecimal)
+The first step is simple, we already know the ISO 7816 inter-industry 'GET CHALLENGE' command. We have seen this within the reverse engineering of the pin authentication protocol and is also in table 2.1 (chapter 2). And we have traces of the encrypted version of the command. (The commands reported below are for generating 24 bytes (24 = '18' hexadecimal) using 'GET CHALLENGE' ISO 7816 command)
 
 \begin{table}[H]
 \hskip-1.5cm\begin{tabular}{|l|p{10cm}|}
@@ -1329,11 +1329,12 @@ The first step is simple, we already know the ISO 7816 inter-industry 'GET CHALL
 'GET CHALLENGE' encrypted & 0C 84 00 00 0D \textbf{97 01} 18 \textbf{8E 08} 1C 0B 23 9F 34 B7 29 FD \textbf{00}\\
 \hline
 \end{tabular}
+\caption{Secure Messaging Command Comparison}
 \end{table}
 
 From reviewing multiple traces of different secure messaging sessions we found that the highlighted bytes are constants for commands with empty data fields. For commands with data fields another 2 bytes are found to be constant which are '87' and  '01'. It appears that control bytes are placed structurally throughout the encrypted command in order to separate the encrypted data field and the CMAC checksum. 
 
-After this finding we decided to review the GlobalPlatform 2.2.1 [?] standard which provides explanations for secure channel protocols, to hopefully find meaning behind these control bytes and how to replicate the bytes following them that are not part of the checksum nor encrypted data field. Unfortunatly it did not provide these explanations. Thus we decided to search through more of the 'Athena smartcard solutions' security polices. One security policy was found to mention the possible use of diffie hellman. This is the first occurrence we had seen of this. Reviewing the references of that security policy lead to a paper published by \textit{International Civil Aviation Organization} [?]. The paper is aimed at explaining machine readable travel documents and their implementation. It included how to build the commands and responses for secure messaging sessions which matched the traces we had reviewed from our smartcard. The diagrams reported are taken from the paper.
+After this finding we decided to review the GlobalPlatform 2.2.1 [?] standard which provides explanations for secure channel protocols, to hopefully find meaning behind these control bytes and how to replicate the bytes following them that are not part of the checksum nor encrypted data field. Unfortunatly it did not provide these explanations. Thus we decided to search through more of the 'Athena smartcard solutions' security polices. One security policy [?] was found to mention the possible use of diffie hellman. This is the first occurrence we had seen of this. Reviewing the references of that security policy lead to a paper published by \textit{International Civil Aviation Organization} [?]. The paper is aimed at explaining machine readable travel documents and their implementation. It included how to build the commands and responses for secure messaging sessions which matched the traces we had reviewed from our smartcard. The diagrams reported are taken from the paper.
 
 
 % IMAGE: SM command
@@ -1356,6 +1357,60 @@ After this finding we decided to review the GlobalPlatform 2.2.1 [?] standard wh
 \caption{How to build APDU response's within secure messaging}
 \end{figure}
 
+The paper also suggests that only triple DES or AES block ciphers are used within secure messaging. Using the knowledge from the traces we have of the smartcard we analyse, we can now deduce with that the checksum (CMAC) is of length 8 bytes. This therefore rules out the possibility of the use of AES, and only leaves triple DES. Triple DES has 3 key options. We reported earlier that the first 16 bytes of the cards 32 byte challenge is used for deriving S$_{Enc}$, and the second 16 bytes for S$_{Mac}$. Considering it is 16 bytes, and not 8 nor 24, we make the assumption that key option 2 for triple DES is used for secure messaging.
+
+\begin{table}[H]
+\begin{tabular}{|l|l|l|c|}
+\hline
+Block Cipher & Key size & Block Size & Used in Secure Messaging\\
+\hline
+AES & 16 & 16 & $\chi$\\
+\hline
+DES \textit{(key option 1)} & 8 & 8 & $\chi$\\
+\hline
+\textbf{DES \textit{(key option 2)}} & \textbf{16} & \textbf{8} & \checked\\
+\hline
+DES \textit{(key option 3)} & 24 & 8 & $\chi$\\
+\hline
+\end{tabular}
+\end{table}
+
+Based on this knowledge we now can build the encrypted command for 'GET CHALLENGE' with different generated keys, using DES3 (key option 2) separately. The only part left to do is to generate session keys using different key derivation functions. Unfortunately due to time constraints we have not been able to complete this part of the experiment and therefore the reverse engineering of the secure messaging protocol. We will however explain the key derivation functions (KDF) we think should be tested, and how to conduct the tests.
+
+The first step in the experiment is to generate session keys using the 32 byte challenge from the card and the shared secret from the diffie hellman protocol. We report these two values below in table .
+
+We need to re-introduce the hash functions that the card supports as these will be utilised for the KDF's, for generating the session keys, these are reported in table .
+
+% TABLE: Hash functions
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+Hash Name & Output Length (bits) & Output Length (Bytes)\\
+\hline
+
+MD5 & 128 &16\\
+SHA1 & 160 & 20\\
+SHA256 & 256 & 32\\
+SHA384 & 384 & 48\\
+SHA512 & 512 & 64\\
+\hline
+\end{tabular}
+\caption{Hash Functions \textit{(supported by the card)}}
+\end{center}
+\end{table}
+
+Generate session keys S$_{Enc}$ and S$_{Mac}$ using the following key derivation techniques:
+
+\begin{table}[H]
+\begin{tabular}{|l|l|l|}
+\hline
+KDF & S$_{Enc}$ & S$_{Mac}$\\
+\hline
+Hash( shared secret $||$ card challenge) & - & - \\
+\hline
+\end{tabular}
+\end{table}
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 \chapter{Conclusion / Results}
