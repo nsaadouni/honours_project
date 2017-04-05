@@ -74,17 +74,19 @@
 \contentsline {subsection}{\numberline {A.3.3}Generator = 0}{77}
 \contentsline {subsection}{\numberline {A.3.4}First 128 bytes set to zero and generator 0}{79}
 \contentsline {subsection}{\numberline {A.3.5}Second 128 bytes set to zero and generator 0}{80}
-\contentsline {section}{\numberline {A.4}Overriding Attribute Controls}{83}
-\contentsline {subsection}{\numberline {A.4.1}Encrypt\_False}{83}
-\contentsline {chapter}{\numberline {B}API Function Traces}{85}
-\contentsline {section}{\numberline {B.1}Initialization}{85}
-\contentsline {section}{\numberline {B.2}C\_login}{86}
-\contentsline {section}{\numberline {B.3}C\_findObject}{87}
-\contentsline {section}{\numberline {B.4}C\_generateKey}{89}
-\contentsline {section}{\numberline {B.5}C\_generateKeyPair}{92}
-\contentsline {section}{\numberline {B.6}C\_destroyObject}{96}
-\contentsline {section}{\numberline {B.7}C\_encrypt}{98}
-\contentsline {section}{\numberline {B.8}C\_decrypt}{98}
-\contentsline {section}{\numberline {B.9}C\_setAttribute}{98}
-\contentsline {section}{\numberline {B.10}C\_unwrap}{99}
-\contentsline {section}{\numberline {B.11}C\_wrap}{103}
+\contentsline {subsection}{\numberline {A.3.6}Set 1st 16 bytes of card challenge to zero}{83}
+\contentsline {subsection}{\numberline {A.3.7}Set 2nd 16 bytes of card challenge to zero}{85}
+\contentsline {section}{\numberline {A.4}Overriding Attribute Controls}{87}
+\contentsline {subsection}{\numberline {A.4.1}Encrypt\_False}{87}
+\contentsline {chapter}{\numberline {B}API Function Traces}{89}
+\contentsline {section}{\numberline {B.1}Initialization}{89}
+\contentsline {section}{\numberline {B.2}C\_login}{90}
+\contentsline {section}{\numberline {B.3}C\_findObject}{91}
+\contentsline {section}{\numberline {B.4}C\_generateKey}{93}
+\contentsline {section}{\numberline {B.5}C\_generateKeyPair}{96}
+\contentsline {section}{\numberline {B.6}C\_destroyObject}{100}
+\contentsline {section}{\numberline {B.7}C\_encrypt}{102}
+\contentsline {section}{\numberline {B.8}C\_decrypt}{102}
+\contentsline {section}{\numberline {B.9}C\_setAttribute}{102}
+\contentsline {section}{\numberline {B.10}C\_unwrap}{103}
+\contentsline {section}{\numberline {B.11}C\_wrap}{107}

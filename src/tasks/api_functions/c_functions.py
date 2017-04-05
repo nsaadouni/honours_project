@@ -356,6 +356,7 @@ print '\n'
 
 
 # generateKeyPair_rsa()
+# generate_DES3('\x10', 'des test')
 destroyAllObjects()
 # objects = session.findObjects()
 # for i in objects:
