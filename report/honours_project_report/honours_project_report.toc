@@ -56,37 +56,38 @@
 \contentsline {subsection}{\numberline {7.3.1}Raw byte analysis of the data fields}{53}
 \contentsline {subsection}{\numberline {7.3.2}Protocol search}{54}
 \contentsline {subsection}{\numberline {7.3.3}Man in the middle attack - Diffie Hellman Key Agreement Protocol}{58}
-\contentsline {chapter}{\numberline {8}Conclusion / Results}{61}
-\contentsline {chapter}{\numberline {9}Future work}{63}
-\contentsline {chapter}{Bibliography}{65}
-\contentsline {chapter}{Appendices}{67}
-\contentsline {chapter}{\numberline {A}Attack Traces}{69}
-\contentsline {section}{\numberline {A.1}Multiple C\_login Traces}{69}
-\contentsline {subsection}{\numberline {A.1.1}Different Second}{69}
-\contentsline {subsection}{\numberline {A.1.2}Same Pin, Same Challenge}{70}
-\contentsline {subsection}{\numberline {A.1.3}Same Pin, Different Challenge}{70}
-\contentsline {subsection}{\numberline {A.1.4}Different Pin, Same Challenge}{71}
-\contentsline {subsection}{\numberline {A.1.5}Different Pin, Different Challenge}{71}
-\contentsline {section}{\numberline {A.2}Successful Login Injection}{72}
-\contentsline {section}{\numberline {A.3}Open Secure Messaging Traces}{73}
-\contentsline {subsection}{\numberline {A.3.1}Generator = 5, [Not modified]}{73}
-\contentsline {subsection}{\numberline {A.3.2}Generator = 1}{74}
-\contentsline {subsection}{\numberline {A.3.3}Generator = 0}{77}
-\contentsline {subsection}{\numberline {A.3.4}First 128 bytes set to zero and generator 0}{79}
-\contentsline {subsection}{\numberline {A.3.5}Second 128 bytes set to zero and generator 0}{80}
-\contentsline {subsection}{\numberline {A.3.6}Set 1st 16 bytes of card challenge to zero}{83}
-\contentsline {subsection}{\numberline {A.3.7}Set 2nd 16 bytes of card challenge to zero}{85}
-\contentsline {section}{\numberline {A.4}Overriding Attribute Controls}{87}
-\contentsline {subsection}{\numberline {A.4.1}Encrypt\_False}{87}
-\contentsline {chapter}{\numberline {B}API Function Traces}{89}
-\contentsline {section}{\numberline {B.1}Initialization}{89}
-\contentsline {section}{\numberline {B.2}C\_login}{90}
-\contentsline {section}{\numberline {B.3}C\_findObject}{91}
-\contentsline {section}{\numberline {B.4}C\_generateKey}{93}
-\contentsline {section}{\numberline {B.5}C\_generateKeyPair}{96}
-\contentsline {section}{\numberline {B.6}C\_destroyObject}{100}
-\contentsline {section}{\numberline {B.7}C\_encrypt}{102}
-\contentsline {section}{\numberline {B.8}C\_decrypt}{102}
-\contentsline {section}{\numberline {B.9}C\_setAttribute}{102}
-\contentsline {section}{\numberline {B.10}C\_unwrap}{103}
-\contentsline {section}{\numberline {B.11}C\_wrap}{107}
+\contentsline {subsection}{\numberline {7.3.4}Final steps for reverse engineering the secure messaging protocol}{60}
+\contentsline {chapter}{\numberline {8}Conclusion / Results}{65}
+\contentsline {chapter}{\numberline {9}Future work}{67}
+\contentsline {chapter}{Bibliography}{69}
+\contentsline {chapter}{Appendices}{71}
+\contentsline {chapter}{\numberline {A}Attack Traces}{73}
+\contentsline {section}{\numberline {A.1}Multiple C\_login Traces}{73}
+\contentsline {subsection}{\numberline {A.1.1}Different Second}{73}
+\contentsline {subsection}{\numberline {A.1.2}Same Pin, Same Challenge}{74}
+\contentsline {subsection}{\numberline {A.1.3}Same Pin, Different Challenge}{74}
+\contentsline {subsection}{\numberline {A.1.4}Different Pin, Same Challenge}{75}
+\contentsline {subsection}{\numberline {A.1.5}Different Pin, Different Challenge}{75}
+\contentsline {section}{\numberline {A.2}Successful Login Injection}{76}
+\contentsline {section}{\numberline {A.3}Open Secure Messaging Traces}{77}
+\contentsline {subsection}{\numberline {A.3.1}Generator = 5, [Not modified]}{77}
+\contentsline {subsection}{\numberline {A.3.2}Generator = 1}{78}
+\contentsline {subsection}{\numberline {A.3.3}Generator = 0}{81}
+\contentsline {subsection}{\numberline {A.3.4}First 128 bytes set to zero and generator 0}{83}
+\contentsline {subsection}{\numberline {A.3.5}Second 128 bytes set to zero and generator 0}{84}
+\contentsline {subsection}{\numberline {A.3.6}Set 1st 16 bytes of card challenge to zero}{87}
+\contentsline {subsection}{\numberline {A.3.7}Set 2nd 16 bytes of card challenge to zero}{89}
+\contentsline {section}{\numberline {A.4}Overriding Attribute Controls}{91}
+\contentsline {subsection}{\numberline {A.4.1}Encrypt\_False}{91}
+\contentsline {chapter}{\numberline {B}API Function Traces}{93}
+\contentsline {section}{\numberline {B.1}Initialization}{93}
+\contentsline {section}{\numberline {B.2}C\_login}{94}
+\contentsline {section}{\numberline {B.3}C\_findObject}{95}
+\contentsline {section}{\numberline {B.4}C\_generateKey}{97}
+\contentsline {section}{\numberline {B.5}C\_generateKeyPair}{100}
+\contentsline {section}{\numberline {B.6}C\_destroyObject}{104}
+\contentsline {section}{\numberline {B.7}C\_encrypt}{106}
+\contentsline {section}{\numberline {B.8}C\_decrypt}{106}
+\contentsline {section}{\numberline {B.9}C\_setAttribute}{106}
+\contentsline {section}{\numberline {B.10}C\_unwrap}{107}
+\contentsline {section}{\numberline {B.11}C\_wrap}{111}

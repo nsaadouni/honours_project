@@ -1278,15 +1278,85 @@ $pub_1^{pub_2} \quad mod \quad p$ & \textbf{0} = $0^{private\_api} \quad mod \qu
 
 As we did not know which 128 bytes was the modulus, and which was the public key of the smartcard we had to complete two experiments setting each of the 128 bytes to be zero to test our hypothesis and also setting the generator to be 0. These two tests can be seen within appendix \textbf{A.3.4} and \textbf{A.3.5}.
 
-As can be seen the first test caused the API to halt. This suggested that this was the modulus and that by setting it 0 caused OpenSSL to try and create a public key with a modulo value of zero which is not should cause OpenSSL to crash. The second test succeeded, this is reported in the appendix. The following communication succeeds as both the API and the smartcard are aware of the same session keys. Thus there is no problem with secure messaging.
+As can be seen the first test caused the API to halt. This suggested that this was the modulus and that by setting it 0 caused OpenSSL to try and create a public key with a modulo value of zero which is not should cause OpenSSL to crash. The second test succeeded, this is reported in the appendix A.3.5. The following communication succeeds as both the API and the smartcard are aware of the same session keys. Thus there is no problem with secure messaging.
 
-The final steps are to figure out how to generate the session keys from the shared secret and the 32 byte challenge. And how to build the commands to be used within secure messaging session.
- - - continue here - -
- 
- Next task if KDF(S) and then re-computing the MAC for 'get challenge' command. Once we have done that we know how to calculate the session keys which will conclude the reverse engineering!
+\subsection{Final steps for reverse engineering the secure messaging protocol}
+With the shared secret from the diffie hellman key agreement protocol now set to 0, the final steps to reverse engineering the secure messaging protocol are:
+\begin{enumerate}
+\item Find out which parts of the 32 bytes sent from the smartcard to the API are for the S$_{Enc}$ and S$_{Mac}$ session keys.
+\item Find the key derivation function used for producing both keys with the knowledge of the shared secret and the 32 byte challenge from the smartcard.
+\item Find the block cipher used within secure messaging sessions
+\item Decrypt the secure messaging communication
+\end{enumerate}
 
-A.3.6 sets the first 16 bytes of cards challenge to 0\\
-A.3.7 sets the second 16 bytes of the cards challenge to 0
+\underline{\textbf{Experiment 1}}\\
+We selected a particular secure messaging session to run an experiment to find the result of the first step listed above. The secure messaging session that we analyse is the first session that the \textit{generateKey} function creates. Within the session the only encrypted communication is the ISO 7816 command 'GET CHALLENGE'. This is particularly useful as the command has an empty data field. This means that the S$_{Enc}$ key derived from secure messaging initialization is not utilised. Thus, this allows us to modify parts of the 32 byte challenge to eliminate the bytes that are used for S$_{Enc}$ key derivation, leaving us with the knowledge of which bytes are used for both session keys.
+
+The experiment consists of two tests. Both of the tests implement the above man in the middle attack setting on the diffie hellman protocol to set the shared secret value to 0. Test 1 sets the first 16 bytes of the 32 bytes the card sends to 0. Test 2 sets the second 16 bytes to 0.
+
+\begin{table}[H]
+\begin{tabular}{|l|c|c|c|}
+\hline
+ & 'GET CHALLENGE' Response & Secure Messageing Succeeded & Appendix\\
+\hline
+Test 1 & (24 bytes) + '90 00' & \checked & A.3.6\\
+\hline
+Test 2 & '69 88' & $\chi$ & A.3.7\\
+\hline
+\end{tabular}
+\caption{Experiment to find out how the 32 bytes from the card are utilised}
+\end{table}
+
+The results reported within table 7.14 prove that the second 16 bytes of the 32 bytes sent from that smartcard are used in the derivation of S$_{Mac}$. We therefore make the logical step in assuming that the first 16 bytes are used for the derivation of S$_{Enc}$.
+
+\underline{\textbf{Experiment 2}}\\
+The second step is more challenging. In order to be able to test whether or not a certain key derivation function is the one used for generating the S$_{Enc}$ and S$_{Mac}$ secure messaging session keys, we need to do the following:
+\begin{enumerate}
+\item Obtain the knowledge of the encrpyted and unencrypted command4
+\item Obtain the knowledge of how to build the encrypted command
+\item Build the encrypted command with keys we generate from a certain key derivation function \textbf{KDF} (using both the shared secret and the 32 bytes from the smartcard)
+\item Test keys with different block ciphers
+\item Compare the encrypted command generate by the API to the command we generate. If they match we have found the KDF, and block cipher.
+\end{enumerate}
+
+The first step is simple, we already know the ISO 7816 inter-industry 'GET CHALLENGE' command. We have seen this within the reverse engineering of the pin authentication protocol and is also in table 2.1 (chapter 2). And we have traces of the encrypted version of the command. (The commands reported below are for generating 24 bytes (24 = '18' hexadecimal)
+
+\begin{table}[H]
+\hskip-1.5cm\begin{tabular}{|l|p{10cm}|}
+\hline
+'GET CHALLENGE' unencrypted & 00 84 00 00 18\\
+\hline
+'GET CHALLENGE' encrypted & 0C 84 00 00 0D \textbf{97 01} 18 \textbf{8E 08} 1C 0B 23 9F 34 B7 29 FD \textbf{00}\\
+\hline
+\end{tabular}
+\end{table}
+
+From reviewing multiple traces of different secure messaging sessions we found that the highlighted bytes are constants for commands with empty data fields. For commands with data fields another 2 bytes are found to be constant which are '87' and  '01'. It appears that control bytes are placed structurally throughout the encrypted command in order to separate the encrypted data field and the CMAC checksum. 
+
+After this finding we decided to review the GlobalPlatform 2.2.1 [?] standard which provides explanations for secure channel protocols, to hopefully find meaning behind these control bytes and how to replicate the bytes following them that are not part of the checksum nor encrypted data field. Unfortunatly it did not provide these explanations. Thus we decided to search through more of the 'Athena smartcard solutions' security polices. One security policy was found to mention the possible use of diffie hellman. This is the first occurrence we had seen of this. Reviewing the references of that security policy lead to a paper published by \textit{International Civil Aviation Organization} [?]. The paper is aimed at explaining machine readable travel documents and their implementation. It included how to build the commands and responses for secure messaging sessions which matched the traces we had reviewed from our smartcard. The diagrams reported are taken from the paper.
+
+
+% IMAGE: SM command
+\begin{figure}[H]
+\centering
+\begin{subfigure}{1\textwidth}
+  \includegraphics[width=1\linewidth]
+  {images/section_7/7.3/sm_command.png}
+\end{subfigure}
+\caption{How to build APDU commands within secure messaging}
+\end{figure}
+
+% IMAGE: SM response
+\begin{figure}[H]
+\centering
+\begin{subfigure}{1\textwidth}
+  \includegraphics[width=1\linewidth]
+  {images/section_7/7.3/sm_response.png}
+\end{subfigure}
+\caption{How to build APDU response's within secure messaging}
+\end{figure}
+
+
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 \chapter{Conclusion / Results}
 
