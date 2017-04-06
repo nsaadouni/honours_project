@@ -468,11 +468,13 @@ RSA private 	 & Attribute & 3F 00 30 00 30 \textbf{02 01 4X} \\
 \end{tabular}
 \caption{Directories of Key and Attribute Files}
 \end{table}
+
+\subsection{Secure Messaging}
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 
 \chapter{Cryptographic Operations}
 
-In this chapter we describe different cryptography standards, and give a brief overview of the terminology and maths used behind some of the types of cryptography. This will be used to aid our explainations in later chapters that regard the cards functionality and cryptographic operations used to attempt the secure transfer of sensitive information.
+In this chapter we describe different cryptography standards, and give a brief overview of the terminology and maths used behind some of the types of cryptography. This will be used to aid our explanations in later chapters that regard the cards functionality and cryptographic operations used to attempt the secure transfer of sensitive information.
 
 \section{Hash Function}
 
@@ -1345,13 +1347,13 @@ Thus concluding this attack.
 
 \section{Reverse Engineering Secure Messaging}
 
-The second attack we investigate is the reverse engineering of the secure messaging protocol used by the card. As stated within section 2.2, and within public 'Athena smartcard solutions' security policies [?] for several different cards the vendor produces, the secure messaging initialization is used to derive 2 session keys. S$_{Enc}$, S$_{Mac}$ are used to encrypt and compute a message authentication code (MAC) of the messages within a secure messaging session respectively. This provides confidentiality and data integrity of the messages. The decision for how to derive these keys is left entirely upto the card vendor. Which makes this particularly difficult as there are several methods that could be used.
+The first objective of our second attack is to investigate the reverse engineering of the secure messaging protocol used by the card. As discussed in section 2.2, and reported in 'Athena smartcard solutions' security policies [?] for several different cards the vendor produces, the secure messaging initialization is used to derive 2 session keys. S$_{Enc}$, S$_{Mac}$ are used to encrypt and compute a message authentication code (MAC) of the messages within a secure messaging session respectively. This provides confidentiality and data integrity of the messages. The decision concerning how to derive these keys is left to the discretion the card's vendor. This makes this attack inherently difficult as there are several methods that could be used.
 
-The secure messaging sessions have seen to be used within the \textbf{\textit{GenerateKey}} and \textbf{\textit{Unwrap}} in the analysis conducted within chapter 6. And also seen to be used within \textbf{\textit{CreateObject}} seen in the analysis conducted by an MSC student (place name here) last year [?]. In every case it is used to provide confidentiality of the CKA\_value of block cipher keys. Successfully reverse engineering the secure messaging protocol would allow an attacker to use a man in the middle attack to derive two sets of session keys (one with the API and one with the card) which would allow the correct keys to be sent to the card, but also allow the attacker to decrypt them and find out the value is said keys. This would violate the PKCS \#11 standard if the keys were set to be sensitive and un-extractable. In addition, it would also be an attack whereby the user would be completely unaware it had taken place. This is considerably worse than previously analysed attacks were there is a large possibility of the user finding out, and therefore changing the keys before an attacker is able to utilise them for malicious purposes.
+As discussed in chapter 6, the secure messaging sessions are used in the \textbf{\textit{GenerateKey}} and \textbf{\textit{Unwrap}} functions. This is also reported in \textbf{\textit{CreateObject}} function by (name) 2015 [?]. In all cases, it is used to provide confidentiality of the CKA\_value of block cipher keys. The ability to successfully reverse engineer the secure messaging protocol would allow an attacker to use a man in the middle attack to derive two sets of session keys (one with the API and one with the smartcard). This would allow the attacker to decrypt the command data field and find value of the generated block cipher keys. This would violate the PKCS \#11 standard if the keys were set to be sensitive and un-extractable. This attack is far more serious than the previously analysed attacks, due to the high chance the user would be completely unaware of the attack.
 
-We also hope to be able to learn how the \textbf{\textit{unwrap}} command data field is built and then build the correct command for \textbf{\textit{wrap}} at the APDU level. This should be able to be completed by decrypting the data field of the unwarp command when used via the API. With this knowledge it should be possible to implement the wrap/decrypt attack [?] at the APDU level, and will therefore allow the exporting of all keys including RSA private keys which are generated on the card and thought to be securely stored.
+Our second objective is to learn how the \textbf{\textit{unwrap}} command data field is built and then build the correct command for \textbf{\textit{wrap}} at the APDU level. This might be completed by decrypting the data field of the unwrap command when used via the API. With this knowledge it should then be possible to implement the wrap/decrypt attack [?] at the APDU level, and will therefore allow the exporting of all keys including RSA private keys which are generated on the card which are assumed to be securely stored.
 
-To begin with we use the API to call the function \textbf{\textit{GenerateKey}}, as we know that secure messaging is utilised within this function. This gives us an overview of how the secure messaging protocol works. Below is a diagram that visually shows what exactly occurs at the APDU level. (The actual APDU commands are stored within appendix A.3.1)
+We use the API to call the function \textbf{\textit{GenerateKey}}, as we know that secure messaging is used within this function. This permits us to have a good overview about how the secure messaging protocol works. Below is a diagram that visually demonstrates what exactly occurs at the APDU level. The actual APDU commands are reported in appendix A.3.1
 
 % IMAGE: Secure Messaging Protocol
 \begin{figure}[H]
@@ -1363,21 +1365,19 @@ To begin with we use the API to call the function \textbf{\textit{GenerateKey}},
 \caption{Secure Messaging Initialization}
 \end{figure}
 
-As shown in figure 7.2 the API first requests the public key of the card. In total (split between two messages due to the size exceeding 256 bytes) the card sends back \textit{265} bytes worth of data, which is its public key. The API then proceeds to send back to the card 131 bytes worth of data \textit{(from multiple traces we have found that these 131 bytes of data change every single time, a new secure messaging session is opened)}. Finally the card sends 32 bytes of data, which concludes the initialization of secure messaging. Now the card and the API are both aware of two sets of block cipher keys S$_{Enc}$ and S$_{Mac}$ which are used to encrypt all of the following communication.
-
-The first step we took was to analyse the raw bytes within the data field that are being sent over. 
+As shown in figure 7.2 the API first requests the public key of the card. In total (split between two messages due to the size exceeding 256 bytes), the smartcard sends to the API 265 bytes worth of data (its public key). The API then proceeds to send 131 bytes to the smartcard. Finally, the smartcard sends 32 bytes of data to the API, which completes the initialization of secure messaging. At this stage both the smartcard and the API are aware of two sets of block cipher keys S$_{Enc}$ and S$_{Mac}$ which are used to encrypt all of the following communication. From studying multiple traces we have found that these 131 bytes and 32 bytes of data, sent by the API and smartcard respectively, change every time a new secure messaging session is opened. The 265 bytes of data sent first are static (remain the same).
 
 \subsection{Raw byte analysis of the data fields}
-From multiple traces whereby we opened a secure messaging session we found 9 bytes within the data sent from the card $\rightarrow$ API that remained constant. This made us think the data might be wrapped in an ASN.1 BER encoding. Using the online tool [?] we had utilised before (within chapter 6) we found 3 distinctive sets of data within the 265 bytes. 
+The first step we have decided to take is to analyse the raw bytes within the data fields. From studying the traces of secure messaging sessions, we found that the 265 bytes that where sent from the smartcard to the API (smartcards public key) had an encoding. From reviewing ISO/IEC 7816 section 13 we have found that the 265 bytes are in fact 3 distinctive pieces of data of the following values. 
 
 \textbf{Send 265 bytes of data (cards public key) (A.3.1 - commands 24, 25)}\\
 $[00]$ (1 byte) 05\\
 $[01]$ (128 byte) F7 B5  15 72 07 22 94 6F C4 08 ...\\
 $[02]$ (128 byte) 3C 52 D2 06 89 28 92 2C AB E6 ...\\
 
-\textit{These command bytes in the BER encoding of the data have been highlighted in bold within the commands in the appendix to make it clear how the data is split.}
+\textit{[These control bytes separating the encoding of the data have been highlighted in bold within the commands in the appendix A.3.1 to show how the data is split]}
 
-We did not find any of the other data fields wrapped in an ASN.1 BER encoding. Thus now we know the following:
+We did not find any of the other data fields wrapped in an encoding. Thus now we know the following:
 
 \begin{table}[H]
 \begin{tabular}{|l|l|}
@@ -1386,7 +1386,7 @@ Data & Explanation\\
 \hline
 Cards public key & (1 byte) = 05\\
 (static key)    & (128 bytes) = F7 B5  15 72 07 22 94 6F C4 08 ...\\
-                 & (128 bytes) = 3C 52 D2 06 89 28 92 2C AB E6 ...\\
+\textbf{257 bytes in total} & (128 bytes) = 3C 52 D2 06 89 28 92 2C AB E6 ...\\
 \hline
 API data & (128 bytes) = 08 9F EA  A1 DC 8F C3 43 ...\\
 \textit{public key or encrypted data} & \\
@@ -1399,21 +1399,21 @@ Card random challenge & (32 bytes) = 66 56 36 31 16 42 8D 8A ...\\
 \caption{Data organization within secure messaging initialization process}
 \end{table}
 
-Using the information within table 7.9 we now begin finding protocols that would allow session keys to be derived, and also match the amount of data being sent across from the API to the card and vice versa.
+Using the information in table 7.9 we now test protocols that would allow session keys to be derived, and match the amount of data being sent across from the API to the card and vice versa.
 
 \subsection{Protocol search}
-There are three main protocols that would support session keys being derived that would remain a secret between the API and the card. These are: RSA encryption, elliptic curve cofactor diffie hellman (ECCDH) and diffie hellman (DH) [see section 3]. 
+There are three main protocols that would support session keys being derived that would remain a secret between the API and the smartcard. These are: RSA encryption, Elliptic Curve Cofactor Diffie Hellman (ECCDH) and Diffie Hellman (DH) (see section 3.1.3, chapter 3). 
 
-Within security policies for 'Athena smartcard solutions' [?] it states that ECCDH is used for some of their smartcard's. And that the 32 bytes of random data sent by the card is used to XOR with the shared secret derived from ECCDH to create the 2 session keys. 
+The security policies for 'Athena smartcard solutions' [?] states that ECCDH is used for some of their smartcards. They also report that the 32 bytes of random data sent by the card is used to XOR with the shared secret derived from ECCDH to create the 2 session keys. 
 
-\textit{[The same documentation stated that the shared secret dervied from ECCDH was 32 bytes in length, and the session keys were 2 x  \textbf{Triple DES (key option 2)} 16 byte keys]}
+\textit{[The same documentation stated that the shared secret derived from ECCDH was 32 bytes in length, and the session keys were 2 x  \textbf{Triple DES (key option 2)} 16 byte keys]}
 
-The card we analyse supports the key generation of elliptic curve public and private keys for this exact purpose, and for signing and verifying data. Thus the first protocol we look into is ECCDH.\\
+Our project's smartcard supports the key generation of elliptic curve public and private keys for this exact purpose, and for signing and verifying data. Thus, the first protocol we look into is ECCDH.\\
 
 \underline{\textbf{Elliptic Curve Cofactor Diffie Hellman}}\\
-The smartcard we analyse only supports curves P-192, and P-521 for ECCDH [see section 3]. The security polices state that curve P-256 is used. This is our first indication that the smartcard we analyse is not using ECCDH. However we continue with the investigation in case one of the above curves is used.
+The smartcard we analyse only supports curves P-192, and P-521 for ECCDH (see section 3.2.1, chapter 3). The security policies state that curve P-256 is used. This is the first indication that this smartcard does is not use ECCDH for secure messaging. Having said this, we believe it is still worth investigating in case one of the above curves is used.
 
-The first step we take is to calculate the number of bytes that are required in order to setup the global parameters that must be sent from the card to the API for ECCDH, and also the number of bytes of each public key. A match between these calculations and the number of bytes that are in fact sent across could suggest this protocol is being utilised for secure messaging initialization. \textit{We used OpenSSL to generate the following different public and private keys, along with the global parameters and outputted them in DER format to find the length of the corresponding data.}\\
+First, we calculate the number of bytes that are required in order to setup the global parameters (for ECCDH) that must be sent from the card to the API, and also the number of bytes of each public key. A match between the number of bytes calculated and the number of bytes that are sent across could suggest this protocol is being used for secure messaging initialization. \textit{We use OpenSSL to generate the following different public and private keys, along with the global parameters and outputted them in DER format to find the length of the corresponding data.}\\
 
 \begin{table}[H]
 \hskip+2.0cm\begin{tabular}{|l|c|c|c|}
@@ -1430,13 +1430,13 @@ Total & \textbf{281} & \textbf{297} & \textbf{364}\\
 \caption{Number of bytes required for ECCDH [Card to API]}
 \end{table}
 
-As shown in table 7.10 non of the curves for ECCDH have a value of 257 bytes in total that would be sent from the card to the API to begin the protocol. None of the public key sizes match 128 bytes which is what the API returns to the card as well. Thus we conclude here that ECCDH is not used and move onto the possibility that RSA is used.\\\\
+As reported in table 7.10 none of the curves for ECCDH have a value of 257 bytes in total that would be sent from the card to the API to begin the protocol. None of the public key sizes match 128 bytes which is what the API returns to the card as well. Thus, we conclude that ECCDH is not used and move on to test the next protocol, RSA encryption.\\\\
 
 
 \underline{\textbf{RSA Public Key Encryption of Block Cipher Keys}}\\
-If RSA is used the only method of deriving keys between the API and the smartcard is for the API to use the public key of the smartcard to encrypt session keys created by the API. The card will then use its private RSA key to decrypt the session keys. Considering that there is 32 bytes sent by the card at the end of the secure messaging initialization process, it is likely that they are XOR'd with the bytes encrypted via RSA, to generate the final session keys to be used.
+If RSA is used then the only method to derive the keys between the API and the smartcard, is for the API to use the public key of the smartcard to encrypt session keys created by the API. The smartcard will then use its private RSA key to decrypt the session keys. Considering that there are 32 bytes sent by the smartcard at the end of the secure messaging initialization process, it is likely that they are XOR'd with the bytes encrypted via RSA, to generate the final session keys to be used.
 
-We will complete the same analysis that we did for ECCDH and calculate the number of bytes required to see if they match the corresponding bytes sent via the API and the smartcard. These are tabulated below:
+Next we complete the same analysis as the one for ECCDH and calculate the number of bytes required to find out if they match the corresponding bytes sent via the API and the smartcard. These results are tabulated below:
 
 \begin{table}[H]
 \hskip+1.5cm\begin{tabular}{|l|c|c|}
@@ -1453,11 +1453,13 @@ Encryption length of 32 bytes & 128 bytes & 256 bytes\\
 \caption{Number of bytes required for RSA}
 \end{table}
 
-As we can see from table 7.11 the key option of 2048-bit fits the size of the public key perfectly for the smartcard's public key \textit{(This is on the basis that the public exponent is set to 5)}. However the encryption of the 32 bytes by the API would result in 256 bytes not 128 bytes. This therefore rules out the possibility that RSA-2048 is used, leaving the other possibility to two RSA-1024 keys. 
+The results reported in table 7.11 reveal that the key option of 2048-bit fits the size of the smartcards public key perfectly \textit{(This is based on the public exponent having a value of 5, see table 7.9)}. In contrast, the encryption of the 32 bytes by the API would result in 256 bytes, not 128 bytes which is sent from the API to the smartcard. This result rules out the possibility that RSA-2048 key is used, leaving the other possibility which is two RSA-1024 keys. 
 
-Literature has shown that some manufactures have implemented cards with multiple asymmetric keys, and certain versions of the PKCS \#11 API that the card vendor implements will only use one of them. Thus the first test we ran was editing the first bytes of each 128 bytes to see if one or both of the suspected keys were used. For each test we ran, the secure messaging initialization completed, but then upon the first instance of encrypted communication an APDU error was raided 'error with secure messaging'. Thus we found that both 128 byte keys must be used.
+The literature suggests that some manufactures have implemented cards with multiple asymmetric keys for secure messaging. Certain versions of the PKCS \#11 API that the card vendor implements will only use one of the keys. Thus the first test we ran was editing the first byte of each of the 128 bytes to find out if one or both of the suspected RSA-1024 keys are used. For each test we run, the secure messaging initialization completes, but then upon the first instance of encrypted communication an APDU error is raised, 'error with secure messaging'. Thus, the results confirm that both 128 byte keys are used.
 
-The only case that this could be (assuming RSA-1024 is the protocol) is if the session keys were encrypted twice with the two different keys, and both keys have a public exponent of 5. This seemed fairly unreasonable, as in any case two RSA-1024 bit keys are no more secure than just using one. And it would of made more logical sense to implement RSA-2048. 
+Assuming two RSA-1024 bit keys are used, this would suggest that the session keys are generated by the API are encrypted twice with the two RSA-1024 bit keys. The output of the first encryption being the input to the second encryption. Both RSA-1024 keys have a public exponent equal to 5. 
+
+\textbf{Despite matching the bytes sent across in secure messaging initialization and the number bytes that would be required when using two RSA-1024 bit keys. The use of two RSA-1024 bit keys is unreasonable, as in any case two RSA-1024 bit keys are no more secure than just using one. And it would of made more logical sense to implement RSA-2048.}
 
 However we continue to check if RSA is in fact used. The next test we run is changing the public exponent. Due to how messages are encrypted with RSA, setting the public exponent to 1 should reveal the message itself, and setting the public exponent to 0 should return a value of 1. This is verified by the following formula:\\
 
