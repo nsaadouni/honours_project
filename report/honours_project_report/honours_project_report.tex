@@ -249,10 +249,10 @@ C\_Unwrap & object handle \& template & The unwrap function takes the object han
 The International Standards Organization (ISO) and the International Electrotechnical Commission (IEC) jointly manage the standard that defines electronic identification cards (mainly contact smartcards) [?].
 The chapters/ sections of the standard are reported in table X. 
  
-The main sections we are interested in are 4, 7, 8, and 9. We have extracted out of the ISO/IEC 7816 standard the information we utilise within this project and reported it within sections boom, boom and boom.
+The main sections we are interested in are 4, 7, and 8. We have extracted out of the ISO/IEC 7816 standard, the information we utilise within this project and reported it within sections 2.2.1 to 2.2.6.
 
 \begin{table}[H]
-\begin{tabular}{|p{3cm}|p{12cm}|}
+\begin{tabular}{|l|p{12cm}|}
 \hline
 ISO 7816 Section & Description\\
 \hline
@@ -262,17 +262,17 @@ ISO 7816 Section & Description\\
 \hline
 3 & Cards with contacts - Electrical interface and transmission protocols \\
 \hline
-\textbf{4}  & Organization, security and commands for interchange \\
+\textbf{4}  & \textbf{Organization, security and commands for interchange} \\
 \hline
 5 & Registration of application providers \\
 \hline
 6 & Interindustry data elements for interchange \\
 \hline
-\textbf{7} response & Interindustry commands for Structured Card Query Language (SCQL) \\
+\textbf{7} & \textbf{Interindustry commands for Structured Card Query Language (SCQL)} \\
 \hline
-\textbf{8} & Commands for security operations \\
+\textbf{8} & \textbf{Commands for security operations} \\
 \hline
-\textbf{9} & Commands for card management \\
+9 & Commands for card management \\
 \hline
 10 & Electronic signals and answer to reset for synchronous cards \\
 \hline
@@ -280,17 +280,52 @@ ISO 7816 Section & Description\\
 \hline
 12 & Cards with contacts - USB electrical interface and operating procedures \\
 \hline
-\textbf{13} defines control bytes for SM pbk & Commands for application management in multi-application environment \\
+13 & Commands for application management in multi-application environment \\
 \hline
 15 & Cryptographic information application \\
 \hline
 \end{tabular}
 \end{table}
 
-\subsection{Command Structure}
-\subsection{Response Structure}
-\subsection{Inter-Industry/ Proprietary}
-\subsection{ISO 7816 - Commands}
+% 7  has is the source of response table
+% 13 defines control bytes for Secure Messaging Public Key
+
+\subsection{Command-Response Structure}
+
+ISO/IEC 7816 section 4 [?] provides details regarding the structure behind the command-response pairs. Commands have a maximum of 7 fields. The definition of each field is reported in table X1.  And the command structure is reported in figure 2.1. Due to the optional fields Lc, Data, and Le, there are 4 possible structures of commands depending on the optional fields that are present. These different possibilities are reported in figure 2.2. Finally the structure of the response is reported in figure 2.3, with the meaning behinds the fields reported in table X2.
+
+% Table: Command fields
+
+% IMAGE: Command
+\begin{figure}[H]
+\hskip+2.0cm\begin{subfigure}{1\textwidth}
+  \includegraphics[width=0.7\linewidth]
+  {images/section_2/command.png}
+\end{subfigure}
+\caption{Command Structure [?]}
+\end{figure}
+
+% IMAGE: Different Commands
+\begin{figure}[H]
+\begin{subfigure}{1\textwidth}
+  \includegraphics[width=1\linewidth]
+  {images/section_2/command_cases.png}
+\end{subfigure}
+\caption{Different Command Possibilities [?]}
+\end{figure}
+
+% Table: Response fields
+
+% IMAGE: Response
+\begin{figure}[H]
+\hskip+3.5cm\begin{subfigure}{1\textwidth}
+  \includegraphics[width=0.5\linewidth]
+  {images/section_2/response.png}
+\end{subfigure}
+\caption{Response Structure [?]}
+\end{figure}
+
+\subsection{Commands}
 
 \begin{table}[H]
 \hskip-1.0cm\begin{tabular}{|c|c|c|c|c|c|c|p{8cm}|}
@@ -332,9 +367,30 @@ Xc  & -   & -  & -  & -   & -          & -  & Secure Messaging (SM)\\
 \end{table} 
 
 \subsection{Responses}
+
+(ISO/IEC 7816 - Section 7)
+
 Here state we do not list all responses due to the sheer amount of them. Instead we provide an explanation that we grabbed from the ISO 7816 standard and this site that summeraizes them [?] if and when we need them.
+
+% IMAGE: 
+\begin{figure}[H]
+\centering
+\begin{subfigure}{1\textwidth}
+  \includegraphics[width=1\linewidth]
+  {images/section_2/response_explain.png}
+\end{subfigure}
+\caption{Response Meanings [?]}
+\end{figure}
 \subsection{File Structure}
 
+% IMAGE: File structure
+\begin{figure}[H]
+\hskip+0.0cm\begin{subfigure}{1\textwidth}
+  \includegraphics[width=1\linewidth]
+  {images/section_2/file_structures.png}
+\end{subfigure}
+\caption{File Structure [?]}
+\end{figure}
 
 
 
