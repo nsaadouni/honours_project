@@ -1,93 +1,92 @@
 \contentsline {chapter}{\numberline {1}Introduction}{9}
 \contentsline {chapter}{\numberline {2}Background}{11}
 \contentsline {section}{\numberline {2.1}PKCS\#11}{11}
-\contentsline {subsection}{\numberline {2.1.1}Key Object}{11}
-\contentsline {subsection}{\numberline {2.1.2}Attributes}{11}
-\contentsline {subsection}{\numberline {2.1.3}Most Common Functions}{12}
-\contentsline {section}{\numberline {2.2}ISO 7816}{12}
-\contentsline {subsection}{\numberline {2.2.1}Command Structure}{13}
-\contentsline {subsection}{\numberline {2.2.2}Response Structure}{13}
-\contentsline {subsection}{\numberline {2.2.3}Inter-Industry/ Proprietary}{13}
-\contentsline {subsection}{\numberline {2.2.4}Most Common Commands}{13}
-\contentsline {subsection}{\numberline {2.2.5}File Structure}{13}
-\contentsline {chapter}{\numberline {3}Cryptographic Operations}{15}
-\contentsline {section}{\numberline {3.1}Hash Function}{15}
-\contentsline {section}{\numberline {3.2}Asymmetric Encryption}{15}
-\contentsline {subsection}{\numberline {3.2.1}RSA}{15}
-\contentsline {subsection}{\numberline {3.2.2}Diffie Hellman}{15}
-\contentsline {subsection}{\numberline {3.2.3}ECC}{15}
-\contentsline {section}{\numberline {3.3}Symmetric Encryption}{16}
-\contentsline {subsection}{\numberline {3.3.1}Block Ciphers}{16}
-\contentsline {subsection}{\numberline {3.3.2}ECB Mode}{16}
-\contentsline {subsection}{\numberline {3.3.3}CBC Mode}{16}
-\contentsline {section}{\numberline {3.4}Message Authentication Codes}{16}
-\contentsline {subsection}{\numberline {3.4.1}Hash Based - Message Authentication Codes (HMAC)}{16}
-\contentsline {subsection}{\numberline {3.4.2}Cryptographic Based - Message Authentication Codes (CMAC)}{16}
-\contentsline {section}{\numberline {3.5}One Time Passwords}{16}
-\contentsline {subsection}{\numberline {3.5.1}Hash Based - One Time Passwords (HOTP)}{16}
-\contentsline {subsection}{\numberline {3.5.2}Time Based - One Time Passwords (TOTP)}{16}
-\contentsline {chapter}{\numberline {4}Tools}{17}
-\contentsline {section}{\numberline {4.1}PCSC-lite}{17}
-\contentsline {section}{\numberline {4.2}Virtual Smartcard}{17}
-\contentsline {section}{\numberline {4.3}Man in The Middle (MiTM)}{17}
-\contentsline {chapter}{\numberline {5}Related Work / Literature Review}{19}
-\contentsline {section}{\numberline {5.1}Manually Overriding Attributes}{19}
-\contentsline {chapter}{\numberline {6}PKCS \#11 Functions - APDU analysis}{21}
-\contentsline {section}{\numberline {6.1}Initialization}{22}
-\contentsline {section}{\numberline {6.2}C\_login}{22}
-\contentsline {section}{\numberline {6.3}C\_findObject}{23}
-\contentsline {section}{\numberline {6.4}C\_generateKey}{24}
-\contentsline {section}{\numberline {6.5}C\_generateKeyPair}{26}
-\contentsline {section}{\numberline {6.6}C\_destroyObject}{29}
-\contentsline {section}{\numberline {6.7}C\_encrypt}{31}
-\contentsline {section}{\numberline {6.8}C\_decrypt}{31}
-\contentsline {section}{\numberline {6.9}C\_setAttribute}{32}
-\contentsline {section}{\numberline {6.10}C\_unwrap}{33}
-\contentsline {section}{\numberline {6.11}C\_wrap}{34}
-\contentsline {chapter}{\numberline {7}Attempts To Attack At the APDU Level (change)}{37}
-\contentsline {section}{\numberline {7.1}Motivations}{37}
-\contentsline {subsection}{\numberline {7.1.1}Vulnerabilities not investigated}{38}
-\contentsline {subsection}{\numberline {7.1.2}Vulnerabilities to investigate}{39}
-\contentsline {section}{\numberline {7.2}Reverse Engineering PIN Authentication Protocol}{40}
-\contentsline {subsection}{\numberline {7.2.1}Authentication Protocol Search 1.0 (Password Storage)}{43}
-\contentsline {subsection}{\numberline {7.2.2}Authentication Protocol Search 2.0 (One Time Passwords)}{45}
-\contentsline {subsection}{\numberline {7.2.3}Authentication Protocol Search 3.0 (Triple DES Encryption)}{47}
-\contentsline {section}{\numberline {7.3}Reverse Engineering Secure Messaging}{52}
-\contentsline {subsection}{\numberline {7.3.1}Raw byte analysis of the data fields}{53}
-\contentsline {subsection}{\numberline {7.3.2}Protocol search}{54}
-\contentsline {subsection}{\numberline {7.3.3}Man in the middle attack - Diffie Hellman Key Agreement Protocol}{58}
-\contentsline {subsection}{\numberline {7.3.4}Final steps for reverse engineering the secure messaging protocol}{60}
-\contentsline {chapter}{\numberline {8}Conclusion / Results}{67}
-\contentsline {chapter}{\numberline {9}Future work}{69}
-\contentsline {chapter}{Bibliography}{71}
-\contentsline {chapter}{Appendices}{73}
-\contentsline {chapter}{\numberline {A}Attack Traces}{75}
-\contentsline {section}{\numberline {A.1}Multiple C\_login Traces}{75}
-\contentsline {subsection}{\numberline {A.1.1}Different Second}{75}
-\contentsline {subsection}{\numberline {A.1.2}Same Pin, Same Challenge}{76}
-\contentsline {subsection}{\numberline {A.1.3}Same Pin, Different Challenge}{76}
-\contentsline {subsection}{\numberline {A.1.4}Different Pin, Same Challenge}{77}
-\contentsline {subsection}{\numberline {A.1.5}Different Pin, Different Challenge}{77}
-\contentsline {section}{\numberline {A.2}Successful Login Injection}{78}
-\contentsline {section}{\numberline {A.3}Open Secure Messaging Traces}{79}
-\contentsline {subsection}{\numberline {A.3.1}Generator = 5, [Not modified]}{79}
-\contentsline {subsection}{\numberline {A.3.2}Generator = 1}{80}
-\contentsline {subsection}{\numberline {A.3.3}Generator = 0}{83}
-\contentsline {subsection}{\numberline {A.3.4}First 128 bytes set to zero and generator 0}{85}
-\contentsline {subsection}{\numberline {A.3.5}Second 128 bytes set to zero and generator 0}{86}
-\contentsline {subsection}{\numberline {A.3.6}Set 1st 16 bytes of card challenge to zero}{89}
-\contentsline {subsection}{\numberline {A.3.7}Set 2nd 16 bytes of card challenge to zero}{91}
-\contentsline {section}{\numberline {A.4}Overriding Attribute Controls}{93}
-\contentsline {subsection}{\numberline {A.4.1}Encrypt\_False}{93}
-\contentsline {chapter}{\numberline {B}API Function Traces}{95}
-\contentsline {section}{\numberline {B.1}Initialization}{95}
-\contentsline {section}{\numberline {B.2}C\_login}{96}
-\contentsline {section}{\numberline {B.3}C\_findObject}{97}
-\contentsline {section}{\numberline {B.4}C\_generateKey}{99}
-\contentsline {section}{\numberline {B.5}C\_generateKeyPair}{102}
-\contentsline {section}{\numberline {B.6}C\_destroyObject}{106}
-\contentsline {section}{\numberline {B.7}C\_encrypt}{108}
-\contentsline {section}{\numberline {B.8}C\_decrypt}{108}
-\contentsline {section}{\numberline {B.9}C\_setAttribute}{108}
-\contentsline {section}{\numberline {B.10}C\_unwrap}{109}
-\contentsline {section}{\numberline {B.11}C\_wrap}{113}
+\contentsline {subsection}{\numberline {2.1.1}PKCS \# 11 Object's and Attributes}{11}
+\contentsline {subsection}{\numberline {2.1.2}PKCS \#11 Functions}{14}
+\contentsline {section}{\numberline {2.2}ISO 7816}{14}
+\contentsline {subsection}{\numberline {2.2.1}Command Structure}{15}
+\contentsline {subsection}{\numberline {2.2.2}Response Structure}{15}
+\contentsline {subsection}{\numberline {2.2.3}Inter-Industry/ Proprietary}{15}
+\contentsline {subsection}{\numberline {2.2.4}Most Common Commands}{15}
+\contentsline {subsection}{\numberline {2.2.5}File Structure}{15}
+\contentsline {chapter}{\numberline {3}Cryptographic Operations}{17}
+\contentsline {section}{\numberline {3.1}Hash Function}{17}
+\contentsline {section}{\numberline {3.2}Asymmetric Encryption}{17}
+\contentsline {subsection}{\numberline {3.2.1}RSA}{17}
+\contentsline {subsection}{\numberline {3.2.2}Diffie Hellman}{17}
+\contentsline {subsection}{\numberline {3.2.3}ECC}{17}
+\contentsline {section}{\numberline {3.3}Symmetric Encryption}{18}
+\contentsline {subsection}{\numberline {3.3.1}Block Ciphers}{18}
+\contentsline {subsection}{\numberline {3.3.2}ECB Mode}{18}
+\contentsline {subsection}{\numberline {3.3.3}CBC Mode}{18}
+\contentsline {section}{\numberline {3.4}Message Authentication Codes}{18}
+\contentsline {subsection}{\numberline {3.4.1}Hash Based - Message Authentication Codes (HMAC)}{18}
+\contentsline {subsection}{\numberline {3.4.2}Cryptographic Based - Message Authentication Codes (CMAC)}{18}
+\contentsline {section}{\numberline {3.5}One Time Passwords}{18}
+\contentsline {subsection}{\numberline {3.5.1}Hash Based - One Time Passwords (HOTP)}{18}
+\contentsline {subsection}{\numberline {3.5.2}Time Based - One Time Passwords (TOTP)}{18}
+\contentsline {chapter}{\numberline {4}Tools}{19}
+\contentsline {section}{\numberline {4.1}PCSC-lite}{19}
+\contentsline {section}{\numberline {4.2}Virtual Smartcard}{19}
+\contentsline {section}{\numberline {4.3}Man in The Middle (MiTM)}{19}
+\contentsline {chapter}{\numberline {5}Related Work / Literature Review}{21}
+\contentsline {section}{\numberline {5.1}Manually Overriding Attributes}{21}
+\contentsline {chapter}{\numberline {6}PKCS \#11 Functions - APDU analysis}{23}
+\contentsline {section}{\numberline {6.1}Initialization}{24}
+\contentsline {section}{\numberline {6.2}C\_login}{24}
+\contentsline {section}{\numberline {6.3}C\_findObject}{25}
+\contentsline {section}{\numberline {6.4}C\_generateKey}{26}
+\contentsline {section}{\numberline {6.5}C\_generateKeyPair}{28}
+\contentsline {section}{\numberline {6.6}C\_destroyObject}{31}
+\contentsline {section}{\numberline {6.7}C\_encrypt}{33}
+\contentsline {section}{\numberline {6.8}C\_decrypt}{33}
+\contentsline {section}{\numberline {6.9}C\_setAttribute}{34}
+\contentsline {section}{\numberline {6.10}C\_unwrap}{35}
+\contentsline {section}{\numberline {6.11}C\_wrap}{36}
+\contentsline {chapter}{\numberline {7}Attempts To Attack At the APDU Level (change)}{39}
+\contentsline {section}{\numberline {7.1}Motivations}{39}
+\contentsline {subsection}{\numberline {7.1.1}Vulnerabilities not investigated}{40}
+\contentsline {subsection}{\numberline {7.1.2}Vulnerabilities to investigate}{41}
+\contentsline {section}{\numberline {7.2}Reverse Engineering PIN Authentication Protocol}{42}
+\contentsline {subsection}{\numberline {7.2.1}Authentication Protocol Search 1.0 (Password Storage)}{45}
+\contentsline {subsection}{\numberline {7.2.2}Authentication Protocol Search 2.0 (One Time Passwords)}{47}
+\contentsline {subsection}{\numberline {7.2.3}Authentication Protocol Search 3.0 (Triple DES Encryption)}{49}
+\contentsline {section}{\numberline {7.3}Reverse Engineering Secure Messaging}{54}
+\contentsline {subsection}{\numberline {7.3.1}Raw byte analysis of the data fields}{55}
+\contentsline {subsection}{\numberline {7.3.2}Protocol search}{56}
+\contentsline {subsection}{\numberline {7.3.3}Man in the middle attack - Diffie Hellman Key Agreement Protocol}{60}
+\contentsline {subsection}{\numberline {7.3.4}Final steps for reverse engineering the secure messaging protocol}{62}
+\contentsline {chapter}{\numberline {8}Conclusion / Results}{69}
+\contentsline {chapter}{\numberline {9}Future work}{71}
+\contentsline {chapter}{Bibliography}{73}
+\contentsline {chapter}{Appendices}{75}
+\contentsline {chapter}{\numberline {A}Attack Traces}{77}
+\contentsline {section}{\numberline {A.1}Multiple C\_login Traces}{77}
+\contentsline {subsection}{\numberline {A.1.1}Different Second}{77}
+\contentsline {subsection}{\numberline {A.1.2}Same Pin, Same Challenge}{78}
+\contentsline {subsection}{\numberline {A.1.3}Same Pin, Different Challenge}{78}
+\contentsline {subsection}{\numberline {A.1.4}Different Pin, Same Challenge}{79}
+\contentsline {subsection}{\numberline {A.1.5}Different Pin, Different Challenge}{79}
+\contentsline {section}{\numberline {A.2}Successful Login Injection}{80}
+\contentsline {section}{\numberline {A.3}Open Secure Messaging Traces}{81}
+\contentsline {subsection}{\numberline {A.3.1}Generator = 5, [Not modified]}{81}
+\contentsline {subsection}{\numberline {A.3.2}Generator = 1}{82}
+\contentsline {subsection}{\numberline {A.3.3}Generator = 0}{85}
+\contentsline {subsection}{\numberline {A.3.4}First 128 bytes set to zero and generator 0}{87}
+\contentsline {subsection}{\numberline {A.3.5}Second 128 bytes set to zero and generator 0}{88}
+\contentsline {subsection}{\numberline {A.3.6}Set 1st 16 bytes of card challenge to zero}{91}
+\contentsline {subsection}{\numberline {A.3.7}Set 2nd 16 bytes of card challenge to zero}{93}
+\contentsline {section}{\numberline {A.4}Overriding Attribute Controls}{95}
+\contentsline {subsection}{\numberline {A.4.1}Encrypt\_False}{95}
+\contentsline {chapter}{\numberline {B}API Function Traces}{97}
+\contentsline {section}{\numberline {B.1}Initialization}{97}
+\contentsline {section}{\numberline {B.2}C\_login}{98}
+\contentsline {section}{\numberline {B.3}C\_findObject}{99}
+\contentsline {section}{\numberline {B.4}C\_generateKey}{101}
+\contentsline {section}{\numberline {B.5}C\_generateKeyPair}{104}
+\contentsline {section}{\numberline {B.6}C\_destroyObject}{108}
+\contentsline {section}{\numberline {B.7}C\_encrypt}{110}
+\contentsline {section}{\numberline {B.8}C\_decrypt}{110}
+\contentsline {section}{\numberline {B.9}C\_setAttribute}{110}
+\contentsline {section}{\numberline {B.10}C\_unwrap}{111}
+\contentsline {section}{\numberline {B.11}C\_wrap}{115}

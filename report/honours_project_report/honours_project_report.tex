@@ -73,23 +73,12 @@ Acknowledgements go here.
 \chapter{Introduction}
 Smartcards are formally known as integrated circuit cards (ICC), and are universally thought to be secure, tamper-resistant devices. They store and process, cryptographic keys, authentication and user sensitive data. They are utilised to preform operations where confidentiality, data integrity and authentication are key to the security of a system.\\
 
-Smartcards offer what seems to be more secure methods for using cryptographic operations. (And should still provide the same level of security that would be offered to un-compromised systems, compared to those that are compromised by an attacker). This is partly due to the fact that the majority of modern smartcards have their own on-board micro-controller, to allow all of these operations to take place on the smartcard itself, with keys that are unknown to the outside world and stored securely on the device. Meaning the only actor that should be able to preform such operations would need to be in possession of the smartcard and the PIN/password. In many industries, for applications such as, banking/ payment systems, telecommunications, healthcare and public sector transport, 
-%\begin{itemize}
-%\item Banking/ payment
-%\item E-commerce
-%\item Sim cards/ telecommunications
-%\item Healthcare
-%\item Public transport
-%\end{itemize}
-smartcards are used due to the security they are believed to provide.\\
-
+Smartcards offer what seems to be more secure methods for using cryptographic operations. (And should still provide the same level of security that would be offered to un-compromised systems, compared to those that are compromised by an attacker). This is partly due to the fact that the majority of modern smartcards have their own on-board micro-controller, to allow all of these operations to take place on the smartcard itself, with keys that are unknown to the outside world and stored securely on the device. Meaning the only actor that should be able to preform such operations would need to be in possession of the smartcard and the PIN/password. In many industries, for applications such as, banking/ payment systems, telecommunications, healthcare and public sector transport, smartcards are used due to the security they are believed to provide.
 
 The most common API (application programming interface) that is used to communicate with smartcards is the RSA defined PKCS\#11 (Public Key Cryptography Standard). Also known as 'Cryptoki' (cryptographic token interface, pronounced as 'crypto-key'). The standard defines a platform-independent API to smartcards and hardware security modules (HSM). PKCS\#11 originated from RSA security, but has since been placed into the hands of OASIS PKCS\#11 Technical Committee to continue its work (since 2013). [reference wikipedia PKCS\#11].\\
 
 
-% Note: decide on a figure to use here, 10 OR 15 years!
-% This paragraph needs to be re-written!
-\noindent In the previous 10-15 years, literature has shown a great deal of research into the examination of the PKCS\#11 API, and the security it provides. Yet little attention has been paid to that of the lower-level communication (command-response pairs), in which the higher level API is broken down into. It is this area that we wish to research within this paper. The reasoning is simple. If we cannot trust the security of the low-level commands that implement the high level API functions, then in turn we cannot trust the security of the high level API. This is analogous to C code being complied down to binary data to be operated on by the CPU. The addition of two integers cannot be considered correct in C, unless the corresponding binary instructions sent to the CPU are correct as well.  
+In the previous 10-15 years, literature has shown a great deal of research into the examination of the PKCS\#11 API, and the security it provides. Yet little attention has been paid to that of the lower-level communication (command-response pairs), in which the higher level API is broken down into. It is this area that we wish to research within this paper. The reasoning is simple. If we cannot trust the security of the low-level commands that implement the high level API functions, then in turn we cannot trust the security of the high level API. This is analogous to C code being complied down to binary data to be operated on by the CPU. The addition of two integers cannot be considered correct in C, unless the corresponding binary instructions sent to the CPU are correct as well.  
 
 % maybe not 
 The research of the low-level communication will take two forms. 
@@ -110,28 +99,92 @@ Before we move into the above analysis, supporting material must be introduced. 
 In this chapter we give background knowledge on two essential standards that are required for the use of the contact smartcard we analyse in this paper. These two standards are PKCS\#11 and ISO 7816.
 
 \section{PKCS\#11}
-This is the API that each card manufacture implements themselves.
+Public Key Cryptography Standard \#11 was created by RSA Laboratories. It is a platform independent API, that defines rules and functions that should be implemented by the card manufacture in the form of a 'middleware'. The API is written within the C programming language, and only header files are included. The implementation of the API's functions are left to each card vendor, and are required to break down each function into multiple ISO 7816 command-response pairs to carry out the indented function.
 
-\subsection{Key Object}
-\subsection{Attributes}
-\hskip-2.0cm\begin{verbatim}
-template = (\\
-	(CKA\_CLASS, LowLevel.CKO\_SECRET\_KEY), [private, public, data, cert (X.509)]
-	(CKA\_KEY_TYPE, LowLevel.CKK_DES), [AES,DES,RSA,ECC]
-	(CKA\_LABEL, label), [name]
-	(CKA\_ID, chr(id)), [id]
-	(CKA\_PRIVATE, True), [requires authentication]
-	(CKA\_SENSITIVE, True), [cannot be extracted unencrypted]
-	(CKA\_ENCRYPT, True), [can be used for encrypting data]
-	(CKA\_DECRYPT, True), [can be used for decrypting data]
-	(CKA\_SIGN, True), [[can be used for signing data]
-	(CKA\_VERIFY, True), [can be used for verifiying data]
-	(CKA\_TOKEN, True), [can be stored permanently on the device]
-	(CKA\_WRAP, True), [can encrypt a key to be extracted]
-	(CKA\_UNWRAP, True), [can decrypt an encrypted key]
-	(CKA\_EXTRACTABLE, False)) [is allowed to be extracted from the device]
-\end{verbatim}
-\subsection{Most Common Functions}
+Smartcards store cryptographic keys, certificates and data. The standard treats each of these data items as objects. With each object having attributes that define controls that PKCS \#11 API should implement. In sections 2.1.1 and 2.1.2 we report the meanings behind the attributes of PKCS \#11 objects and the PKCS \#11 functions that utilise them.
+
+\subsection{PKCS \# 11 Object's and Attributes}
+
+There are 5 different types of objects supports by the PKCS \#11 standard. These are presented as the CKA\_class attribute.
+
+\begin{table}[H]
+\begin{tabular}{|l|p{10cm}|}
+\hline 
+CKA\_class & Definition\\
+\hline
+Secret Key & A secret key object is an object that stores a block cipher key value and its attributes.\\
+\hline
+Public Key & A public key object is an object that stores the public key value and attributes of an asymmetric key pair\\
+\hline
+Private Key & A private key object is an object that stores the private key value and attributes of an asymmetric key pair\\
+\hline
+Data & A data object is a generic object that allows any value to be stored within its objects value.\\
+\hline
+Certificate & A certificate object stores certificates usually wrapped in an ASN.1 encoding (e.g X.509) for their use on-line.\\
+\hline
+\end{tabular}
+\caption{PKCS \#11 Object Types}
+\end{table}
+
+Each of the types of objects hold values in the following attribute fields to store the sensitive information the hold.
+
+\begin{table}[H]
+\begin{tabular}{|l|l|p{10cm}|}
+\hline
+Object & Value & Definition\\
+
+\hline
+\end{tabular}
+
+\end{table}
+
+The objects shown within table 2.1 also have the following attributes that define controls the API should provide.
+
+\begin{table}[H]
+\begin{tabular}{|l|l|p{10cm}|}
+\hline
+CKA\_attribute & Value Type & Definition\\
+\hline
+Key Type & String & The key type attribute defines what type of key the object represents \textbf{\textit{[This is not present for data and certificate objects]}}\\
+\hline
+Token & Boolean & The token attribute defines whether or not the object is to be stored permanently on the card, or securely destroyed after a session. \textbf{\textit{[If token = True, the object must have an ID]}} \\
+\hline
+
+Modulus Bits & - & - \\
+\hline
+Public Exponent & - & - \\
+\hline
+Value Length & - & - \\
+\hline
+
+Private & Boolean & The private attribute defines if a user has to be authenticated with the smartcard before the object can be utilised \\
+\hline
+Label & String & The label attribute gives a name to the object for reference by the user \\
+\hline
+ID & String & The ID attribute gives an ID string value for lookup searches within the API by the user, when searching for objects stored on the card. \\
+\hline
+Sensitive & Boolean & The sensitive object defines if an object can be extracted out of the smartcard in an unencrypted format \\
+\hline
+Extractable & Boolean & The extractable attribute defines if an object can be extracted out of the smartcard\\
+\hline
+Encrypt & Boolean & The encrypt attribute defines if the object can be used for encrypting data \\
+\hline 
+Decrypt & Boolean & The decrypt attribute defines if an object can be used for decrypting data \\
+\hline
+Sign & Boolean & The sign attribute defines if an object can be used for signing data \\
+\hline 
+Verify & Boolean & The verify attribute defines if an object can be used for verifying the signature of data \\
+\hline
+Wrap & Boolean & The wrap attribute defines if an object can be used for wrapping (encrypting) another key object for extraction out of the smartcard in an encrypted format \\
+\hline
+Unwrap & Boolean & The unwrap attribute defines if an object can be used for unwrapping (decrypting) another (encrypted) key object for storing within the smartcard \\
+\hline
+\end{tabular}
+\caption{PKCS \#11 Attribute Definitions}
+\end{table}
+
+\subsection{PKCS \#11 Functions}
+
 
 
 \section{ISO 7816}
