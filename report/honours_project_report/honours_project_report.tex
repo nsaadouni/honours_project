@@ -98,14 +98,17 @@ Before we move into the above analysis, supporting material must be introduced. 
 
 In this chapter we give background knowledge on two essential standards that are required for the use of the contact smartcard we analyse in this paper. These two standards are PKCS\#11 and ISO 7816.
 
+\textit{Note that some of the explanations of the standards presented within this chapter require some knowledge of cryptographic terminology. The explanations of these are provided within chapter 3.}
+
 \section{PKCS\#11}
-Public Key Cryptography Standard \#11 was created by RSA Laboratories. It is a platform independent API, that defines rules and functions that should be implemented by the card manufacture in the form of a 'middleware'. The API is written within the C programming language, and only header files are included. The implementation of the API's functions are left to each card vendor, and are required to break down each function into multiple ISO 7816 command-response pairs to carry out the indented function.
+Public Key Cryptography Standard \#11 was created by RSA Laboratories. It is a platform independent API, that defines rules and functions that should be implemented by the card manufacturer in the form of a 'middleware'. The API is written within the C programming language, and only header files are included. The implementation of the API's functions are left to each card vendor, and are required to break down each function into multiple ISO 7816 command-response pairs to carry out the indented function.
 
 Smartcards store cryptographic keys, certificates and data. The standard treats each of these data items as objects. With each object having attributes that define controls that PKCS \#11 API should implement. In sections 2.1.1 and 2.1.2 we report the meanings behind the attributes of PKCS \#11 objects and the PKCS \#11 functions that utilise them.
 
+\pagebreak
 \subsection{PKCS \# 11 Object's and Attributes}
 
-There are 5 different types of objects supports by the PKCS \#11 standard. These are presented as the CKA\_class attribute.
+There are 5 different types of objects supports by the PKCS \#11 standard. These are presented as the CKA\_class attribute and reported in table 2.1. The sensitive values stored in objects are reported within table 2.1. And finally, the attributes each object has (depending on its type) are reported in table 2.3. The attributes in table 2.3, set controls that the API should implement.
 
 \begin{table}[H]
 \begin{tabular}{|l|p{10cm}|}
@@ -126,8 +129,6 @@ Certificate & A certificate object stores certificates usually wrapped in an ASN
 \caption{PKCS \#11 Object Types}
 \end{table}
 
-Each of the types of objects hold values in the following attribute fields to store their sensitive information.
-
 \begin{table}[H]
 \hskip-1.5cm\begin{tabular}{|p{3cm}|p{5cm}|p{10cm}|}
 \hline
@@ -144,8 +145,6 @@ Data \& Certificate & CKA\_Value & Stores the value of the data or certificate.\
 \end{tabular}
 \caption{PKCS \#11 Senseitive Attribute Values}
 \end{table}
-
-Finally each object has the following attributes set (depending on the type of object). These set controls that the API should implement. Table 2.1 reports this information.
 
 \begin{table}[H]
 \begin{tabular}{|l|l|p{10cm}|}
@@ -190,11 +189,13 @@ Unwrap & Boolean & The unwrap attribute defines if an object can be used for unw
 \caption{PKCS \#11 Attribute Definitions}
 \end{table}
 
-\textit{[Note there are additional attributes for different cryptographic keys e.g. elliptic curve asymmetric keys. We have only reported in the above table those attributes used within this study]}
+\textit{[Note there are additional attributes for different cryptographic keys e.g. elliptic curve asymmetric keys. We have only reported in the table 2.3 those attributes used within this study]}
 
 \subsection{PKCS \#11 Functions}
 
 There are 13 number of functions (that are commonly used) that utilise the objects described in section 2.1.1. These function preform different operations. We report in tabls 2.4 and 2.5 the function name and the description of the functionality it should provide. The implementation of these functions are all completed by the card vendors middleware and therefore differ from manufacturer and even smartcards of the same manufacture. We report an analysis of how 'Athena smartcard solutions' implemented their middleware for the IDprotect smartcard we study. This is provided in chapter 6.
+
+\textit{[Note the PKCS \#11 standard states that the attributes CKA\_sensitive and CKA\_extractable cannot be changed using setAttribute function from false to true, and true to false respectively.]}
 
 % PKCS 11 function table
 \begin{table}[H]
@@ -241,8 +242,6 @@ C\_Unwrap & object handle \& template & The unwrap function takes the object han
 \end{tabular}
 \caption{PKCS \#11 Functions}
 \end{table}
-
-\textit{[Note the PKCS \#11 standard states that the attributes CKA\_sensitive and CKA\_extractable cannot be changed using setAttribute function from false to true, and true to false respectively.]}
 
 \section{ISO/IEC 7816}
 
@@ -292,9 +291,31 @@ ISO 7816 Section & Description\\
 
 \subsection{Command-Response Structure}
 
-ISO/IEC 7816 section 4 [?] provides details regarding the structure behind the command-response pairs. Commands have a maximum of 7 fields. The definition of each field is reported in table X1.  And the command structure is reported in figure 2.1. Due to the optional fields Lc, Data, and Le, there are 4 possible structures of commands depending on the optional fields that are present. These different possibilities are reported in figure 2.2. Finally the structure of the response is reported in figure 2.3, with the meaning behinds the fields reported in table X2.
+ISO/IEC 7816 section 4 [?] provides details regarding the structure behind the command-response pairs. Commands have a maximum of 7 fields. The definition of each field is reported in table 2.6.  And the command structure is reported in figure 2.1. Due to the optional fields Lc, Data, and Le, there are 4 possible structures of commands depending on the optional fields that are present. These different possibilities are reported in figure 2.2. Finally the structure of the response is reported in figure 2.3, with the meaning behind the fields reported in table 2.7.
 
 % Table: Command fields
+\begin{table}[H]
+\begin{tabular}{|l|p{10cm}|}
+\hline
+Field & Description\\
+\hline
+CLA & CLA is the 'class' byte. This dictates if the command is inter-industry or proprietary \textit{(We provide examples of both within section 2.2.2)}\\
+\hline
+INS & INS is the instruction byte. This dictates what the instruction/ command is. \\
+\hline
+P1 & P1 is a byte which is the first parameter to the command \\
+\hline
+P2 & P2 is a byte which is the second parameter to the command \\
+\hline
+Lc & Lc is a byte that dictates the length of the data field. \textit{(Maximum = 256)}  \\
+\hline
+Data & Data is a field that has maximum length 256 bytes. It provides that data the command sends to the smartcard. \\
+\hline
+Le & Le is a byte that dictates the number of bytes expected in the response datafield \textit{(default = 00)} \\
+\hline
+\end{tabular}
+\caption{Command Field Explanations}
+\end{table}
 
 % IMAGE: Command
 \begin{figure}[H]
@@ -315,6 +336,20 @@ ISO/IEC 7816 section 4 [?] provides details regarding the structure behind the c
 \end{figure}
 
 % Table: Response fields
+\begin{table}[H]
+\begin{tabular}{|l|p{10cm}|}
+\hline
+Field & Description\\
+\hline
+Data & Data is a field that has maximum length 256 bytes. It provides that data the response sends back to the API. \\
+\hline
+SW1 & SW1 is the first status bytes.\\
+\hline
+SW2 & SW2 is the second status bytes.\\
+\hline
+\end{tabular}
+\caption{Response Field Explanations}
+\end{table}
 
 % IMAGE: Response
 \begin{figure}[H]
@@ -325,7 +360,24 @@ ISO/IEC 7816 section 4 [?] provides details regarding the structure behind the c
 \caption{Response Structure [?]}
 \end{figure}
 
-\subsection{Commands}
+
+ISO/IEC 7816 - section 7 provides the meaning behind the status bytes SW1 and SW2. We have provided a summary of the common types of status bytes and their meanings. This is reported in figure 2.4.
+
+% IMAGE: 
+\begin{figure}[H]
+\centering
+\begin{subfigure}{1\textwidth}
+  \includegraphics[width=1\linewidth]
+  {images/section_2/response_explain.png}
+\end{subfigure}
+\caption{Response Meanings [?]}
+\end{figure}
+
+\subsection{Commands Found During Analysis}
+
+During the analysis of the PKCS \#11 functions and how they are broken down into multiple ISO 7816 command-response pairs for the Athena IDprotect smartcard we analyse in this paper, we found the use of the following inter-industry and proprietary commands.
+
+\textit{[The work from (name) 2015 [?] found the 'inner-function' names which gave a good decoding of the proparitary commands listed in table 2.8. He had utilised a program named 'pcsc-spy' to find the 'inner-function' names. We discuss this within chapter 4 of this paper]}
 
 \begin{table}[H]
 \hskip-1.0cm\begin{tabular}{|c|c|c|c|c|c|c|p{8cm}|}
@@ -366,21 +418,7 @@ Xc  & -   & -  & -  & -   & -          & -  & Secure Messaging (SM)\\
 \caption{Common APDU Commands}
 \end{table} 
 
-\subsection{Responses}
 
-(ISO/IEC 7816 - Section 7)
-
-Here state we do not list all responses due to the sheer amount of them. Instead we provide an explanation that we grabbed from the ISO 7816 standard and this site that summeraizes them [?] if and when we need them.
-
-% IMAGE: 
-\begin{figure}[H]
-\centering
-\begin{subfigure}{1\textwidth}
-  \includegraphics[width=1\linewidth]
-  {images/section_2/response_explain.png}
-\end{subfigure}
-\caption{Response Meanings [?]}
-\end{figure}
 \subsection{File Structure}
 
 % IMAGE: File structure
@@ -879,9 +917,9 @@ Modifying the retry counter & C\_login & future work\\
 \subsection{Vulnerabilities not investigated}
 The \textit{initialization} function does not reveal any vulnerabilities that cane be exploited and is there for the API to correctly operate.
 
-We have highlighted in the \textit{Login} function analysis that it might be possible to use either 'REALLOCATE BINARY' or 'DELETE FILE' and 'CREATE FILE' in order to modify the retry counter. The aim of this would be to allow an unlimited number of attempts at guessing the user's PIN. We argue that is it not advisable to focus on this attack as it would not be particularly useful without the knowledge of the challenge-response algorithm that is used to verify the user's PIN.
+We have highlighted in the \textit{Login} function analysis that it might be possible to use either 'REALLOCATE BINARY' or 'DELETE FILE' and 'CREATE FILE' in order to modify the retry counter. The aim of this would be to allow an unlimited number of attempts at guessing the user's PIN. We argue that is it not advisable to focus on this attack as it would not be particularly useful without the knowledge of the challenge-response algorithm that is used to verify the user's PIN. Thus, we decided to focus on the reverse engineering of the PIN authentication protocol first, and left this attack for future work.
 
-The vulnerability discussed in the \textit{FindObject} function analysis presents the possibility to locate the attribute files at the APDU level, and modify them using 'REALLOCATE BINARY'. The two attributes that have the most significance would be CKA\_extractable and CKA\_sensitive. Previous work [?] has analysed this vulnerability and the findings did not reveal any significant security concerns. This was due to the fact that once the attributes had been set as part of the key generation process, the attribute file and the key file are separated and thus prevent the key from being exposed in plain text. Since this attack had already been investigated we did not feel that it would be appropriate to investigate it any further at this stage and leave it to future work.
+The vulnerability discussed in the \textit{FindObject} function analysis presents the possibility to locate the attribute files at the APDU level, and modify them using 'REALLOCATE BINARY'. The two attributes that have the most significance would be CKA\_extractable and CKA\_sensitive. Previous work [?] has analysed this vulnerability and the findings did not reveal any significant security concerns. This was due to the fact that once the attributes had been set as part of the key generation process, the attribute file and the key file are separated and thus prevent the key from being exposed in plain text. Since this attack had already been investigated we did not feel that it would be appropriate to investigate it any further at this stage.
 
 \textit{GenerateKey} and \textit{GenerateKeyPair} function analysis both suggest a vulnerability whereby attributes can be modified as the attribute file is being created for the first time. This leaves the possibility of the key value being exposed at the API layer. This effectively could result in the card being instructed to generate the key with the attributes the attacker sets. Setting the key attributes to have CKA\_sensitive set to false and CKA\_extractable set to true, will allow for key value exposure at the API level. This vulnerability would always have to be exploited upon key generation and would be visible to the user of the smartcard. Although this might be a viable attack to investigate, we have decided that it would be better to look into methods that would allow all keys to be exported in plain text regardless of whether the key was already generated and saved on the card without informing the user.
 
