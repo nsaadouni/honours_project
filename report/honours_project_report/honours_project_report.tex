@@ -452,18 +452,18 @@ Previous work completed by (name) 2015 [?] had found that attributes and sensiti
 The work also found the location of these attribute files and key value files. However we extended this work to include the locations of RSA key files. As the previous work only included the directories of block cipher key files (assuming that asymmetric key value files were stored within the same directory). We discuss this within the literature review in chapter 5, but also list the directory of key and attribute files in table 2.9.
 
 \begin{table}[H]
-\begin{tabular}{|l|l|p{10cm}|}
+\hskip+2.0cm\begin{tabular}{|l|l|p{6cm}|}
 \hline
 Key Type & File Type & Directory\\
 \hline
-Block cipher & Attribute & - \\
- 			 & Key       & - \\
+Block cipher & Attribute & 3F 00 30 00 30 \textbf{01 03 4X} \\
+ 			 & Key       & 3F 00 30 00 30 \textbf{01 00 CX} \\
 \hline
-RSA public 	 & Attribute & - \\
-		   	 & Key	     & - \\	   	 
+RSA public 	 & Attribute & 3F 00 30 00 30 \textbf{02 01 4X} \\
+		   	 & Key	     & 3F 00 30 00 30 \textbf{02 00 8X} \\	   	 
 \hline
-RSA private 	 & Attribute & - \\
-		   	 & Key	     & - \\	   	 
+RSA private 	 & Attribute & 3F 00 30 00 30 \textbf{02 01 4X} \\
+		   	 & Key	     & 3F 00 30 00 30 \textbf{02 02 0X} \\	   	 
 \hline
 \end{tabular}
 \caption{Directories of Key and Attribute Files}

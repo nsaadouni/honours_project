@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.14)  6 APR 2017 20:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.14)  6 APR 2017 21:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -871,12 +871,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 443--444
 
  []
 
-[21 <./images/section_2/file_structures.png>]
-Overfull \hbox (29.25804pt too wide) in paragraph at lines 455--469
-[][] 
- []
-
-[22]
+[21 <./images/section_2/file_structures.png>] [22]
 Chapter 3.
 [23
 
@@ -1577,7 +1572,7 @@ bol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb></usr/share/texl
 ive/texmf-dist/fonts/type1/public/wasy2-ps/wasy10.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/public/wasy2-ps/wasyb10.pfb>
-Output written on honours_project_report.pdf (121 pages, 432534 bytes).
+Output written on honours_project_report.pdf (121 pages, 432599 bytes).
 PDF statistics:
  486 PDF objects out of 1000 (max. 8388607)
  325 compressed objects within 4 object streams
