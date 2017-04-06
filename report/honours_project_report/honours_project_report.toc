@@ -6,7 +6,8 @@
 \contentsline {section}{\numberline {2.2}ISO/IEC 7816}{16}
 \contentsline {subsection}{\numberline {2.2.1}Command-Response Structure}{17}
 \contentsline {subsection}{\numberline {2.2.2}Commands Found During Analysis}{19}
-\contentsline {subsection}{\numberline {2.2.3}File Structure}{21}
+\contentsline {subsection}{\numberline {2.2.3}File System}{20}
+\contentsline {subsection}{\numberline {2.2.4}Directories of Key and Attribute Files}{22}
 \contentsline {chapter}{\numberline {3}Cryptographic Operations}{23}
 \contentsline {section}{\numberline {3.1}Hash Function}{23}
 \contentsline {section}{\numberline {3.2}Asymmetric Encryption}{23}

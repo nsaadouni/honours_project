@@ -361,7 +361,7 @@ SW2 & SW2 is the second status bytes.\\
 \end{figure}
 
 
-ISO/IEC 7816 - section 7 provides the meaning behind the status bytes SW1 and SW2. We have provided a summary of the common types of status bytes and their meanings. This is reported in figure 2.4.
+ISO/IEC 7816 - section 7 provides the meaning behind the status bytes SW1 and SW2. We have provided a summary of the common types of status bytes and their meanings. This is reported in figure 2.4. Due to the amount of decodings for the status bytes, we only give the exact decoding of them if and when they are required throughout this paper.
 
 % IMAGE: 
 \begin{figure}[H]
@@ -419,20 +419,55 @@ Xc  & -   & -  & -  & -   & -          & -  & Secure Messaging (SM)\\
 \end{table} 
 
 
-\subsection{File Structure}
+\subsection{File System}
+
+As defined in section 4 of the ISO/IEC 7816 standard, contact smartcards have a standard for their file systems. A master file (MF) is the root of the file structure, this is analogous to the C drive for windows operating systems on computers. Under the MF are dedicated files (DF) and elementary files (EF). DF's are directories (similar to folders) and have EF's contained within them. EF's are files consisting of data. There are 4 types of files that EF's support, they can be viewed in figure 2.5 and are:
+\begin{enumerate}
+\item Transparent Binary File
+\item Linear structure with records of fixed size
+\item Linear structure with records of variable size
+\item Cyclic structure with records of fixed size\\\\
+\end{enumerate}
+
+Elementary Files (EF) also take on two different formats. These have been witnessed within our analysis in chapter 6. \textit{The explanations of the formats have been taken directly from the standard [?]}:
+\begin{enumerate}
+\item An internal EF stores data interpreted by the card, i.e., data used by the card for management and
+control purposes.
+\item A working EF stores data not interpreted by the card, i.e., data used by the outside world exclusively.
+\end{enumerate}
 
 % IMAGE: File structure
 \begin{figure}[H]
 \hskip+0.0cm\begin{subfigure}{1\textwidth}
   \includegraphics[width=1\linewidth]
-  {images/section_2/file_structures.png}
+  {images/section_2/file_structures.png}\\\\\\
 \end{subfigure}
 \caption{File Structure [?]}
 \end{figure}
 
+\subsection{Directories of Key and Attribute Files}
+% Table: File locations within Athena IDprotect smartcard
+Previous work completed by (name) 2015 [?] had found that attributes and sensitive key values are stored within separate files in the smartcard. It appears that the sensitive key values are stored in internal EF's to prevent extraction, and the attributes are placed in a working EF transparent binary files. 
 
+The work also found the location of these attribute files and key value files. However we extended this work to include the locations of RSA key files. As the previous work only included the directories of block cipher key files (assuming that asymmetric key value files were stored within the same directory). We discuss this within the literature review in chapter 5, but also list the directory of key and attribute files in table 2.9.
 
-
+\begin{table}[H]
+\begin{tabular}{|l|l|p{10cm}|}
+\hline
+Key Type & File Type & Directory\\
+\hline
+Block cipher & Attribute & - \\
+ 			 & Key       & - \\
+\hline
+RSA public 	 & Attribute & - \\
+		   	 & Key	     & - \\	   	 
+\hline
+RSA private 	 & Attribute & - \\
+		   	 & Key	     & - \\	   	 
+\hline
+\end{tabular}
+\caption{Directories of Key and Attribute Files}
+\end{table}
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 
 \chapter{Cryptographic Operations}
