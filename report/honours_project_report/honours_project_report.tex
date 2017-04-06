@@ -244,8 +244,49 @@ C\_Unwrap & object handle \& template & The unwrap function takes the object han
 
 \textit{[Note the PKCS \#11 standard states that the attributes CKA\_sensitive and CKA\_extractable cannot be changed using setAttribute function from false to true, and true to false respectively.]}
 
-\section{ISO 7816}
-This is the international standards organization that defines the low level communication protocol between smartcard's and the API on the computer.
+\section{ISO/IEC 7816}
+
+The International Standards Organization (ISO) and the International Electrotechnical Commission (IEC) jointly manage the standard that defines electronic identification cards (mainly contact smartcards) [?].
+The chapters/ sections of the standard are reported in table X. 
+ 
+The main sections we are interested in are 4, 7, 8, and 9. We have extracted out of the ISO/IEC 7816 standard the information we utilise within this project and reported it within sections boom, boom and boom.
+
+\begin{table}[H]
+\begin{tabular}{|p{3cm}|p{12cm}|}
+\hline
+ISO 7816 Section & Description\\
+\hline
+1 & Physical Characteristics \\
+\hline
+2 & Cards with contacts - Dimensions and location of the contacts \\
+\hline
+3 & Cards with contacts - Electrical interface and transmission protocols \\
+\hline
+\textbf{4}  & Organization, security and commands for interchange \\
+\hline
+5 & Registration of application providers \\
+\hline
+6 & Interindustry data elements for interchange \\
+\hline
+\textbf{7} response & Interindustry commands for Structured Card Query Language (SCQL) \\
+\hline
+\textbf{8} & Commands for security operations \\
+\hline
+\textbf{9} & Commands for card management \\
+\hline
+10 & Electronic signals and answer to reset for synchronous cards \\
+\hline
+11 & Personal verification through biometric methods \\
+\hline
+12 & Cards with contacts - USB electrical interface and operating procedures \\
+\hline
+\textbf{13} defines control bytes for SM pbk & Commands for application management in multi-application environment \\
+\hline
+15 & Cryptographic information application \\
+\hline
+\end{tabular}
+\end{table}
+
 \subsection{Command Structure}
 \subsection{Response Structure}
 \subsection{Inter-Industry/ Proprietary}
@@ -261,27 +302,27 @@ CLA & INS & P1 & P2 & Lc  & Data Field & Le & Description\\
 Xc  & -   & -  & -  & -   & -          & -  & Secure Messaging (SM)\\
 \hline
 00  & 84  & 00 & 00 & -   & -          & L  &  (II) Get Challenge [\# bytes = L]\\
-00  & b0  & X  & X  & -   & -          & L  &  (II) Read Binary [\# bytes = L] \\
-00  & c0  & 00 & 00 & -   & -          & L  &  (II) Get Remaining Bytes\\
-00  & d6  & X  & X  & L   & X          & -  &  (II) Update Binary\\
-00  & e0  & X  & X  & L   & X          & -  &  (II) Create Binary\\
-00  & 47  & 00 & 00 & L   & params     & -  &  (II) Generate RSA KeyPair\\
-00  & e4  & 00 & 00 & 00  & -          & -  &  (II) Delete File\\
-00  & 2a  & 82 & 05 & L   & X          & 00 &  (II) Encrypt Data \\
-00  & 2a  & 80 & 05 & L   & X          & 00 &  (II) Decrypt Data \\
-00  & 2a  & 9E & 12 & L   & X          & 00 &  (II) Sign Data \\
-00  & 2a  & 80 & 0A & L   & X          & 00  & (II) Unwrap Key (RSA\_PKCS)\\
+00  & B0  & X  & X  & -   & -          & L  &  (II) Read Binary [\# bytes = L] \\
+00  & C0  & 00 & 00 & -   & -          & L  &  (II) Get Remaining Bytes\\
+00  & D6  & X  & X  & L   & X          & -  &  (II) Update Binary\\
+00  & E0  & X  & X  & L   & X          & -  &  (II) Create Binary\\
+00  & 47  & 00 & 00 & L   & Params     & -  &  (II) Generate RSA KeyPair\\
+00  & E4  & 00 & 00 & 00  & -          & -  &  (II) Delete File\\
+00  & 2A  & 82 & 05 & L   & X          & 00 &  (II) Encrypt Data \\
+00  & 2A  & 80 & 05 & L   & X          & 00 &  (II) Decrypt Data \\
+00  & 2A  & 9E & 12 & L   & X          & 00 &  (II) Sign Data \\
+00  & 2A  & 80 & 0A & L   & X          & 00  & (II) Unwrap Key (RSA\_PKCS)\\
 \hline
-80  & a4  & 08 & 00 & L   & FL         & -  & (P) Select File [FL = file location; L = len(fl)]\\
-80  & a4  & 00 & 00 & -   & FL         & -  & (P) Select File [append previous path]\\
-80  & a4  & 08 & 0c & L   & FL         & -  & (P) Read File Control Parameters\\
+80  & A4  & 08 & 00 & L   & FL         & -  & (P) Select File [FL = file location; L = len(fl)]\\
+80  & A4  & 00 & 00 & -   & FL         & -  & (P) Select File [append previous path]\\
+80  & A4  & 08 & 0C & L   & FL         & -  & (P) Read File Control Parameters\\
 80  & 20  & 00 & 00 & 10  & R          & -  & (P) Verify PIN [R = Response]\\
 80  & 28  & 00 & 00 & 04  & 00 00 00 20& -  & (P) Clear Security Status\\
 80  & 30  & 01 & 00 & 00  & -          & -  & (P) List Files\\
-80  & 48  & 00 & 80 & 00  & -          & -  & (P) Get Cards Public Key (genkey)\\
-80  & 48  & 00 & 00 & 00  & -          & -  & (P) Get Cards Public Key (genkeypair)\\
+80  & 48  & 00 & 80 & 00  & -          & -  & (P) Get The Smartcards Public Key [SM]\\
+80  & 48  & 00 & 00 & 00  & -          & -  & (P) Get Generated Public Key\\
 80  & 86  & 00 & 00 & L   & X          & 00 & (P) Open Secure Messaging\\
-80  & 86  & ff & ff & -   & -          & -  & (P) Close Secure Messaging\\
+80  & 86  & FF & FF & -   & -          & -  & (P) Close Secure Messaging\\
 \hline
 90  & 32  & 00 & 03 & ff  & X          & -  &  Reallocate Binary 256 bytes\\
 80  & 32  & 00 & 03 & L   & X          & -  &  Reallocate Binary L bytes (changes file)\\
