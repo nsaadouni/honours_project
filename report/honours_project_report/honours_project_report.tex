@@ -95,7 +95,7 @@ Before we move into the above analysis, supporting material must be introduced. 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 \chapter{Background - Cryptography}
 
-This chapter aims to provide an understanding of different cryptographic standards, and how they are used. This is to aid our explanations with regard the smartcards functionality and cryptographic operations used to attempt the secure transfer of sensitive information. In addition this chapter provides an understanding of terminology that is used throughout this paper.
+This chapter aims to provide an understanding of different cryptographic standards (we do not give explanations regarding the correctness of the standards, merely just how to use them). This is to aid our explanations with regard the smartcards functionality and cryptographic operations used to attempt the secure transfer of sensitive information. In addition this chapter provides an understanding of terminology that is used throughout this paper.
 
 \section{Cryptograhic - Hash Functions}
 
@@ -112,7 +112,44 @@ FIPS PUB 180-4 define [?] hash functions are a one way functions. They take in a
 Asymmetric encryption relies on public and private key pairs. Public keys can be sent over insecure channels for an entity to use to encrypt a message. Private keys are to be always kept a secret. Only the private key can be used to decrypt messages encrypted via the public key. This allows communication to remain confidential despite insecure mediums of transport being used.
 
 \subsection{RSA}
-Chinese Remainder Theorem RSA Keys
+(Chinese Remainder Theorem RSA Keys - for later)
+
+Ron Rivest, Adi Shamir, and Leonard Adleman published the RSA asymmetric encryption standard in 1977. The standard defines a public key (N,e) and a private key (N,d), where N is the multiplication of two large primes p and q. 
+
+\begin{table}[H]
+\begin{tabular}{|l|l|l|}
+\hline
+ & Public Key & Private Key\\
+\hline
+Modulus & N = p x q & N = p x q\\
+\hline
+Exponent & e & d\\
+\hline
+\end{tabular}
+\end{table}
+
+Messages to be encrypted are converted into integers to be used for the encryption and decryption process.
+
+\underline{\textbf{RSA public key encryption}}\\
+$$ encrpyted\_message =  message^e  \quad mod \quad N $$
+
+\underline{\textbf{RSA private key decryption}}\\
+$$ message =  encrypted\_message^d  \quad mod \quad N $$
+
+There are different RSA private and public key pairs. The size of the moudlus (N) in bits gives the names of the different forms of RSA there are. They provide different levels of security. It is suggested to now use RSA-2048 and above.
+
+\begin{table}[H]
+\begin{tabular}{|l|c|}
+\hline
+RSA-type & Exponent size (bytes)\\
+\hline
+RSA-512 & 64\\
+RSA-1024 & 128\\
+RSA-2048 & 256\\
+RSA-4096 & 512\\
+\hline
+\end{tabular}
+\end{table}
 
 \subsection{Diffie Hellman}
 
