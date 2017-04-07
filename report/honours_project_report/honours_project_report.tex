@@ -154,14 +154,20 @@ RSA-4096 & 512\\
 \end{tabular}
 \end{table}
 
-\underline{\textbf{Chinese Remainder Theorem RSA cryptography}}\\
+\underline{\textbf{Chinese Remainder Theorem (CRT) RSA cryptography}}\\
 
-G.N.Shinde and H.S.Fadewar published a paper in 2008 [?] explaining how the use of the chienese remainder theorem can improve the efficiency of RSA encryptions and decryptions by upto a factor of four. It required three additional calculations which are the following:
+G.N.Shinde and H.S.Fadewar published a paper in 2008 [?] explaining how the use of the chienese remainder theorem can improve the efficiency of RSA decryption by upto a factor of four. It required three additional calculations which are the following:
 \begin{enumerate}
 \item $dP = (1/e)\quad  mod (p-1)$
 \item $dQ = (1/e) \quad mod (q-1)$
 \item $qInv = (1/q) \quad mod (p)$
 \end{enumerate}
+
+To compute the decryption ($m= c^d mod(N)$) using CRT, we do the following:
+$$m1 = c^{dP} mod p$$
+$$m2 = c^{dQ} mod q$$
+$$h = qInv.(m1 - m2) mod (p)$$
+$$ m = m2 + h.q  == c^d mod (N)$$
 
 
 \subsection{Diffie Hellman}
