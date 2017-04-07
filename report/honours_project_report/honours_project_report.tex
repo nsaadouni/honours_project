@@ -245,20 +245,59 @@ Once each entity has each others public keys, they can now calculate a shared se
 
 
 \section{Symmetric Encryption}
-
-\noindent explain this in an overview term
-
-\subsection{Block Ciphers}
+Symmetric key algorithms rely on the fact that both entities in communication with one and other are both in the knowledge of a shared key. The shared key is to be held a secret by both entities and is used for both encryption and decryption. The symmetric key algorithms that are implemented on the smartcard we analyse are block ciphers. They are named block ciphers due to how the encrypt/ decrypt data, it occurs in blocks (predefined number of bytes). The three block ciphers that the smartcard has implemented are:
 \begin{enumerate}
-\item AES
-\item DES
-\item Triple DES
+\item Advanced Encryption Standard (AES)
+\item Data Encryption Standard (DES)
+\item Triple Data encryption Standard (3DES)\\
 \end{enumerate}
+
+We have reported the characteristics of the three block ciphers in table 2.1. Block ciphers also have serveral different modes of operation. These modes dictate different methods of encrypting and decrypting data. We have explained the two that are present on the Athena IDprotect smartcard we analyse in this paper.
+
+\begin{table}[H]
+\begin{tabular}{|l|c|c|}
+\hline
+Block Cipher & Block Size (bytes) & Key Size (bytes)\\
+\hline
+AES-128 & 16 & 16\\
+AES-192 & 16 & 24\\
+AES-256 & 16 & 32\\
+\hline
+DES & 8 & 8\\
+\hline
+3DES-64 & 8 & 8\\
+3DES-128 & 8 & 16\\
+3DES-192 & 8 & 24\\
+\hline
+\end{tabular}
+\caption{Block Cipher Characteristic's}
+\end{table}
 
 % might go against those headings and just list them in the explanations
 \subsection{ECB Mode}
+
+
+% IMAGE: ECB encryption
+\begin{figure}[H]
+\centering
+\begin{subfigure}{1.0\textwidth}
+  \includegraphics[width=1\linewidth]
+  {images/crypto/ecb.png}
+\end{subfigure}
+\caption{ECC Addition and Multiplication [?]}
+\end{figure}
 \subsection{CBC Mode}
 
+
+% IMAGE: CBC encryption
+\begin{figure}[H]
+\centering
+\begin{subfigure}{1.0\textwidth}
+  \includegraphics[width=1\linewidth]
+  {images/crypto/cbc.png}
+\end{subfigure}
+\caption{ECC Addition and Multiplication [?]}
+\end{figure}
 
 \section{Message Authentication Codes}
 
