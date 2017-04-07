@@ -191,7 +191,57 @@ $$ public\_key = G^{private\_key} \quad mod (p)$$
 The 2 entities send each other their public keys over the insecure channel, and can then calculate a shared secret (that other entities that cannot calculate) as follows:
 $$ shared\_secret = public\_key_2^{private\_key_1} \quad mod (p) $$
 
-\subsection{ECC}
+\subsection{Elliptic Curve Cryptography}
+\textit{[Note, we only report how ECCDH operates as this is an area we research within chapter 7 as part of an attack.]}
+
+Elliptic curve cryptography is based on the algebraic structure of elliptic curve over finite fields. The standard only received wide spread use starting 2004. It is similar to RSA in the respect that it provides a method for sharing an entities public key over and insecure channel. The public key can be used to encrypt data, sign data or even use a version of the Diffie Hellman protocol to derive a shared secret (ECCDH). Certicom Research published a revised paper in 2009 [?] explaining how to use the ECC standard.
+
+One major difference between ECC and standard cryptographic methods, is the addition and multiplication operations. In elliptic curve cryptograhpy addition and multiplication are redefined over the curve. The maths behind ECC means that addition and multiplication are no longer reversiable operations, and are now assumed to be one way functions. In which to compute the reverse of one of the operations, one must solve the 'elliptic curve discrete logarithm problem'. We report below in figure 2.1 examples of how multiplication and addition operation work in ECC.
+% IMAGE: ECC addition and multiplication
+\begin{figure}[H]
+\centering
+\begin{subfigure}{1.2\textwidth}
+  \includegraphics[width=1\linewidth]
+  {images/crypto/ecc.png}
+\end{subfigure}
+\caption{ECC Addition and Multiplication [?]}
+\end{figure}
+
+Global Paramters are shared (similar to Diffie Hellman) between two entities, these are:
+\begin{table}[H]
+\begin{tabular}{|l|l|}
+\hline
+Global Parameter & Description\\
+\hline
+\textit{p} & The field the curve is defined over\\
+\hline
+\textit{(a,b)} & Values defining the curve\\
+\hline
+\textit{G} & Generator point (fixed point on the curve)\\
+\hline
+\textit{n} & Prime order of G (n.G = elliptic identity)\\
+\hline
+\textit{h} & Cofactor\\
+\hline
+\textit{Seed} & Random number\\
+\hline
+\end{tabular}
+\end{table}
+
+\underline{\textbf{Elliptic Curve Cofactor Diffie Hellman}}\\
+
+Using the global parameters two entities can now generate their own private keys (defined on the curve). The value of their respective private keys (\textit{d}), are randomly selected numbers (seeded with \textit{Seed}), in the range $ 1 <= d <= (n-1)$.
+
+With their private keys each entity can now calculate their own public keys to send to one and other. This is similar to Diffie Hellman, however the ECC multiplication operation is used instead.
+
+\textit{public\_key$_1$ = (X$_1$, Y$_1$) - A point on the curve}\\
+\textit{public\_key$_1$ = (private\_key$_1$).G}\\
+
+Once each entity has each others public keys, they can now calculate a shared secret using the following formula:
+
+\begin{center}
+\textit{shared\_secret = public\_key$_2$.(private\_key$_1$.h)}
+\end{center}
 
 
 \section{Symmetric Encryption}
