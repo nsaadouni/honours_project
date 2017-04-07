@@ -171,9 +171,28 @@ $$ m = m2 + h.q  == c^d mod (N)$$
 
 
 \subsection{Diffie Hellman}
+Whitfield Diffie and Martin Hellman published in 1976 [?] the Diffie Hellman protocol. The protocol again has a public and private key pair that is used to derive a shared secret over an insecure channel. Two entities must agree on the global parameters.
+
+\begin{table}[H]
+\begin{tabular}{|l|c|}
+\hline
+ & Global Parameter\\
+\hline
+Generator & \textit{G}\\
+\hline
+Public Modulus & \textit{p}\\
+\hline
+\end{tabular}
+\end{table}
+
+Using the global parameters each entity generates selects its own private key to be a random number between 1 and \textit{p-1}. And then calculate their respective public keys as follows:
+$$ public\_key = G^{private\_key} \quad mod (p)$$
+
+The 2 entities send each other their public keys over the insecure channel, and can then calculate a shared secret (that other entities that cannot calculate) as follows:
+$$ shared\_secret = public\_key_2^{private\_key_1} \quad mod (p) $$
 
 \subsection{ECC}
-also explain ECCDH
+
 
 \section{Symmetric Encryption}
 
@@ -1564,8 +1583,8 @@ $$ public\_key_1 = G ^{private\_key_1} \quad mod \quad p $$
 $$ public\_key_2 = G ^{private\_key_2} \quad mod \quad p $$
 
 From here a shared secret \textbf{S} can be calculated by each entity with the following formula:\\
-$$ S_1 = public\_key_1 ^ {public\_key_2} \quad mod \quad p $$
-$$ S_2 = public\_key_2 ^ {public\_key_1} \quad mod \quad p $$
+$$ S_1 = public\_key_1 ^ {private\_key_2} \quad mod \quad p $$
+$$ S_2 = public\_key_2 ^ {private\_key_1} \quad mod \quad p $$
 $$ S = S_1 = S_2 $$
 
 Thus if the generator were set to be \textbf{0}, then the public key calculated by the API would in fact be 0 as well. And in the case the generator is set to \textbf{1}, the API would calculate its public key as 1. This matches the properties described in table 7.12. Therefore we conclude due to the mathematical properties presented that, the secure messaging initialization process is the diffie hellman protcol. Whereby the data sent during the initialization of secure messaging is the following:
