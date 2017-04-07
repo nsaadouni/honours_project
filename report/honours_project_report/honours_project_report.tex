@@ -16,6 +16,8 @@
 \usepackage{fancyvrb}
 \usepackage{bera}
 
+
+
 \usepackage[toc,page]{appendix}
 
 \begin{document}
@@ -99,7 +101,7 @@ This chapter aims to provide an understanding of different cryptographic standar
 
 \section{Cryptograhic - Hash Functions}
 
-FIPS PUB 180-4 define [?] hash functions are a one way functions. They take in as input a message (a string) and output a fixed size message digest (another string). Hash functions should hold three properties:
+FIPS PUB 180-4 define [?] hash functions are a one way functions. They take in as input a \textbf{variable sized} message (a string) and output a \textbf{fixed size} message digest (another string). Hash functions should hold three properties:
 \begin{enumerate}
 \item \textbf{Simple Computation} - It should be easy to calculate the message digest of a given message.
 \item \textbf{Difficult Reversing the Computation} - It should be difficult to find the message given its mesage digest.
@@ -107,14 +109,15 @@ FIPS PUB 180-4 define [?] hash functions are a one way functions. They take in a
 \end{enumerate}
 
 
+$$ Message\_digest = Hash\_function(message) $$
+
+
 \section{Asymmetric Encryption}
 
 Asymmetric encryption relies on public and private key pairs. Public keys can be sent over insecure channels for an entity to use to encrypt a message. Private keys are to be always kept a secret. Only the private key can be used to decrypt messages encrypted via the public key. This allows communication to remain confidential despite insecure mediums of transport being used.
 
 \subsection{RSA}
-(Chinese Remainder Theorem RSA Keys - for later)
-
-Ron Rivest, Adi Shamir, and Leonard Adleman published the RSA asymmetric encryption standard in 1977. The standard defines a public key (N,e) and a private key (N,d), where N is the multiplication of two large primes p and q. 
+Ron Rivest, Adi Shamir, and Leonard Adleman published the RSA asymmetric encryption standard in 1977 [?]. The standard defines a public key (N,e) and a private key (N,d), where N is the multiplication of two large primes p and q. 
 
 \begin{table}[H]
 \begin{tabular}{|l|l|l|}
@@ -150,6 +153,16 @@ RSA-4096 & 512\\
 \hline
 \end{tabular}
 \end{table}
+
+\underline{\textbf{Chinese Remainder Theorem RSA cryptography}}\\
+
+G.N.Shinde and H.S.Fadewar published a paper in 2008 [?] explaining how the use of the chienese remainder theorem can improve the efficiency of RSA encryptions and decryptions by upto a factor of four. It required three additional calculations which are the following:
+\begin{enumerate}
+\item $dP = (1/e)\quad  mod (p-1)$
+\item $dQ = (1/e) \quad mod (q-1)$
+\item $qInv = (1/q) \quad mod (p)$
+\end{enumerate}
+
 
 \subsection{Diffie Hellman}
 
