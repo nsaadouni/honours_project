@@ -6,14 +6,14 @@
 \contentsline {subsection}{\numberline {2.2.2}Diffie Hellman}{13}
 \contentsline {subsection}{\numberline {2.2.3}Elliptic Curve Cryptography}{13}
 \contentsline {section}{\numberline {2.3}Symmetric Encryption}{15}
-\contentsline {subsection}{\numberline {2.3.1}ECB Mode}{16}
-\contentsline {subsection}{\numberline {2.3.2}CBC Mode}{16}
-\contentsline {section}{\numberline {2.4}Message Authentication Codes}{16}
+\contentsline {subsection}{\numberline {2.3.1}Electronic CodeBook (ECB) Mode}{16}
+\contentsline {subsection}{\numberline {2.3.2}Cipher Block Chaining (CBC) Mode}{16}
+\contentsline {section}{\numberline {2.4}Message Authentication Codes}{17}
 \contentsline {subsection}{\numberline {2.4.1}Hash Based - Message Authentication Codes (HMAC)}{17}
 \contentsline {subsection}{\numberline {2.4.2}Cryptographic Based - Message Authentication Codes (CMAC)}{17}
-\contentsline {section}{\numberline {2.5}One Time Passwords}{17}
-\contentsline {subsection}{\numberline {2.5.1}Hash Based - One Time Passwords (HOTP)}{17}
-\contentsline {subsection}{\numberline {2.5.2}Time Based - One Time Passwords (TOTP)}{17}
+\contentsline {section}{\numberline {2.5}One Time Passwords}{18}
+\contentsline {subsection}{\numberline {2.5.1}Hash Based - One Time Passwords (HOTP)}{18}
+\contentsline {subsection}{\numberline {2.5.2}Time Based - One Time Passwords (TOTP)}{18}
 \contentsline {chapter}{\numberline {3}Background - Standards For Smartcards}{19}
 \contentsline {section}{\numberline {3.1}PKCS\#11}{19}
 \contentsline {subsection}{\numberline {3.1.1}PKCS \# 11 Object's and Attributes}{20}

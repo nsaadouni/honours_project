@@ -245,7 +245,7 @@ Once each entity has each others public keys, they can now calculate a shared se
 
 
 \section{Symmetric Encryption}
-Symmetric key algorithms rely on the fact that both entities in communication with one and other are both in the knowledge of a shared key. The shared key is to be held a secret by both entities and is used for both encryption and decryption. The symmetric key algorithms that are implemented on the smartcard we analyse are block ciphers. They are named block ciphers due to how the encrypt/ decrypt data, it occurs in blocks (predefined number of bytes). The three block ciphers that the smartcard has implemented are:
+Symmetric key algorithms rely on the fact that both entities in communication with one and other are both in the knowledge of a shared key. The shared key is to be held a secret by both entities and is used for both encryption and decryption. The symmetric key algorithms that are implemented on the smartcard we analyse are block ciphers. They are named block ciphers due to how the encrypt/ decrypt data, it occurs in blocks (predefined number of bytes). Thus, if a message's length is not of a multiple of the block size it must be padded. The three block ciphers that the smartcard has implemented are:
 \begin{enumerate}
 \item Advanced Encryption Standard (AES)
 \item Data Encryption Standard (DES)
@@ -274,8 +274,8 @@ DES & 8 & 8\\
 \end{table}
 
 % might go against those headings and just list them in the explanations
-\subsection{ECB Mode}
-
+\subsection{Electronic CodeBook (ECB) Mode}
+Electronic CodeBook mode is the simplest form of encryption. Every block is treated separately, encrypted and concatenated together to form the encrypted message. This can be seen in figure 2.2.
 
 % IMAGE: ECB encryption
 \begin{figure}[H]
@@ -284,10 +284,13 @@ DES & 8 & 8\\
   \includegraphics[width=1\linewidth]
   {images/crypto/ecb.png}
 \end{subfigure}
-\caption{ECC Addition and Multiplication [?]}
+\caption{Block Cipher ECB Encryption [?]}
 \end{figure}
-\subsection{CBC Mode}
+\subsection{Cipher Block Chaining (CBC) Mode}
 
+Cipher Block Chaining mode is more complex. It requires an \textit{initialization vector} (IV), that is used to XOR with the first block of plaintext for encryption. The output of every encrypted block is then XOR'd with the next block of plaintext before it is encrypted. This can be seen in figure 2.3.
+
+\textit{[The IV is always of the same length as the block size for a given block cipher] 1}
 
 % IMAGE: CBC encryption
 \begin{figure}[H]
@@ -296,20 +299,63 @@ DES & 8 & 8\\
   \includegraphics[width=1\linewidth]
   {images/crypto/cbc.png}
 \end{subfigure}
-\caption{ECC Addition and Multiplication [?]}
+\caption{Block Cipher CBC encryption [?]}
 \end{figure}
 
 \section{Message Authentication Codes}
 
-\noindent explain what a message authentication code is, what its used for\\
-\noindent (wikipedia have good diagrams and explanations of this!!)
+A Message Authentication Code (MAC) is a checksum/ tag that is appended to a message. Its use is to provide data integrity to a message sent over an insecure channel. It does this by forming a tag that should not be able to be formed without the knowledge of the shared key. Thus, the receiver of the message will use their shared key, the MAC algorithm and the message to compute (what should be the same tag) a tag. This tag is then cross-referenced with the tag appended to the message. If they match the entity is aware that the message has not been tampered with.
 
 \subsection{Hash Based - Message Authentication Codes (HMAC)}
+
+RFC 2104 [?] defines the HMAC: keyed-hashing for message authentication. HMAC's use cryptographic hash functions to combine the message and the shared key to generate a tag that should only be able to computed via the knowledge of both the key and the message. The formula is:
+
+\begin{table}[H]
+\begin{tabular}{|l|l|}
+\hline
+Variable & Description\\
+\hline
+Hash & A cryptographic hash function (e.g. SHA-256)\\
+\hline
+Key & The shared secret key between the two entities\\
+\hline
+Msg & The message to compute the tag for\\
+\hline
+opad & The byte 0x36 repeated B times\\
+\hline
+ipad & The byte 0x5C repeated B times\\
+\hline
+B & Block size of the block cipher used in the cryptographic hash function\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{center}
+\textit{HMAC(Key, Msg) = Hash(Key XOR opad, Hash(Key XOR ipad, Msg))}
+\end{center}
+
+
 \subsection{Cryptographic Based - Message Authentication Codes (CMAC)}
+
+RFC 4493 [?] defines the AES Cryptograhic Message Authentication Code (the use of other block ciphers is also allowed for CMAC's). First two additional keys K$_1$ and K$_2$ are generated using a derivation of the original shared key known by the two entities. The message is encrypted using the block cipher in CBC mode with an IV = 0, denoted Enc$_1$. 
+
+The two shared keys are used to alter last block of the message as defined in the standard, and then encrypted using the block cipher and original shared key. This is XOR'd with Enc$_1$ to form the CMAC tag. This can be seen in figure 2.4.
+
+
+% IMAGE: CBC encryption
+\begin{figure}[H]
+\centering
+\begin{subfigure}{1.2\textwidth}
+  \includegraphics[width=1\linewidth]
+  {images/crypto/CMAC.jpg}
+\end{subfigure}
+\caption{CMAC [?]}
+\end{figure}
+
 
 \section{One Time Passwords}
 
-\noindent What is a one time password $\rightarrow$ what forms are there?
+What are one time passwords?
 
 \subsection{Hash Based - One Time Passwords (HOTP)}
 \subsection{Time Based - One Time Passwords (TOTP)}
