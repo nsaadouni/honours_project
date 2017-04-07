@@ -95,17 +95,21 @@ Before we move into the above analysis, supporting material must be introduced. 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 \chapter{Background - Cryptography}
 
-In this chapter we describe different cryptography standards, and give a brief overview of the terminology and maths used behind some of the types of cryptography. This will be used to aid our explanations in later chapters that regard the cards functionality and cryptographic operations used to attempt the secure transfer of sensitive information.
+This chapter aims to provide an understanding of different cryptographic standards, and how they are used. This is to aid our explanations with regard the smartcards functionality and cryptographic operations used to attempt the secure transfer of sensitive information. In addition this chapter provides an understanding of terminology that is used throughout this paper.
 
-\section{Hash Function}
+\section{Cryptograhic - Hash Functions}
 
-\noindent explain this in an overview term
-
+FIPS PUB 180-4 define [?] hash functions are a one way functions. They take in as input a message (a string) and output a fixed size message digest (another string). Hash functions should hold three properties:
+\begin{enumerate}
+\item \textbf{Simple Computation} - It should be easy to calculate the message digest of a given message.
+\item \textbf{Difficult Reversing the Computation} - It should be difficult to find the message given its mesage digest.
+\item \textbf{Collision Resistance} - It should be difficult to find two messages m$_1$ and m$_2$ that have identical message digests.
+\end{enumerate}
 
 
 \section{Asymmetric Encryption}
 
-public and private keys for communicating over an insecure channel
+Asymmetric encryption relies on public and private key pairs. Public keys can be sent over insecure channels for an entity to use to encrypt a message. Private keys are to be always kept a secret. Only the private key can be used to decrypt messages encrypted via the public key. This allows communication to remain confidential despite insecure mediums of transport being used.
 
 \subsection{RSA}
 Chinese Remainder Theorem RSA Keys
@@ -468,8 +472,14 @@ We report the use of secure messaging within chapters 6 and 7.
 This will be a brief chapter and will discuss all of the research I have conducted.\\
 Mainly regarding PKCS\#11 API attacks due to the small amount of literature that is available for APDU level attacks
 I shall also explain why some of the attacks are not able to be conducted on the particular card I am reviewing
+\section{RAID (2016)}
 
-\section{Directories of Key and Attribute Files}
+\section{REPROVE}
+
+\section{Wrap/Decrypt Attack}
+\section{(name) 2015 - Previous study on the same smartcard}
+\section{Extended Work}
+\subsection{Directories of Key and Attribute Files}
 % Table: File locations within Athena IDprotect smartcard
 Previous work completed by (name) 2015 [?] had found that attributes and sensitive key values are stored within separate files in the smartcard. It appears that the sensitive key values are stored in internal EF's to prevent extraction, and the attributes are placed in working EF transparent binary files. 
 
@@ -493,7 +503,7 @@ RSA private 	 & Attribute & 3F 00 30 00 30 \textbf{02 01 4X} \\
 \caption{Directories of Key and Attribute Files}
 \end{table}
 
-\section{APDU Commands Found During Analysis}
+\subsection{APDU Commands Found During Analysis}
 
 During the analysis of the PKCS \#11 functions and how they are broken down into multiple ISO 7816 command-response pairs for the Athena IDprotect smartcard we analyse in this paper, we found the use of the following inter-industry and proprietary commands.
 
@@ -539,12 +549,13 @@ Xc  & -   & -  & -  & -   & -          & -  & Secure Messaging (SM)\\
 \end{table} 
 
 
-\section{Manually Overriding Attributes}
+\subsection{Manually Overriding Attributes}
 This attack was found by previous literature. We simply tested to see if the same attack was feasiable on the smart card we analyse. 
 
 To test this we created a DES3 key on the card that had the encrypt attribute set to False. We asked the card to encrypt the string '12345678'. The API returned an error stating that this function was not supported due to the attribute settings. We then override the API by manually sending the command overselves. This results in the encryption taking place on the card, when in-fact it should not.
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 \chapter{Tools Developed/Used In This Project}
 
