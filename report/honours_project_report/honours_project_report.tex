@@ -93,12 +93,64 @@ Before we move into the above analysis, supporting material must be introduced. 
 
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
+\chapter{Background - Cryptography}
 
-\chapter{Background}
+In this chapter we describe different cryptography standards, and give a brief overview of the terminology and maths used behind some of the types of cryptography. This will be used to aid our explanations in later chapters that regard the cards functionality and cryptographic operations used to attempt the secure transfer of sensitive information.
+
+\section{Hash Function}
+
+\noindent explain this in an overview term
+
+
+
+\section{Asymmetric Encryption}
+
+public and private keys for communicating over an insecure channel
+
+\subsection{RSA}
+Chinese Remainder Theorem RSA Keys
+
+\subsection{Diffie Hellman}
+
+\subsection{ECC}
+also explain ECCDH
+
+\section{Symmetric Encryption}
+
+\noindent explain this in an overview term
+
+\subsection{Block Ciphers}
+\begin{enumerate}
+\item AES
+\item DES
+\item Triple DES
+\end{enumerate}
+
+% might go against those headings and just list them in the explanations
+\subsection{ECB Mode}
+\subsection{CBC Mode}
+
+
+\section{Message Authentication Codes}
+
+\noindent explain what a message authentication code is, what its used for\\
+\noindent (wikipedia have good diagrams and explanations of this!!)
+
+\subsection{Hash Based - Message Authentication Codes (HMAC)}
+\subsection{Cryptographic Based - Message Authentication Codes (CMAC)}
+
+\section{One Time Passwords}
+
+\noindent What is a one time password $\rightarrow$ what forms are there?
+
+\subsection{Hash Based - One Time Passwords (HOTP)}
+\subsection{Time Based - One Time Passwords (TOTP)}
+
+
+%---------------------------------------------------------------------------------------------------------------------------------------------------
+\chapter{Background - Standards For Smartcards}
 
 In this chapter we give background knowledge on two essential standards that are required for the use of the contact smartcard we analyse in this paper. These two standards are PKCS\#11 and ISO 7816.
-
-\textit{Note that some of the explanations of the standards presented within this chapter require some knowledge of cryptographic terminology. The explanations of these are provided within chapter 3.}
 
 \section{PKCS\#11}
 Public Key Cryptography Standard \#11 was created by RSA Laboratories. It is a platform independent API, that defines rules and functions that should be implemented by the card manufacturer in the form of a 'middleware'. The API is written within the C programming language, and only header files are included. The implementation of the API's functions are left to each card vendor, and are required to break down each function into multiple ISO 7816 command-response pairs to carry out the indented function.
@@ -289,9 +341,9 @@ ISO 7816 Section & Description\\
 % 7  has is the source of response table
 % 13 defines control bytes for Secure Messaging Public Key
 
-\subsection{Command-Response Structure}
+\subsection{APDU Command-Response Structure}
 
-ISO/IEC 7816 section 4 [?] provides details regarding the structure behind the command-response pairs. Commands have a maximum of 7 fields. The definition of each field is reported in table 2.6.  And the command structure is reported in figure 2.1. Due to the optional fields Lc, Data, and Le, there are 4 possible structures of commands depending on the optional fields that are present. These different possibilities are reported in figure 2.2. Finally the structure of the response is reported in figure 2.3, with the meaning behind the fields reported in table 2.7.
+ISO/IEC 7816 section 4 [?] provides details regarding the structure behind the \textbf{application data protocol units} (APDU) command-response pairs. Commands have a maximum of 7 fields. The definition of each field is reported in table 2.6.  And the command structure is reported in figure 2.1. Due to the optional fields Lc, Data, and Le, there are 4 possible structures of commands depending on the optional fields that are present. These different possibilities are reported in figure 2.2. Finally the structure of the response is reported in figure 2.3, with the meaning behind the fields reported in table 2.7.
 
 % Table: Command fields
 \begin{table}[H]
@@ -373,7 +425,75 @@ ISO/IEC 7816 - section 7 provides the meaning behind the status bytes SW1 and SW
 \caption{Response Meanings [?]}
 \end{figure}
 
-\subsection{Commands Found During Analysis}
+
+\subsection{File System}
+
+As defined in section 4 of the ISO/IEC 7816 standard, contact smartcards have a standard for their file systems. A master file (MF) is the root of the file structure, this is analogous to the C drive for windows operating systems on computers. Under the MF are dedicated files (DF) and elementary files (EF). DF's are directories (similar to folders) and have EF's contained within them. EF's are files consisting of data. There are 4 types of files that EF's support, they can be viewed in figure 2.5 and are:
+\begin{enumerate}
+\item Transparent Binary File
+\item Linear structure with records of fixed size
+\item Linear structure with records of variable size
+\item Cyclic structure with records of fixed size\\\\
+\end{enumerate}
+
+Elementary Files (EF) also take on two different formats. These have been witnessed within our analysis in chapter 6. \textit{The explanations of the formats have been taken directly from the standard [?]}:
+\begin{enumerate}
+\item An internal EF stores data interpreted by the card, i.e., data used by the card for management and
+control purposes.
+\item A working EF stores data not interpreted by the card, i.e., data used by the outside world exclusively.
+\end{enumerate}
+
+% IMAGE: File structure
+\begin{figure}[H]
+\hskip+0.0cm\begin{subfigure}{0.8\textwidth}
+  \includegraphics[width=1\linewidth]
+  {images/section_2/file_structures.png}\\\\\\
+\end{subfigure}
+\caption{File Structure [?]}
+\end{figure}
+
+
+\subsection{Secure Messaging}
+
+ISO/IEC 7816 section 4 reports details of the command structure of messages that occur within a 'secure messaging session'. We provide an example of the command structure in table 2.8 (the CLA byte is equal to 8C).
+
+Secure messaging sessions derive two session keys S$_{Enc}$ and S$_{Mac}$ between the API and the smartcard. The S$_{Enc}$ session key is used to encrypt the data-field of commands within a secure messaging session. And S$_{Mac}$ is used to compute a checksum (using C-MAC) of the entire command. This checksum is appended to the command. This provides confidentiality (only the systems in question should be able to read the actual messages) and integrity (data has not been altered in transit) to command-response pairs in a secure messaging session. 
+
+We report the use of secure messaging within chapters 6 and 7.
+
+%---------------------------------------------------------------------------------------------------------------------------------------------------
+
+\chapter{Literature Review}
+
+This will be a brief chapter and will discuss all of the research I have conducted.\\
+Mainly regarding PKCS\#11 API attacks due to the small amount of literature that is available for APDU level attacks
+I shall also explain why some of the attacks are not able to be conducted on the particular card I am reviewing
+
+\section{Directories of Key and Attribute Files}
+% Table: File locations within Athena IDprotect smartcard
+Previous work completed by (name) 2015 [?] had found that attributes and sensitive key values are stored within separate files in the smartcard. It appears that the sensitive key values are stored in internal EF's to prevent extraction, and the attributes are placed in working EF transparent binary files. 
+
+The work also found the location of these attribute files and key value files. However, we extended this work to include the locations of RSA key files. As the previous work only included the directories of block cipher key files (and assumed that asymmetric key value files were stored within the same directory). We discuss this within the literature review in chapter 5, but also list the directory of key and attribute files in table 2.9.
+
+\begin{table}[H]
+\hskip+2.0cm\begin{tabular}{|l|l|p{6cm}|}
+\hline
+Key Type & File Type & Directory\\
+\hline
+Block cipher & Attribute & 3F 00 30 00 30 \textbf{01 03 4X} \\
+ 			 & Key       & 3F 00 30 00 30 \textbf{01 00 CX} \\
+\hline
+RSA public 	 & Attribute & 3F 00 30 00 30 \textbf{02 01 4X} \\
+		   	 & Key	     & 3F 00 30 00 30 \textbf{02 00 8X} \\	   	 
+\hline
+RSA private 	 & Attribute & 3F 00 30 00 30 \textbf{02 01 4X} \\
+		   	 & Key	     & 3F 00 30 00 30 \textbf{02 02 0X} \\	   	 
+\hline
+\end{tabular}
+\caption{Directories of Key and Attribute Files}
+\end{table}
+
+\section{APDU Commands Found During Analysis}
 
 During the analysis of the PKCS \#11 functions and how they are broken down into multiple ISO 7816 command-response pairs for the Athena IDprotect smartcard we analyse in this paper, we found the use of the following inter-industry and proprietary commands.
 
@@ -419,118 +539,14 @@ Xc  & -   & -  & -  & -   & -          & -  & Secure Messaging (SM)\\
 \end{table} 
 
 
-\subsection{File System}
+\section{Manually Overriding Attributes}
+This attack was found by previous literature. We simply tested to see if the same attack was feasiable on the smart card we analyse. 
 
-As defined in section 4 of the ISO/IEC 7816 standard, contact smartcards have a standard for their file systems. A master file (MF) is the root of the file structure, this is analogous to the C drive for windows operating systems on computers. Under the MF are dedicated files (DF) and elementary files (EF). DF's are directories (similar to folders) and have EF's contained within them. EF's are files consisting of data. There are 4 types of files that EF's support, they can be viewed in figure 2.5 and are:
-\begin{enumerate}
-\item Transparent Binary File
-\item Linear structure with records of fixed size
-\item Linear structure with records of variable size
-\item Cyclic structure with records of fixed size\\\\
-\end{enumerate}
-
-Elementary Files (EF) also take on two different formats. These have been witnessed within our analysis in chapter 6. \textit{The explanations of the formats have been taken directly from the standard [?]}:
-\begin{enumerate}
-\item An internal EF stores data interpreted by the card, i.e., data used by the card for management and
-control purposes.
-\item A working EF stores data not interpreted by the card, i.e., data used by the outside world exclusively.
-\end{enumerate}
-
-% IMAGE: File structure
-\begin{figure}[H]
-\hskip+0.0cm\begin{subfigure}{1\textwidth}
-  \includegraphics[width=1\linewidth]
-  {images/section_2/file_structures.png}\\\\\\
-\end{subfigure}
-\caption{File Structure [?]}
-\end{figure}
-
-\subsection{Directories of Key and Attribute Files}
-% Table: File locations within Athena IDprotect smartcard
-Previous work completed by (name) 2015 [?] had found that attributes and sensitive key values are stored within separate files in the smartcard. It appears that the sensitive key values are stored in internal EF's to prevent extraction, and the attributes are placed in a working EF transparent binary files. 
-
-The work also found the location of these attribute files and key value files. However we extended this work to include the locations of RSA key files. As the previous work only included the directories of block cipher key files (assuming that asymmetric key value files were stored within the same directory). We discuss this within the literature review in chapter 5, but also list the directory of key and attribute files in table 2.9.
-
-\begin{table}[H]
-\hskip+2.0cm\begin{tabular}{|l|l|p{6cm}|}
-\hline
-Key Type & File Type & Directory\\
-\hline
-Block cipher & Attribute & 3F 00 30 00 30 \textbf{01 03 4X} \\
- 			 & Key       & 3F 00 30 00 30 \textbf{01 00 CX} \\
-\hline
-RSA public 	 & Attribute & 3F 00 30 00 30 \textbf{02 01 4X} \\
-		   	 & Key	     & 3F 00 30 00 30 \textbf{02 00 8X} \\	   	 
-\hline
-RSA private 	 & Attribute & 3F 00 30 00 30 \textbf{02 01 4X} \\
-		   	 & Key	     & 3F 00 30 00 30 \textbf{02 02 0X} \\	   	 
-\hline
-\end{tabular}
-\caption{Directories of Key and Attribute Files}
-\end{table}
-
-\subsection{Secure Messaging}
-%---------------------------------------------------------------------------------------------------------------------------------------------------
-
-\chapter{Cryptographic Operations}
-
-In this chapter we describe different cryptography standards, and give a brief overview of the terminology and maths used behind some of the types of cryptography. This will be used to aid our explanations in later chapters that regard the cards functionality and cryptographic operations used to attempt the secure transfer of sensitive information.
-
-\section{Hash Function}
-
-\noindent explain this in an overview term
-
-
-
-\section{Asymmetric Encryption}
-
-public and private keys for communicating over an insecure channel
-
-\subsection{RSA}
-Chinese Remainder Theorem RSA Keys
-
-\subsection{Diffie Hellman}
-
-\subsection{ECC}
-also explain ECCDH
-
-\section{Symmetric Encryption}
-
-\noindent explain this in an overview term
-
-\subsection{Block Ciphers}
-\begin{enumerate}
-\item AES
-\item DES
-\item Triple DES
-\end{enumerate}
-
-% might go against those headings and just list them in the explanations
-\subsection{ECB Mode}
-\subsection{CBC Mode}
-
-
-\section{Message Authentication Codes}
-
-\noindent explain what a message authentication code is, what its used for\\
-\noindent (wikipedia have good diagrams and explanations of this!!)
-
-\subsection{Hash Based - Message Authentication Codes (HMAC)}
-\subsection{Cryptographic Based - Message Authentication Codes (CMAC)}
-
-\section{One Time Passwords}
-
-\noindent What is a one time password $\rightarrow$ what forms are there?
-
-\subsection{Hash Based - One Time Passwords (HOTP)}
-\subsection{Time Based - One Time Passwords (TOTP)}
-
-
-
+To test this we created a DES3 key on the card that had the encrypt attribute set to False. We asked the card to encrypt the string '12345678'. The API returned an error stating that this function was not supported due to the attribute settings. We then override the API by manually sending the command overselves. This results in the encryption taking place on the card, when in-fact it should not.
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 
-\chapter{Tools}
+\chapter{Tools Developed/Used In This Project}
 
 
 
@@ -543,24 +559,6 @@ This is then used to run API functions, and the commands are relayed to the actu
 
 
 \section{Man in The Middle (MiTM)}
-
-
-
-
-
-%---------------------------------------------------------------------------------------------------------------------------------------------------
-
-\chapter{Related Work / Literature Review}
-
-This will be a brief chapter and will discuss all of the research I have conducted.\\
-Mainly regarding PKCS\#11 API attacks due to the small amount of literature that is available for APDU level attacks
-I shall also explain why some of the attacks are not able to be conducted on the particular card I am reviewing
-
-\section{Manually Overriding Attributes}
-This attack was found by previous literature. We simply tested to see if the same attack was feasiable on the smart card we analyse. 
-
-To test this we created a DES3 key on the card that had the encrypt attribute set to False. We asked the card to encrypt the string '12345678'. The API returned an error stating that this function was not supported due to the attribute settings. We then override the API by manually sending the command overselves. This results in the encryption taking place on the card, when in-fact it should not.
-
 
 
 
@@ -663,7 +661,7 @@ Secure messaging session have an initialization process whereby the API and smar
 
 Two different secure messaging sessions are used. The first is to request the card to generate 24 bytes (same as the key length) and send it to the API. The second is to place the key value into the key file. The attribute file is created without the use of secure messaging as it does not contain sensitive information.
 
-The analysis of the communication trace suggests that the card is requested to generate the key value from a 'get challenge' request (within secure messaging). We assume that the generated bytes are used to be stored in the key file as the key value. At this stage it is not possible to verify this. The reason being that two different secure messaging sessions are used, and therefore have different session keys. This causes the encryption of the generated bytes and the storing of them in a file, to be different. Despite the possibility they might be identical. 
+The analysis of the communication trace suggests that the card is requested to generate the key value from a 'GET CHALLENGE' request (within secure messaging). We assume that the generated bytes are used to be stored in the key file as the key value. At this stage it is not possible to verify this. The reason being that two different secure messaging sessions are used, and therefore have different session keys. This causes the encryption of the generated bytes and the storing of them in a file, to be different. Despite the possibility they might be identical. 
 
 As discussed in the literature review chapter, previous hardware security modules created by 'Athena smartcard solutions' have in the past requested the card to generate random bytes and use them as the key value (when generateKey function is called). This was completed without the use of secure messaging. Thus, it appears that they might be using a similar approach but with the use of secure messaging (to prevent revealing the encryption keys in plain text at the APDU layer) on this smartcard.
 
@@ -802,7 +800,7 @@ $[05]$ (4 byte) 01 0C 10 00\\
 
 The above decoding is similar to what we have reported for the RSA private key analysis in section 6.5. The 16 byte key that would be used for triple DES is not present. There is however pointers to the file that we just read the parameters of \textit{(00 C1)}, and other additional parameters that we are unsure of their use. 
 
-All security policies [?] that we have reviewed concerning 'Athena smartcard solutions' suggest that keys are held in a non-readable memory to outside actors, and only when required are encrypted internally (by the smartcard's OS) and stored in the EEPROM (electrically erasable programmable read only memory) for them to be used for the security operation required of them. 
+All security policies [?] that we have reviewed concerning 'Athena smartcard solutions' suggest that keys are stored in internal EF's (cannot be accessed by outside actors, see section 3.2.1, chapter 3), and only when required are encrypted internally (by the smartcard's OS) and stored in the EEPROM (electrically erasable programmable read only memory) for them to be used for the security operation required of them. 
 
 Thus we did not find any security vulnerabilities from this function. And also eliminates one of the vulnerabilities we suggested within the generateKeyPair function analysis. We discuss further in chapter 7.
 
@@ -925,7 +923,7 @@ The data field of unwrap is encrypted, as it is used within secure messaging. Ho
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-\chapter{Attempts To Attack At the APDU Level (change)}
+\chapter{New Attack's At the APDU Level}
 
 In this chapter we explain the motivations, implementation and results of the attacks we attempt as the APDU level. For clarity purposes we first give a brief overview of the API's function analysis at the APDU layer that we conducted within chapter 6. This analysis in combination with previous work completed on the same smartcard and for that matter other smartcards as well, drove the motivations behind the attacks we selected to conduct.
 
@@ -960,7 +958,7 @@ The vulnerability discussed in the \textit{FindObject} function analysis present
 
 \textit{GenerateKey} and \textit{GenerateKeyPair} function analysis both suggest a vulnerability whereby attributes can be modified as the attribute file is being created for the first time. This leaves the possibility of the key value being exposed at the API layer. This effectively could result in the card being instructed to generate the key with the attributes the attacker sets. Setting the key attributes to have CKA\_sensitive set to false and CKA\_extractable set to true, will allow for key value exposure at the API level. This vulnerability would always have to be exploited upon key generation and would be visible to the user of the smartcard. Although this might be a viable attack to investigate, we have decided that it would be better to look into methods that would allow all keys to be exported in plain text regardless of whether the key was already generated and saved on the card without informing the user.
 
-\textit{Encrypt, Decrypt, GenerateKeyPair} and \textit{DestroyObject} functions export in plain text the directory of the key file. Following our discussion in chapter 6, (destroyObject analysis, section 6.6) we hypothesise that this might have provided the ability to open the file and read the key value in plain text. This hypothesis turned out not to be valid, and instead the files stored data wrapped in an ASN.1 BER encoding, that had pointers to locations within the smartcard's memory where the key values are stored securely (non-readable to outside actors).
+\textit{Encrypt, Decrypt, GenerateKeyPair} and \textit{DestroyObject} functions export in plain text the directory of the key file. Following our discussion in chapter 6, (destroyObject analysis, section 6.6) we hypothesise that this might have provided the ability to open the file and read the key value in plain text. This hypothesis turned out not to be valid, and instead the  we could only view the file control parameters, which stored data wrapped in an ASN.1 BER encoding, that had pointers to locations within the smartcard's memory where the key values are stored securely within internal EF's (see section 3.2.1, chapter 3).
 
 We find that \textit{Unwrap} function does not reveal any vulnerabilities. Instead we would like to learn exactly how the data field is built, but this cannot be inferred from traces as the command is only ever used within secure messaging. Therefore, the data field is encrypted. The rational for focusing on understanding of how the command works is related to possibility of implementing the wrap/decrypt attack at the APDU layer. This is explained in the next section.
 
