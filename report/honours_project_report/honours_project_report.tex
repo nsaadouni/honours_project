@@ -755,28 +755,29 @@ Contribution & Description\\
 \hline
 1 & Finding the meaning behind proprietary ISO 7816 commands for the smartcard analysed\\
 \hline
-2 &Discovery of attribute and key file separation for the smartcard analysed\\
+2 & Decoding of attribute files\\
 \hline
-3 &Discovery of \textit{block cipher} key file locations\\
+3 & Discovery of attribute and key file separation for the smartcard analysed\\
 \hline
-4 & Discovery of a counter that is used upon file creation and deletion\\
+4 &Discovery of \textit{block cipher} key file locations\\
 \hline
-5 & Discovery of an implementation flaw regarding decryption using block cipher AES in ECB mode\\
+5 & Discovery of a counter that is used upon file creation and deletion\\
 \hline
-6 & Discovery that the functions \textit{C\_wrap} and \textit{C\_copyObject} are not supported by the manufactures middleware that implements the PKCS \#11 functions\\
+6 & Discovery of an implementation flaw regarding decryption using block cipher AES in ECB mode\\
 \hline
-7 & Attack$_1$ is reported in the paper. The attack modifies the values of CKA\_extractable and CKA\_sensitive from false to true and true to false respectively. (This is not premitted by the PKCS \#11 API)\\
+7 & Discovery that the functions \textit{C\_wrap} and \textit{C\_copyObject} are not supported by the manufactures middleware that implements the PKCS \#11 functions\\
 \hline
-8 & Attack$_2$ is reported in the paper. The attack modifies the key value of a block cipher key that is already stored within the smartcard.\\
+8 & Attack$_1$ is reported in the paper. The attack modifies the values of CKA\_extractable and CKA\_sensitive from false to true and true to false respectively. (This is not premitted by the PKCS \#11 API)\\
 \hline
-9 & Attack$_3$ is reported in the paper. The attack finds the ability to use block cipher keys regardless of authentication status of the user, with CKA\_private set to True. (This is not premitted by the PKCS\#11 API)\\
+9 & Attack$_2$ is reported in the paper. The attack modifies the key value of a block cipher key that is already stored within the smartcard.\\
+\hline
+10 & Attack$_3$ is reported in the paper. The attack finds the ability to use block cipher keys regardless of authentication status of the user, with CKA\_private set to True. (This is not premitted by the PKCS\#11 API)\\
 \hline
 \end{tabular}
 \caption{Summary of Findings}
 \end{table}
 
-One PKCS \#11 function is broken down into multiple APDU command-response pairs. The APDU commands are sent from the middleware to the PC/SC layer on the computer, to then be sent to the smartcard. This is illustrated in figure 4.1. L.Rousseau [?] created a program that is part of the open-source software package,  PCSC-lite (PC/SC implementation for linux) named \textit{pcsc-spy}. This effectively implemented a man in the middle attack between the middleware and the PC/SC layer. Using this program it was possible to sniff the 'inner function' names of all the communication between the middleware and PC/SC layer (inner functions are functions within each PKCS \#11function that are called to send one command). (name) 2015 [?] used this tool which gave a good understanding of the proprietary commands implemented within the middlware. The inter-industry commands can be looked up in the ISO 7816 specification for the understanding of the instruction.
-
+One PKCS \#11 function is broken down into multiple APDU command-response pairs. The APDU commands are sent from the middleware to the PC/SC layer on the computer, to then be sent to the smartcard. This is illustrated in figure 4.1. L.Rousseau [?] created a program that is part of the open-source software package,  PCSC-lite (PC/SC implementation for linux) named \textit{pcsc-spy}. This effectively implemented a man in the middle attack between the middleware and the PC/SC layer. Using this program it was possible to sniff the 'inner function' names of all the communication between the middleware and PC/SC layer (inner functions are functions within each PKCS \#11function that are called to send one command). (name) 2015 [?] used this tool which gave a good understanding of the proprietary commands implemented within the middlware. The inter-industry commands can be looked up in the ISO 7816 specification for the understanding of the instruction. We did not replicate this work as the details of the meaning with regard to each proprietary command are listed within the appendix of the paper (name) 2015 [?]. We do have ever extract this information out of the appendix, retrieve the meanings of the inter-industry commands used and tabulate them in section 4.5.2.
 
 % IMAGE: pcsc spy implementation
 \begin{figure}[H]
@@ -787,7 +788,51 @@ One PKCS \#11 function is broken down into multiple APDU command-response pairs.
 \caption{pcsc-spy implementation}
 \end{figure}
 
+The second contribution of the paper is the decoding of attribute files. The attribute files in the Athena IDprotect smartcard are saved in a transparent binary file. The values in the file can be viewed in hexadecimal format at the APDU layer. It was reported in the paper [?] that each PKCS \#11 attribute has a hexadecimal encoding. We have extracted the examples provided in the paper and reported them in table X. The paper stated that the representation of each attribute is stored in the attribute file in the following format:
 
+\begin{center}
+Hexidecimal Encoding + Filler + Length + Value
+\end{center}
+
+\begin{table}[H]
+\begin{tabular}{|l|c|}
+\hline
+Attribute & Hexadecimal Encoding\\
+\hline
+CKA\_class & 0x0000\\
+\hline
+CKA\_private & 0x0002\\
+\hline
+CKA\_label & 0x0003\\
+\hline
+CKA\_value & 0x0011\\
+\hline
+CKA\_id & 0x0102\\
+\hline
+CKA\_sensitive & 0x0103\\
+\hline
+CKA\_modulus & 0x0120\\
+\hline
+CKA\_public\_exponent & 0x0122\\
+\hline
+CKA\_private\_exponent & 0x0123\\
+\hline
+CKA\_extractable & 0x0162\\
+\hline
+\end{tabular}
+\caption{Attribute Encodings}
+\end{table}
+
+The third discovery of attribute and key file separation. Despite their being fields in the attribute files to store sensitive values (reported in table 3.2, chapter 3), it is reported [?] that those fields were filled with 'FF' hexidecimal values and return 'NULL' at the API layer. We assume that this method (attribute and key file separation) is to patch the vulnerability that have been present in previous versions of 'Athena smartcard solutions' hardware security modules, whereby sensitive values are revealed at the APDU layer when they should not have been.
+
+The forth discovery of the memory locations on the smartcard for block cipher keys and attribute files. This is reported in the previous work as the location of all keys including RSA public and private keys. During our analysis in chapter 6 we discover that this is not in fact the case. The location of block cipher keys was the same as reported in the previous work, however we find different locations for RSA keys. We report this in section 4.5.1, as part of extended work.
+
+The fifth discovery reported in previous work is a counter file for symmetric and asymmetric keys. This value of the counter is incremented upon file deletion. And upon file creation is appended to the attribute file of the keys. It is noted within previous work that there is no indication of the value being used (e.g. to check if a file has been created, not by the API) but is present. We discuss this in our analysis in chapter 6.
+
+The sixth discovery is an implementation flaw in the middleware that 'Athena Smartcard Solutions' created to implement the PKCS \#11 API. The flaw is regarding the use of decryption with the block cipher AES in ECB mode. The wrong command is sent and thus returns an error '6A 86', meaning 'Incorrect P1 or P2 parameters'. The paper corrected the command and sent it to the card which decrypted the ciphertext correctly. As discussed in the previous work this is not a security vulnerability and rather an issue with functionality of the API. We also discuss this in chapter 6.
+
+
+ 
 \section{Extended Work}
 \subsection{Directories of Key and Attribute Files}
 % Table: File locations within Athena IDprotect smartcard
