@@ -21,16 +21,16 @@
 \contentsline {section}{\numberline {3.2}ISO/IEC 7816}{26}
 \contentsline {subsection}{\numberline {3.2.1}APDU Command-Response Structure}{27}
 \contentsline {subsection}{\numberline {3.2.2}File System}{29}
-\contentsline {subsection}{\numberline {3.2.3}Secure Messaging}{31}
+\contentsline {subsection}{\numberline {3.2.3}Secure Messaging}{30}
 \contentsline {chapter}{\numberline {4}Literature Review}{33}
 \contentsline {section}{\numberline {4.1}RAID (2016)}{33}
 \contentsline {section}{\numberline {4.2}REPROVE}{33}
 \contentsline {section}{\numberline {4.3}Wrap/Decrypt Attack}{33}
 \contentsline {section}{\numberline {4.4}(name) 2015 - Previous study on the same smartcard}{33}
-\contentsline {section}{\numberline {4.5}Extended Work}{33}
-\contentsline {subsection}{\numberline {4.5.1}Directories of Key and Attribute Files}{33}
-\contentsline {subsection}{\numberline {4.5.2}APDU Commands Found During Analysis}{34}
-\contentsline {subsection}{\numberline {4.5.3}Manually Overriding Attributes}{35}
+\contentsline {section}{\numberline {4.5}Extended Work}{35}
+\contentsline {subsection}{\numberline {4.5.1}Directories of Key and Attribute Files}{35}
+\contentsline {subsection}{\numberline {4.5.2}APDU Commands Found During Analysis}{35}
+\contentsline {subsection}{\numberline {4.5.3}Manually Overriding Attribute Controls}{36}
 \contentsline {chapter}{\numberline {5}Tools Developed/Used In This Project}{37}
 \contentsline {section}{\numberline {5.1}PCSC-lite}{37}
 \contentsline {section}{\numberline {5.2}Virtual Smartcard}{37}

@@ -571,7 +571,7 @@ C\_Unwrap & object handle \& template & The unwrap function takes the object han
 The International Standards Organization (ISO) and the International Electrotechnical Commission (IEC) jointly manage the standard that defines electronic identification cards (mainly contact smartcards) [?].
 The chapters/ sections of the standard are reported in table X. 
  
-The main sections we are interested in are 4, 7, and 8. We have extracted out of the ISO/IEC 7816 standard, the information we utilise within this project and reported it within sections 2.2.1 to 2.2.6.
+The main sections we are interested in are 4, 7, and 8. We have extracted out of the ISO/IEC 7816 standard, the information we utilise within this project and reported it within sections 3.2.1 to 3.2.3.
 
 \begin{table}[H]
 \begin{tabular}{|l|p{12cm}|}
@@ -718,7 +718,7 @@ control purposes.
 \begin{figure}[H]
 \hskip+0.0cm\begin{subfigure}{0.8\textwidth}
   \includegraphics[width=1\linewidth]
-  {images/section_2/file_structures.png}\\\\\\
+  {images/section_2/file_structures.png}
 \end{subfigure}
 \caption{File Structure [?]}
 \end{figure}
@@ -736,15 +736,58 @@ We report the use of secure messaging within chapters 6 and 7.
 
 \chapter{Literature Review}
 
-This will be a brief chapter and will discuss all of the research I have conducted.\\
-Mainly regarding PKCS\#11 API attacks due to the small amount of literature that is available for APDU level attacks
-I shall also explain why some of the attacks are not able to be conducted on the particular card I am reviewing
+This chapter concerns literature that is reported within the area of computer security with regard to PKCS \#11 and ISO 7816 for contact smartcards. We analyse 4 papers, explain the contribtuions they provided and in some cases replicate their work to see if the smartcard we analyse has the same vulnerabilities present. The last paper we analyse was a study on the same smartcard we analyse in this paper. In this case we extent some of their work and report it within section 4.5.
+
 \section{RAID (2016)}
 
 \section{REPROVE}
 
 \section{Wrap/Decrypt Attack}
+
 \section{(name) 2015 - Previous study on the same smartcard}
+
+The paper (name) 2015 [?] was a study on the same smartcard we analyse in this paper (Athena IDprotect). We provide the main contributions of the paper summarised in table X. And report the specific details of the contributions below.
+
+\begin{table}[H]
+\begin{tabular}{|l|p{10cm}|}
+\hline
+Contribution & Description\\
+\hline
+1 & Finding the meaning behind proprietary ISO 7816 commands for the smartcard analysed\\
+\hline
+2 &Discovery of attribute and key file separation for the smartcard analysed\\
+\hline
+3 &Discovery of \textit{block cipher} key file locations\\
+\hline
+4 & Discovery of a counter that is used upon file creation and deletion\\
+\hline
+5 & Discovery of an implementation flaw regarding decryption using block cipher AES in ECB mode\\
+\hline
+6 & Discovery that the functions \textit{C\_wrap} and \textit{C\_copyObject} are not supported by the manufactures middleware that implements the PKCS \#11 functions\\
+\hline
+7 & Attack$_1$ is reported in the paper. The attack modifies the values of CKA\_extractable and CKA\_sensitive from false to true and true to false respectively. (This is not premitted by the PKCS \#11 API)\\
+\hline
+8 & Attack$_2$ is reported in the paper. The attack modifies the key value of a block cipher key that is already stored within the smartcard.\\
+\hline
+9 & Attack$_3$ is reported in the paper. The attack finds the ability to use block cipher keys regardless of authentication status of the user, with CKA\_private set to True. (This is not premitted by the PKCS\#11 API)\\
+\hline
+\end{tabular}
+\caption{Summary of Findings}
+\end{table}
+
+One PKCS \#11 function is broken down into multiple APDU command-response pairs. The APDU commands are sent from the middleware to the PC/SC layer on the computer, to then be sent to the smartcard. This is illustrated in figure 4.1. L.Rousseau [?] created a program that is part of the open-source software package,  PCSC-lite (PC/SC implementation for linux) named \textit{pcsc-spy}. This effectively implemented a man in the middle attack between the middleware and the PC/SC layer. Using this program it was possible to sniff the 'inner function' names of all the communication between the middleware and PC/SC layer (inner functions are functions within each PKCS \#11function that are called to send one command). (name) 2015 [?] used this tool which gave a good understanding of the proprietary commands implemented within the middlware. The inter-industry commands can be looked up in the ISO 7816 specification for the understanding of the instruction.
+
+
+% IMAGE: pcsc spy implementation
+\begin{figure}[H]
+\hskip+0.0cm\begin{subfigure}{1.1\textwidth}
+  \includegraphics[width=1\linewidth]
+  {images/lit_review/pcsc-spy.png}
+\end{subfigure}
+\caption{pscs-spy implementation}
+\end{figure}
+
+
 \section{Extended Work}
 \subsection{Directories of Key and Attribute Files}
 % Table: File locations within Athena IDprotect smartcard
@@ -816,8 +859,8 @@ Xc  & -   & -  & -  & -   & -          & -  & Secure Messaging (SM)\\
 \end{table} 
 
 
-\subsection{Manually Overriding Attributes}
-This attack was found by previous literature. We simply tested to see if the same attack was feasiable on the smart card we analyse. 
+\subsection{Manually Overriding Attribute Controls}
+This attack is reported in the RAID 2016 [?] paper. We replicated the attack to tested if our smartcard had the same vulnerability present. 
 
 To test this we created a DES3 key on the card that had the encrypt attribute set to False. We asked the card to encrypt the string '12345678'. The API returned an error stating that this function was not supported due to the attribute settings. We then override the API by manually sending the command overselves. This results in the encryption taking place on the card, when in-fact it should not.
 
