@@ -369,7 +369,7 @@ Both entities the one requesting to login and the one verifying the request need
 \end{itemize}
 
 \subsection{Hash Based - One Time Passwords (HOTP)}
-RFC 4226 [?] def ines the hash based one time password (HOTP). The standard uses a cryptographic hash function (for HMAC), a counter, and a shared secret key (the password) to generate different passwords for authentication.
+RFC 4226 [?] defines the hash based one time password (HOTP). The standard uses a cryptographic hash function (for HMAC), a counter, and a shared secret key (the password) to generate different passwords for authentication.
 
 \begin{table}[H]
 \begin{tabular}{|l|p{10cm}|}
@@ -390,8 +390,33 @@ HOTP uses the HMAC that we reported in section 2.4.1 to calculate its output. Th
 \textit{HOTP(K,C) = Truncate(HMAC(K,C)) \& 0x7F FF FF FF}
 \end{center}
 
-
 \subsection{Time Based - One Time Passwords (TOTP)}
+RFC 6238 [?] defines the time based one time password (TOTP). The standard uses the hash based one time password (HOTP) reported in section 2.5.1, but changes the counter value C to be a value determined by a time period (requiring synchronous clock between two devices). The variables required to use the TOPT are reported in table X.
+
+\begin{table}[H]
+\begin{tabular}{|l|p{10cm}|}
+\hline
+Variable & Description\\
+\hline
+Password (K) & The shared secret between the two entities\\
+\hline
+T0 & Unix time to start counting steps (default 0)\\
+\hline
+X & Time steps/ Time period  (in seconds )\\
+\hline
+Counter value (T) & (Current Unix time - T0) / X\\
+\hline
+Hash function & Used as the parameter to HOTP\\
+\hline
+\end{tabular}
+\end{table}
+
+The TOPT formula for calculating a one time password derived by using a function of time that is synchronised between two devices is reported below:
+
+\begin{center}
+\textit{ TOTP(K, T) = HOTP(K, C)}
+\end{center}
+
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 \chapter{Background - Standards For Smartcards}
