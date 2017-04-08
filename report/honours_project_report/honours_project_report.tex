@@ -744,6 +744,15 @@ This chapter concerns literature that is reported within the area of computer se
 
 \section{Wrap/Decrypt Attack}
 
+Attacking and Fixing PKCS \#11 Security Tokens [?] describes the 'wrap/ decrypt attack'. The attack occurs at the API level and extracts sensitive key values of symmetric and asymmetric keys in plain text. The CKA\_extractable attribute must be set to true, but other PKCS \#11 attributes are not taken into consideration. Therefore in the case that CKA\_sensitive is set to false, the attack directly contradicts the controls the API should provide.
+
+The steps to conduct the attack are as follows:
+\begin{enumerate}
+\item Generate a new block cipher key K$_1$, with attributes C\_wrap and C\_decrypt set to True
+\item Use K$_1$ to wrap the existing key K$_2$ within the token, and extract it in an encrypted format
+\item Use K$_1$ to decrypt the wrapped key and expose its value in plain text
+\end{enumerate}
+
 \section{(name) 2015 - Previous study on the same smartcard}
 
 The paper (name) 2015 [?] was a study on the same smartcard we analyse in this paper (Athena IDprotect). We provide the main contributions of the paper summarised in table X. We report in depth the findings of previous work to make clear the difference in the work we conducted in this project.
@@ -2114,7 +2123,13 @@ $$ Checksum \quad = \quad encrypt(Message) $$
 
 Encrypted command = 0C 84 00 00 0D 97 01 18 8E 08 $Checksum$ 00\\
 
-Once we find a match between the encrypted command we generate and the command the API encrypts we will know for sure that we have the correct session keys computed and thus will have successfully reversed engineered the secure messaging protocol. This concludes this section.
+Once we find a match between the encrypted command we generate and the command the API encrypts we will know for sure that we have the correct session keys computed and thus will have successfully reversed engineered the secure messaging protocol. 
+
+If the above methods do not reverse-engineer the session keys S$_{Enc}$ and S$_{Mac}$ there is also another possibility that within the key derivation function a counter value is used. This is reported as an option in the machine readable travel document paper [?]. It states that an initial value of 0 might be used, or the counter value can be generated from the first 4 bytes of the nonce sent by the API and the first 4 bytes of the smartcards challenge concatenated together. These bytes are from the login authentication that we reversed engineered in the previous section. Thus, the next option to test afterwards (in the case of failing to find a match) is:
+\begin{center}
+\textit{S$_{Enc}$ = Truncate( Hash( ss $||$ counter )) XOR cc\_1\\}
+\textit{S$_{Mac}$ = Truncate( Hash( ss $||$ counter )) XOR cc\_2\\}
+\end{center}
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 \chapter{Conclusion / Results}

@@ -26,9 +26,9 @@
 \contentsline {section}{\numberline {4.1}RAID (2016)}{33}
 \contentsline {section}{\numberline {4.2}REPROVE}{33}
 \contentsline {section}{\numberline {4.3}Wrap/Decrypt Attack}{33}
-\contentsline {section}{\numberline {4.4}(name) 2015 - Previous study on the same smartcard}{33}
-\contentsline {section}{\numberline {4.5}Extended Work}{37}
-\contentsline {subsection}{\numberline {4.5.1}Directories of Key and Attribute Files}{37}
+\contentsline {section}{\numberline {4.4}(name) 2015 - Previous study on the same smartcard}{34}
+\contentsline {section}{\numberline {4.5}Extended Work}{38}
+\contentsline {subsection}{\numberline {4.5.1}Directories of Key and Attribute Files}{38}
 \contentsline {subsection}{\numberline {4.5.2}APDU Commands Found During Analysis}{38}
 \contentsline {subsection}{\numberline {4.5.3}Manually Overriding Attribute Controls}{39}
 \contentsline {chapter}{\numberline {5}Tools Developed/Used In This Project}{41}
