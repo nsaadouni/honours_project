@@ -696,6 +696,8 @@ ISO/IEC 7816 - section 7 provides the meaning behind the status bytes SW1 and SW
 \caption{Response Meanings [?]}
 \end{figure}
 
+\subsection{Inter-Industry and Proprietary Commands}
+The ISO 7816 standard defines two sets of different commands, inter-industry and proprietary. The CLA byte dictates if the command is either. Inter-Industry commands are reported within the ISO 7816 documentation, with the meaning of the data in all fields explained explicitly. Proprietary commands are created by card vendors with the meaning of each data field kept as proprietary information, including the commands response. We give details of the inter-industry and proprietary commands that we witness during the analysis of our smartcard in table 4.4, chapter 4.
 
 \subsection{File System}
 
@@ -741,6 +743,14 @@ This chapter concerns literature that is reported within the area of computer se
 \section{RAID (2016)}
 
 \section{REPROVE}
+
+Reverse Engineering the Smart-Card Application Protocol Data Unit (REPROVE) [?] presents an a "proof of concept system for automatically analysing APDU low-level communication" [?]. The system uses information with regard to the PKCS \#11 standard and the ISO 7816 standard to reduce the combinatorial search space to enable the reverse engineering of the proprietary APDU commands.
+
+During the analysis of 5 commercially available smartcards they reported:
+\begin{enumerate}
+
+\end{enumerate}
+
 
 \section{Wrap/Decrypt Attack}
 
