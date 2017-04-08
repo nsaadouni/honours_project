@@ -304,7 +304,7 @@ Cipher Block Chaining mode is more complex. It requires an \textit{initializatio
 
 \section{Message Authentication Codes}
 
-A Message Authentication Code (MAC) is a checksum/ tag that is appended to a message. Its use is to provide data integrity to a message sent over an insecure channel. It does this by forming a tag that should not be able to be formed without the knowledge of the shared key. Thus, the receiver of the message will use their shared key, the MAC algorithm and the message to compute (what should be the same tag) a tag. This tag is then cross-referenced with the tag appended to the message. If they match the entity is aware that the message has not been tampered with.
+A Message Authentication Code (MAC) is a checksum/ tag that is appended to a message. Its use is to provide data integrity to a message sent over an insecure channel. It does this by forming a tag that should not be able to be formed without the knowledge of the shared key and the message in question. Thus, the receiver of the message will use their shared key, the MAC algorithm and the message to compute (what should be the same tag) a tag. This tag is then cross-referenced with the tag appended to the message. If they match the entity is aware that the message has not been tampered with.
 
 \subsection{Hash Based - Message Authentication Codes (HMAC)}
 
@@ -337,9 +337,9 @@ B & Block size of the block cipher used in the cryptographic hash function\\
 
 \subsection{Cryptographic Based - Message Authentication Codes (CMAC)}
 
-RFC 4493 [?] defines the AES Cryptograhic Message Authentication Code (the use of other block ciphers is also allowed for CMAC's). First two additional keys K$_1$ and K$_2$ are generated using a derivation of the original shared key known by the two entities. The message is encrypted using the block cipher in CBC mode with an IV = 0, denoted Enc$_1$. 
+RFC 4493 [?] defines the AES Cryptograhic Message Authentication Code (the use of other block ciphers is also allowed for CMAC's). The standard defines that first, two additional keys K$_1$ and K$_2$ are generated using a derivation of the original shared key known by the two entities. The message is encrypted using the block cipher in CBC mode with an IV = 0, denoted Enc$_1$. 
 
-The two shared keys are used to alter last block of the message as defined in the standard, and then encrypted using the block cipher and original shared key. This is XOR'd with Enc$_1$ to form the CMAC tag. This can be seen in figure 2.4.
+The two shared keys are used to alter last block of the message as defined in the standard, and then encrypted using the block cipher and original shared key. The output is XOR'd with Enc$_1$ to form the CMAC tag. This can be seen in figure 2.4.
 
 
 % IMAGE: CBC encryption
@@ -354,12 +354,44 @@ The two shared keys are used to alter last block of the message as defined in th
 
 
 \section{One Time Passwords}
+One Time passwords (OTP) is a password that is valid for one login. They overcome the short coming of original \textit{static} based passwords that are vulnerable to replay attacks. Normally they are incorporated using two factor authentication methods (this doesn't have to be the case). This is done by proving knowledge of two pieces of information. Two of the following are often used:
+\begin{enumerate}
+\item 'Something you know' - e.g. A PIN number or password
+\item 'Something you have' - e.g. An RSA key fob (OTP calculator)
+\item 'Something you are'  - e.g. Your fingerprints
+\end{enumerate}
 
-What are one time passwords?
+Both entities the one requesting to login and the one verifying the request need to be aware of the following:
+\begin{itemize}
+\item The shared secret key (password)
+\item The algorithm for generating OTP using the password
+\item Additional variables the algorithms require.
+\end{itemize}
 
 \subsection{Hash Based - One Time Passwords (HOTP)}
-\subsection{Time Based - One Time Passwords (TOTP)}
+RFC 4226 [?] def ines the hash based one time password (HOTP). The standard uses a cryptographic hash function (for HMAC), a counter, and a shared secret key (the password) to generate different passwords for authentication.
 
+\begin{table}[H]
+\begin{tabular}{|l|p{10cm}|}
+\hline
+Variable & Description\\
+\hline
+Password (K) & The shared secret used to login\\
+\hline
+Counter (C) & The value that is used to generate different outputs given the same password\\
+\hline
+Hash function & The cryptographic hash function used in HOTP\\
+\hline
+\end{tabular}
+\end{table}
+
+HOTP uses the HMAC that we reported in section 2.4.1 to calculate its output. The first byte of the output of logically AND'd with the value '7F' (hexidecimal). And also logically AND'd 'FF'*\textit{i}, where i-1 is the number of bytes requested to be the output of HOTP. The formula is reported below (4 byte output):
+\begin{center}
+\textit{HOTP(K,C) = Truncate(HMAC(K,C)) \& 0x7F FF FF FF}
+\end{center}
+
+
+\subsection{Time Based - One Time Passwords (TOTP)}
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 \chapter{Background - Standards For Smartcards}
