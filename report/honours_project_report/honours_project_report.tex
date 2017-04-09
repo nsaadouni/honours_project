@@ -758,7 +758,7 @@ The paper concluded with the following suggestions to mitigate the attacks they 
 
 \section{REPROVE}
 
-Gkaniatsou, McNeill, Bundy, Steel, Focardi and Bozzato (2015) [?] presented the 'Reverse Engineering the Smart-Card Application Protocol Data Unit'. The paper reports a "proof of concept system for automatically analysing APDU low-level communication" named Reverse Engineering PROtocols for Verification (REPROVE). REPROVE uses first-order logic, information with regard to the PKCS \#11 standard and the ISO 7816 standard to reduce the combinatorial search space to enable the reverse engineering of the proprietary APDU commands with respect to the PKCS \#11 functions that use them.
+Gkaniatsou, McNeill, Bundy, Steel, Focardi and Bozzato (2015) [?] presented the 'Reverse Engineering the Smart-Card Application Protocol Data Unit'. The paper reports a "proof of concept system for automatically analysing APDU low-level communication" named Reverse Engineering PROtocols for Verification (REPROVE). REPROVE uses first-order logic, information with regard to the PKCS \#11 standard and the ISO 7816 standard to reduce the combinatorial search space to enable the reverse engineering of the proprietary APDU commands with respect to the PKCS \#11 functions that use them. It accomplishes this without the need to have physical access to the smartcards, nor their proprietary middleware (implementation of the PKCS \#11 API)
 
 During the analysis of 5 commercially available smartcards they reported smartcards revealing users PIN's in plain text and sensitive cryptographic keys in plain text. This consequentially allowed replay/ man in the middle attacks to take place on the evaluated cards. Trivial (static) authentication methods for C\_login where also found which allowed for an attacker to trivially login to the smartcard even without knowing the user PIN as the static login command is known (the PIN might be encrypted/ hidden but login can still occur).
 
@@ -968,13 +968,30 @@ Rousseau [?] created the open-source implementation of the PC/SC layer for compu
 \end{figure}
 
 \section{Virtual Smartcard}
-frank something
-Explain how this creates a virtual smartcard reader
-This is then used to run API functions, and the commands are relayed to the actual card reader and therefore card.
+Frank Morgner [?] created the virtual smart card reader project. The project emulates a smartcard reader and creates a virtual one in the host machine. It also has the 'Relay OS' which has a basic implementation of a man in the middle attack already in the code of the project (no APDU command response pairs are altered, the ability is just present). This can be seen in figure 5.2.
 
+\textit{"The vpcd is a smart card reader driver for PCSC-Lite [2] and the windows smart card service. It allows} \textit{smart card applications to access the vpicc through the PC/SC API. By default vpcd opens slots} \textit{for communication with multiple vpicc's on localhost on port 35963 and port 35964. But the vpicc} \textit{does not need to run on the same machine as the vpcd, they can connect over the internet for} \textit{example.}
+
+\textit{Although the Virtual Smart Card is a software emulator, you can use PC/SC Relay to make it accessible to} \textit{an external contact-less smart card reader."} [?] - This is the explanation provided on his github page.
+
+% IMAGE: MiTM implementation
+\begin{figure}[H]
+\hskip+0.0cm\begin{subfigure}{1.1\textwidth}
+  \includegraphics[width=1\linewidth]
+  {images/lit_review/mitm.png}
+\end{subfigure}
+\caption{Man in The Middle implementation}
+\end{figure}
 
 \section{Man in The Middle Tool (MiTM)}
 
+We used the Virtual Smartcard Reader project discussed in section 5.2. We developed on top of the projects code to implement a software man in the middle attack for a variety of applications in this project. The developed code included both APDU commands and responses as printed output and use the python package 'hexdump' for clarity in the printed APDU communication traces. Some of the applications this is used for in this project are:
+\begin{itemize}
+\item Bypassing attribute controls by sending the APDU commands for secuirty operations (discussed in section 4.5.3, chapter 4)
+\item Altering the challenge sent by the smartcard in PIN authentication (discussed in section 7.2, chapter 7)
+\item Injecting our own response in PIN authentication (discussed in section section 7.2.3, chapter 7)
+\item Altering bytes of the smartcards public key to derive the protocol used in secure messaging (discussed in section 7.3, chapter 7)
+\end{itemize}
 
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -3363,7 +3380,7 @@ RESPONSE
 00000020: 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 90  ................
 00000030: 00                                                .                                       ..
 \end{Verbatim}
-\pagebreak
+%\pagebreak
 
 \section{C\_generateKey}
 \begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
@@ -4088,6 +4105,9 @@ RESPONSE
 \end{Verbatim}
 
 \end{appendices} 
+
+
+
 
 
 \end{document}

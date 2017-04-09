@@ -87,7 +87,7 @@
 \contentsline {section}{\numberline {B.1}Initialization}{121}
 \contentsline {section}{\numberline {B.2}C\_login}{122}
 \contentsline {section}{\numberline {B.3}C\_findObject}{123}
-\contentsline {section}{\numberline {B.4}C\_generateKey}{125}
+\contentsline {section}{\numberline {B.4}C\_generateKey}{124}
 \contentsline {section}{\numberline {B.5}C\_generateKeyPair}{128}
 \contentsline {section}{\numberline {B.6}C\_destroyObject}{132}
 \contentsline {section}{\numberline {B.7}C\_encrypt}{134}
