@@ -742,7 +742,7 @@ This chapter concerns literature that is reported within the area of computer se
 
 \section{APDU-level attacks in PKCS \#11 devices}
 
-(name) et al (2016) [?] presented 'APDU-level attacks in PKCS \#11 devices'. The paper concerned new un-published attacks at the APDU level with respect to a generated threat model of the PKCS \#11 middleware. 5 commercially available smartcards (some were usb tokens), that do not use encrypted APDU's (secure messaging) are investigated in the paper, with the following results reported:
+Bozzato, Focardi, Palmarini and Steel (2016) [?] presented 'APDU-level attacks in PKCS \#11 devices'. The paper concerned new un-published attacks at the APDU level with respect to a generated threat model of the PKCS \#11 middleware. 5 commercially available smartcards (some were usb tokens), that do not use encrypted APDU's (secure messaging) are investigated in the paper, with the following results reported:
 
 \begin{itemize}
 \item 2 smartcards used plain PIN authentication and therefore sent the PIN to the smartcard at the APDU layer in plain text
@@ -754,18 +754,11 @@ This chapter concerns literature that is reported within the area of computer se
 \end{itemize}
 
 
-The paper concluded with the following suggestions to mitigate the attacks they had presented.
-
-** conclusions **
-all cyrptorahpic operations should be implemented within the hardware (costly to redesign!)
-
-seperate privialage for middleware on computer (fixes some issues)
-
-For devices with display utilise the OTP they can offer. This makes it much harder to reverse-engineer the authentication protocol and requires access to the device!
+The paper concluded with the following suggestions to mitigate the attacks they had presented. All cryptographic operations should be implemented within the hardware security module (this is however very costly as a redesign is required for most of the devices analysed in the paper). Another mitigation is to run the middlware layer (PKCS \#11 implementation) on the computer as a separate process at a different privilege to the user. It is reported that this prevents an attacker from attaching and observing/altering APDU commands. And finally for devices with a display unit (not smartcards), the one time password functionality (OTP) should be used in the PIN authentication stage. This will create large difficulties in reverse engineering the authentication protocol and will also requires access to the users device, even if the protocol is reversed engineered.
 
 \section{REPROVE}
 
-(name) et al (year) [?] presented the 'Reverse Engineering the Smart-Card Application Protocol Data Unit'. The paper reports a "proof of concept system for automatically analysing APDU low-level communication" named Reverse Engineering PROtocols for Verification (REPROVE). REPROVE uses first-order logic, information with regard to the PKCS \#11 standard and the ISO 7816 standard to reduce the combinatorial search space to enable the reverse engineering of the proprietary APDU commands with respect to the PKCS \#11 functions that use them.
+Gkaniatsou, McNeill, Bundy, Steel, Focardi and Bozzato (2015) [?] presented the 'Reverse Engineering the Smart-Card Application Protocol Data Unit'. The paper reports a "proof of concept system for automatically analysing APDU low-level communication" named Reverse Engineering PROtocols for Verification (REPROVE). REPROVE uses first-order logic, information with regard to the PKCS \#11 standard and the ISO 7816 standard to reduce the combinatorial search space to enable the reverse engineering of the proprietary APDU commands with respect to the PKCS \#11 functions that use them.
 
 During the analysis of 5 commercially available smartcards they reported smartcards revealing users PIN's in plain text and sensitive cryptographic keys in plain text. This consequentially allowed replay/ man in the middle attacks to take place on the evaluated cards. Trivial (static) authentication methods for C\_login where also found which allowed for an attacker to trivially login to the smartcard even without knowing the user PIN as the static login command is known (the PIN might be encrypted/ hidden but login can still occur).
 
@@ -781,9 +774,9 @@ The steps to conduct the attack are as follows:
 \item Use K$_1$ to decrypt the wrapped key and expose its value in plain text
 \end{enumerate}
 
-\section{(name) 2015 - Previous study on the same smartcard}
+\section{Previous study on the same smartcard}
 
-The paper (name) 2015 [?] was a study on the same smartcard we analyse in this project (Athena IDprotect). We provide the main contributions of the paper summarised in table 4.1. We report in depth the findings of previous work to make clear the difference in the work we conducted in this project.
+Lan 2015 [?] is a study on the same smartcard we analyse in this project (Athena IDprotect). We provide the main contributions of the paper summarised in table 4.1. We report in depth the findings of previous work to make clear the difference in the work we conducted in this project.
 
 \begin{table}[H]
 \begin{tabular}{|l|p{10cm}|}
@@ -814,16 +807,7 @@ Contribution & Description\\
 \caption{Summary of Findings}
 \end{table}
 
-One PKCS \#11 function is broken down into multiple APDU command-response pairs. The APDU commands are sent from the middleware to the PC/SC layer on the computer, to then be sent to the smartcard. This is illustrated in figure 4.1. L.Rousseau [?] created a program that is part of the open-source software package,  PCSC-lite (PC/SC implementation for linux) named \textit{pcsc-spy}. This effectively implemented a man in the middle attack between the middleware and the PC/SC layer. Using this program it was possible to sniff the 'inner function' names of all the communication between the middleware and PC/SC layer (inner functions are functions within each PKCS \#11function that are called to send one command). (name) 2015 [?] used this tool which gave a good understanding of the proprietary commands implemented within the middlware. The inter-industry commands can be looked up in the ISO 7816 specification for the understanding of the instruction. We did not replicate this work as the details of the meaning with regard to each proprietary command are listed within the appendix of the paper (name) 2015 [?]. We do have ever extract this information out of the appendix, retrieve the meanings of the inter-industry commands used and tabulate them in section 4.5.2.
-
-% IMAGE: pcsc spy implementation
-\begin{figure}[H]
-\hskip+0.0cm\begin{subfigure}{1.1\textwidth}
-  \includegraphics[width=1\linewidth]
-  {images/lit_review/pcsc-spy.png}
-\end{subfigure}
-\caption{pcsc-spy implementation}
-\end{figure}
+Lan (2015) [?] used the \textit{pcsc-spy} tool (reported in section 5.1), chapter 5 which gave a good understanding of the proprietary commands implemented within the middlware. The inter-industry commands can be looked up in the ISO 7816 specification for the understanding of the instruction. We did not replicate this work as the details of the meaning with regard to each proprietary command are listed within the appendix of the paper. We have extracted this information out of the appendix, retrieve the meanings of the inter-industry commands used and tabulate them in section 4.5.2.
 
 The second contribution of the paper is the decoding of attribute files. The attribute files in the Athena IDprotect smartcard are saved in a transparent binary file. The values in the file can be viewed in hexadecimal format at the APDU layer. It was reported in the paper [?] that each PKCS \#11 attribute has a hexadecimal encoding. We have extracted the examples provided in the paper and reported them in table 4.2. The paper stated that the representation of each attribute is stored in the attribute file in the following format:
 
@@ -888,7 +872,7 @@ Finally is contribution 10 which is attack$_3$. The attack suggested that keys w
 \section{Extended Work}  
 \subsection{Directories of Key and Attribute Files}
 % Table: File locations within Athena IDprotect smartcard
-Previous work completed by (name) 2015 [?] had found that attributes and sensitive key values are stored within separate files in the smartcard. It appears that the sensitive key values are stored in internal EF's to prevent extraction, and the attributes are placed in working EF transparent binary files. 
+Previous work completed by Lan 2015 [?] had found that attributes and sensitive key values are stored within separate files in the smartcard. It appears that the sensitive key values are stored in internal EF's to prevent extraction, and the attributes are placed in working EF transparent binary files. 
 
 The work also found the location of these attribute files and key value files. However, we extended this work to include the locations of RSA key files. As the previous work only included the directories of block cipher key files (and assumed that asymmetric key value files were stored within the same directory). We report the locations of block cipher keys, RSA public and private keys in table 4.3.
 
@@ -914,7 +898,7 @@ RSA private 	 & Attribute & 3F 00 30 00 30 \textbf{02 01 4X} \\
 
 During the analysis of the PKCS \#11 functions and how they are broken down into multiple ISO 7816 command-response pairs for the Athena IDprotect smartcard we analyse in this paper, we found the use of the following inter-industry and proprietary commands.
 
-\textit{[The work from (name) 2015 [?] found the 'inner-function' names which gave a good decoding of the proparitary commands listed in table 4.4. They had utilised a program named 'pcsc-spy' to find the 'inner-function' names. We discuss this within chapter 4 of this project]}
+\textit{[Lan 2015 [?] found the 'inner-function' names which gave a good decoding of the proparitary commands listed in table 4.4. They had utilised a program named 'pcsc-spy' to find the 'inner-function' names. We discuss this within section 4.4]}
 
 \begin{table}[H]
 \hskip-1.0cm\begin{tabular}{|c|c|c|c|c|c|c|p{8cm}|}
@@ -957,9 +941,9 @@ Xc  & -   & -  & -  & -   & -          & -  & Secure Messaging (SM)\\
 
 
 \subsection{Manually Overriding Attribute Controls}
-This attack is reported in the RAID 2016 [?] paper. We replicated the attack to tested if our smartcard had the same vulnerability present. 
+One of the APDU level attacks reported in the Bozzato et al. (2016) [?] paper, involves sending APDU commands to the smartcard, bypassing the controls that attributes at the PKCS \#11 API level should enforce. We replicated the attack to test if our smartcard has the same vulnerability present as all 5 hardware security modules studied in the paper did. 
 
-To test this we created a DES3 key on the card that had the encrypt attribute set to False. We asked the card to encrypt the string '12345678'. The API returned an error stating that this function was not supported due to the attribute settings. We then override the API by manually sending the command overselves. This results in the encryption taking place on the card, when in-fact it should not.
+To test this vulnerability we generated a triple DES symmetric key on the card and set CKA\_encrypt attribute set to False. We first requested the PKCS \#11 API to encrypt the string 'TestString123456'. The API returned an error stating that this function was not supported due to the attribute settings. Second we sent the APDU command for the security operation 'encrypt' (reported in table 4.4) to attempt to override the attribute controls that the API enforce. The result conformed with that reported in Bozzato et al. (2016) [?]. The APDU command executed successfully and resulted in the encryption taking place on the card, and returning in the APDU response, the value of the encryption. This resulting APDU communication trace of this test is reported in appendix A.4.1.
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -970,6 +954,18 @@ In this chapter we report details regarding the use of pre-existing software pac
 
 
 \section{PCSC-Spy}
+One PKCS \#11 function is broken down into multiple APDU command-response pairs. The APDU commands are sent from the middleware to the PC/SC layer on the computer, to then be sent to the smartcard. This is illustrated in figure 5.1.
+
+Rousseau [?] created the open-source implementation of the PC/SC layer for computers using the linux operating system, named PCSC-lite. As part of the implementation he created a program named \textit{pcsc-spy}. This effectively implemented a man in the middle attack between the middleware and the PC/SC layer. Using this program it was possible to sniff the 'inner function' names of all the communication between the middleware and PC/SC layer (inner functions are functions within each PKCS \#11function that are called to send one command). By extracting this information the program gives a good understanding to  proprietary ISO 7816 commands, that are not within the standard.
+
+% IMAGE: pcsc spy implementation
+\begin{figure}[H]
+\hskip+0.0cm\begin{subfigure}{1.1\textwidth}
+  \includegraphics[width=1\linewidth]
+  {images/lit_review/pcsc-spy.png}
+\end{subfigure}
+\caption{pcsc-spy implementation}
+\end{figure}
 
 \section{Virtual Smartcard}
 frank something
@@ -2259,6 +2255,8 @@ Internet Engineering Task Force (IETF).\\
 
 \end{thebibliography}
 
+% Xiao Lan 
+
 
 \begin{appendices}
 
@@ -3159,7 +3157,35 @@ COMMAND from API
 
 \section{Overriding Attribute Controls}
 \subsection{Encrypt\_False}
+\begin{Verbatim}[commandchars=\\\{\}, fontsize=\small]
+Do you want to to alter command? (y/N)
+y
+Enter command (spaced integers)
+128 164 8 0 8 63 0 48 0 48 1 0 193 		(integers)
+80 A4 08 00 08 3F 00 30 00 30 01 00 C1	(hexadecimal)
+command changed!
 
+RESPONSE
+00000000: 90 00                                             ..
+
+Do you want to alter the response? (y/N)
+
+----- APDU command/response pair 49 -----
+
+COMMAND from API
+00000000: 80 A4 08 00 08 3F 00 30  00 30 01 D0 7E           .....?.0.0..~
+
+Do you want to to alter command? (y/N)
+y
+Enter command (spaced integers)
+0 42 130 5 19 128 129 16 84 101 115 116 83 116 114 105 110 103 49 50 51 52 53 54 0 (ints)
+00 2A 82 05 13 80 81 10 54 65 73 74 53 74 72 69 6E 67 31 32 33 34 35 36 00 (hexadecimals)
+command changed!
+
+RESPONSE
+00000000: 82 10 8B 4C 51 82 70 4A  1F 9D 79 A8 68 3D 23 8C  ...LQ.pJ..y.h=\#.
+00000010: E8 BE 90 00                                       ....
+\end{Verbatim}
 
 \chapter{API Function Traces}
 
