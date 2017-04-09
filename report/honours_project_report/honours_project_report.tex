@@ -390,7 +390,7 @@ HOTP uses the HMAC that we reported in section 2.4.1 to calculate its output. Th
 \end{center}
 
 \subsection{Time Based - One Time Passwords (TOTP)}
-RFC 6238 [?] defines the time based one time password (TOTP). The standard uses the hash based one time password (HOTP) reported in section 2.5.1, but changes the counter value C to be a value determined by a time period (requiring synchronous clock between two devices). The variables required to use the TOPT are reported in table X.
+RFC 6238 [?] defines the time based one time password (TOTP). The standard uses the hash based one time password (HOTP) reported in section 2.5.1, but changes the counter value C to be a value determined by a time period (requiring synchronous clock between two devices). The variables required to use the TOPT are reported in table below..
 
 \begin{table}[H]
 \begin{tabular}{|l|p{10cm}|}
@@ -430,7 +430,7 @@ Smartcards store cryptographic keys, certificates and data. The standard treats 
 \pagebreak
 \subsection{PKCS \# 11 Object's and Attributes}
 
-There are 5 different types of objects supports by the PKCS \#11 standard. These are presented as the CKA\_class attribute and reported in table 2.1. The sensitive values stored in objects are reported within table 2.1. And finally, the attributes each object has (depending on its type) are reported in table 2.3. The attributes in table 2.3, set controls that the API should implement.
+There are 5 different types of objects supports by the PKCS \#11 standard. These are presented as the CKA\_class attribute and reported in table 3.1. The sensitive values stored in objects are reported within table 3.2. And finally, the attributes each object has (depending on its type) are reported in table 3.3. The attributes in table 3.3, set controls that the API should implement.
 
 \begin{table}[H]
 \begin{tabular}{|l|p{10cm}|}
@@ -511,11 +511,11 @@ Unwrap & Boolean & The unwrap attribute defines if an object can be used for unw
 \caption{PKCS \#11 Attribute Definitions}
 \end{table}
 
-\textit{[Note there are additional attributes for different cryptographic keys e.g. elliptic curve asymmetric keys. We have only reported in the table 2.3 those attributes used within this study]}
+\textit{[Note there are additional attributes for different cryptographic keys e.g. elliptic curve asymmetric keys. We have only reported in the table 3.3 those attributes used within this study]}
 
 \subsection{PKCS \#11 Functions}
 
-There are 13 number of functions (that are commonly used) that utilise the objects described in section 2.1.1. These function preform different operations. We report in tabls 2.4 and 2.5 the function name and the description of the functionality it should provide. The implementation of these functions are all completed by the card vendors middleware and therefore differ from manufacturer and even smartcards of the same manufacture. We report an analysis of how 'Athena smartcard solutions' implemented their middleware for the IDprotect smartcard we study. This is provided in chapter 6.
+There are 13 number of functions (that are commonly used) that utilise the objects described in section 3.1.1. These function preform different operations. We report in tables 2.4 and 2.5 the function name and the description of the functionality it should provide. The implementation of these functions are all completed by the card vendors middleware and therefore differ from manufacturer and even smartcards of the same manufacture. We report an analysis of how 'Athena smartcard solutions' implemented their middleware for the IDprotect smartcard we study. This is provided in chapter 6.
 
 \textit{[Note the PKCS \#11 standard states that the attributes CKA\_sensitive and CKA\_extractable cannot be changed using setAttribute function from false to true, and true to false respectively.]}
 
@@ -568,9 +568,9 @@ C\_Unwrap & object handle \& template & The unwrap function takes the object han
 \section{ISO/IEC 7816}
 
 The International Standards Organization (ISO) and the International Electrotechnical Commission (IEC) jointly manage the standard that defines electronic identification cards (mainly contact smartcards) [?].
-The chapters/ sections of the standard are reported in table X. 
+The chapters/ sections of the standard are reported in table 3.6. 
  
-The main sections we are interested in are 4, 7, and 8. We have extracted out of the ISO/IEC 7816 standard, the information we utilise within this project and reported it within sections 3.2.1 to 3.2.3.
+The main sections we are interested in are 4, 7, and 8. We have extracted out of the ISO/IEC 7816 standard, the information we utilise within this project and reported it within sections 3.2.1 to 3.2.4.
 
 \begin{table}[H]
 \begin{tabular}{|l|p{12cm}|}
@@ -606,6 +606,7 @@ ISO 7816 Section & Description\\
 15 & Cryptographic information application \\
 \hline
 \end{tabular}
+\caption{ISO/IEC 7816 Chapters}
 \end{table}
 
 % 7  has is the source of response table
@@ -613,7 +614,7 @@ ISO 7816 Section & Description\\
 
 \subsection{APDU Command-Response Structure}
 
-ISO/IEC 7816 section 4 [?] provides details regarding the structure behind the \textbf{application data protocol units} (APDU) command-response pairs. Commands have a maximum of 7 fields. The definition of each field is reported in table 2.6.  And the command structure is reported in figure 2.1. Due to the optional fields Lc, Data, and Le, there are 4 possible structures of commands depending on the optional fields that are present. These different possibilities are reported in figure 2.2. Finally the structure of the response is reported in figure 2.3, with the meaning behind the fields reported in table 2.7.
+ISO/IEC 7816 section 4 [?] provides details regarding the structure behind the \textbf{application data protocol units} (APDU) command-response pairs. Commands have a maximum of 7 fields. The definition of each field is reported in table 3.7.  And the command structure is reported in figure 3.1. Due to the optional fields Lc, Data, and Le, there are 4 possible structures of commands depending on the optional fields that are present. These different possibilities are reported in figure 3.2. Finally the structure of the response is reported in figure 3.3, with the meaning behind the fields reported in table 3.8.
 
 % Table: Command fields
 \begin{table}[H]
@@ -621,7 +622,7 @@ ISO/IEC 7816 section 4 [?] provides details regarding the structure behind the \
 \hline
 Field & Description\\
 \hline
-CLA & CLA is the 'class' byte. This dictates if the command is inter-industry or proprietary \textit{(We provide examples of both within section 2.2.2)}\\
+CLA & CLA is the 'class' byte. This dictates if the command is inter-industry or proprietary \textit{(We provide examples of both within section 4.5.2)}\\
 \hline
 INS & INS is the instruction byte. This dictates what the instruction/ command is. \\
 \hline
@@ -683,7 +684,7 @@ SW2 & SW2 is the second status bytes.\\
 \end{figure}
 
 
-ISO/IEC 7816 - section 7 provides the meaning behind the status bytes SW1 and SW2. We have provided a summary of the common types of status bytes and their meanings. This is reported in figure 2.4. Due to the amount of decodings for the status bytes, we only give the exact decoding of them if and when they are required throughout this project.
+ISO/IEC 7816 - section 7 provides the meaning behind the status bytes SW1 and SW2. We have provided a summary of the common types of status bytes and their meanings. This is reported in figure 3.4. Due to the amount of decodings for the status bytes, we only give the exact decoding of them if and when they are required throughout this project.
 
 % IMAGE: 
 \begin{figure}[H]
@@ -700,7 +701,7 @@ The ISO 7816 standard defines two sets of different commands, inter-industry and
 
 \subsection{File System}
 
-As defined in section 4 of the ISO/IEC 7816 standard, contact smartcards have a standard for their file systems. A master file (MF) is the root of the file structure, this is analogous to the C drive for windows operating systems on computers. Under the MF are dedicated files (DF) and elementary files (EF). DF's are directories (similar to folders) and have EF's contained within them. EF's are files consisting of data. There are 4 types of files that EF's support, they can be viewed in figure 2.5 and are:
+As defined in section 4 of the ISO/IEC 7816 standard, contact smartcards have a standard for their file systems. A master file (MF) is the root of the file structure, this is analogous to the C drive for windows operating systems on computers. Under the MF are dedicated files (DF) and elementary files (EF). DF's are directories (similar to folders) and have EF's contained within them. EF's are files consisting of data. There are 4 types of files that EF's support, they can be viewed in figure 3.5 and are:
 \begin{enumerate}
 \item Transparent Binary File
 \item Linear structure with records of fixed size
@@ -727,7 +728,7 @@ control purposes.
 
 \subsection{Secure Messaging}
 
-ISO/IEC 7816 section 4 reports details of the command structure of messages that occur within a 'secure messaging session'. We provide an example of the command structure in table 2.8 (the CLA byte is equal to 8C).
+ISO/IEC 7816 section 4 reports details of the command structure of messages that occur within a 'secure messaging session'. We provide an example of the command structure in table 4.4, chapter 4 (the CLA byte is equal to 8C).
 
 Secure messaging sessions derive two session keys S$_{Enc}$ and S$_{Mac}$ between the API and the smartcard. The S$_{Enc}$ session key is used to encrypt the data-field of commands within a secure messaging session. And S$_{Mac}$ is used to compute a checksum (using C-MAC) of the entire command. This checksum is appended to the command. This provides confidentiality (only the systems in question should be able to read the actual messages) and integrity (data has not been altered in transit) to command-response pairs in a secure messaging session. 
 
@@ -763,7 +764,7 @@ The steps to conduct the attack are as follows:
 
 \section{(name) 2015 - Previous study on the same smartcard}
 
-The paper (name) 2015 [?] was a study on the same smartcard we analyse in this project (Athena IDprotect). We provide the main contributions of the paper summarised in table X. We report in depth the findings of previous work to make clear the difference in the work we conducted in this project.
+The paper (name) 2015 [?] was a study on the same smartcard we analyse in this project (Athena IDprotect). We provide the main contributions of the paper summarised in table 4.1. We report in depth the findings of previous work to make clear the difference in the work we conducted in this project.
 
 \begin{table}[H]
 \begin{tabular}{|l|p{10cm}|}
@@ -805,7 +806,7 @@ One PKCS \#11 function is broken down into multiple APDU command-response pairs.
 \caption{pcsc-spy implementation}
 \end{figure}
 
-The second contribution of the paper is the decoding of attribute files. The attribute files in the Athena IDprotect smartcard are saved in a transparent binary file. The values in the file can be viewed in hexadecimal format at the APDU layer. It was reported in the paper [?] that each PKCS \#11 attribute has a hexadecimal encoding. We have extracted the examples provided in the paper and reported them in table X. The paper stated that the representation of each attribute is stored in the attribute file in the following format:
+The second contribution of the paper is the decoding of attribute files. The attribute files in the Athena IDprotect smartcard are saved in a transparent binary file. The values in the file can be viewed in hexadecimal format at the APDU layer. It was reported in the paper [?] that each PKCS \#11 attribute has a hexadecimal encoding. We have extracted the examples provided in the paper and reported them in table 4.2. The paper stated that the representation of each attribute is stored in the attribute file in the following format:
 
 \begin{center}
 Hexidecimal Encoding + Filler + Length + Value
@@ -850,7 +851,7 @@ The sixth discovery is an implementation flaw in the middleware that 'Athena Sma
 
 The seventh discovery was simply the removal of C\_wrap and C\_copyObject functions from the card vendors middleware that implemented the PKCS \#11 API. We believe that this could have been done in an attempt to prevent attacks suggested in other literature (wrap/decrypt attack).
 
-Contribution 8 is attack$_1$, the attack modified the attribute files at the APDU level by sending the 'UPDATE BINARY' command to alter the attributes stored on the card. The attributes altered are CKA\_sensitive and CKA\_extractable from true to false, and false to true respectively. This contradicts the PKCS \#11 API as it is not permitted. This however was achieved in the paper [?], but yielded no security vulnerability. While a real change to the attributes are reported at the API level, the value of the sensitive key is reported to still be 'None'. Therefore is still secured despite the attack taking place. We believe that when a key is generated with CKA\_sensitive set to true and CKA\_extractable set to false the key value is stored in an internal EF (discussed in section 3.2.2, chapter 3) and thus cannot be extracted regardless to the change in the attributes. We disucss this in our analysis in chapter 6. However we do not replicate the attack due to it yielding no security issues.
+Contribution 8 is attack$_1$, the attack modified the attribute files at the APDU level by sending the 'UPDATE BINARY' command to alter the attributes stored on the card. The attributes altered are CKA\_sensitive and CKA\_extractable from true to false, and false to true respectively. This contradicts the PKCS \#11 API as it is not permitted. This however was achieved in the paper [?], but yielded no security vulnerability. While a real change to the attributes are reported at the API level, the value of the sensitive key is reported to still be 'None'. Therefore is still secured despite the attack taking place. We believe that when a key is generated with CKA\_sensitive set to true and CKA\_extractable set to false the key value is stored in an internal EF (discussed in section 3.2.3, chapter 3) and thus cannot be extracted regardless to the change in the attributes. We disucss this in our analysis in chapter 6. However we do not replicate the attack due to it yielding no security issues.
 
 Contribution 9 is attack$_2$, the attack modifies the key value of already generated/stored block cipher keys. The attack consists of 5 elements:
 \begin{enumerate}
@@ -870,7 +871,7 @@ Finally is contribution 10 which is attack$_3$. The attack suggested that keys w
 % Table: File locations within Athena IDprotect smartcard
 Previous work completed by (name) 2015 [?] had found that attributes and sensitive key values are stored within separate files in the smartcard. It appears that the sensitive key values are stored in internal EF's to prevent extraction, and the attributes are placed in working EF transparent binary files. 
 
-The work also found the location of these attribute files and key value files. However, we extended this work to include the locations of RSA key files. As the previous work only included the directories of block cipher key files (and assumed that asymmetric key value files were stored within the same directory). We discuss this within the literature review in chapter 5, but also list the directory of key and attribute files in table 2.9.
+The work also found the location of these attribute files and key value files. However, we extended this work to include the locations of RSA key files. As the previous work only included the directories of block cipher key files (and assumed that asymmetric key value files were stored within the same directory). We report the locations of block cipher keys, RSA public and private keys in table 4.3.
 
 \begin{table}[H]
 \hskip+2.0cm\begin{tabular}{|l|l|p{6cm}|}
@@ -894,7 +895,7 @@ RSA private 	 & Attribute & 3F 00 30 00 30 \textbf{02 01 4X} \\
 
 During the analysis of the PKCS \#11 functions and how they are broken down into multiple ISO 7816 command-response pairs for the Athena IDprotect smartcard we analyse in this paper, we found the use of the following inter-industry and proprietary commands.
 
-\textit{[The work from (name) 2015 [?] found the 'inner-function' names which gave a good decoding of the proparitary commands listed in table 2.8. He had utilised a program named 'pcsc-spy' to find the 'inner-function' names. We discuss this within chapter 4 of this project]}
+\textit{[The work from (name) 2015 [?] found the 'inner-function' names which gave a good decoding of the proparitary commands listed in table 4.4. They had utilised a program named 'pcsc-spy' to find the 'inner-function' names. We discuss this within chapter 4 of this project]}
 
 \begin{table}[H]
 \hskip-1.0cm\begin{tabular}{|c|c|c|c|c|c|c|p{8cm}|}
@@ -1029,7 +1030,7 @@ The findObjects function is split into 3 main components (these are listed below
 \end{enumerate}
 
 
-First, a cmapfile is accessed. This file stores the location of key attribute files. Following this, attribute files are accessed. The attribute files store all the information regarding a specific keys attributes (listed in section 2.1.2). Finally the next (and last) file is opened. In the case more than one key was stored on the card at the time of running this function the next file would contain the attributes of the next key. However, since there is only 1 key, the next file is empty (containing all zero's) thus determining there are no more key objects to be found.
+First, a cmapfile is accessed. This file stores the location of key attribute files. Following this, attribute files are accessed. The attribute files store all the information regarding a specific keys attributes (listed in section 3.1.1). Finally the next (and last) file is opened. In the case more than one key was stored on the card at the time of running this function the next file would contain the attributes of the next key. However, since there is only 1 key, the next file is empty (containing all zero's) thus determining there are no more key objects to be found.
 
 Due to key and attribute files being stored separately, this function call reveals no sensitive information. This finding was reported by (name) 2015 [?] and is stated within our literature review. Only the attributes are opened and listed at the APDU layer. These attributes can be printed at the API layer as well.
 
@@ -1056,7 +1057,7 @@ The generateKey function has 9 main components (these are listed below).
 \item Close secure messaging (B.4 - command 47)\\
 \end{enumerate}
 
-Secure messaging session have an initialization process whereby the API and smartcard generate 2 session keys S$_{Enc}$ and S$_{Mac}$. Once the initialization is completed the following communications data fields are encrypted with S$_{Enc}$ and a checksum is computed via C-MAC (see section 3.4.2) using S$_{Mac}$. They provide confidentiality and integrity of the data being sent within the data fields of the commands during a secure messaging session.
+Secure messaging session have an initialization process whereby the API and smartcard generate 2 session keys S$_{Enc}$ and S$_{Mac}$. Once the initialization is completed the following communications data fields are encrypted with S$_{Enc}$ and a checksum is computed via C-MAC (see section 2.4.2) using S$_{Mac}$. They provide confidentiality and integrity of the data being sent within the data fields of the commands during a secure messaging session.
 
 Two different secure messaging sessions are used. The first is to request the card to generate 24 bytes (same as the key length) and send it to the API. The second is to place the key value into the key file. The attribute file is created without the use of secure messaging as it does not contain sensitive information.
 
@@ -1199,7 +1200,7 @@ $[05]$ (4 byte) 01 0C 10 00\\
 
 The above decoding is similar to what we have reported for the RSA private key analysis in section 6.5. The 16 byte key that would be used for triple DES is not present. There is however pointers to the file that we just read the parameters of \textit{(00 C1)}, and other additional parameters that we are unsure of their use. 
 
-All security policies [?] that we have reviewed concerning 'Athena smartcard solutions' suggest that keys are stored in internal EF's (cannot be accessed by outside actors, see section 3.2.1, chapter 3), and only when required are encrypted internally (by the smartcard's OS) and stored in the EEPROM (electrically erasable programmable read only memory) for them to be used for the security operation required of them. 
+All security policies [?] that we have reviewed concerning 'Athena smartcard solutions' suggest that keys are stored in internal EF's (cannot be accessed by outside actors, see section 3.2.3, chapter 3), and only when required are encrypted internally (by the smartcard's OS) and stored in the EEPROM (electrically erasable programmable read only memory) for them to be used for the security operation required of them. 
 
 Thus we did not find any security vulnerabilities from this function. And also eliminates one of the vulnerabilities we suggested within the generateKeyPair function analysis. We discuss further in chapter 7.
 
@@ -1249,7 +1250,7 @@ Similar to encrypt and decrypt, this function has only 2 main components. The fi
 \item Modify attribute file to change the label name from 'des3' to  'changed' (B.9 - commands 52,53)\\
 \end{enumerate}
 
-Command chaining (see section 2.2) was used as the number of bytes within the attribute file exceeded the limit of 256. Command chaining is indicated by the use of '90' instead of '80' as the CLA byte. This was seen in the 'REALLOCATE BINARY' command that was used to modify the attribute file.
+Command chaining was used as the number of bytes within the attribute file exceeded the limit of 256. Command chaining is indicated by the use of '90' instead of '80' as the CLA byte. This was seen in the 'REALLOCATE BINARY' command that was used to modify the attribute file.
 
 We notice that at the APDU layer attributes can be changed  via the 'REALLOCATE BINARY' command. This is a vulnerability that was discovered and tested in previous work [?]. With the main focus on changing the attribute values of CKA\_sensitive and CKA\_extractable from true to false and false to true respectively. The change in this direction is not permitted by the PKCS \#11 standard. However, this was conducted at the APDU layer. The tests carried out in the literature found that due to the split between attribute files and key value files, the key value could still not be extracted despite the modification to the attributes.
 
@@ -1284,9 +1285,9 @@ Furthermore, an attacker can also modify the attributes as the key is saved with
 
 
 \section{C\_wrap}
-As discussed in section [?] of the literature, the wrap/decrypt attack is carried out at the API level whereby one key can be given wrapping and decryption functionalities within its attributes. This allows for any key (regardless of the attributes) to be wrapped, exported out of the card, and then decrypted by the same key. This would reveal its key value in plain text. This vulnerability bypassed all controls that the attributes of a key are expected to provide. Due to this vulnerability discovery, it is reasonable to assume that 'Athena smartcard solutions' decided to remove the ability to wrap keys completely in an attempt to prevent this type of attack. This reasoning is based on the fact that requesting any key to wrap another key at the API level causes an error: \textit{CKR\_Function\_Not\_Supported}.
+As discussed in section 4.3, literature showed the wrap/decrypt attack is carried out at the API level whereby one key can be given wrapping and decryption functionalities within its attributes. This allows for any key (regardless of the attributes) to be wrapped, exported out of the card, and then decrypted by the same key. This would reveal its key value in plain text. This vulnerability bypassed all controls that the attributes of a key are expected to provide. Due to this vulnerability discovery, it is reasonable to assume that 'Athena smartcard solutions' decided to remove the ability to wrap keys completely in an attempt to prevent this type of attack. This reasoning is based on the fact that requesting any key to wrap another key at the API level causes an error: \textit{CKR\_Function\_Not\_Supported}.
 
-From the analysis of table 2.1 (see section 2.2.4), we find a correlation between the P1 and P2 parameters for the APDU commands for encryption, decryption and unwrapping. These values are tabulated below:
+From the analysis of table 4.4 (see section 4.5.2), we find a correlation between the P1 and P2 parameters for the APDU commands for encryption, decryption and unwrapping. These values are tabulated below:
 
 \begin{table}[H]
 \begin{tabular}{|c|c|l|}
@@ -1357,7 +1358,7 @@ The vulnerability discussed in the \textit{FindObject} function analysis present
 
 \textit{GenerateKey} and \textit{GenerateKeyPair} function analysis both suggest a vulnerability whereby attributes can be modified as the attribute file is being created for the first time. This leaves the possibility of the key value being exposed at the API layer. This effectively could result in the card being instructed to generate the key with the attributes the attacker sets. Setting the key attributes to have CKA\_sensitive set to false and CKA\_extractable set to true, will allow for key value exposure at the API level. This vulnerability would always have to be exploited upon key generation and would be visible to the user of the smartcard. Although this might be a viable attack to investigate, we have decided that it would be better to look into methods that would allow all keys to be exported in plain text regardless of whether the key was already generated and saved on the card without informing the user.
 
-\textit{Encrypt, Decrypt, GenerateKeyPair} and \textit{DestroyObject} functions export in plain text the directory of the key file. Following our discussion in chapter 6, (destroyObject analysis, section 6.6) we hypothesise that this might have provided the ability to open the file and read the key value in plain text. This hypothesis turned out not to be valid, and instead the  we could only view the file control parameters, which stored data wrapped in an ASN.1 BER encoding, that had pointers to locations within the smartcard's memory where the key values are stored securely within internal EF's (see section 3.2.1, chapter 3).
+\textit{Encrypt, Decrypt, GenerateKeyPair} and \textit{DestroyObject} functions export in plain text the directory of the key file. Following our discussion in chapter 6, (destroyObject analysis, section 6.6) we hypothesise that this might have provided the ability to open the file and read the key value in plain text. This hypothesis turned out not to be valid, and instead the  we could only view the file control parameters, which stored data wrapped in an ASN.1 BER encoding, that had pointers to locations within the smartcard's memory where the key values are stored securely within internal EF's (see section 3.2.3, chapter 3).
 
 We find that \textit{Unwrap} function does not reveal any vulnerabilities. Instead we would like to learn exactly how the data field is built, but this cannot be inferred from traces as the command is only ever used within secure messaging. Therefore, the data field is encrypted. The rational for focusing on understanding of how the command works is related to possibility of implementing the wrap/decrypt attack at the APDU layer. This is explained in the next section.
 
@@ -1392,7 +1393,7 @@ The API requests (via a 'GET CHALLENGE' command) the smartcard to generate and s
 
 The following sections provide explanations of the searches that we have conducted in trying to reverse-engineer the protocol shown above. To give a good understanding of how challenging this part of the project is, we will explain the combinations of different possibilities that we have tested, and the reasoning behind each of them. These are divided into different 'searches', with the findings of each 'search' being incorporated into the next one.
 
-To facilitate these explanations, we first introduce here 3 sub-functionalities that have been used throughout the majority of our searches. Table 7.1 lists all of the hash functions (see section 3.1 of chapter 3) that are used. The table also provides the output length in bits \& bytes. These hash functions are all supported by openSSL and the smartcard. Table 7.2 provides the names of the bitwise logical operations that are used to 'join' two bytes together. Table 7.3 provides the description of truncation methods that are used to reduce the output size of a search down to 16 bytes to match the response provided by the API. \\
+To facilitate these explanations, we first introduce here 3 sub-functionalities that have been used throughout the majority of our searches. Table 7.1 lists all of the hash functions (see section 2.1 of chapter 2) that are used. The table also provides the output length in bits \& bytes. These hash functions are all supported by openSSL and the smartcard. Table 7.2 provides the names of the bitwise logical operations that are used to 'join' two bytes together. Table 7.3 provides the description of truncation methods that are used to reduce the output size of a search down to 16 bytes to match the response provided by the API. \\
 
 In the explanation of the searches, I will just refer to \textbf{\textit{hash}}, \textbf{\textit{join}} \& \textbf{\textit{truncate}} which will suggest that all of the elements in the tables 7.1, 7,2 and 7.3 have been iterated over and preformed on. For example, \textbf{\textit{truncate(hash('example'))}}, means the string, 'example', is to be hashed with all the functions in table 7.1, and then truncated to 16 bytes using all the methods listed in table 7.3.\\
 
@@ -1486,7 +1487,7 @@ Assumptions:
 
 %--------------------------------------
 \textbf{\underline{Search 1.1 - Hash functions}}\\
-In the early stage of this project we were of the opinion that there is a high chance that the 16 byte response is generated by hashing a combination of the PIN and the 8 byte challenge. This is partly due to common practices that are used by the industry whereby users passwords are often hashed, and in most cases salted (see section 3.1), before storing them in databases. This practice is more secure than storing plain text passwords. If an attacker were to gain access to the back end databases  where passwords are stored, these passwords would not be available to in plain text. For authenticating a user on a website, the password is just hashed (and salted, if a salt is used), and then compared against to the stored value (correct password hashed) within the database. 
+In the early stage of this project we were of the opinion that there is a high chance that the 16 byte response is generated by hashing a combination of the PIN and the 8 byte challenge. This is partly due to common practices that are used by the industry whereby users passwords are often hashed (see section 2.1), and in most cases salted (A salt is a random string appended to a message before hashing), before storing them in databases. This practice is more secure than storing plain text passwords. If an attacker were to gain access to the back end databases  where passwords are stored, these passwords would not be available to in plain text. For authenticating a user on a website, the password is just hashed (and salted, if a salt is used), and then compared against to the stored value (correct password hashed) within the database. 
 
 The fact that from multiple traces the 16 byte response seemed to be uniformly random, this provides support to our hypothesis that the PIN is hashed to provide the 16 byte response. Thus, our first completed search has focused on the use of different hash functions. Below we list the methods we have tested in our experiments to generate 16 bytes, given X and the PIN.
 
@@ -1571,7 +1572,7 @@ With no success in deducing the challenge-response algorithm, we have decided to
 \end{Verbatim}
 
 
-The paper also explains that 'OCRA' (in the instance of this protcol) stands for a generic variable to state which form of HOTP is to be used. HOTP (see section 3.5.1, chapter 3) can take on different formula's due to using different hash functions. The generic formula is:\\
+The paper also explains that 'OCRA' (in the instance of this protcol) stands for a generic variable to state which form of HOTP is to be used. HOTP (see section 2.5.1, chapter 2) can take on different formula's due to using different hash functions. The generic formula is:\\
 $$HOTP(K,C) = Truncate(HMAC(K,C)) \quad \&\& \quad 0x7FFFFFFF$$
 
 where K and C stands for the password (secret key) and is a counter (the challenge) respectively.
@@ -1579,9 +1580,9 @@ where K and C stands for the password (secret key) and is a counter (the challen
 We ran experiments using the 5 hash functions listed in table 7.1, and even inter-changed K and C using each others values. This did not result in finding a matching response to the one the API has calculated.\\
 
 \textbf{\underline{Search 2.2 - TOTP}}\\
-Following search 2.1, we thought it would be appropriate to rule out the possible use of \textit{time based one time passwords} (see section 3.5.2). TOTP algorithms are rarely used within smartcard's due to the complexity of syncing the clocks between the computer and the smartcards processors, and then also accounting for any lag. Despite the low chance of TOTP being used it was worth testing.
+Following search 2.1, we thought it would be appropriate to rule out the possible use of \textit{time based one time passwords} (see section 2.5.2). TOTP algorithms are rarely used within smartcard's due to the complexity of syncing the clocks between the computer and the smartcards processors, and then also accounting for any lag. Despite the low chance of TOTP being used it was worth testing.
 
-This was completed by halting communication between the smartcard and API using the man-in-the-middle tool (see section 4.2). We halted the communication for upto 2 hours. Our primary objective is to look for a failed verification, despite having the correct PIN. The failure should have been caused by the delay in the response if TOTP is used. This was not found to be the case and therefore we ruled out as a possibility that TOTP is used.
+This was completed by halting communication between the smartcard and API using the man-in-the-middle tool (see section 5.3). We halted the communication for upto 2 hours. Our primary objective is to look for a failed verification, despite having the correct PIN. The failure should have been caused by the delay in the response if TOTP is used. This was not found to be the case and therefore we ruled out as a possibility that TOTP is used.
 
 \subsection{Authentication Protocol Search 3.0 (Triple DES Encryption)}
 
@@ -1626,7 +1627,7 @@ These characteristics provide evidence to support the fact that the 16 byte resp
 \begin{enumerate}
 \item The first 8 bytes is a random number $N_A$ = Nonce API, which is seeded with time (in seconds)
 \item The second 8 bytes is a another number that verifies the knowledge of both the challenge and $N_A$. We denote this as $V_{AC}$
-\item A block cipher (see section 3.3) is used to encrypt both of these numbers, to send over to the card for PIN verification
+\item A block cipher (see section 2.3) is used to encrypt both of these numbers, to send over to the card for PIN verification
 \item A function of the PIN, is the password to the block cipher
 \item The PIN is still of maximum length 16 bytes
 \item The PIN is still in ASCII format
@@ -1707,7 +1708,7 @@ SHA512(PIN$_2$)& 2 & 1C202A831098546D 8EF674B4A0B0D7AD \\
 The results are interesting. While we do not find an exact match of the entire responses when decrypting both of them, we do find a match for the first 8 bytes. This suggests that we have found the correct protocol and formatting of the PIN, but the wrong decryption methodology. A change in the second 8 bytes suggests that cipher block chaining is used. Next we move onto search 3.2.\\
 
 \textbf{\underline{Search 3.2 - Triple DES \textit{(Key option 2)}-CBC}}\\
-Triple DES block cipher using cipher block chaining (CBC) requires an initialization vector (IV) to be used (see section 3.3, chapter 3). The IV is 8 bytes in length. It is Common practice is to send this in plain text along with the encryption of a message. It is evident from our results that this is not the case. The only other possibility is that the card and the API already have agreed upon a value to use, and always use this same value. The most common practice is to use an IV = 00 00 00 00 00 00 00 00. Despite it being a an insecure practice, this still does occur. Hence, in the following experiment we only test the pin method for SHA1(PIN$_{1,2}$) and decrypt the corresponding responses using triple DES-CBC with an IV of zeros.
+Triple DES block cipher using cipher block chaining (CBC) requires an initialization vector (IV) to be used (see section 2.3, chapter 2). The IV is 8 bytes in length. It is Common practice is to send this in plain text along with the encryption of a message. It is evident from our results that this is not the case. The only other possibility is that the card and the API already have agreed upon a value to use, and always use this same value. The most common practice is to use an IV = 00 00 00 00 00 00 00 00. Despite it being a an insecure practice, this still does occur. Hence, in the following experiment we only test the pin method for SHA1(PIN$_{1,2}$) and decrypt the corresponding responses using triple DES-CBC with an IV of zeros.
 
 
 \begin{table}[H]
@@ -1744,7 +1745,7 @@ Thus concluding this attack.
 
 \section{Reverse Engineering Secure Messaging}
 
-The first objective of our second attack is to investigate the reverse engineering of the secure messaging protocol used by the card. As discussed in section 2.2, and reported in 'Athena smartcard solutions' security policies [?] for several different cards the vendor produces, the secure messaging initialization is used to derive 2 session keys. S$_{Enc}$, S$_{Mac}$ are used to encrypt and compute a message authentication code (MAC) of the messages within a secure messaging session respectively. This provides confidentiality and data integrity of the messages. The decision concerning how to derive these keys is left to the discretion the card's vendor. This makes this attack inherently difficult as there are several methods that could be used.
+The first objective of our second attack is to investigate the reverse engineering of the secure messaging protocol used by the card. As discussed in section 3.2.4 (chapter 3), and reported in 'Athena smartcard solutions' security policies [?] for several different cards the vendor produces, the secure messaging initialization is used to derive 2 session keys. S$_{Enc}$, S$_{Mac}$ are used to encrypt and compute a message authentication code (MAC) of the messages within a secure messaging session respectively. This provides confidentiality and data integrity of the messages. The decision concerning how to derive these keys is left to the discretion the card's vendor. This makes this attack inherently difficult as there are several methods that could be used.
 
 As discussed in chapter 6, the secure messaging sessions are used in the \textbf{\textit{GenerateKey}} and \textbf{\textit{Unwrap}} functions. This is also reported in \textbf{\textit{CreateObject}} function by (name) 2015 [?]. In all cases, it is used to provide confidentiality of the CKA\_value of block cipher keys. The ability to successfully reverse engineer the secure messaging protocol would allow an attacker to use a man in the middle attack to derive two sets of session keys (one with the API and one with the smartcard). This would allow the attacker to decrypt the command data field and find value of the generated block cipher keys. This would violate the PKCS \#11 standard if the keys were set to be sensitive and un-extractable. This attack is far more serious than the previously analysed attacks, due to the high chance the user would be completely unaware of the attack.
 
@@ -1799,7 +1800,7 @@ Card random challenge & (32 bytes) = 66 56 36 31 16 42 8D 8A ...\\
 Using the information in table 7.9 we now test protocols that would allow session keys to be derived, and match the amount of data being sent across from the API to the card and vice versa.
 
 \subsection{Protocol search}
-There are three main protocols that would support session keys being derived that would remain a secret between the API and the smartcard. These are: RSA encryption, Elliptic Curve Cofactor Diffie Hellman (ECCDH) and Diffie Hellman (DH) (see section 3.1.3, chapter 3). 
+There are three main protocols that would support session keys being derived that would remain a secret between the API and the smartcard. These are: RSA encryption, Elliptic Curve Cofactor Diffie Hellman (ECCDH) and Diffie Hellman (DH) (see section 2.2.2, chapter 2). 
 
 The security policies for 'Athena smartcard solutions' [?] states that ECCDH is used for some of their smartcards. They also report that the 32 bytes of random data sent by the card is used to XOR with the shared secret derived from ECCDH to create the 2 session keys. 
 
@@ -1808,7 +1809,7 @@ The security policies for 'Athena smartcard solutions' [?] states that ECCDH is 
 Our project's smartcard supports the key generation of elliptic curve public and private keys for this exact purpose, and for signing and verifying data. Thus, the first protocol we look into is ECCDH.\\
 
 \underline{\textbf{Elliptic Curve Cofactor Diffie Hellman}}\\
-The smartcard we analyse only supports curves P-192, and P-521 for ECCDH (see section 3.2.1, chapter 3). The security policies state that curve P-256 is used. This is the first indication that this smartcard does is not use ECCDH for secure messaging. Having said this, we believe it is still worth investigating in case one of the above curves is used.
+The smartcard we analyse only supports curves P-192, and P-521 for ECCDH (see section 2.2.3, chapter 2). The security policies state that curve P-256 is used. This is the first indication that this smartcard does is not use ECCDH for secure messaging. Having said this, we believe it is still worth investigating in case one of the above curves is used.
 
 First, we calculate the number of bytes that are required in order to setup the global parameters (for ECCDH) that must be sent from the card to the API, and also the number of bytes of each public key. A match between the number of bytes calculated and the number of bytes that are sent across could suggest this protocol is being used for secure messaging initialization. \textit{We use OpenSSL to generate the following different public and private keys, along with the global parameters and outputted them in DER format to find the length of the corresponding data.}\\
 
@@ -1884,7 +1885,7 @@ Appendix & A.3.3 & A.3.2 \\
 The results reported in table 7.12 are not consistent with our expectations relating to RSA encryption. The value of the cipher text when the public exponent was 0 was 0, and 1 when it was 1. The value of the cipher text should have been 1 and the value of the message respectively. The results do however fit the mathematics behind the Diffie Hellman protocol. This leads onto our final search.\\
 
 \underline{\textbf{Diffie Hellman - Key Agreement Protocol}}\\
-As discussed within chapter 2 (section 2.2.2) the Diffie Hellman protocol relies on the fact that the global parameters are known by the 2 entities in communication with one and other (API and smartcard). The 2 entities then share their own respective public keys which allows them to derive a shared secret without ever revealing it in plain text. Again, the following is the Diffie Hellman protocol.\\
+As discussed within 2.2.2 (chapter 2) the Diffie Hellman protocol relies on the fact that the global parameters are known by the 2 entities in communication with one and other (API and smartcard). The 2 entities then share their own respective public keys which allows them to derive a shared secret without ever revealing it in plain text. Again, the following is the Diffie Hellman protocol.\\
 
 \textbf{Public Parameters}\\
 \textit{[G must be a primitive root modulo p]}\\
@@ -2031,7 +2032,7 @@ The second experiment concerns finding the key derivation function and the block
 \item Compare the encrypted command generate by the API to the command we generate. If they match we have found the KDF, and block cipher.
 \end{enumerate}
 
-The first step is simple, since we already know the ISO 7816 inter-industry 'GET CHALLENGE' command. This is discussed in the reverse engineering of the pin authentication protocol (section 7.2) and is also reported in table 4.4 (chapter 4). We also have the encrypted version of the 'GET CHALLENGE' command, which is reported in appendix A.3.6, command/response pair 26. (The commands reported below are for generating 24 bytes (24 = '18' in hexadecimal) using 'GET CHALLENGE' ISO 7816 command)
+The first step is simple, since we already know the ISO 7816 inter-industry 'GET CHALLENGE' command. This is discussed in the reverse engineering of the pin authentication protocol (section 7.2) and is also reported in table 4.4 (chapter 4). We also have the encrypted version of the 'GET CHALLENGE' command, which is reported in appendix A.3.6 (command/response pair 26) and table 7.16 (The commands reported below are for generating 24 bytes (24 = '18' in hexadecimal) using 'GET CHALLENGE' ISO 7816 command).
 
 \begin{table}[H]
 \hskip-1.5cm\begin{tabular}{|l|p{10cm}|}
