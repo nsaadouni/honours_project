@@ -740,20 +740,39 @@ We report the use of secure messaging within chapters 6 and 7.
 
 This chapter concerns literature that is reported within the area of computer security with regard to PKCS \#11 and ISO 7816 for contact smartcards. We analyse 4 papers, explain the contribtuions they provided and in some cases replicate their work to see if the smartcard we analyse has the same vulnerabilities present. We replicate and extend some of the work presented in these literatures and report this in section 4.5 of this chapter.
 
-\section{RAID (2016)}
+\section{APDU-level attacks in PKCS \#11 devices}
 
-Do in the morning
+(name) et al (2016) [?] presented 'APDU-level attacks in PKCS \#11 devices'. The paper concerned new un-published attacks at the APDU level with respect to a generated threat model of the PKCS \#11 middleware. 5 commercially available smartcards (some were usb tokens), that do not use encrypted APDU's (secure messaging) are investigated in the paper, with the following results reported:
+
+\begin{itemize}
+\item 2 smartcards used plain PIN authentication and therefore sent the PIN to the smartcard at the APDU layer in plain text
+\item 3 smartcards implemented a challenge-response algorithm for PIN authentication. 2 challenge-response algorithms are reported to have been reversed engineered, as a proof of concept that an attacker can then brute force the PIN with the knowledge of the algorithm and 1 successful login trace.
+\item All smartcards investigated implemented no protection from man in the middle attacks.
+\item 3 of the smartcards do not preform encryption and decryption on the smartcard, and instead delicate it to the middleware. To do this they send the sensitive symmetric key value in plaintext at the APDU level to the API.
+\item One of the smartcards is usb token from the same company 'Athena smartcard solutions'. This device showed the following protocol implemented to generate block cipher keys. Request and receive 8 random bytes from the smartcard. Request and receive the smartcards (not users) RSA public key. Encrypt the entire Elementary File (EF) to store the symmetric key (the key value is the requested random bytes). So despite going to significant effort to protect the key value as its being stored, it had already been revealed at the APDU level.
+\item In all 5 smartcards the ability to bypass PKCS \#11 attribute controls was achieved by sending the APDU commands for cryptographic operations and skipping the middleware (API) all together.
+\end{itemize}
+
+
+The paper concluded with the following suggestions to mitigate the attacks they had presented.
+
+** conclusions **
+all cyrptorahpic operations should be implemented within the hardware (costly to redesign!)
+
+seperate privialage for middleware on computer (fixes some issues)
+
+For devices with display utilise the OTP they can offer. This makes it much harder to reverse-engineer the authentication protocol and requires access to the device!
 
 \section{REPROVE}
 
-Reverse Engineering the Smart-Card Application Protocol Data Unit [?] presents an a "proof of concept system for automatically analysing APDU low-level communication" [?] named Reverse Engineering PROtocols for Verification (REPROVE). REPROVE uses first-order logic, information with regard to the PKCS \#11 standard and the ISO 7816 standard to reduce the combinatorial search space to enable the reverse engineering of the proprietary APDU commands with respect to the PKCS \#11 functions that use them.
+(name) et al (year) [?] presented the 'Reverse Engineering the Smart-Card Application Protocol Data Unit'. The paper reports a "proof of concept system for automatically analysing APDU low-level communication" named Reverse Engineering PROtocols for Verification (REPROVE). REPROVE uses first-order logic, information with regard to the PKCS \#11 standard and the ISO 7816 standard to reduce the combinatorial search space to enable the reverse engineering of the proprietary APDU commands with respect to the PKCS \#11 functions that use them.
 
 During the analysis of 5 commercially available smartcards they reported smartcards revealing users PIN's in plain text and sensitive cryptographic keys in plain text. This consequentially allowed replay/ man in the middle attacks to take place on the evaluated cards. Trivial (static) authentication methods for C\_login where also found which allowed for an attacker to trivially login to the smartcard even without knowing the user PIN as the static login command is known (the PIN might be encrypted/ hidden but login can still occur).
 
 
-\section{Wrap/Decrypt Attack}
+\section{On the Security of PKCS \#11}
 
-Attacking and Fixing PKCS \#11 Security Tokens [?] describes the 'wrap/ decrypt attack'. The attack occurs at the API level and extracts sensitive key values of symmetric and asymmetric keys in plain text. The CKA\_extractable attribute must be set to true, but other PKCS \#11 attributes are not taken into consideration. Therefore in the case that CKA\_sensitive is set to false, the attack directly contradicts the controls the API should provide.
+Clulow (2003) [?] presented the paper 'On the Security of PKCS \#11' that describes the 'wrap/ decrypt attack'. The attack occurs at the API level and extracts sensitive key values of symmetric and asymmetric keys in plain text. The CKA\_extractable attribute must be set to true, but other PKCS \#11 attributes are not taken into consideration. Therefore in the case that CKA\_sensitive is set to false, the attack directly contradicts the controls the API should provide.
 
 The steps to conduct the attack are as follows:
 \begin{enumerate}
@@ -2177,6 +2196,8 @@ In the case that none of the methods suggested in table 7.19 do not reverse engi
 \chapter{Conclusion / Results}
 
 Order this correctly and also summarise my work.
+
+key separation principle (should be enforced by the smartcard, requires pkcs \#11 attribute controls to be implemented by hardware not API)
 
 Due isolating cryptographic key storage and the operations of cryptography to smartcards memory and processors, sensitive data should never be revealed in plain text. This should be regardless of whether the computer (that has the API to communicate with the smartcard) is compromised with malicious malware. As we have seen from this study and others reported in literature, this is not the case.
 
