@@ -55,7 +55,7 @@
 \abstract{
 Basic example of an abstract (this will be changed)\\
 
-Smartcards are used commercially and within industry for authentication, encryption, decryption, signing and verifying data. This paper aims to look into how the smartcard interacts with an application at the lower level. PKCS\#11 (public key cryptography system?) is the standard that is implemented at the higher level and then broken down into command/response pairs sent as APDU traffic to and from the smart card. It is the APDU low-level protocol that will be analysed to see if any vulnerabilities are present with regard to the smart cards tested.\\
+Smartcards are used commercially and within industry for authentication, encryption, decryption, signing and verifying data. This project aims to look into how the smartcard interacts with an application at the lower level. PKCS\#11 (public key cryptography system?) is the standard that is implemented at the higher level and then broken down into command/response pairs sent as APDU traffic to and from the smart card. It is the APDU low-level protocol that will be analysed to see if any vulnerabilities are present with regard to the smart cards tested.\\
 }
 
 \maketitle
@@ -80,7 +80,7 @@ Smartcards offer what seems to be more secure methods for using cryptographic op
 The most common API (application programming interface) that is used to communicate with smartcards is the RSA defined PKCS\#11 (Public Key Cryptography Standard). Also known as 'Cryptoki' (cryptographic token interface, pronounced as 'crypto-key'). The standard defines a platform-independent API to smartcards and hardware security modules (HSM). PKCS\#11 originated from RSA security, but has since been placed into the hands of OASIS PKCS\#11 Technical Committee to continue its work (since 2013). [reference wikipedia PKCS\#11].\\
 
 
-In the previous 10-15 years, literature has shown a great deal of research into the examination of the PKCS\#11 API, and the security it provides. Yet little attention has been paid to that of the lower-level communication (command-response pairs), in which the higher level API is broken down into. It is this area that we wish to research within this paper. The reasoning is simple. If we cannot trust the security of the low-level commands that implement the high level API functions, then in turn we cannot trust the security of the high level API. This is analogous to C code being complied down to binary data to be operated on by the CPU. The addition of two integers cannot be considered correct in C, unless the corresponding binary instructions sent to the CPU are correct as well.  
+In the previous 10-15 years, literature has shown a great deal of research into the examination of the PKCS\#11 API, and the security it provides. Yet little attention has been paid to that of the lower-level communication (command-response pairs), in which the higher level API is broken down into. It is this area that we wish to research within this project. The reasoning is simple. If we cannot trust the security of the low-level commands that implement the high level API functions, then in turn we cannot trust the security of the high level API. This is analogous to C code being complied down to binary data to be operated on by the CPU. The addition of two integers cannot be considered correct in C, unless the corresponding binary instructions sent to the CPU are correct as well.  
 
 % maybe not 
 The research of the low-level communication will take two forms. 
@@ -90,21 +90,21 @@ The research of the low-level communication will take two forms.
 \end{enumerate}
 
 
-Before we move into the above analysis, supporting material must be introduced. This the rest of this paper will be organized as follows.
+Before we move into the above analysis, supporting material must be introduced. This the rest of this project's report will be organized as follows.
 
 
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 \chapter{Background - Cryptography}
 
-This chapter aims to provide an understanding of different cryptographic standards (we do not give explanations regarding the correctness of the standards, merely just how to use them). This is to aid our explanations with regard the smartcards functionality and cryptographic operations used to attempt the secure transfer of sensitive information. In addition this chapter provides an understanding of terminology that is used throughout this paper.
+This chapter aims to provide an understanding of different cryptographic standards and how to use them (the chapter does not go into the details of the correctness of the standards). This will help our explanations regarding our smartcard's functionality and cryptographic operations it undertakes. In addition, this chapter also provides an understanding of terminology that is used throughout this project.
 
 \section{Cryptograhic - Hash Functions}
 
-FIPS PUB 180-4 define [?] hash functions are a one way functions. They take in as input a \textbf{variable sized} message (a string) and output a \textbf{fixed size} message digest (another string). Hash functions should hold three properties:
+FIPS PUB 180-4 define [?] hash functions are a one way functions. They take in as input a \textbf{variable sized} message (a string) and output a \textbf{fixed size} message digest (another string). Hash functions are expected to hold three properties:
 \begin{enumerate}
 \item \textbf{Simple Computation} - It should be easy to calculate the message digest of a given message.
-\item \textbf{Difficult Reversing the Computation} - It should be difficult to find the message given its mesage digest.
+\item \textbf{Difficult Reversing the Computation} - It should be difficult to find the message given its message digest.
 \item \textbf{Collision Resistance} - It should be difficult to find two messages m$_1$ and m$_2$ that have identical message digests.
 \end{enumerate}
 
@@ -114,10 +114,10 @@ $$ Message\_digest = Hash\_function(message) $$
 
 \section{Asymmetric Encryption}
 
-Asymmetric encryption relies on public and private key pairs. Public keys can be sent over insecure channels for an entity to use to encrypt a message. Private keys are to be always kept a secret. Only the private key can be used to decrypt messages encrypted via the public key. This allows communication to remain confidential despite insecure mediums of transport being used.
+Asymmetric encryption relies on public and private key pairs. Public keys can be sent over insecure channels for an entity to use to encrypt a message. Private keys should always kept a secret. Only the private key can be used to decrypt messages encrypted via the public key. This allows communication to remain confidential despite the use insecure mediums of transport.
 
 \subsection{RSA}
-Ron Rivest, Adi Shamir, and Leonard Adleman published the RSA asymmetric encryption standard in 1977 [?]. The standard defines a public key (N,e) and a private key (N,d), where N is the multiplication of two large primes p and q. 
+Rivest, Shamir, and Adleman in their 1977 paper [?] on RSA asymmetric encryption standard define a public key (N,e) and a private key (N,d), where N is the multiplication of two large primes p and q. 
 
 \begin{table}[H]
 \begin{tabular}{|l|l|l|}
@@ -131,7 +131,7 @@ Exponent & e & d\\
 \end{tabular}
 \end{table}
 
-Messages to be encrypted are converted into integers to be used for the encryption and decryption process.
+Messages to be encrypted are converted into integers, and follow the formula's below for encryption and decryption.
 
 \underline{\textbf{RSA public key encryption}}\\
 $$ encrpyted\_message =  message^e  \quad mod \quad N $$
@@ -139,7 +139,7 @@ $$ encrpyted\_message =  message^e  \quad mod \quad N $$
 \underline{\textbf{RSA private key decryption}}\\
 $$ message =  encrypted\_message^d  \quad mod \quad N $$
 
-There are different RSA private and public key pairs. The size of the moudlus (N) in bits gives the names of the different forms of RSA there are. They provide different levels of security. It is suggested to now use RSA-2048 and above.
+There are different RSA private and public key pairs. The size of the moudlus (N) in bits gives the names of the different forms of RSA. The different forms of RSA provide different levels of security, these are reported below.
 
 \begin{table}[H]
 \begin{tabular}{|l|c|}
@@ -156,14 +156,14 @@ RSA-4096 & 512\\
 
 \underline{\textbf{Chinese Remainder Theorem (CRT) RSA cryptography}}\\
 
-G.N.Shinde and H.S.Fadewar published a paper in 2008 [?] explaining how the use of the chienese remainder theorem can improve the efficiency of RSA decryption by upto a factor of four. It required three additional calculations which are the following:
+Shinde and Fadewar in their 2008 paper [?] explain how the use of the Chinese remainder theorem can improve the efficiency of RSA decryption by upto a factor of four. It requires three additional parameters to be calcualted upon key pair generation, these are given below.
 \begin{enumerate}
 \item $dP = (1/e)\quad  mod (p-1)$
 \item $dQ = (1/e) \quad mod (q-1)$
 \item $qInv = (1/q) \quad mod (p)$
 \end{enumerate}
 
-To compute the decryption ($m= c^d mod(N)$) using CRT, we do the following:
+To compute the decryption ($m= c^d mod(N)$) using CRT apply the following:
 $$m1 = c^{dP} mod p$$
 $$m2 = c^{dQ} mod q$$
 $$h = qInv.(m1 - m2) mod (p)$$
@@ -171,7 +171,7 @@ $$ m = m2 + h.q  == c^d mod (N)$$
 
 
 \subsection{Diffie Hellman}
-Whitfield Diffie and Martin Hellman published in 1976 [?] the Diffie Hellman protocol. The protocol again has a public and private key pair that is used to derive a shared secret over an insecure channel. Two entities must agree on the global parameters.
+Diffie and Hellman in their 1976 paper [?] presented the Diffie Hellman protocol. The protocol has a public and private key pair that is used to derive a shared secret over an insecure channel. Two entities in communication with each other must agree on the global parameters.
 
 \begin{table}[H]
 \begin{tabular}{|l|c|}
@@ -185,18 +185,18 @@ Public Modulus & \textit{p}\\
 \end{tabular}
 \end{table}
 
-Using the global parameters each entity generates selects its own private key to be a random number between 1 and \textit{p-1}. And then calculate their respective public keys as follows:
+Each entity selects its own private key to be a random number between 1 and \textit{p-1}. Using the global parameters each entity calculates its own public key as follows:
 $$ public\_key = G^{private\_key} \quad mod (p)$$
 
-The 2 entities send each other their public keys over the insecure channel, and can then calculate a shared secret (that other entities that cannot calculate) as follows:
+The two entities send each other their public keys and then calculate a shared secret. This cannot be replicated by other entities that may intercept the communication. The shared secret is computed as follows:
 $$ shared\_secret = public\_key_2^{private\_key_1} \quad mod (p) $$
 
 \subsection{Elliptic Curve Cryptography}
-\textit{[Note, we only report how ECCDH operates as this is an area we research within chapter 7 as part of an attack.]}
+\textit{[It is worth noting that in this section, we only report how Elliptic Curve Cofactor Diffie Hellman (ECCDH) operates as this is an area of research that is part of our second attack discussed in chapter 7]}
 
-Elliptic curve cryptography is based on the algebraic structure of elliptic curve over finite fields. The standard only received wide spread use starting 2004. It is similar to RSA in the respect that it provides a method for sharing an entities public key over and insecure channel. The public key can be used to encrypt data, sign data or even use a version of the Diffie Hellman protocol to derive a shared secret (ECCDH). Certicom Research published a revised paper in 2009 [?] explaining how to use the ECC standard.
+Elliptic curve cryptography is based on the algebraic structure of elliptic curve over finite fields. The standard only started to attract wide spread since 2004. It is similar to RSA in that it provides a method for sharing an entity's public key over an insecure channel. The public key can be used to encrypt data, sign data or even use a version of the Diffie Hellman protocol to derive a shared secret (ECCDH). Certicom Corp. published a paper in 2009 [?] explaining how to use the ECC standard.
 
-One major difference between ECC and standard cryptographic methods, is the addition and multiplication operations. In elliptic curve cryptograhpy addition and multiplication are redefined over the curve. The maths behind ECC means that addition and multiplication are no longer reversiable operations, and are now assumed to be one way functions. In which to compute the reverse of one of the operations, one must solve the 'elliptic curve discrete logarithm problem'. We report below in figure 2.1 examples of how multiplication and addition operation work in ECC.
+One major difference between ECC and standard cryptographic methods, is the addition and multiplication operations. In elliptic curve cryptograhpy addition and multiplication are redefined over the curve. The maths behind ECC means that addition and multiplication are no longer reversible operations, and are now assumed to be one way functions. This means to compute the reverse of one of the operations, one must solve the 'elliptic curve discrete logarithm problem'. In figure 2.1, we report examples of how addition and multiplication operation work in ECC.
 % IMAGE: ECC addition and multiplication
 \begin{figure}[H]
 \centering
@@ -207,7 +207,7 @@ One major difference between ECC and standard cryptographic methods, is the addi
 \caption{ECC Addition and Multiplication [?]}
 \end{figure}
 
-Global Paramters are shared (similar to Diffie Hellman) between two entities, these are:
+Global Paramters are shared (similar to Diffie Hellman) between two entities. These are given below.
 \begin{table}[H]
 \begin{tabular}{|l|l|}
 \hline
@@ -230,29 +230,28 @@ Global Parameter & Description\\
 
 \underline{\textbf{Elliptic Curve Cofactor Diffie Hellman}}\\
 
-Using the global parameters two entities can now generate their own private keys (defined on the curve). The value of their respective private keys (\textit{d}), are randomly selected numbers (seeded with \textit{Seed}), in the range $ 1 <= d <= (n-1)$.
+Using the global parameters, two entities can now generate their own private keys (defined on the curve). The value of their respective private keys (\textit{d}), are randomly selected numbers (seeded with \textit{Seed}), in the range $ 1 <= d <= (n-1)$.
 
-With their private keys each entity can now calculate their own public keys to send to one and other. This is similar to Diffie Hellman, however the ECC multiplication operation is used instead.
+Using their own private key, each entity can now calculate its own public key. This is similar to Diffie Hellman, however the ECC multiplication operation is used instead.
 
 \textit{public\_key$_1$ = (X$_1$, Y$_1$) - A point on the curve}\\
 \textit{public\_key$_1$ = (private\_key$_1$).G}\\
 
-Once each entity has each others public keys, they can now calculate a shared secret using the following formula:
-
+The two entities send each other their public keys and then calculate a shared secret. This cannot be replicated by other entities that may intercept the communication. The shared secret is computed as follows:
 \begin{center}
 \textit{shared\_secret = public\_key$_2$.(private\_key$_1$.h)}
 \end{center}
 
 
 \section{Symmetric Encryption}
-Symmetric key algorithms rely on the fact that both entities in communication with one and other are both in the knowledge of a shared key. The shared key is to be held a secret by both entities and is used for both encryption and decryption. The symmetric key algorithms that are implemented on the smartcard we analyse are block ciphers. They are named block ciphers due to how the encrypt/ decrypt data, it occurs in blocks (predefined number of bytes). Thus, if a message's length is not of a multiple of the block size it must be padded. The three block ciphers that the smartcard has implemented are:
+Symmetric key algorithms rely on the fact that both entities in communication are both in the knowledge of a shared key. The shared key is to be held a secret by both entities and is used for both encryption and decryption. The symmetric key algorithms that are implemented on the our smartcard are block ciphers. They are named block ciphers because they encrypt and decrypt data in blocks (predefined number of bytes). Thus, if a message's length is not of a multiple of the block size it must be padded. The three block ciphers that the smartcard has implemented are:
 \begin{enumerate}
 \item Advanced Encryption Standard (AES)
 \item Data Encryption Standard (DES)
 \item Triple Data encryption Standard (3DES)\\
 \end{enumerate}
 
-We have reported the characteristics of the three block ciphers in table 2.1. Block ciphers also have serveral different modes of operation. These modes dictate different methods of encrypting and decrypting data. We have explained the two that are present on the Athena IDprotect smartcard we analyse in this paper.
+The characteristics of the three block ciphers in table 2.1. Block ciphers also have several different modes of operation. These modes dictate different methods of encrypting and decrypting data. We only explain the two that are present on our smartcard, these are ECB and CBC.
 
 \begin{table}[H]
 \begin{tabular}{|l|c|c|}
@@ -275,7 +274,7 @@ DES & 8 & 8\\
 
 % might go against those headings and just list them in the explanations
 \subsection{Electronic CodeBook (ECB) Mode}
-Electronic CodeBook mode is the simplest form of encryption. Every block is treated separately, encrypted and concatenated together to form the encrypted message. This can be seen in figure 2.2.
+Electronic CodeBook mode is the simplest form of encryption. Every block is treated separately, encrypted and concatenated together to form the encrypted message. This is shown in figure 2.2.
 
 % IMAGE: ECB encryption
 \begin{figure}[H]
@@ -290,7 +289,7 @@ Electronic CodeBook mode is the simplest form of encryption. Every block is trea
 
 Cipher Block Chaining mode is more complex. It requires an \textit{initialization vector} (IV), that is used to XOR with the first block of plaintext for encryption. The output of every encrypted block is then XOR'd with the next block of plaintext before it is encrypted. This can be seen in figure 2.3.
 
-\textit{[The IV is always of the same length as the block size for a given block cipher] 1}
+\textit{[The IV is always of the same length as the block size for a given block cipher]}
 
 % IMAGE: CBC encryption
 \begin{figure}[H]
@@ -304,11 +303,11 @@ Cipher Block Chaining mode is more complex. It requires an \textit{initializatio
 
 \section{Message Authentication Codes}
 
-A Message Authentication Code (MAC) is a checksum/ tag that is appended to a message. Its use is to provide data integrity to a message sent over an insecure channel. It does this by forming a tag that should not be able to be formed without the knowledge of the shared key and the message in question. Thus, the receiver of the message will use their shared key, the MAC algorithm and the message to compute (what should be the same tag) a tag. This tag is then cross-referenced with the tag appended to the message. If they match the entity is aware that the message has not been tampered with.
+A Message Authentication Code (MAC) is a checksum/ tag that is appended to a message. Its use is to provide data integrity to a message sent over an insecure channel. It does this by forming a tag that should be difficult to generate without the knowledge of the shared key and the message. Thus, the receiver of the message will use their shared key, the MAC algorithm and the message to compute (what should be the same tag) a tag. This tag is then cross-referenced with the tag appended to the message. If they match the entity is becomes aware that the message has not been tampered with.
 
 \subsection{Hash Based - Message Authentication Codes (HMAC)}
 
-RFC 2104 [?] defines the HMAC: keyed-hashing for message authentication. HMAC's use cryptographic hash functions to combine the message and the shared key to generate a tag that should only be able to computed via the knowledge of both the key and the message. The formula is:
+RFC 2104 [?] defines the HMAC: keyed-hashing for message authentication. HMAC's use cryptographic hash functions to combine the message and the shared key to generate a tag that can only be computer with the knowledge the key and the message. The formula is:
 
 \begin{table}[H]
 \begin{tabular}{|l|l|}
@@ -339,7 +338,7 @@ B & Block size of the block cipher used in the cryptographic hash function\\
 
 RFC 4493 [?] defines the AES Cryptograhic Message Authentication Code (the use of other block ciphers is also allowed for CMAC's). The standard defines that first, two additional keys K$_1$ and K$_2$ are generated using a derivation of the original shared key known by the two entities. The message is encrypted using the block cipher in CBC mode with an IV = 0, denoted Enc$_1$. 
 
-The two shared keys are used to alter last block of the message as defined in the standard, and then encrypted using the block cipher and original shared key. The output is XOR'd with Enc$_1$ to form the CMAC tag. This can be seen in figure 2.4.
+The two shared keys are used to alter last block of the message as defined in the standard, and then encrypted using the block cipher and original shared key. The output is XOR'd with Enc$_1$ to form the CMAC tag. This is reported in figure 2.4.
 
 
 % IMAGE: CBC encryption
@@ -421,7 +420,7 @@ The TOPT formula for calculating a one time password derived by using a function
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 \chapter{Background - Standards For Smartcards}
 
-In this chapter we give background knowledge on two essential standards that are required for the use of the contact smartcard we analyse in this paper. These two standards are PKCS\#11 and ISO 7816.
+In this chapter we give background knowledge on two essential standards that are required for the use of the contact smartcard we analyse in this project. These two standards are PKCS\#11 and ISO 7816.
 
 \section{PKCS\#11}
 Public Key Cryptography Standard \#11 was created by RSA Laboratories. It is a platform independent API, that defines rules and functions that should be implemented by the card manufacturer in the form of a 'middleware'. The API is written within the C programming language, and only header files are included. The implementation of the API's functions are left to each card vendor, and are required to break down each function into multiple ISO 7816 command-response pairs to carry out the indented function.
@@ -684,7 +683,7 @@ SW2 & SW2 is the second status bytes.\\
 \end{figure}
 
 
-ISO/IEC 7816 - section 7 provides the meaning behind the status bytes SW1 and SW2. We have provided a summary of the common types of status bytes and their meanings. This is reported in figure 2.4. Due to the amount of decodings for the status bytes, we only give the exact decoding of them if and when they are required throughout this paper.
+ISO/IEC 7816 - section 7 provides the meaning behind the status bytes SW1 and SW2. We have provided a summary of the common types of status bytes and their meanings. This is reported in figure 2.4. Due to the amount of decodings for the status bytes, we only give the exact decoding of them if and when they are required throughout this project.
 
 % IMAGE: 
 \begin{figure}[H]
@@ -764,7 +763,7 @@ The steps to conduct the attack are as follows:
 
 \section{(name) 2015 - Previous study on the same smartcard}
 
-The paper (name) 2015 [?] was a study on the same smartcard we analyse in this paper (Athena IDprotect). We provide the main contributions of the paper summarised in table X. We report in depth the findings of previous work to make clear the difference in the work we conducted in this project.
+The paper (name) 2015 [?] was a study on the same smartcard we analyse in this project (Athena IDprotect). We provide the main contributions of the paper summarised in table X. We report in depth the findings of previous work to make clear the difference in the work we conducted in this project.
 
 \begin{table}[H]
 \begin{tabular}{|l|p{10cm}|}
@@ -895,7 +894,7 @@ RSA private 	 & Attribute & 3F 00 30 00 30 \textbf{02 01 4X} \\
 
 During the analysis of the PKCS \#11 functions and how they are broken down into multiple ISO 7816 command-response pairs for the Athena IDprotect smartcard we analyse in this paper, we found the use of the following inter-industry and proprietary commands.
 
-\textit{[The work from (name) 2015 [?] found the 'inner-function' names which gave a good decoding of the proparitary commands listed in table 2.8. He had utilised a program named 'pcsc-spy' to find the 'inner-function' names. We discuss this within chapter 4 of this paper]}
+\textit{[The work from (name) 2015 [?] found the 'inner-function' names which gave a good decoding of the proparitary commands listed in table 2.8. He had utilised a program named 'pcsc-spy' to find the 'inner-function' names. We discuss this within chapter 4 of this project]}
 
 \begin{table}[H]
 \hskip-1.0cm\begin{tabular}{|c|c|c|c|c|c|c|p{8cm}|}
@@ -1572,7 +1571,7 @@ With no success in deducing the challenge-response algorithm, we have decided to
 \end{Verbatim}
 
 
-The paper also explains that 'OCRA' (in the instance of this protcol) stands for a generic variable to state which form of HOTP is to be used. HOTP (see section 3.5.1 of this paper) can take on different formula's due to using different hash functions. The generic formula is:\\
+The paper also explains that 'OCRA' (in the instance of this protcol) stands for a generic variable to state which form of HOTP is to be used. HOTP (see section 3.5.1, chapter 3) can take on different formula's due to using different hash functions. The generic formula is:\\
 $$HOTP(K,C) = Truncate(HMAC(K,C)) \quad \&\& \quad 0x7FFFFFFF$$
 
 where K and C stands for the password (secret key) and is a counter (the challenge) respectively.

@@ -6,9 +6,9 @@
 \contentsline {subsection}{\numberline {2.2.2}Diffie Hellman}{13}
 \contentsline {subsection}{\numberline {2.2.3}Elliptic Curve Cryptography}{13}
 \contentsline {section}{\numberline {2.3}Symmetric Encryption}{15}
-\contentsline {subsection}{\numberline {2.3.1}Electronic CodeBook (ECB) Mode}{16}
+\contentsline {subsection}{\numberline {2.3.1}Electronic CodeBook (ECB) Mode}{15}
 \contentsline {subsection}{\numberline {2.3.2}Cipher Block Chaining (CBC) Mode}{16}
-\contentsline {section}{\numberline {2.4}Message Authentication Codes}{17}
+\contentsline {section}{\numberline {2.4}Message Authentication Codes}{16}
 \contentsline {subsection}{\numberline {2.4.1}Hash Based - Message Authentication Codes (HMAC)}{17}
 \contentsline {subsection}{\numberline {2.4.2}Cryptographic Based - Message Authentication Codes (CMAC)}{17}
 \contentsline {section}{\numberline {2.5}One Time Passwords}{18}
