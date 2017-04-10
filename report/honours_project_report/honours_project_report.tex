@@ -85,7 +85,7 @@ In the previous 10-15 years, literature [?] (5,6,9 from RAID) has shown a great 
 
 From these research papers it is clear that APDU level attacks require further investigation, the research has shown the ability to grab sensitive key value and user PIN information at the APDU-level. If the security of the low-level (APDU) command-response pairs is not implemented correctly it removes the secuirty the PKCS \#11 standard provides. This is analogous to C code being complied down to binary data to be operated on by the CPU. The addition of two integers cannot be considered correct in C, unless the corresponding binary instructions sent to the CPU are correct as well.
 
-This motivates the research area of this project. We undertake the analysis of the \textbf{Athena IDprotect smartcard} and how the PKCS \#11 functions are (specifically for our smartcard) broken down into (APDU) command-response pairs. Using this analysis, and research from literature [?] (RAID, Lan) we replicate some published attacks, and also research 2 new un-published attacks at the APDU level. The main contributions of this research project are as follows:
+This motivates the research area of this project. We undertake the analysis of the \textbf{Athena IDprotect smartcard} and how the PKCS \#11 functions are (specifically for our smartcard) broken down into (APDU) command-response pairs. Using this analysis, and research from literature [?] (RAID, Lan) we replicate some published attacks, and also research a new un-published attack at the APDU level. The main contributions of this research project are as follows:
 
 % Contributions
 \begin{enumerate}
@@ -97,7 +97,7 @@ This motivates the research area of this project. We undertake the analysis of t
 
 \item The first attack we research and complete, is the reverse engineering of the proprietary (challenge response) PIN authentication protocol used in our smartcard. The PIN authentication protocol implementations differ from each hardware security module, this is a new vulnerability discovery for the smartcard we investigate. However, published literature [?] has reported completing this for 2 hardware security modules as well. (Section 7.2, chapter 7)
 
-\item The second attack we research is the reverse engineering of the proprietary secure messaging protocol to encrypt APDU communication (specifically for our smartcard). This is a new area of research and has not been published in any literature regarding other hardware security modules.
+\item The second attack we research is the reverse engineering of the proprietary secure messaging protocol to encrypt APDU communication (specifically for our smartcard). We have managed to empirically prove the cryptograhpic protocol used. However unfortunatly due to time constraints we have had to leave the final step to future work. We have provided the methodology for the experimental setup to complete the final step. This is a new area of research, as of yet we have not found any published literature regarding the reverse engineering of secure messaging for APDU encrypted communication. (Section 7.3, chapter 7)
 \end{enumerate}
 
 For 3 PKCS \#11 functions, our smartcard uses secure messaging at the APDU level to encrypt and append a checksum to the end of each command and response in a secure messaging session. 
