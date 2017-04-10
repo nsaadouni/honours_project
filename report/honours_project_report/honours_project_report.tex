@@ -100,9 +100,8 @@ This motivates the research area of this project. We undertake the analysis of t
 \item The second attack we research is the reverse engineering of the proprietary secure messaging protocol to encrypt APDU communication (specifically for our smartcard). We have managed to empirically prove the cryptograhpic protocol used. However unfortunatly due to time constraints we have had to leave the final step to future work. We have provided the methodology for the experimental setup to complete the final step. This is a new area of research, as of yet we have not found any published literature regarding the reverse engineering of secure messaging for APDU encrypted communication. (Section 7.3, chapter 7)
 \end{enumerate}
 
-For 3 PKCS \#11 functions, our smartcard uses secure messaging at the APDU level to encrypt and append a checksum to the end of each command and response in a secure messaging session. 
+The attacks we selected to investigate lead onto a final hypothesis that using the published attacks in literature [?], the reverse engineering of both the PIN authentication protocol and secure messaging an attacker will be able to implement the wrap/decrypt attack [?] at the APDU level. This will allow the extraction of all cryptographic sensitive key values, regardless of the PKCS \#11 attributes set for them. The constraint of requiring CKA\_extractable set to true in the wrap/decrypt attack, will not be present in the attack we suggest, as all attribute controls should be able to be bypassed. We explain the steps that needed to be undertaken to reach a final conclusion on this hypothesis in chapter 9 (future work). Due time constraints on the project we did not manage to reach a conclusion ourselves, due to working on the reverse engineering of the PIN authentication and secure messaging protocols.
 
-Before we move into the above analysis, supporting material must be introduced. This the rest of this project's report will be organized as follows.
 
 
 
