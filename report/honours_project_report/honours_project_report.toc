@@ -20,21 +20,21 @@
 \contentsline {subsection}{\numberline {3.1.2}PKCS \#11 Functions}{26}
 \contentsline {section}{\numberline {3.2}ISO/IEC 7816}{29}
 \contentsline {subsection}{\numberline {3.2.1}APDU Command-Response Structure}{29}
-\contentsline {subsection}{\numberline {3.2.2}Inter-Industry and Proprietary Commands}{31}
+\contentsline {subsection}{\numberline {3.2.2}Inter-Industry and Proprietary Commands}{32}
 \contentsline {subsection}{\numberline {3.2.3}File System}{32}
 \contentsline {subsection}{\numberline {3.2.4}Secure Messaging}{33}
 \contentsline {chapter}{\numberline {4}Literature Review}{35}
 \contentsline {section}{\numberline {4.1}APDU-level attacks in PKCS \#11 devices}{35}
 \contentsline {section}{\numberline {4.2}REPROVE}{36}
 \contentsline {section}{\numberline {4.3}On the Security of PKCS \#11}{37}
-\contentsline {section}{\numberline {4.4}Previous study on the same smartcard}{37}
-\contentsline {section}{\numberline {4.5}Extended Work}{41}
-\contentsline {subsection}{\numberline {4.5.1}Directories of Key and Attribute Files}{41}
-\contentsline {subsection}{\numberline {4.5.2}APDU Commands Found During Analysis}{42}
-\contentsline {subsection}{\numberline {4.5.3}Manually Overriding Attribute Controls}{43}
+\contentsline {section}{\numberline {4.4}A Study On The Same Smartcard}{37}
+\contentsline {section}{\numberline {4.5}Additional Work}{41}
+\contentsline {subsection}{\numberline {4.5.1}Directories of Key and Attribute Files (Extended Work)}{41}
+\contentsline {subsection}{\numberline {4.5.2}APDU Command Definitions (Summary)}{43}
+\contentsline {subsection}{\numberline {4.5.3}Manually Overriding Attribute Controls (Replication Study)}{44}
 \contentsline {chapter}{\numberline {5}Tools Developed/Used In This Project}{45}
 \contentsline {section}{\numberline {5.1}PCSC-Spy}{45}
-\contentsline {section}{\numberline {5.2}Virtual Smartcard}{46}
+\contentsline {section}{\numberline {5.2}Virtual Smartcard Reader}{46}
 \contentsline {section}{\numberline {5.3}Man in The Middle Tool (MiTM)}{46}
 \contentsline {chapter}{\numberline {6}PKCS \#11 Functions - APDU analysis}{47}
 \contentsline {section}{\numberline {6.1}Initialization}{48}

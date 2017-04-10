@@ -89,7 +89,8 @@ This motivates the research area of this project. We undertake the analysis of t
 
 % Contributions
 \begin{enumerate}
-\item An extended analysis of how (specifically for our smartcard) the PKCS \#11 function are broken down into multiple (APDU) command-response pairs. This is an extended analysis as Lan (2016) [?] studied the same smartcard. We specifically state were we used this previous research, and also provide new more in depth analysis of several functions. (Chapters 5 and 6)
+\item \textbf{An extended analysis of how (specifically for our smartcard) the PKCS \#11 function are broken down into multiple (APDU) command-response pairs. This is an extended analysis as Lan (2016) [?] studied the same smartcard. We specifically state were we used this previous research, and also provide new more in depth analysis of several functions. (Chapters 5 and 6)}
+
 
 \item From the function analysis we suggest possible vulnerabilities that could be exploited at the APDU level to attack the smartcard. (Chapters 6 and the motivation section of chapter 7)
 
@@ -370,14 +371,14 @@ The two shared keys are used to alter last block of the message as defined in th
 
 
 \section{One Time Passwords}
-One Time passwords (OTP) is a password that is valid for one login. They overcome the short coming of original \textit{static} based passwords that are vulnerable to replay attacks. Normally they are incorporated using two factor authentication methods (this doesn't have to be the case). This is done by proving knowledge of two pieces of information. Two of the following are often used:
+One Time passwords (OTP) is a password that is valid for one login. They overcome the short coming of original \textit{static} based passwords that are vulnerable to replay attacks. Normally they are incorporated using two factor authentication methods (this doesn't have to be the case). This is done by proving knowledge of any two out of the following three pieces of information.
 \begin{enumerate}
 \item 'Something you know' - e.g. A PIN number or password
 \item 'Something you have' - e.g. An RSA key fob (OTP calculator)
 \item 'Something you are'  - e.g. Your fingerprints
 \end{enumerate}
 
-Both entities the one requesting to login and the one verifying the request need to be aware of the following:
+The entity requesting to login and the entity verifying the request need to be aware of the following:
 \begin{itemize}
 \item The shared secret key (password)
 \item The algorithm for generating OTP using the password
@@ -401,13 +402,13 @@ Hash function & The cryptographic hash function used in HOTP\\
 \end{tabular}
 \end{table}
 
-HOTP uses the HMAC that we reported in section 2.4.1 to calculate its output. The first byte of the output of logically AND'd with the value '7F' (hexidecimal). And also logically AND'd 'FF'*\textit{i}, where i-1 is the number of bytes requested to be the output of HOTP. The formula is reported below (4 byte output):
+HOTP uses the HMAC that we discussed in section 2.4.1 in order to calculate its output. The first byte of the output of logically AND'd with the value '7F' (hexidecimal) and truncated down to the number of bytes the user requests. The formula is reported below (4 byte output):
 \begin{center}
 \textit{HOTP(K,C) = Truncate(HMAC(K,C)) \& 0x7F FF FF FF}
 \end{center}
 
 \subsection{Time Based - One Time Passwords (TOTP)}
-RFC 6238 [?] defines the time based one time password (TOTP). The standard uses the hash based one time password (HOTP) reported in section 2.5.1, but changes the counter value C to be a value determined by a time period (requiring synchronous clock between two devices). The variables required to use the TOPT are reported in table below..
+RFC 6238 [?] defines the time based one time password (TOTP). The standard uses the hash based one time password (HOTP) as discussed above, but changes the counter value C to be a value determined by a time period (requiring synchronous clock between two devices). The variables required to use the TOPT are reported in the table below.
 
 \begin{table}[H]
 \begin{tabular}{|l|p{10cm}|}
@@ -427,7 +428,7 @@ Hash function & Used as the parameter to HOTP\\
 \end{tabular}
 \end{table}
 
-The TOPT formula for calculating a one time password derived by using a function of time that is synchronised between two devices is reported below:
+The TOPT formula for calculating a one time password is derived by using a function of time that is synchronised between two devices is reported below:
 
 \begin{center}
 \textit{ TOTP(K, T) = HOTP(K, C)}
@@ -437,17 +438,18 @@ The TOPT formula for calculating a one time password derived by using a function
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 \chapter{Background - Standards For Smartcards}
 
-In this chapter we give background knowledge on two essential standards that are required for the use of the contact smartcard we analyse in this project. These two standards are PKCS\#11 and ISO 7816.
+This chapter aims to explain two important standards, PKCS \#11 and ISO/IEC 7816. PKCS \#11 is a standard that defines an application programming interface (API) for users to communicate with smartcards. The ISO/IEC 7816 defines electronic identification cards including the command response pairs that the PKCS \#11 functions are broken down into. These two standards are required in order to operate our project's smartcard.
+
 
 \section{PKCS\#11}
-Public Key Cryptography Standard \#11 was created by RSA Laboratories. It is a platform independent API, that defines rules and functions that should be implemented by the card manufacturer in the form of a 'middleware'. The API is written within the C programming language, and only header files are included. The implementation of the API's functions are left to each card vendor, and are required to break down each function into multiple ISO 7816 command-response pairs to carry out the indented function.
+Public Key Cryptography Standard \#11 has been created by RSA Laboratories. It is a platform independent API, that defines rules and functions that should be implemented by the card manufacturer in the form of a 'middleware'. The API is written in the C programming language, and only header files are included. The implementation of the API's functions are left the discretion of each card's vendor. The card vendor is required to break down each function into multiple ISO 7816 command-response pairs to carry out the indented function.
 
-Smartcards store cryptographic keys, certificates and data. The standard treats each of these data items as objects. With each object having attributes that define controls that PKCS \#11 API should implement. In sections 2.1.1 and 2.1.2 we report the meanings behind the attributes of PKCS \#11 objects and the PKCS \#11 functions that utilise them.
+Smartcards store cryptographic keys, certificates and data. The standard treats each of these data items as objects. With each object having attributes that define the controls that PKCS \#11 API should implement. In sections 3.1.1 and 3.1.2 we report the definitions of the PKCS \#11 objects, attributes and functions.
 
 \pagebreak
 \subsection{PKCS \# 11 Object's and Attributes}
 
-There are 5 different types of objects supports by the PKCS \#11 standard. These are presented as the CKA\_class attribute and reported in table 3.1. The sensitive values stored in objects are reported within table 3.2. And finally, the attributes each object has (depending on its type) are reported in table 3.3. The attributes in table 3.3, set controls that the API should implement.
+Five different types of objects are supported by the PKCS \#11 standard. These are presented as the CKA\_class attribute and reported in table 3.1. The sensitive values stored in objects are reported in table 3.2. Finally, the attributes that each object has (depending on its type) are reported in table 3.3. The attributes in table 3.3, set controls that the API should implement.
 
 \begin{table}[H]
 \begin{tabular}{|l|p{10cm}|}
@@ -460,7 +462,7 @@ Public Key & A public key object is an object that stores the public key value a
 \hline
 Private Key & A private key object is an object that stores the private key value and attributes of an asymmetric key pair\\
 \hline
-Data & A data object is a generic object that allows any value to be stored within its objects value.\\
+Data & A data object is a generic object that allows any value to be stored within its object's value.\\
 \hline
 Certificate & A certificate object stores certificates usually wrapped in an ASN.1 encoding (e.g X.509) for their use on-line.\\
 \hline
@@ -528,11 +530,11 @@ Unwrap & Boolean & The unwrap attribute defines if an object can be used for unw
 \caption{PKCS \#11 Attribute Definitions}
 \end{table}
 
-\textit{[Note there are additional attributes for different cryptographic keys e.g. elliptic curve asymmetric keys. We have only reported in the table 3.3 those attributes used within this study]}
+\textit{[In table 3.3, we only report those attributes we have used in our study. They're additional attributes for different types of cryptographic keys]}
 
 \subsection{PKCS \#11 Functions}
 
-There are 13 number of functions (that are commonly used) that utilise the objects described in section 3.1.1. These function preform different operations. We report in tables 2.4 and 2.5 the function name and the description of the functionality it should provide. The implementation of these functions are all completed by the card vendors middleware and therefore differ from manufacturer and even smartcards of the same manufacture. We report an analysis of how 'Athena smartcard solutions' implemented their middleware for the IDprotect smartcard we study. This is provided in chapter 6.
+There are 13 functions (that are commonly used) that use the objects described in section 3.1.1. These functions preform different operations. We report in table 3.4 the function names and the description of the functionality each function provides. The implementation of these functions are all completed by the cards vendors middleware and therefore differ from one manufacturer to another. They also differ between different smartcards from the same manufacture. We report an analysis of how 'Athena smartcard solutions' implement their middleware for the Athena IDprotect smartcard we study. This is provided in chapter 6.
 
 \textit{[Note the PKCS \#11 standard states that the attributes CKA\_sensitive and CKA\_extractable cannot be changed using setAttribute function from false to true, and true to false respectively.]}
 
@@ -542,15 +544,23 @@ There are 13 number of functions (that are commonly used) that utilise the objec
 \hline
 Function & Parameters & Description\\
 \hline
-C\_login & User PIN & The login function should send the users PIN over to the smartcard for the smartcard to verify if the PIN is correct. In the case it is, the user should now be in an authenticated state with the smartcard.\\
+C\_login & User PIN & The login function should send the user's PIN over to the smartcard for the smartcard to verify if the PIN is correct. In the case it is, the user should now be in an authenticated state with the smartcard.\\
 \hline 
 C\_findObject & - & The findObject function should search the smartcards file system for currently stored objects. This should return different object handles, dependant on the authenticated state of the user, and the \textit{private} attribute of objects stored on the card.\\
 \hline
 C\_generateKey & template of key & The generateKey function \textit{(used for generating block cipher keys)} should use the template provided to store the attributes in the smartcards memory, and then set CKA\_Value of the block cipher key to a computer generated value. (can be generated by either API on computer or the smartcard)\\
 \hline 
-C\_generateKeyPair & template of both keys & The generateKeyPair function \textit{(used for generating asymmetric key pairs)} should use the template provided for both keys to store the attributes of each key individually to the smartcards memory. The values of the sensitive attributes should be computer generated as well, just like generateKey function.\\
+C\_generateKeyPair & template of both keys & The generateKeyPair function \textit{(used for generating asymmetric key pairs)} should use the template provided for both keys to store the attributes of each key individually to the smartcard's memory. The values of the sensitive attributes should be computer generated as well, just like generateKey function.\\
 \hline
-C\_createObject & template of object & The createObject function should use the template provided to create the object in its entirity. Thus, the sensitive values should be included within the template \textit{(unlike the generate functions)} as well. Which should then be saved to the smartcards memory.\\
+\end{tabular}
+\caption{PKCS \#11 Functions}
+\end{table}
+
+% PKCS 11 function table
+\begin{table}[H]
+\hskip-1.5cm\begin{tabular}{|l|p{5cm}|p{8cm}|}
+\hline
+C\_createObject & template of object & The createObject function should use the template provided to create the object in its entirity. Thus, the sensitive values should be included within the template \textit{(unlike the generate functions)} as well. Which should then be saved to the smartcard's memory.\\
 \hline
 C\_destroyObject & object handle & The destroyObject function uses the object handle to locate the object stored on the smartcard and delete it from its memory. \\
 \hline 
@@ -558,37 +568,35 @@ C\_setAttribute & object handle \& template for attribute to be changed & The se
 \hline
 C\_Encrypt & object handle \& mechanism \& data & The encrypt function uses the object handle to locate the cryptographic key. It then uses that key to encrypt the data provided using the cryptograhic mechanism (e.g. AES-ECB) and return the encrypted data. \\
 \hline
-\end{tabular}
-\caption{PKCS \#11 Functions}
-\end{table}
-
-% PKCS 11 function table continued
-\begin{table}[H]
-\begin{tabular}{|l|p{5cm}|p{8cm}|}
-\hline
-Function & Parameters & Description\\
-\hline
 C\_Decrypt & object handle \& mechanism \& data & The decrypt function uses the object handle to locate the cryptographic key. It then uses that key to decrypt the data provided using the cryptographic mechanism (e.g. AES-ECB) and return the decrypted data. \\
 \hline
 C\_Sign & object handle \& mechanism \& data & The sign function uses the object handle to locate the cryptographic key. It then uses that key to sign the data provided using the cryptographic mechanism (e.g. AES-CMAC) and return the signature of the data. \\
 \hline
 C\_Verify & object handle \& mechanism \& data \& signature & The verify function uses the object handle to locate the cryptographic key. It then uses that key to sign the data provided using the cryptographic mechanism (e.g. AES-CMAC) and return the comparison between the computed signature and the signature provided. \\
 \hline
-C\_Wrap & 2 x object handle's &  The wrap function takes both object handles. The first one is to locate the key used for wrapping (encrypting). And the second one is used to locate the key to be wrapped. The function then encrpyts the second key using the first key, and returns the encryption. \\
+C\_Wrap & 2 x object handle's &  The wrap function takes both object handles. The first one is to locate the key used for wrapping (encrypting) and the second one is used to locate the key to be wrapped. The function then encrpyts the second key using the first key, and returns the encryption. \\
+\hline
+\end{tabular}
+\caption*{Table 3.4: continued}
+\end{table}
+
+% PKCS 11 function table continued
+\begin{table}[H]
+\begin{tabular}{|l|p{5cm}|p{8cm}|}
 \hline
 C\_Unwrap & object handle \& template & The unwrap function takes the object handle to locate the key to be used to unwrap (decrypt) the sensitive value within the template. The template consists of the attributes for the wrapped key, and the encrypted key value. The key is then unwrapped and stored in the smartcards memory. \\
 \hline
 \end{tabular}
-\caption{PKCS \#11 Functions}
+\caption*{Table 3.4: continued}
 \end{table}
 
 \pagebreak
 \section{ISO/IEC 7816}
 
 The International Standards Organization (ISO) and the International Electrotechnical Commission (IEC) jointly manage the standard that defines electronic identification cards (mainly contact smartcards) [?].
-The chapters/ sections of the standard are reported in table 3.6. 
+The content table for ISO/IEC 7816 standard is reported in table 3.5. 
  
-The main sections we are interested in are 4, 7, and 8. We have extracted out of the ISO/IEC 7816 standard, the information we utilise within this project and reported it within sections 3.2.1 to 3.2.4.
+The main sections of interest are 4, 7, and 8. We extract and report in sections 3.2.1 to 3.2.4, the information we use for our project from the ISO/IEC 7816 standard.
 
 \begin{table}[H]
 \begin{tabular}{|l|p{12cm}|}
@@ -624,7 +632,7 @@ ISO 7816 Section & Description\\
 15 & Cryptographic information application \\
 \hline
 \end{tabular}
-\caption{ISO/IEC 7816 Chapters}
+\caption{ISO/IEC 7816 - Content Table}
 \end{table}
 
 % 7  has is the source of response table
@@ -632,7 +640,7 @@ ISO 7816 Section & Description\\
 
 \subsection{APDU Command-Response Structure}
 
-ISO/IEC 7816 section 4 [?] provides details regarding the structure behind the \textbf{application data protocol units} (APDU) command-response pairs. Commands have a maximum of 7 fields. The definition of each field is reported in table 3.7.  And the command structure is reported in figure 3.1. Due to the optional fields Lc, Data, and Le, there are 4 possible structures of commands depending on the optional fields that are present. These different possibilities are reported in figure 3.2. Finally the structure of the response is reported in figure 3.3, with the meaning behind the fields reported in table 3.8.
+ISO/IEC 7816 section 4 [?] provides details regarding the structure behind the \textbf{application data protocol units} (APDU) command-response pairs. Commands have a maximum of 7 fields. The definition of each field is reported in table 3.6 and the command structure is reported in figure 3.1. Due to the optional fields Lc, Data, and Le, there are four possible structures of commands depending on the optional fields that are present. These different possibilities are reported in figure 3.2. Finally the structure of the response is reported in figure 3.3, with the meaning behind the fields reported in table 3.7.
 
 % Table: Command fields
 \begin{table}[H]
@@ -640,7 +648,7 @@ ISO/IEC 7816 section 4 [?] provides details regarding the structure behind the \
 \hline
 Field & Description\\
 \hline
-CLA & CLA is the 'class' byte. This dictates if the command is inter-industry or proprietary \textit{(We provide examples of both within section 4.5.2)}\\
+CLA & CLA is the 'class' byte. This dictates if the command is inter-industry or proprietary \textit{(We provide both examples in section 4.5.2)}\\
 \hline
 INS & INS is the instruction byte. This dictates what the instruction/ command is. \\
 \hline
@@ -702,7 +710,9 @@ SW2 & SW2 is the second status bytes.\\
 \end{figure}
 
 
-ISO/IEC 7816 - section 7 provides the meaning behind the status bytes SW1 and SW2. We have provided a summary of the common types of status bytes and their meanings. This is reported in figure 3.4. Due to the amount of decodings for the status bytes, we only give the exact decoding of them if and when they are required throughout this project.
+ISO/IEC 7816 - section 7 provides the definition of the response depending on status bytes SW1 and SW2. There are four main groupings for the types of response statuses. These are highlighted in figure 3.4 (XX dictates any hexadecimal value can be present). Due to the substantial volume of decodings for the status bytes, we only provide their exact decoding if and when required throughout this project.
+
+
 
 % IMAGE: 
 \begin{figure}[H]
@@ -711,15 +721,17 @@ ISO/IEC 7816 - section 7 provides the meaning behind the status bytes SW1 and SW
   \includegraphics[width=1\linewidth]
   {images/section_2/response_explain.png}
 \end{subfigure}
-\caption{Response Meanings [?]}
+\caption{Response Definitions [?]}
 \end{figure}
 
+\pagebreak
+
 \subsection{Inter-Industry and Proprietary Commands}
-The ISO 7816 standard defines two sets of different commands, inter-industry and proprietary. The CLA byte dictates if the command is either. Inter-Industry commands are reported within the ISO 7816 documentation, with the meaning of the data in all fields explained explicitly. Proprietary commands are created by card vendors with the meaning of each data field kept as proprietary information, including the commands response. We give details of the inter-industry and proprietary commands that we witness during the analysis of our smartcard in table 4.4, chapter 4.
+The ISO 7816 standard defines two sets of different commands, inter-industry and proprietary. The CLA byte dictates if the command is either inter-industry or proprietary. Inter-Industry commands are standardized and reported in the ISO 7816 documentation. Proprietary commands are created by card vendors with the definition of each data field kept as proprietary information, including the commands response. Details regarding both inter-industry and proprietary commands for our project's smartcard are provided in table 4.4, chapter 4.
 
 \subsection{File System}
 
-As defined in section 4 of the ISO/IEC 7816 standard, contact smartcards have a standard for their file systems. A master file (MF) is the root of the file structure, this is analogous to the C drive for windows operating systems on computers. Under the MF are dedicated files (DF) and elementary files (EF). DF's are directories (similar to folders) and have EF's contained within them. EF's are files consisting of data. There are 4 types of files that EF's support, they can be viewed in figure 3.5 and are:
+As defined in section 4 of the ISO/IEC 7816 standard, contact smartcards have a standard for their file systems. A master file (MF) is the root of the file structure. This is analogous to the C drive for windows operating systems on computers. Under the MF, there are dedicated files (DF) and elementary files (EF). DF's are directories (similar to folders) and have EF's contained within them. EF's are files consisting of data. There are four types of files that EF's support. These are reported below and in figure 3.5.
 \begin{enumerate}
 \item Transparent Binary File
 \item Linear structure with records of fixed size
@@ -727,11 +739,11 @@ As defined in section 4 of the ISO/IEC 7816 standard, contact smartcards have a 
 \item Cyclic structure with records of fixed size\\\\
 \end{enumerate}
 
-Elementary Files (EF) also take on two different formats. These have been witnessed within our analysis in chapter 6. \textit{The explanations of the formats have been taken directly from the standard [?]}:
+Elementary Files (EF) also take on two different formats. These have been discussed in chapter 6. \textit{The explanations of the formats have been sourced from the ISO 7815 standard [?]}:
 \begin{enumerate}
-\item An internal EF stores data interpreted by the card, i.e., data used by the card for management and
-control purposes.
-\item A working EF stores data not interpreted by the card, i.e., data used by the outside world exclusively.
+\item "An internal EF stores data interpreted by the card, i.e., data used by the card for management and
+control purposes."
+\item "A working EF stores data not interpreted by the card, i.e., data used by the outside world exclusively."
 \end{enumerate}
 
 % IMAGE: File structure
@@ -748,58 +760,60 @@ control purposes.
 
 ISO/IEC 7816 section 4 reports details of the command structure of messages that occur within a 'secure messaging session'. We provide an example of the command structure in table 4.4, chapter 4 (the CLA byte is equal to 8C).
 
-Secure messaging sessions derive two session keys S$_{Enc}$ and S$_{Mac}$ between the API and the smartcard. The S$_{Enc}$ session key is used to encrypt the data-field of commands within a secure messaging session. And S$_{Mac}$ is used to compute a checksum (using C-MAC) of the entire command. This checksum is appended to the command. This provides confidentiality (only the systems in question should be able to read the actual messages) and integrity (data has not been altered in transit) to command-response pairs in a secure messaging session. 
-
-We report the use of secure messaging within chapters 6 and 7.
+Secure messaging sessions derive two session keys S$_{Enc}$ and S$_{Mac}$ between the API and the smartcard. The S$_{Enc}$ session key is used to encrypt the data-field of commands within a secure messaging session. S$_{Mac}$ is used to compute a checksum (using C-MAC) of the entire command. This checksum is appended to the command. This provides confidentiality (only the systems in question should be able to read the actual messages) and integrity (data has not been altered in transit) to command-response pairs in a secure messaging session.
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 
 \chapter{Literature Review}
 
-This chapter concerns literature that is reported within the area of computer security with regard to PKCS \#11 and ISO 7816 for contact smartcards. We analyse 4 papers, explain the contribtuions they provided and in some cases replicate their work to see if the smartcard we analyse has the same vulnerabilities present. We replicate and extend some of the work presented in these literatures and report this in section 4.5 of this chapter.
+This chapter provides a review of the literature relating to the area of computer security especially with regard to PKCS \#11 and ISO 7816 for contact smartcards. We first summarise the findings of four papers and then in one case examine if our project's smartcard has the same vulnerability as that reported in one of these papers. We also extend some of the work of Lan (2015) [?] (who also studied the same smartcard), with regard to attribute and key file locations in the smartcard's memory. We also summarise all of the inter-industry and proprietary APDU command definitions for our smartcard.
 
 \section{APDU-level attacks in PKCS \#11 devices}
 
-Bozzato, Focardi, Palmarini and Steel (2016) [?] presented 'APDU-level attacks in PKCS \#11 devices'. The paper concerned new un-published attacks at the APDU level with respect to a generated threat model of the PKCS \#11 middleware. 5 commercially available smartcards (some were usb tokens), that do not use encrypted APDU's (secure messaging) are investigated in the paper, with the following results reported:
+Bozzato, Focardi, Palmarini and Steel (2016) [?] examine new attacks at the APDU level with respect to a generated threat model of the PKCS \#11 middleware. The authors investigate five commercially available smartcards (some were usb tokens), that do not use encrypted APDU's (secure messaging). Their key findings are summarised below.
 
 \begin{itemize}
-\item 2 smartcards used plain PIN authentication and therefore sent the PIN to the smartcard at the APDU layer in plain text
-\item 3 smartcards implemented a challenge-response algorithm for PIN authentication. 2 challenge-response algorithms are reported to have been reversed engineered, as a proof of concept that an attacker can then brute force the PIN with the knowledge of the algorithm and 1 successful login trace.
-\item All smartcards investigated implemented no protection from man in the middle attacks.
-\item 3 of the smartcards do not preform encryption and decryption on the smartcard, and instead delicate it to the middleware. To do this they send the sensitive symmetric key value in plaintext at the APDU level to the API.
-\item One of the smartcards is usb token from the same company 'Athena smartcard solutions'. This device showed the following protocol implemented to generate block cipher keys. Request and receive 8 random bytes from the smartcard. Request and receive the smartcards (not users) RSA public key. Encrypt the entire Elementary File (EF) to store the symmetric key (the key value is the requested random bytes). So despite going to significant effort to protect the key value as its being stored, it had already been revealed at the APDU level.
-\item In all 5 smartcards the ability to bypass PKCS \#11 attribute controls was achieved by sending the APDU commands for cryptographic operations and skipping the middleware (API) all together.
+\item Two smartcards use plain PIN authentication and therefore sent the PIN to the smartcard at the APDU layer in plain text
+
+\item Three smartcards implement a challenge-response algorithm for PIN authentication. Two challenge-response algorithms are reported to have been reversed engineered, as a proof of concept that an attacker can then brute force the PIN with the knowledge of the algorithm and one successful login trace.
+
+\item All smartcards that are investigated do not implement any protection from man in the middle attacks.
+\item Three of the smartcards do not preform encryption and decryption on the smartcard, and instead delegate it to the middleware. To do this they send the sensitive symmetric key value in plaintext at the APDU level to the API.
+
+\item One of the smartcards is usb token from the same company 'Athena smartcard solutions'. This device shows the following protocol has been implemented to generate block cipher keys. The middlware/API requests and receives 8 random bytes from the smartcard. The middlware/API requests and receives the smartcard's (not users) RSA public key. The middlware/API then encrypts (using the RSA public key) the entire Elementary File (EF) to store the symmetric block cipher key. The authors find that the key value is the requested random bytes that had been sent in plaintext. So despite the card manufacturer going to significant effort to protect the key value as its being stored, it had already been revealed at the APDU level.
+
+\item In all five smartcards the ability to bypass PKCS \#11 attribute controls was achieved by sending the APDU commands for cryptographic operations and skipping the middleware (API) all together.
 \end{itemize}
 
 
-The paper concluded with the following suggestions to mitigate the attacks they had presented. All cryptographic operations should be implemented within the hardware security module (this is however very costly as a redesign is required for most of the devices analysed in the paper). Another mitigation is to run the middlware layer (PKCS \#11 implementation) on the computer as a separate process at a different privilege to the user. It is reported that this prevents an attacker from attaching and observing/altering APDU commands. And finally for devices with a display unit (not smartcards), the one time password functionality (OTP) should be used in the PIN authentication stage. This will create large difficulties in reverse engineering the authentication protocol and will also requires access to the users device, even if the protocol is reversed engineered.
+The authors conclude that to mitigate the attacks, all cryptographic operations should be implemented within the hardware security module (this is however very costly as a redesign is required for most of the devices analysed in the paper). They also recommend a second mitigation which is to run the middlware layer (PKCS \#11 implementation) on the computer as a separate process at a different privilege to the user. They report that this prevents an attacker from attaching and observing/altering APDU commands. Finally they conclude that for devices with a display unit (not smartcards), the one time password functionality (OTP) should be used in the PIN authentication stage. They argued that this will raise significant difficulties in reverse engineering the authentication protocol and will also require access to the user's device, even if the protocol is reversed engineered.
 
 \section{REPROVE}
 
-Gkaniatsou, McNeill, Bundy, Steel, Focardi and Bozzato (2015) [?] presented the 'Reverse Engineering the Smart-Card Application Protocol Data Unit'. The paper reports a "proof of concept system for automatically analysing APDU low-level communication" named Reverse Engineering PROtocols for Verification (REPROVE). REPROVE uses first-order logic, information with regard to the PKCS \#11 standard and the ISO 7816 standard to reduce the combinatorial search space to enable the reverse engineering of the proprietary APDU commands with respect to the PKCS \#11 functions that use them. It accomplishes this without the need to have physical access to the smartcards, nor their proprietary middleware (implementation of the PKCS \#11 API)
+Gkaniatsou, McNeill, Bundy, Steel, Focardi and Bozzato (2015) [?] paper reports a "proof of concept system for automatically analysing APDU low-level communication" named Reverse Engineering PROtocols for Verification (REPROVE). REPROVE uses first-order logic, information with regard to the PKCS \#11 standard and the ISO 7816 standard to reduce the combinatorial search space. This enables the reverse engineering of the proprietary APDU commands with respect to the PKCS \#11 functions that use them. It accomplishes this without the need to have physical access to the smartcard, nor their proprietary middleware (implementation of the PKCS \#11 API)
 
-During the analysis of 5 commercially available smartcards they reported smartcards revealing users PIN's in plain text and sensitive cryptographic keys in plain text. This consequentially allowed replay/ man in the middle attacks to take place on the evaluated cards. Trivial (static) authentication methods for C\_login where also found which allowed for an attacker to trivially login to the smartcard even without knowing the user PIN as the static login command is known (the PIN might be encrypted/ hidden but login can still occur).
+Gkaniatsou et al. (2015) analyse five commercially available smartcards. They find some smartcards revealing users PIN's and sensitive cryptographic keys in plaintext. They also find trivial (static) authentication methods for C\_login. This consequently allowed replay/ man in the middle attacks to take place on the smartcards.
 
 
 \section{On the Security of PKCS \#11}
 
-Clulow (2003) [?] presented the paper 'On the Security of PKCS \#11' that describes the 'wrap/ decrypt attack'. The attack occurs at the API level and extracts sensitive key values of symmetric and asymmetric keys in plain text. The CKA\_extractable attribute must be set to true, but other PKCS \#11 attributes are not taken into consideration. Therefore in the case that CKA\_sensitive is set to false, the attack directly contradicts the controls the API should provide.
-
-The steps to conduct the attack are as follows:
+Clulow (2003) [?] finds the 'wrap/ decrypt attack'. The attack occurs at the API level and extracts sensitive key values of symmetric and asymmetric keys in plain text. The CKA\_extractable attribute must be set to true, but other PKCS \#11 attributes are not taken into consideration. Therefore in the case that CKA\_sensitive is set to false, the attack directly contradicts the controls the API is expected to provide. The author proposes the following steps to conduct the attack.
 \begin{enumerate}
 \item Generate a new block cipher key K$_1$, with attributes C\_wrap and C\_decrypt set to True
 \item Use K$_1$ to wrap the existing key K$_2$ within the token, and extract it in an encrypted format
 \item Use K$_1$ to decrypt the wrapped key and expose its value in plain text
 \end{enumerate}
 
-\section{Previous study on the same smartcard}
+This can also be achieved with asymmetric keys instead of block cipher keys. Setting the public key to be able to wrap and the private key to be able to decrypt.
 
-Lan 2015 [?] is a study on the same smartcard we analyse in this project (Athena IDprotect). We provide the main contributions of the paper summarised in table 4.1. We report in depth the findings of previous work to make clear the difference in the work we conducted in this project.
+\section{A Study On The Same Smartcard}
+
+Lan 2015 [?] carries out his work on the same smartcard as the one we use in our project (Athena IDprotect). We summarise the main contributions of his study in table 4.1. We also report in detail the findings of the paper (more so than other papers). The rationale for doing this is to clearly distinguish between his work and ours.
 
 \begin{table}[H]
 \begin{tabular}{|l|p{10cm}|}
 \hline
-Contribution & Description\\
+Finding & Description\\
 \hline
 1 & Finding the meaning behind proprietary ISO 7816 commands for the smartcard analysed\\
 \hline
@@ -815,19 +829,19 @@ Contribution & Description\\
 \hline
 7 & Discovery that the functions \textit{C\_wrap} and \textit{C\_copyObject} are not supported by the manufactures middleware that implements the PKCS \#11 functions\\
 \hline
-8 & Attack$_1$ is reported in the paper. The attack modifies the values of CKA\_extractable and CKA\_sensitive from false to true and true to false respectively. (This is not premitted by the PKCS \#11 API)\\
+8 & Attack$_1$ modifies the values of CKA\_extractable and CKA\_sensitive from false to true and true to false respectively. (This is not premitted by the PKCS \#11 API)\\
 \hline
-9 & Attack$_2$ is reported in the paper. The attack modifies the key value of a block cipher key that is already stored within the smartcard.\\
+9 & Attack$_2$ modifies the key value of a block cipher key that is already stored within the smartcard.\\
 \hline
-10 & Attack$_3$ is reported in the paper. The attack finds the ability to use block cipher keys regardless of authentication status of the user, with CKA\_private set to True. (This is not premitted by the PKCS\#11 API)\\
+10 & Attack$_3$ finds the ability to use block cipher keys regardless of authentication status of the user, with CKA\_private set to True. (This is not premitted by the PKCS\#11 API)\\
 \hline
 \end{tabular}
 \caption{Summary of Findings}
 \end{table}
 
-Lan (2015) [?] used the \textit{pcsc-spy} tool (reported in section 5.1), chapter 5 which gave a good understanding of the proprietary commands implemented within the middlware. The inter-industry commands can be looked up in the ISO 7816 specification for the understanding of the instruction. We did not replicate this work as the details of the meaning with regard to each proprietary command are listed within the appendix of the paper. We have extracted this information out of the appendix, retrieve the meanings of the inter-industry commands used and tabulate them in section 4.5.2.
+Lan (2015) [?] used the \textit{pcsc-spy} tool. This tool is reported in section 5.1, chapter 5 of our project. The tool gave a good understanding of the proprietary commands implemented within the middlware. The inter-industry commands are standardized and can be found in the ISO 7816 specification. It is worth noting that we do not replicate this work as the details the proprietary command are listed in the appendix of the Lan's paper. We extract this information from this appendix and summarise all of the commands in section 4.5.2.
 
-The second contribution of the paper is the decoding of attribute files. The attribute files in the Athena IDprotect smartcard are saved in a transparent binary file. The values in the file can be viewed in hexadecimal format at the APDU layer. It was reported in the paper [?] that each PKCS \#11 attribute has a hexadecimal encoding. We have extracted the examples provided in the paper and reported them in table 4.2. The paper stated that the representation of each attribute is stored in the attribute file in the following format:
+The second finding relates to the decoding of the attribute files. The attribute files in the Athena IDprotect smartcard are saved in a transparent binary file. The values in the file can be viewed in hexadecimal format at the APDU layer. Lan reports that each PKCS \#11 attribute has a hexadecimal encoding. We extract the examples given in his paper and report them in table 4.2. The paper states that the representation of each attribute is stored in the attribute file in the following format:
 
 \begin{center}
 Hexidecimal Encoding + Filler + Length + Value
@@ -862,19 +876,19 @@ CKA\_extractable & 0x0162\\
 \caption{Attribute Encodings}
 \end{table}
 
-The third discovery of attribute and key file separation. Despite their being fields in the attribute files to store sensitive values (reported in table 3.2, chapter 3), it is reported [?] that those fields were filled with 'FF' hexidecimal values and return 'NULL' at the API layer. We assume that this method (attribute and key file separation) is to patch the vulnerability that have been present in previous versions of 'Athena smartcard solutions' hardware security modules, whereby sensitive values are revealed at the APDU layer when they should not have been.
+The third finding is attribute and key file separation. Lan reports that despite there being fields in the attribute files to store sensitive values (see table 3.2, chapter 3 of our project), those fields were filled with 'FF' hexidecimal values and return 'NULL' at the API layer. We assume that this method (attribute and key file separation) is to patch the vulnerability that has been present in an earlier version of 'Athena smartcard solutions' hardware security module. This vulnerability is found in [?] and summarised in our literature review.
 
-The forth discovery of the memory locations on the smartcard for block cipher keys and attribute files. This is reported in the previous work as the location of all keys including RSA public and private keys. During our analysis in chapter 6 we discover that this is not in fact the case. The location of block cipher keys was the same as reported in the previous work, however we find different locations for RSA keys. We report this in section 4.5.1, as part of extended work.
+The forth finding concerns the memory locations on the smartcard for block cipher keys and attribute files. Lan reports that '00 CX' (X being any hexadecimal value) is the location of the EF's that store key values, for all type of keys. However, our analysis discussed in chapter 6 finds that this is not in fact the case. The location of block cipher keys is the same as what Lan reports, however we find different locations for RSA public and private keys. We report this in section 4.5.1, as part of our extended work.
 
-The fifth discovery reported in previous work is a counter file for symmetric and asymmetric keys. This value of the counter is incremented upon file deletion. And upon file creation is appended to the attribute file of the keys. It is noted within previous work that there is no indication of the value being used (e.g. to check if a file has been created, not by the API) but is present. We discuss this in our analysis in chapter 6.
+The fifth finding is a counter file for symmetric and asymmetric keys. This value of the counter is incremented upon file deletion. On a new key creation/ generation, the counter is appended to the attribute file of the keys. In Lan noted that there is no indication of the value being used (e.g. to check if a file has been created not by the API) but the counter is present. We discuss this in chapter 6 of our project.
 
-The sixth discovery is an implementation flaw in the middleware that 'Athena Smartcard Solutions' created to implement the PKCS \#11 API. The flaw is regarding the use of decryption with the block cipher AES in ECB mode. The wrong command is sent and thus returns an error '6A 86', meaning 'Incorrect P1 or P2 parameters'. The paper corrected the command and sent it to the card which decrypted the ciphertext correctly. As discussed in the previous work this is not a security vulnerability and rather an issue with functionality of the API. We also discuss this in chapter 6. 
+The sixth finding is an implementation flaw in the middleware that 'Athena Smartcard Solutions' created to implement the PKCS \#11 API. The flaw is regarding the use of decryption with the block cipher AES in ECB mode. The wrong command is sent and thus returns an error '6A 86', meaning 'Incorrect P1 or P2 parameters'. Lan corrects the command and sends it to the smartcard which decrypts the ciphertext correctly. He points out that this is not a security vulnerability and rather an issue with functionality of the API. We also find a similar issue with the use of triple DES keys and discuss this in chapter 6 of our project. 
 
-The seventh discovery was simply the removal of C\_wrap and C\_copyObject functions from the card vendors middleware that implemented the PKCS \#11 API. We believe that this could have been done in an attempt to prevent attacks suggested in other literature (wrap/decrypt attack).
+The seventh finding concerns the removal of C\_wrap and C\_copyObject functions from the card vendors middleware that implements the PKCS \#11 API. We believe that this could have been done in an attempt to prevent the 'wrap/decrypt attack', Clulow (2003) [?].
 
-Contribution 8 is attack$_1$, the attack modified the attribute files at the APDU level by sending the 'UPDATE BINARY' command to alter the attributes stored on the card. The attributes altered are CKA\_sensitive and CKA\_extractable from true to false, and false to true respectively. This contradicts the PKCS \#11 API as it is not permitted. This however was achieved in the paper [?], but yielded no security vulnerability. While a real change to the attributes are reported at the API level, the value of the sensitive key is reported to still be 'None'. Therefore is still secured despite the attack taking place. We believe that when a key is generated with CKA\_sensitive set to true and CKA\_extractable set to false the key value is stored in an internal EF (discussed in section 3.2.3, chapter 3) and thus cannot be extracted regardless to the change in the attributes. We disucss this in our analysis in chapter 6. However we do not replicate the attack due to it yielding no security issues.
+The eighth finding is attack$_1$. The attack modifies the attribute files at the APDU level by sending the 'UPDATE BINARY' command to alter the attributes that are stored on the card. The attributes altered are CKA\_sensitive and CKA\_extractable from true to false, and false to true respectively. This contradicts the PKCS \#11 API as it is not permitted. Lan succeeds in altering the attribute values, but it yielded no security vulnerability. While a real change to the attributes are reported at the API level, the value of the sensitive key is reported to still be 'None'. We assume that when a key is created/ generated with CKA\_sensitive set to true and CKA\_extractable set to false, the key value is stored in an internal EF (discussed in section 3.2.3, chapter 3 of our project). If this assumption holds it explains why the key value cannot be extracted regardless of the change in the attribute values. We discuss this further in our chapter 6, but we do not replicate the attack as Lan reports no security issues.
 
-Contribution 9 is attack$_2$, the attack modifies the key value of already generated/stored block cipher keys. The attack consists of 5 elements:
+The ninth finding is attack$_2$. The attack modifies the key value of already generated/stored block cipher keys. The attack consists of five elements:
 \begin{enumerate}
 \item Using the information regarding block cipher key file memory location on the card (see section 4.5.1) locate an already stored key$_1$ on the card, and its corresponding at attribute file.
 \item Open the attribute file ('SELECT FILE' and 'READ BINARY') and save the hexadecimal values of the attributes
@@ -883,23 +897,25 @@ Contribution 9 is attack$_2$, the attack modifies the key value of already gener
 \item Modify the attribute file of key$_2$ to be equal to the attribute of key$_1$ ('UPDATE BINARY')
 \end{enumerate}
 
-It was difficult to gain the above understanding of how the attack operated from the explanation provided within the paper [?]. However after studying the APDU traces provided in the appendix of the paper we managed to figure out how it was implemented. While the above attack is valid it provides some issues. Unless this attack took place as soon as a new block cipher key is generated by the user, the attack would noticed by the user almost immediately. An example is if the user had used the key to encrypt data for storage or communication purposes. The resulting decryption after the key file had been modified would not result in the decryption they would expect. Thus, altering them to the fact that the key has been changed. For this reason we decided not to replicate this attack, and instead focus on attacks that would find the key value's stored on the smartcard without the users knowledge and without modifying it in a manner where the user would be alerted too it.
+It is difficult to understand how the above attack operates using the explanations provided by Lan. However, after studying the APDU traces given in the appendix of his paper, we are able to find how the attack is implemented. The above attack may not be valid unless it takes place as soon as a new block cipher key is generated by the user using C\_generateKey (it cannot be created by the user using C\_createObject, as they will be aware of the key value). This is because the attack would noticed by the user almost immediately. An example is whereby the user had already used the key to encrypt data for storage or communication purposes. The resulting decryption after the key file had been modified would not result in the decryption they would expect. Thus, alerting them to the fact that the key has been changed. It is for this reason we do not to replicate this attack. We rather focus on attacks that would find the key values stored on the smartcard without the users knowledge and without modifying it in a manner where the user would be alerted to it.
 
-Finally is contribution 10 which is attack$_3$. The attack suggested that keys with the attribute CKA\_private set to true (meaning a user has to be logged in, in order to use the key) can be used for security operations regardless of the attribute value. This is because we have the knowledge of the key file location in the smartcards memory, and the commands required to be sent to the card for security operations. Thus, we can use 'SELECT FILE' command to select the key in question, and then send any of the security operation commands (e.g. 'ENCRYPT') to use the key regardless of its CKA\_private value. We attempted to replicate this attack, but for an unknown reason recieved API segmentation faults when generating a block cipher key with the CKA\_private attribute set to true. Thus, we could not verify this finding. We did however replicate a very similar attack that was conducted in other literature [?] which also override's API attribute controls by sending the commands ourselves at the APDU layer. This was discussed earlier.
- 
-\section{Extended Work}  
-\subsection{Directories of Key and Attribute Files}
+CKA\_private with a value of true dictates that a user must be logged in to use the key for security operations. The final attack (attack$_3$) suggests that keys with the attribute CKA\_private set to true can be used for security operations regardless of the user's logged in status. This is because the knowledge of the key file location in the smartcard's memory, and the commands required to be sent to the card for security operations are known. Thus, he suggests using 'SELECT FILE' command to select the key in question, and then send any of the security operation commands (e.g. 'ENCRYPT') to use the key while being not logged in. 
+
+We attempt to test if this attack is valid, but for an unknown reason received API segmentation faults when generating a block cipher key with the CKA\_private and CKA\_token attributes set to true. Therefore we could not create/ generate a persistant block cipher key on our smartcard with CKA\_private set to true. This prevented us from verifying the validity of attack$_3$. We did however test a very similar attack that is reported in Bozzato et al. [?]. This attack also overrides API attribute controls by sending the commands directly at the APDU layer.
+
+\section{Additional Work}  
+\subsection{Directories of Key and Attribute Files (Extended Work)}
 % Table: File locations within Athena IDprotect smartcard
-Previous work completed by Lan 2015 [?] had found that attributes and sensitive key values are stored within separate files in the smartcard. It appears that the sensitive key values are stored in internal EF's to prevent extraction, and the attributes are placed in working EF transparent binary files. 
+Lan 2015 [?] finds that attributes and sensitive key values are stored within separate files in the smartcard. His results also show the location of these attribute files and key value files for \textbf{block cipher} keys. He assumes that asymmetric attribute and key value files are stored within the same directory that he reports for block cipher keys. 
 
-The work also found the location of these attribute files and key value files. However, we extended this work to include the locations of RSA key files. As the previous work only included the directories of block cipher key files (and assumed that asymmetric key value files were stored within the same directory). We report the locations of block cipher keys, RSA public and private keys in table 4.3.
+We find in chapter 6 (section 6.6) that Lan's above assumption is not valid. This is due to the fact that RSA public and private, attribute and key files have different directories for the EF's that store their respective values. We extend hid work to include the locations of RSA attribute and key files. We report results of the locations in table 4.3.
 
 \begin{table}[H]
 \hskip+2.0cm\begin{tabular}{|l|l|p{6cm}|}
 \hline
 Key Type & File Type & Directory\\
 \hline
-Block cipher & Attribute & 3F 00 30 00 30 \textbf{01 03 4X} \\
+\textbf{Block cipher} & Attribute & 3F 00 30 00 30 \textbf{01 03 4X} \\
  			 & Key       & 3F 00 30 00 30 \textbf{01 00 CX} \\
 \hline
 RSA public 	 & Attribute & 3F 00 30 00 30 \textbf{02 01 4X} \\
@@ -912,11 +928,13 @@ RSA private 	 & Attribute & 3F 00 30 00 30 \textbf{02 01 4X} \\
 \caption{Directories of Key and Attribute Files}
 \end{table}
 
-\subsection{APDU Commands Found During Analysis}
+\pagebreak
+\subsection{APDU Command Definitions (Summary)}
 
-During the analysis of the PKCS \#11 functions and how they are broken down into multiple ISO 7816 command-response pairs for the Athena IDprotect smartcard we analyse in this paper, we found the use of the following inter-industry and proprietary commands.
 
-\textit{[Lan 2015 [?] found the 'inner-function' names which gave a good decoding of the proparitary commands listed in table 4.4. They had utilised a program named 'pcsc-spy' to find the 'inner-function' names. We discuss this within section 4.4]}
+In chapter 6 we analyse the PKCS \#11 functions and how they are broken down into multiple ISO 7816 command-response pairs (for our project's smartcard). We find as did Lan the use of the following inter-industry and proprietary commands. We provide a summary of all of the commands below.
+
+\textit{[Lan 2015 [?] finds the 'inner-function' names which provide a good decoding of the proprietary commands listed in table 4.4. He has used a program known as 'pcsc-spy' to find the 'inner-function' names. We discuss this tool in section 5.1]}
 
 \begin{table}[H]
 \hskip-1.0cm\begin{tabular}{|c|c|c|c|c|c|c|p{8cm}|}
@@ -925,7 +943,7 @@ CLA & INS & P1 & P2 & Lc  & Data Field & Le & Description\\
 \hline
 00  & -   & -  & -  & -   & -          & -  & Inter-industry (II)\\
 80  & -   & -  & -  & -   & -          & -  & Proprietary (P)\\
-Xc  & -   & -  & -  & -   & -          & -  & Secure Messaging (SM)\\
+XC  & -   & -  & -  & -   & -          & -  & Secure Messaging (SM)\\
 \hline
 00  & 84  & 00 & 00 & -   & -          & L  &  (II) Get Challenge [\# bytes = L]\\
 00  & B0  & X  & X  & -   & -          & L  &  (II) Read Binary [\# bytes = L] \\
@@ -958,23 +976,25 @@ Xc  & -   & -  & -  & -   & -          & -  & Secure Messaging (SM)\\
 \end{table} 
 
 
-\subsection{Manually Overriding Attribute Controls}
-One of the APDU level attacks reported in the Bozzato et al. (2016) [?] paper, involves sending APDU commands to the smartcard, bypassing the controls that attributes at the PKCS \#11 API level should enforce. We replicated the attack to test if our smartcard has the same vulnerability present as all 5 hardware security modules studied in the paper did. 
+\subsection{Manually Overriding Attribute Controls (Replication Study)}
+One of the APDU level attacks reported by Bozzato et al. (2016) [?] involves sending APDU commands to the smartcard, bypassing the controls that attributes at the PKCS \#11 API level is expected enforce. We test the same attack on our smartcard to find out if it has the same vulnerability as all five hardware security modules that are examined in the above paper. 
 
-To test this vulnerability we generated a triple DES symmetric key on the card and set CKA\_encrypt attribute set to False. We first requested the PKCS \#11 API to encrypt the string 'TestString123456'. The API returned an error stating that this function was not supported due to the attribute settings. Second we sent the APDU command for the security operation 'encrypt' (reported in table 4.4) to attempt to override the attribute controls that the API enforce. The result conformed with that reported in Bozzato et al. (2016) [?]. The APDU command executed successfully and resulted in the encryption taking place on the card, and returning in the APDU response, the value of the encryption. This resulting APDU communication trace of this test is reported in appendix A.4.1.
+To test this vulnerability, we generate a triple DES symmetric key on the smartcard and set CKA\_encrypt attribute to false. First, we request the PKCS \#11 API to encrypt the string 'TestString123456'. The API returns the following error 'CKR\_KEY\_FUNCTION\_NOT\_PERMITTED'. This states that the function is not supported due to the attribute settings. Second, we send the APDU command 'SELECT FILE' (reported in table 4.4) to select the triple DES key we have generated. Then we send the APDU command for the security operation 'ENCRYPT' to attempt to override the attribute controls that the API enforce. 
+
+Our result is consistent with the findings of Bozzato et al. (2016) [?]. The APDU command executed successfully and resulted in the encryption taking place on the card, and returning in the APDU response, the value of the encryption. The APDU communication trace of this test is reported in appendix A.4.1.
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 \chapter{Tools Developed/Used In This Project}
 
-In this chapter we report details regarding the use of pre-existing software packages, and the development of tools we used in this project that extended the software packages reported.
+This chapter explains the details regarding the use of pre-existing software packages. We also explain how we extend and develop the virtual smartcard reader for tasks in our project (specifically for our smartcard).
 
 
 \section{PCSC-Spy}
-One PKCS \#11 function is broken down into multiple APDU command-response pairs. The APDU commands are sent from the middleware to the PC/SC layer on the computer, to then be sent to the smartcard. This is illustrated in figure 5.1.
+One PKCS \#11 function is broken down into multiple APDU command-response pairs. The APDU commands are sent from the middleware to the PC/SC layer on the computer, and then to the smartcard. This is illustrated in figure 5.1.
 
-Rousseau [?] created the open-source implementation of the PC/SC layer for computers using the linux operating system, named PCSC-lite. As part of the implementation he created a program named \textit{pcsc-spy}. This effectively implemented a man in the middle attack between the middleware and the PC/SC layer. Using this program it was possible to sniff the 'inner function' names of all the communication between the middleware and PC/SC layer (inner functions are functions within each PKCS \#11function that are called to send one command). By extracting this information the program gives a good understanding to  proprietary ISO 7816 commands, that are not within the standard.
+Rousseau [?] has created the open-source implementation of the PC/SC layer for computers using the linux operating system (known as PCSC-lite). As part of the implementation, he has created the \textit{pcsc-spy} program. This effectively implements a man in the middle attack between the middleware and the PC/SC layer. Using this program it is possible to sniff the 'inner function' names of all the communication between the middleware and PC/SC layer (inner functions are functions within each PKCS \#11 function that are called to send one command). By extracting this information, the program gives a good understanding of the proprietary ISO 7816 commands.
 
 % IMAGE: pcsc spy implementation
 \begin{figure}[H]
@@ -985,8 +1005,8 @@ Rousseau [?] created the open-source implementation of the PC/SC layer for compu
 \caption{pcsc-spy implementation}
 \end{figure}
 
-\section{Virtual Smartcard}
-Frank Morgner [?] created the virtual smart card reader project. The project emulates a smartcard reader and creates a virtual one in the host machine. It also has the 'Relay OS' which has a basic implementation of a man in the middle attack already in the code of the project (no APDU command response pairs are altered, the ability is just present). This can be seen in figure 5.2.
+\section{Virtual Smartcard Reader}
+Morgner [?] has created the virtual smart card reader project. The project emulates a smartcard reader and creates a virtual one in the host machine. It also has the 'Relay OS' which has a basic implementation of a man in the middle attack provided in the code of the project (no APDU command response pairs are altered, the ability is just present). This can be seen in figure 5.2.
 
 \textit{"The vpcd is a smart card reader driver for PCSC-Lite [2] and the windows smart card service. It allows} \textit{smart card applications to access the vpicc through the PC/SC API. By default vpcd opens slots} \textit{for communication with multiple vpicc's on localhost on port 35963 and port 35964. But the vpicc} \textit{does not need to run on the same machine as the vpcd, they can connect over the internet for} \textit{example.}
 
@@ -1003,7 +1023,7 @@ Frank Morgner [?] created the virtual smart card reader project. The project emu
 
 \section{Man in The Middle Tool (MiTM)}
 
-We used the Virtual Smartcard Reader project discussed in section 5.2. We developed on top of the projects code to implement a software man in the middle attack for a variety of applications in this project. The developed code included both APDU commands and responses as printed output and use the python package 'hexdump' for clarity in the printed APDU communication traces. Some of the applications this is used for in this project are:
+We use the Virtual Smartcard Reader project discussed above. We develop on top of the project's code to implement a software man in the middle attack for a variety of applications our project. The developed code includes both APDU commands and responses as printed output and uses the python package 'hexdump' for clarity in the printed APDU communication traces. We also added the functionality of altering the APDU communication from the terminal. Some of the applications for which the developed code is used for in our project are:
 \begin{itemize}
 \item Bypassing attribute controls by sending the APDU commands for secuirty operations (discussed in section 4.5.3, chapter 4)
 \item Altering the challenge sent by the smartcard in PIN authentication (discussed in section 7.2, chapter 7)
@@ -1286,7 +1306,9 @@ It also has 2 main components (these are listed below).\\
 \item Decrypt data (B.8 - command 65)\\
 \end{enumerate}
 
-As the decrypt function operates in a similar fashion to the encrypt function, we find no vulnerabilities here either. However we did find a similar implementation flaw that has been reported in earlier work [?] regarding decryption using an AES block cipher key in ECB mode. For an unknown reason the first 8 bytes are removed from the encrypted data. This only decrypts and returns the second 8 bytes. As this does not present a security vulnerability, but it is rather an issue with the functionality of the decrypt function. Therefore for this reason we do not analyse it any further.
+As the decrypt function operates in a similar fashion to the encrypt function, we find no vulnerabilities here either. However we did find a similar implementation flaw that has been reported in earlier work [?] regarding decryption using an AES block cipher key in ECB mode. 
+
+We use a triple DES key instead of AES, and find for an unknown reason the first 8 bytes are removed from the encrypted data. This only decrypts and returns the second 8 bytes. As this does not present a security vulnerability, but it is rather an issue with the functionality of the decrypt function we do not analyse it any further.
 
 \section{C\_setAttribute}
 \textit{[For this trace we modify the label of the triple DES key from 'des3' to 'changed']}
