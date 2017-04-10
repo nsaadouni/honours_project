@@ -81,18 +81,26 @@ The most common API (application programming interface) that is used to communic
 
 PKCS \#11 defines a platform-independent API and conditions that must be strictly followed to communicate and instruct smartcards /hardware security modules (HSM). The API only provides C header files (with the object tpyes, attributes and functions to be supported), and leaves the actual implementation to card manufacturers. Each function is broken down into multiple Application Data Protocol Unit (APDU) command-response pairs. These command-response pairs are binary instructions for the smartcard to execute and respond with data if requested. The International Standard Organization (ISO) and International Electrotechnical Commission (IEC) jointly manage the ISO/IEC 7816 standard that defines electronic identification cards. This standard provides details upon how these binary instructions should be formulated. They provide standardized inter-industry commands and responses, but also allow for proprietary commands and responses to be used, with the meaning behind the command-response pairs to be kept as proprietary information.
 
-
 In the previous 10-15 years, literature [?] (5,6,9 from RAID) has shown a great deal of research into the examination of the PKCS\#11 API, and the security it provides. Yet little attention has been paid to that of the lower-level communication (APDU command-response pairs), in which the higher level API is broken down into. Only 2 papers have been published in this area in the past 2 years [?]. The 2 papers concern the reverse engineering of proprietary ISO 7816 commands without access to the cards proprietary PKCS \#11 middlware, and APDU-level attacks on hardware security modules that do not use encrypted APDU command-response pairs.
 
-It is this area that we wish to research within this project. The reasoning is simple. If we cannot trust the security of the low-level commands that implement the high level API functions, then in turn we cannot trust the security of the high level API. This is analogous to C code being complied down to binary data to be operated on by the CPU. The addition of two integers cannot be considered correct in C, unless the corresponding binary instructions sent to the CPU are correct as well.  
+From these research papers it is clear that APDU level attacks require further investigation, the research has shown the ability to grab sensitive key value and user PIN information at the APDU-level. If the security of the low-level (APDU) command-response pairs is not implemented correctly it removes the secuirty the PKCS \#11 standard provides. This is analogous to C code being complied down to binary data to be operated on by the CPU. The addition of two integers cannot be considered correct in C, unless the corresponding binary instructions sent to the CPU are correct as well.
 
-% maybe not 
-The research of the low-level communication will take two forms. 
+This motivates the research area of this project. We undertake the analysis of the \textbf{Athena IDprotect smartcard} and how the PKCS \#11 functions are (specifically for our smartcard) broken down into (APDU) command-response pairs. Using this analysis, and research from literature [?] (RAID, Lan) we replicate some published attacks, and also research 2 new un-published attacks at the APDU level. The main contributions of this research project are as follows:
+
+% Contributions
 \begin{enumerate}
-\item An analysis of the raw communication between PC and smartcard for all API function calls
-\item 
+\item An extended analysis of how (specifically for our smartcard) the PKCS \#11 function are broken down into multiple (APDU) command-response pairs. This is an extended analysis as Lan (2016) [?] studied the same smartcard. We specifically state were we used this previous research, and also provide new more in depth analysis of several functions. (Chapters 5 and 6)
+
+\item From the function analysis we suggest possible vulnerabilities that could be exploited at the APDU level to attack the smartcard. (Chapters 6 and the motivation section of chapter 7)
+
+\item Replication of work conducted in [?], whereby the controls dictated by the attributes of a PKCS \#11 object can be overridden at the APDU level was undertaken to test if our smartcard held the same vulnerabilities (Section 4.5, chapter 4)
+
+\item The first attack we research and complete, is the reverse engineering of the proprietary (challenge response) PIN authentication protocol used in our smartcard. The PIN authentication protocol implementations differ from each hardware security module, this is a new vulnerability discovery for the smartcard we investigate. However, published literature [?] has reported completing this for 2 hardware security modules as well. (Section 7.2, chapter 7)
+
+\item The second attack we research is the reverse engineering of the proprietary secure messaging protocol to encrypt APDU communication (specifically for our smartcard). This is a new area of research and has not been published in any literature regarding other hardware security modules.
 \end{enumerate}
 
+For 3 PKCS \#11 functions, our smartcard uses secure messaging at the APDU level to encrypt and append a checksum to the end of each command and response in a secure messaging session. 
 
 Before we move into the above analysis, supporting material must be introduced. This the rest of this project's report will be organized as follows.
 
