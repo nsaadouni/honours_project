@@ -23,6 +23,7 @@
 \begin{document}
 
 \title{Finding Vulnerabilities in Low-Level Protocols}
+%\title{Hacking dafuk' outta shit cuz I can}
 
 \author{Nordine Saadouni}
 
@@ -2246,10 +2247,26 @@ In the case that none of the methods suggested in table 7.19 do not reverse engi
 \end{center}
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
-\chapter{Conclusion / Results}
+\chapter{Conclusion}
 
-Order this correctly and also summarise my work.
+We have presented in this project an examination of the Athena IDprotect smartcard that uses encrypted APDU communication in an attempt to prevent sensitive information from being revealed at the APDU level. To the best of our knowledge this is the first study that examines reverse engineering a proprietary implementation of encrypting APDU communication between the smartcard and the middleware. We use knowledge of cryptographic protocols, the PKCS \#11 standard, the ISO/IEC 7816 standard and literature to analyse the communication between the smartcard the the card vendors middlware and successfully complete the attacks we report. In summary we complete the following in our project.
 
+We tested the vulnerability presented in Bozzato et al. (2016) [?] whereby attribute controls at the PKCS \#11 API level can be overridden at the APDU level on our smartcard. The results of the test shows that our smartcard suffers from the same vulnerability, and that security operations (e.g. encrypt, sign) can be conducted on the smartcard regardless of the values of the keys attributes. (See section 4.5.3)
+
+We extend the work of Lan (2016) [?] to include the key and attribute file locations of not only block cipher keys. But also RSA public and private keys. (See section 4.5.1)
+
+We provide an extended analysis of how PKCS \#11 functions are broken down into ISO 7816 APDU command response pairs (for our projects smartcard). And especially in the cases of C\_generateKey, C\_generateKeyPair, C\_destroyObject, C\_wrap and C\_unwrap we provide new insights. (See chapter 6)
+
+We successfully reverse engineer the proprietary implantation for PIN authentication. Using the protocol we deduced an attacker can brute force/ use a dictionary attack to calculate a users PIN given one successful login (APDU) communication trace. This seriously violates the PKCS \#11 standard. (See section 7.2)
+
+We successfully reverse engineer the cryptographic protocol that is implemented at the secure messaging (SM) initialization process. We find that this process uses the Diffie Hellman protocol, and we implement a man in the middle attack to set the shared secret to a value of zero. Through a thorough analysis of different security policies of 'Athena Smartcard Solutions' we find a paper by the International Civil Aviation Organization [?] that describes how to build encrypted APDU commands and responses, that match that in our smartcard. The final step of using the 32 byte card challenge, the shared secret (set to 0), a key derivation function and the encrypted command 'GET CHALLENGE' to calculate the the SM session keys S$_{Enc}$ and S$_{Mac}$ we leave to future work due to time constraints in our project. (See section 7.3)
+
+In addition we provide steps that should be undertaken to complete the reverse engineering of the secure messaging protocol. We are confident that using our suggestions and experimental setup this attack can be completed. In doing so, this will reveal sensitive key values of block cipher keys created and/or generated. It will also lead onto the investigation of whether or not the Clulow (2003) [?] 'wrap/decrpyt attack' can be achieved at the APDU level of our smartcard. The attack is not achievable at this stage due to the removal of the wrap functionality at the PKCS \#11 API level of our smartcard. We believe from the investigation we undertook in section 6.11 that the security operation for wrapping is still supported at the APDU level. If this can be achieved all keys including RSA private keys will be able to be extracted from our smartcard, in direct violation of the PKCS \#11 standard.
+
+\section{Mitigation And Recommendations}
+
+
+- - - - - - - - - - -  - - - - - - - -  - - - - - -  - - - - - -  - - - - - -  - - - - - - -  - - - - -\\
 Smartcards should provide isolated security especially for the sensitive key values that are stored in their memory. This security should be provided regardless of the threat model. Therefore the assumption that a physical man in the middle attack is in process (on the users system), should remain true throughout the development process of smartcards, to provide the security against that possibility.
 
 key separation principle (should be enforced by the smartcard, requires pkcs \#11 attribute controls to be implemented by hardware not API)
