@@ -1397,7 +1397,8 @@ The data field of unwrap is encrypted, as it is used within secure messaging. Ho
 
 \chapter{New Attack's At the APDU Level}
 
-In this chapter we explain the motivations, implementation and results of the attacks we attempt as the APDU level. For clarity purposes we first give a brief overview of the API's function analysis at the APDU layer that we conducted within chapter 6. This analysis in combination with previous work completed on the same smartcard and for that matter other smartcards as well, drove the motivations behind the attacks we selected to conduct.
+
+This chapter explains the motivations, implementation and discusses the results of the attacks we conduct as the APDU level. For clarity we extract the vulnerabilities we suggest for investigation in our analysis of each PKCS \#11 function in chapter 6. We report the attacks we decide to investigate and the reasoning for selecting them. The two attacks we do investigate are the reverse engineering of the PIN authentication protocol and the secure messaging protocol.
 
 \section{Motivations}
 \begin{table}[H]
@@ -2260,55 +2261,69 @@ We successfully reverse engineer the proprietary implementation for PIN authenti
 
 We also successfully reverse engineer the cryptographic protocol that is implemented at the secure messaging (SM) initialization process. We find that this process uses the Diffie Hellman protocol. We implement a man in the middle attack to set the shared secret to a value of zero. Following our thorough analysis of a number of security policies of 'Athena Smartcard Solutions', we find a paper by the International Civil Aviation Organization [?] that describes how to build encrypted APDU commands and responses, that matches that of our smartcard. The final step involves using the 32 byte card challenge, the shared secret (set to 0), a key derivation function and the encrypted command 'GET CHALLENGE' to calculate the SM session keys S$_{Enc}$ and S$_{Mac}$. We leave this for future work as time constraints does not permit its completion.
 
-Our contribution to this future work is that we provide detailed explanations (in section 7.3, chapter 7) of the steps that need to be taken to complete the reverse engineering of the secure messaging protocol. We are confident that using our suggestions and experimental setup, this attack can be completed. If completed this will reveal sensitive key values of block cipher keys created and/or generated. It will also lead onto the investigation of whether or not the Clulow (2003) [?] 'wrap/decrpyt attack' can be achieved at the APDU level on our smartcard. The attack is not achievable at this stage due to the removal of the wrap functionality at the PKCS \#11 API level of our smartcard. We believe from the investigation we undertook in section 6.11 that the security operation for wrapping is still supported at the APDU level. If this is achieved the attacker can extract all keys including RSA private keys from our smartcard. This will be in direct violation of the PKCS \#11 standard. We provide the steps necessary for this second investigation within section 8.3.
+Our contribution to this future work is that we provide detailed explanations (in section 7.3, chapter 7) of the steps that need to be taken to complete the reverse engineering of the secure messaging protocol. We are confident that using our suggestions and experimental setup, this attack can be completed. If completed this will reveal sensitive key values of block cipher keys created and/or generated. It will also lead onto the investigation of whether or not the Clulow (2003) [?] 'wrap/decrpyt attack' can be achieved at the APDU level on our smartcard. The attack is not achievable at this stage due to the removal of the wrap functionality at the PKCS \#11 API level of our smartcard. We believe from the investigation we undertook in section 6.11 that the security operation for wrapping is still supported at the APDU level. If this is achieved the attacker can extract all keys including RSA private keys from our smartcard. This will be in direct violation of the PKCS \#11 standard. We provide the steps necessary for this second investigation within section 8.1.
+
+\section{Future work}
+
+The first suggestion we have for future work is the completion of the reverse engineering of the secure messaging protocol for our smartcard. The explanation for how to do this can be found in chapter 7, section 7.3. We are confident that this can be achieved. If this is achieved, the first attack that will then be possible is the decryption of block cipher key values as they are being created/ generated with C\_createObject and C\_generateKey respectively.
+
+More importantly is our second attack suggestion. Based on the reverse engineering of the secure messaging protocol, our second suggestion for future work is the implementation of the 'wrap/decrypt attack' at the APDU level. This should be able to be achieved by completing the following:
+
+\begin{itemize}
+\item Generate a new key with C\_generateKey function and decrypt the data field for create file (when creating the key file)
+
+\item Unwrap a key using C\_unwrap and decrypt the data field of the 'unwrap' security operation APDU command
+\end{itemize}
+
+We suggest decrypting the data field for the creation of a key file to find the understanding of how to create and store in the smartcards memory, a block cipher key without the need for the middlware. This is the first part to be completed before we can complete 'wrap/decrypt' attack at the APDU level.
+
+The second part concerns our discussion in chapter 6, section 6.11. We find the APDU command we assume to correspond to the 'wrap' security operation. We tested an example command and find an APDU level error, stating the parameters in the data field are incorrect. We think that studying the data field of the un-encrypted 'unwrap' APDU command might give insight into how the 'wrap' data field is defined. This is the reason for decrypting the data field of the 'unwrap' APDU command. If this does not achieve the understanding required for the APDU 'wrap' command, a study into previous hardware security modules and/or middlware versions (of 'Athena Smartcard Solutions') could find the correct correct APDU 'wrap' command. 
+
+Once these two additional understandings are found, using the knowledge we provide in this project the following attack should be able to take place on the smartcard. The attack is at the APDU level and does not require the use of the middlware (just send APDU commands directly to the smartcard).
+
+\begin{itemize}
+\item Using 'CREATE FILE' APDU command, create a block cipher key$_1$ (see table 4.4, chapter 4) at a file location that is empty. (See table 4.3 for file locations)
+\item Incrementally select key file directories with 'SELECT FILE' APDU command. This will return '90 00' APDU command exected sucessfully in the case that the file exists. Or an APDU error in the case that the key file does not exist. This will provide the information regarding the locations of saved keys on the smartcard.
+\item For each key$_i$ found, use the 'wrap' APDU command to wrap the key$_i$ with key$_1$. This will return in the APDU response the encrypted key$_e$
+\item Using the value we set for key$_1$, decrypt key$_e$ outside of the smartcard.
+\end{itemize}
+
+All key values stored in the card regardless of any CKA\_attribute values should now appear in an un-encrypted format outside of the smartcard. This is in direct violation of the PKCS \#11 standard. And if successful is a very serious attack. Due to the ability to send the commands directly to the card as the middlware is no longer required the mitigation suggested by Bozzato et al. (2016) of running middlware at different privilege to user would not mitigate this attack.
+
+As we only study one smartcard in our project, a study into more PKCS \#11 hardware security modules that use encrypted APDU command response pairs should take place. On the basis of the above attack is successful. The study should aim to find an understanding of whether the above attack is possible on other (more secure) smartcards. This will provide evidence of whether a change in the standards for contact smartcards should take place. In the following chapter we hypothesise that it might only be possible to provide aspects of the security of PKCS \#11, by implementing the PKCS \#11 standard on the smartcard. Thus, it would be the hardware to reject invalid key attributes, and invalid requests for security operations to take place. Not the middleware on the computer. This would also allow for the key separation principle to be enforced and never overridden at the APDU level.
+
+
+%Try using 'reallocate binary' and/or 'delete file' then 'create file' (must be done with caution! could brick card) to alter the retry counter for logging in. (Then a successful login trace is not required!)
+
+
 
 \section{Mitigation And Recommendations}
 
 Smartcards should provide isolated security especially for the sensitive key values that are stored in their memory. This security should be provided regardless of the threat model. Therefore the assumption that a physical man in the middle attack is in process (on the users system), should remain true throughout the development process of smartcards, to provide the security against this happening.
 
-key separation principle (should be enforced by the smartcard, requires pkcs \#11 attribute controls to be implemented by hardware not API)
 
-Due isolating cryptographic key storage and the operations of cryptography to smartcards memory and processors, sensitive data should never be revealed in plain text. This should always be the case regardless of whether the computer (that has the API to communicate with the smartcard) is compromised with malicious malware. The findings of our study and of the literature show this is not the case.
+Mitigations suggested from literature [?] are:
+
+\begin{itemize}
+\item The key separation principle at the API layer. One key/ key pair should not hold the ability for wrapping/unwrapping and encryption/decryption. They should hold only one of those sets.
+
+\item Using the OTP functionality of some hardware security modules (usb tokens) for PIN authentication protocols. This should make it far more difficult for an attacker to reverse engineer the PIN authentication protocol. In the case they do, the attacker will still require physical access to the device.
+
+\item Running the middleware on a different process and at a higher privilege than the user of the system. This should prevent an attacker from attaching to the process and observing/ altering APDU communication.
+\end{itemize}
 
 From the smartcard we study and those studied in litreature, there is no protection against man in the middle attacks.
 
 There are methods for detecting them, however they require synchronous clocks between the smartcard and the computer with the card vendors middleware (implementation of PKCS \#11 API). Synchronizing clocks to allow for relative time measurements between the smartcard and the API is not a simple task, and so far has not been seen from any literature. An example of a detection method would be, calculate the average time between a specific APDU command and its corresponding response. If the time exceeds X milliseconds assume a man in the middle attack is occurring. 
 
-The methodologies we have shown within this project show that with enough time proprietary implementations of non-trivial PIN authentication techniques and secure messaging can be reversed engineered. We find that this in combination with the attribute controls being enforced by the API rather than the smartcard itself, leaves the security of the smartcard to the obscurity of the protocols the card manufacturers implement. This as discussed in REPROVE [?] is an illusion of security. Because as and when these proprietary implementations are reversed engineered all dependencies on the use of the API will be removed. There will be a high change in the ability to implement the wrap/decrypt attack at the APDU level. All attribute controls will be able to be bypassed as has been seen in this project from the replication of work in the RAID (2016) paper [?]. In-addition any cryptographic methodologies used to secure the transit of sensitive data will also be rendered useless.
+%The methodologies we have shown within this project show that with enough time proprietary implementations of non-trivial PIN authentication techniques and secure messaging can be reversed engineered. We find that this in combination with the attribute controls being enforced by the API rather than the smartcard itself, leaves the security of the smartcard to the obscurity of the protocols the card manufacturers implement. This as discussed in REPROVE [?] is an illusion of security. Because as and when these proprietary implementations are reversed engineered all dependencies on the use of the API will be removed. There will be a high change in the ability to implement the wrap/decrypt attack at the APDU level. All attribute controls will be able to be bypassed as has been seen in this project from the replication of work in the RAID (2016) paper [?]. In-addition any cryptographic methodologies used to secure the transit of sensitive data will also be rendered useless.
+
+My own suggested mitigations are:
 
 Instead we propose a change that would require no keys to ever be in the knowledge of any users. And instead all cryptographic keys are to be generated and stored within internel EF's on the smartcard. Thus, rendering the need for secure messaging useless and preventing man in the middle attacks completely. We suggest that PKCS \#11 attribute controls should be implemented by the PKI application on the smartcard, instead of by the API on the computer. As we have seen in this project and other literature the ability to analyse communication traces, find the commands that are required to override the API and render the attribute values useless by sending the commands ourselves. A new condition should state that a symmetric key or asymmetric key pair should not hold the ability of both encryption/decryption and wrapping/unwrapping. They should hold only one of these sets of attributes, with the other being false.
 
 Finally mitigating the problem of PIN authentication techniques has already been suggested [?] with the use of time based one time passwords. This would require a key fob, the users PIN and the smartcard to have a synchronized clock with the computer. 
 
-\chapter{Future work}
-
-\begin{enumerate}
-\item Complete the reverse engineering secure messaging
-\item Decrypt and understand the unwrap command
-\item Test and get the wrap command to work (hopefully)
-\item Implement the wrap/decrypt attack at the APDU level.
-
-\item Try using 'reallocate binary' and/or 'delete file' then 'create file' (must be done with caution! could brick card) to alter the retry counter for logging in. (Then a successful login trace is not required!)
-
-\end{enumerate}
-
-\begin{itemize}
-\item Run generateKey
-\item Decrypt data field for create file (when creating key file)
-\item understand how to create your own key file
-\item decrypt unwrap security operation (at APDU level)
-\item understand how the unwrap command works to understand how the wrap command should work
-\item if this does not provide the understanding then search for older athena smartcard moduels or older version of the middleware in order to find commands they use with wrap
-\item Create your own key$_1$ (APDU level, with value known to attacker)
-\item Search and find all keys stored on card (using file location information)
-\item Wrap and export all keys stored on card with key$_1$.
-\item Decrypt keys outside of smartcard
-\item Attacker now has all key values stored in the card (This can be completed without the use of the middlware and sending APDU commands directly to the card). The mitigation suggested by RAID 2016 of running middlware at different privilege to user would not mitigate the suggested attack!
-
-
-The attacks we selected to investigate lead onto a final hypothesis that using the published attacks in literature [?], the reverse engineering of both the PIN authentication protocol and secure messaging an attacker will allow implementation of the wrap/decrypt attack [?] at the APDU level (on our smartcard). This will allow the extraction of all cryptographic sensitive key values, regardless of the PKCS \#11 attributes set for them. The constraint of requiring CKA\_extractable set to true in the wrap/decrypt attack, will not be present in the attack we suggest, as all attribute controls should be able to be bypassed. We explain the steps that needed to be undertaken to reach a final conclusion on this hypothesis in chapter 9 (future work). Due the same time constraints on the project we did not manage to reach a conclusion ourselves, due to working on the reverse engineering of the PIN authentication and secure messaging protocols.
-
-\end{itemize}
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------------------------------------------------------
