@@ -5,6 +5,10 @@
 \newblock
   https://en.wikipedia.org/wiki/Block$\_$cipher$\_$mode$\_$of$\_$operation.
 
+\bibitem{cmacimage}
+{\em CMAC Image Source}, (accessed April 6, 2017).
+\newblock https://en.wikipedia.org/wiki/One-key$\_$MAC.
+
 \bibitem{eccimage}
 {\em ECC Image Source}, (accessed April 6, 2017).
 \newblock
@@ -29,10 +33,10 @@ Jolyon Clulow.
   Systems}, pages 411--425. Springer, 2003.
 
 \bibitem{pkcs11:oasis}
-Oasis~Technical Committee.
-\newblock {\em OASIS PKCS 11 TC}, (accessed October 15, 2016).
-\newblock
-  https://www.oasis-open.org/committees/tc$\_$home.php?wg$\_$abbrev=pkcs11.
+Cryptsoft.
+\newblock {\em Cryptsoft PKCS 11 Cryptographic Token Interface Standard},
+  (accessed October 15, 2016).
+\newblock https://www.cryptsoft.com/pkcs11doc/.
 
 \bibitem{diffie1976new}
 Whitfield Diffie and Martin Hellman.
@@ -52,14 +56,39 @@ Darrel Hankerson, Alfred~J Menezes, and Scott Vanstone.
 \newblock {\em Guide to elliptic curve cryptography}.
 \newblock Springer Science \& Business Media, 2006.
 
+\bibitem{iso7816}
+ISO/IEC.
+\newblock {\em International Organization for Standardization and the
+  International Electrotechnical Commission 7816}, 1987 - 2013.
+
+\bibitem{jurgensen2002smart}
+Timothy~M Jurgensen and Scott~B Guthery.
+\newblock {\em Smart cards: the developer's toolkit}.
+\newblock Prentice Hall Professional, 2002.
+
 \bibitem{krawczyk1997rfc}
 Hugo Krawczyk, Mihir Bellare, and Ran Canetti.
 \newblock Rfc 2104: Hmac: Keyed-hashing for message authentication.
 \newblock 1997.
 
+\bibitem{pkcs11:rsaLab}
+RSA Laboratories.
+\newblock {\em PKCS $\#$11 v2.20: Cryptographic Token Interface Standard}, June
+  28, 2004.
+
 \bibitem{lan}
 Xiao Lan.
 \newblock {\em Finding Vulnerabilities In Low Level Protocols}, 2016.
+
+\bibitem{m2005hotp}
+D~M'raihi, M~Bellare, F~Hoornaert, D~Naccache, and O~Ranen.
+\newblock Hotp: An hmac-based one-time password algorithm.
+\newblock Technical report, 2005.
+
+\bibitem{m2011totp}
+David M'Raihi, S~Machani, M~Pei, and J~Rydell.
+\newblock Totp: Time-based one-time password algorithm.
+\newblock Technical report, 2011.
 
 \bibitem{rsa1978}
 Ronald~L Rivest, Adi Shamir, and Leonard Adleman.
@@ -72,6 +101,11 @@ GN~Shinde and HS~Fadewar.
 \newblock Faster rsa algorithm for decryption using chinese remainder theorem.
 \newblock In {\em International Conference on Computational and Experimental
   Engineering and Sciences (ICCES)}, volume~5, pages 255--262, 2008.
+
+\bibitem{song2006aes}
+Junhyuk Song, Radha Poovendran, Jicheol Lee, and Tetsu Iwata.
+\newblock The aes-cmac algorithm.
+\newblock Technical report, 2006.
 
 \bibitem{standard2002fips}
 Secure~Hash Standard.

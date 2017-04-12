@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.14)  12 APR 2017 14:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.14)  12 APR 2017 15:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1693,25 +1693,32 @@ April 6, 2017).
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 9--12
+Underfull \hbox (badness 10000) in paragraph at lines 9--11
+[]\T1/fve/m/sl/12 CMAC Im-age Source\T1/fve/m/n/12 , (ac-cessed April 6, 2017).
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--16
 []\T1/fve/m/sl/12 ECC Im-age Source\T1/fve/m/n/12 , (ac-cessed April 6, 2017).
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 9--12
+Underfull \hbox (badness 10000) in paragraph at lines 13--16
 \T1/fve/m/n/12 http://bitcoin.stackexchange.com/questions/37289/in-elliptic-cur
 ve-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 32--36
-[]\T1/fve/m/n/12 Oasis Tech-ni-cal Com-mit-tee.  \T1/fve/m/sl/12 OA-SIS PKCS 11
- TC\T1/fve/m/n/12 ,
+Underfull \hbox (badness 10000) in paragraph at lines 36--40
+[]\T1/fve/m/n/12 Cryptsoft.  \T1/fve/m/sl/12 Crypt-soft PKCS 11 Cryp-to-graphic
+ To-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 32--36
-\T1/fve/m/n/12 (ac-cessed Oc-to-ber 15, 2016).  https://www.oasis-
+Underfull \hbox (badness 10000) in paragraph at lines 36--40
+\T1/fve/m/sl/12 ken In-ter-face Stan-dard\T1/fve/m/n/12 , (ac-cessed Oc-to-ber 
+15, 2016).
  []
 
 [103]) [104] [105
@@ -1805,10 +1812,10 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 7814 strings out of 493085
- 116696 string characters out of 6136916
- 193215 words of memory out of 5000000
- 11077 multiletter control sequences out of 15000+600000
+ 7821 strings out of 493085
+ 116786 string characters out of 6136916
+ 193243 words of memory out of 5000000
+ 11084 multiletter control sequences out of 15000+600000
  88281 words of font info for 95 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  43i,12n,40p,1199b,418s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1829,7 +1836,7 @@ mf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/urw/times/utmri8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/wa
 sy2-ps/wasy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/wasy2-ps/wa
 syb10.pfb>
-Output written on honours_project_report.pdf (145 pages, 646990 bytes).
+Output written on honours_project_report.pdf (145 pages, 647766 bytes).
 PDF statistics:
  574 PDF objects out of 1000 (max. 8388607)
  378 compressed objects within 4 object streams

@@ -6,47 +6,51 @@ Database file #1: mybibfile.bib
 Warning--I didn't find a database entry for "test"
 Warning--to sort, need author, organization, or key in eccimage
 Warning--to sort, need author, organization, or key in ecbcbcimage
+Warning--to sort, need author, organization, or key in cmacimage
 Warning--empty journal in krawczyk1997rfc
+Warning--empty institution in m2005hotp
+Warning--empty institution in m2011totp
 Warning--can't use both volume and number fields in shinde2008faster
-You've used 14 entries,
+Warning--empty institution in song2006aes
+You've used 21 entries,
             2118 wiz_defined-function locations,
-            576 strings with 6305 characters,
-and the built_in function-call counts, 4668 in all, are:
-= -- 471
-> -- 189
+            603 strings with 7066 characters,
+and the built_in function-call counts, 6361 in all, are:
+= -- 625
+> -- 291
 < -- 6
-+ -- 77
-- -- 62
-* -- 293
-:= -- 728
-add.period$ -- 43
-call.type$ -- 14
-change.case$ -- 68
++ -- 119
+- -- 96
+* -- 399
+:= -- 1033
+add.period$ -- 61
+call.type$ -- 21
+change.case$ -- 105
 chr.to.int$ -- 0
-cite$ -- 18
-duplicate$ -- 201
-empty$ -- 388
-format.name$ -- 62
-if$ -- 1018
+cite$ -- 29
+duplicate$ -- 263
+empty$ -- 510
+format.name$ -- 96
+if$ -- 1352
 int.to.chr$ -- 0
-int.to.str$ -- 14
-missing$ -- 11
-newline$ -- 70
-num.names$ -- 24
-pop$ -- 87
+int.to.str$ -- 21
+missing$ -- 13
+newline$ -- 102
+num.names$ -- 36
+pop$ -- 130
 preamble$ -- 1
-purify$ -- 59
+purify$ -- 90
 quote$ -- 0
-skip$ -- 153
+skip$ -- 196
 stack$ -- 0
-substring$ -- 276
-swap$ -- 65
+substring$ -- 312
+swap$ -- 71
 text.length$ -- 6
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 54
-warning$ -- 4
-while$ -- 43
-width$ -- 16
-write$ -- 147
-(There were 5 warnings)
+type$ -- 80
+warning$ -- 8
+while$ -- 55
+width$ -- 23
+write$ -- 211
+(There were 9 warnings)
