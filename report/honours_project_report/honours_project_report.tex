@@ -89,7 +89,7 @@ In the last 15 years or so, the literature \cite{bortolozzo2010attacking,clulow2
 
 It is clear from the available research that APDU level attacks require further investigation. The research demonstrates the ability to grab sensitive key value and user PIN information at the APDU-level of the smartcards they examine. If the security at the low-level (APDU) command-response pairs is flawed it compromises the security that is provided by the PKCS \#11 standard. 
 
-This motivates the research of our project. We undertake the analysis of the \textbf{Athena IDprotect smartcard} that uses encrypted APDU level communication to prevent leaking sensitive key values. This has made the work of this project more challenging. We present two new attacks at the APDU level for our smartcard. The first attack concerns reverse engineering the proprietary PIN authentication protocol that is used to log a user into the smartcard. The second attack concerns reverse engineering the proprietary secure messaging protocol used at the APDU level to protect sensitive keys from being revealed in plain text. This attack is novel in that it has not been carried out before. Furthermore, we extend the analysis of Lan (2016) \cite{lan} in two areas. The first one concerns (specifically for our smartcard) how PKCS \#11 functions are broken down into ISO 7816 (APDU) command response pairs. The second one is regarding the key and attribute file locations in our smartcards memory. Finally, we test an attack that has been reported in the literature \cite{apdu:attacks} to find out if our smartcard suffers from the same vulnerability.
+This motivates the research of our project. We undertake the analysis of the \textbf{Athena IDprotect smartcard} that uses encrypted APDU level communication to prevent leaking sensitive key values. This has made the work of this project more challenging. We present two new attacks at the APDU level for our smartcard. The first attack concerns reverse engineering the proprietary PIN authentication protocol that is used to log a user into the smartcard. The second attack concerns reverse engineering the proprietary secure messaging protocol used at the APDU level to protect sensitive keys from being revealed in plain text. This attack is novel in that it has not been carried out before. Furthermore, we extend the analysis of Xiao (2016) \cite{Xiao} in two areas. The first one concerns (specifically for our smartcard) how PKCS \#11 functions are broken down into ISO 7816 (APDU) command response pairs. The second one is regarding the key and attribute file locations in our smartcards memory. Finally, we test an attack that has been reported in the literature \cite{apdu:attacks} to find out if our smartcard suffers from the same vulnerability.
 
 
 Our study makes five important contributions, these are:
@@ -99,10 +99,10 @@ Our study makes five important contributions, these are:
 
 \item The second attack concerns reverse engineering of the proprietary secure messaging protocol to encrypt APDU communication (specifically for our smartcard). We provide evidence to prove the cryptographic protocol used in the initialization process for secure messaging is Diffie Hellman. We also implement a man in the middle attack to set the value of the shared secret to zero. This gives an attacker the same knowledge as the API and smartcard. The final step in reverse engineering the secure messaging protocol is to derive two session keys given the shared secret value, a 32 byte challenge, and a key derivation function. Unfortunately, due to time constraints we are unable to complete this final step. We however include the methodology of the experiment that should be used to complete this attack. To the best of our knowledge, we are the first to research the reverse engineering of encrypted APDU communication (secure messaging).
 
-\item In our third contribution we extend Lan (2016) \cite{lan} analysis of how (specifically for our smartcard) the PKCS \#11 functions are broken down into multiple (APDU) command-response pairs. In the cases of C\_generateKey, C\_generateKeyPair, C\_destroyObject, C\_wrap and C\_unwrap we provide new insights into the APDU communication.
+\item In our third contribution we extend Xiao (2016) \cite{Xiao} analysis of how (specifically for our smartcard) the PKCS \#11 functions are broken down into multiple (APDU) command-response pairs. In the cases of C\_generateKey, C\_generateKeyPair, C\_destroyObject, C\_wrap and C\_unwrap we provide new insights into the APDU communication.
 
 
-\item Lan (2016) \cite{lan} finds the location of key and attribute files for block cipher keys only. We extend his work to include, RSA public and private, key and attribute file locations in the smartcards memory.
+\item Xiao (2016) \cite{Xiao} finds the location of key and attribute files for block cipher keys only. We extend his work to include, RSA public and private, key and attribute file locations in the smartcards memory.
 
 \item In our final contribution we test work conducted in \cite{apdu:attacks}, whereby the controls dictated by the attributes of a PKCS \#11 object can be overridden at the APDU level. We do this in order to test if our smartcard has the same vulnerability.\\
 
@@ -767,7 +767,7 @@ Secure messaging sessions derive two session keys S$_{Enc}$ and S$_{Mac}$ betwee
 
 \chapter{Literature Review}
 
-This chapter provides a review of the literature relating to the area of computer security especially with regard to PKCS \#11 and ISO 7816 for contact smartcards. We first summarise the findings of four papers and then in one case examine if our project's smartcard has the same vulnerability as that reported in one of these papers. We also extend some of the work of Lan (2016) \cite{lan} (who also studied the same smartcard), with regard to attribute and key file locations in the smartcard's memory. We also summarise all of the inter-industry and proprietary APDU command definitions for our smartcard.
+This chapter provides a review of the literature relating to the area of computer security especially with regard to PKCS \#11 and ISO 7816 for contact smartcards. We first summarise the findings of four papers and then in one case examine if our project's smartcard has the same vulnerability as that reported in one of these papers. We also extend some of the work of Xiao (2016) \cite{Xiao} (who also studied the same smartcard), with regard to attribute and key file locations in the smartcard's memory. We also summarise all of the inter-industry and proprietary APDU command definitions for our smartcard.
 
 \section{APDU-level attacks in PKCS \#11 devices}
 
@@ -809,7 +809,7 @@ This can also be achieved with asymmetric keys instead of block cipher keys. Set
 
 \section{A Study On The Same Smartcard}
 
-Lan (2016) \cite{lan} carries out his work on the same smartcard as the one we use in our project (Athena IDprotect). We summarise the main contributions of his study in table 4.1. We also report in detail the findings of the paper (more so than other papers). The rationale for doing this is to clearly distinguish between his work and ours.
+Xiao (2016) \cite{Xiao} carries out his work on the same smartcard as the one we use in our project (Athena IDprotect). We summarise the main contributions of his study in table 4.1. We also report in detail the findings of the paper (more so than other papers). The rationale for doing this is to clearly distinguish between his work and ours.
 
 \begin{table}[H]
 \begin{tabular}{|l|p{10cm}|}
@@ -840,9 +840,9 @@ Finding & Description\\
 \caption{Summary of Findings}
 \end{table}
 
-Lan (2016) \cite{lan} used the \textit{pcsc-spy} tool. This tool is reported in section 5.1, chapter 5 of our project. The tool gave a good understanding of the proprietary commands implemented within the middlware. The inter-industry commands are standardized and can be found in the ISO 7816 specification. It is worth noting that we do not replicate this work as the details the proprietary command are listed in the appendix of the Lan's paper. We extract this information from this appendix and summarise all of the commands in section 4.5.2.
+Xiao (2016) \cite{Xiao} used the \textit{pcsc-spy} tool. This tool is reported in section 5.1, chapter 5 of our project. The tool gave a good understanding of the proprietary commands implemented within the middlware. The inter-industry commands are standardized and can be found in the ISO 7816 specification. It is worth noting that we do not replicate this work as the details the proprietary command are listed in the appendix of the Xiao's paper. We extract this information from this appendix and summarise all of the commands in section 4.5.2.
 
-The second finding relates to the decoding of the attribute files. The attribute files in the Athena IDprotect smartcard are saved in a transparent binary file. The values in the file can be viewed in hexadecimal format at the APDU layer. Lan reports that each PKCS \#11 attribute has a hexadecimal encoding. We extract the examples given in his paper and report them in table 4.2. The paper states that the representation of each attribute is stored in the attribute file in the following format:
+The second finding relates to the decoding of the attribute files. The attribute files in the Athena IDprotect smartcard are saved in a transparent binary file. The values in the file can be viewed in hexadecimal format at the APDU layer. Xiao reports that each PKCS \#11 attribute has a hexadecimal encoding. We extract the examples given in his paper and report them in table 4.2. The paper states that the representation of each attribute is stored in the attribute file in the following format:
 
 \begin{center}
 Hexidecimal Encoding + Filler + Length + Value
@@ -877,17 +877,17 @@ CKA\_extractable & 0x0162\\
 \caption{Attribute Encodings}
 \end{table}
 
-The third finding is attribute and key file separation. Lan reports that despite there being fields in the attribute files to store sensitive values (see table 3.2, chapter 3 of our project), those fields were filled with 'FF' hexidecimal values and return 'NULL' at the API layer. We assume that this method (attribute and key file separation) is to patch the vulnerability that has been present in an earlier version of 'Athena smartcard solutions' hardware security module. This vulnerability is found in \cite{apdu:attacks} and summarised in our literature review.
+The third finding is attribute and key file separation. Xiao reports that despite there being fields in the attribute files to store sensitive values (see table 3.2, chapter 3 of our project), those fields were filled with 'FF' hexidecimal values and return 'NULL' at the API layer. We assume that this method (attribute and key file separation) is to patch the vulnerability that has been present in an earlier version of 'Athena smartcard solutions' hardware security module. This vulnerability is found in \cite{apdu:attacks} and summarised in our literature review.
 
-The forth finding concerns the memory locations on the smartcard for block cipher keys and attribute files. Lan reports that '00 CX' (X being any hexadecimal value) is the location of the EF's that store key values, for all type of keys. However, our analysis discussed in chapter 6 finds that this is not in fact the case. The location of block cipher keys is the same as what Lan reports, however we find different locations for RSA public and private keys. We report this in section 4.5.1, as part of our extended work.
+The forth finding concerns the memory locations on the smartcard for block cipher keys and attribute files. Xiao reports that '00 CX' (X being any hexadecimal value) is the location of the EF's that store key values, for all type of keys. However, our analysis discussed in chapter 6 finds that this is not in fact the case. The location of block cipher keys is the same as what Xiao reports, however we find different locations for RSA public and private keys. We report this in section 4.5.1, as part of our extended work.
 
-The fifth finding is a counter file for symmetric and asymmetric keys. This value of the counter is incremented upon file deletion. On a new key creation/ generation, the counter is appended to the attribute file of the keys. In Lan noted that there is no indication of the value being used (e.g. to check if a file has been created not by the API) but the counter is present. We discuss this in chapter 6 of our project.
+The fifth finding is a counter file for symmetric and asymmetric keys. This value of the counter is incremented upon file deletion. On a new key creation/ generation, the counter is appended to the attribute file of the keys. In Xiao noted that there is no indication of the value being used (e.g. to check if a file has been created not by the API) but the counter is present. We discuss this in chapter 6 of our project.
 
-The sixth finding is an implementation flaw in the middleware that 'Athena Smartcard Solutions' created to implement the PKCS \#11 API. The flaw is regarding the use of decryption with the block cipher AES in ECB mode. The wrong command is sent and thus returns an error '6A 86', meaning 'Incorrect P1 or P2 parameters'. Lan corrects the command and sends it to the smartcard which decrypts the ciphertext correctly. He points out that this is not a security vulnerability and rather an issue with functionality of the API. We also find a similar issue with the use of triple DES keys and discuss this in chapter 6 of our project. 
+The sixth finding is an implementation flaw in the middleware that 'Athena Smartcard Solutions' created to implement the PKCS \#11 API. The flaw is regarding the use of decryption with the block cipher AES in ECB mode. The wrong command is sent and thus returns an error '6A 86', meaning 'Incorrect P1 or P2 parameters'. Xiao corrects the command and sends it to the smartcard which decrypts the ciphertext correctly. He points out that this is not a security vulnerability and rather an issue with functionality of the API. We also find a similar issue with the use of triple DES keys and discuss this in chapter 6 of our project. 
 
 The seventh finding concerns the removal of C\_wrap and C\_copyObject functions from the card vendors middleware that implements the PKCS \#11 API. We believe that this could have been done in an attempt to prevent the 'wrap/decrypt attack', Clulow (2003) \cite{clulow2003security}.
 
-The eighth finding is attack$_1$. The attack modifies the attribute files at the APDU level by sending the 'UPDATE BINARY' command to alter the attributes that are stored on the card. The attributes altered are CKA\_sensitive and CKA\_extractable from true to false, and false to true respectively. This contradicts the PKCS \#11 API as it is not permitted. Lan succeeds in altering the attribute values, but it yielded no security vulnerability. While a real change to the attributes are reported at the API level, the value of the sensitive key is reported to still be 'None'. We assume that when a key is created/ generated with CKA\_sensitive set to true and CKA\_extractable set to false, the key value is stored in an internal EF (discussed in section 3.2.3, chapter 3 of our project). If this assumption holds it explains why the key value cannot be extracted regardless of the change in the attribute values. We discuss this further in our chapter 6, but we do not replicate the attack as Lan reports no security issues.
+The eighth finding is attack$_1$. The attack modifies the attribute files at the APDU level by sending the 'UPDATE BINARY' command to alter the attributes that are stored on the card. The attributes altered are CKA\_sensitive and CKA\_extractable from true to false, and false to true respectively. This contradicts the PKCS \#11 API as it is not permitted. Xiao succeeds in altering the attribute values, but it yielded no security vulnerability. While a real change to the attributes are reported at the API level, the value of the sensitive key is reported to still be 'None'. We assume that when a key is created/ generated with CKA\_sensitive set to true and CKA\_extractable set to false, the key value is stored in an internal EF (discussed in section 3.2.3, chapter 3 of our project). If this assumption holds it explains why the key value cannot be extracted regardless of the change in the attribute values. We discuss this further in our chapter 6, but we do not replicate the attack as Xiao reports no security issues.
 
 The ninth finding is attack$_2$. The attack modifies the key value of already generated/stored block cipher keys. The attack consists of five elements:
 \begin{enumerate}
@@ -898,7 +898,7 @@ The ninth finding is attack$_2$. The attack modifies the key value of already ge
 \item Modify the attribute file of key$_2$ to be equal to the attribute of key$_1$ ('UPDATE BINARY')
 \end{enumerate}
 
-It is difficult to understand how the above attack operates using the explanations provided by Lan. However, after studying the APDU traces given in the appendix of his paper, we are able to find how the attack is implemented. The above attack may not be valid unless it takes place as soon as a new block cipher key is generated by the user using C\_generateKey (it cannot be created by the user using C\_createObject, as they will be aware of the key value). This is because the attack would noticed by the user almost immediately. An example is whereby the user had already used the key to encrypt data for storage or communication purposes. The resulting decryption after the key file had been modified would not result in the decryption they would expect. Thus, alerting them to the fact that the key has been changed. It is for this reason we do not to replicate this attack. We rather focus on attacks that would find the key values stored on the smartcard without the users knowledge and without modifying it in a manner where the user would be alerted to it.
+It is difficult to understand how the above attack operates using the explanations provided by Xiao. However, after studying the APDU traces given in the appendix of his paper, we are able to find how the attack is implemented. The above attack may not be valid unless it takes place as soon as a new block cipher key is generated by the user using C\_generateKey (it cannot be created by the user using C\_createObject, as they will be aware of the key value). This is because the attack would noticed by the user almost immediately. An example is whereby the user had already used the key to encrypt data for storage or communication purposes. The resulting decryption after the key file had been modified would not result in the decryption they would expect. Thus, alerting them to the fact that the key has been changed. It is for this reason we do not to replicate this attack. We rather focus on attacks that would find the key values stored on the smartcard without the users knowledge and without modifying it in a manner where the user would be alerted to it.
 
 CKA\_private with a value of true dictates that a user must be logged in to use the key for security operations. The final attack (attack$_3$) suggests that keys with the attribute CKA\_private set to true can be used for security operations regardless of the user's logged in status. This is because the knowledge of the key file location in the smartcard's memory, and the commands required to be sent to the card for security operations are known. Thus, he suggests using 'SELECT FILE' command to select the key in question, and then send any of the security operation commands (e.g. 'ENCRYPT') to use the key while being not logged in. 
 
@@ -907,9 +907,9 @@ We attempt to test if this attack is valid, but for an unknown reason received A
 \section{Additional Work}  
 \subsection{Directories of Key and Attribute Files (Extended Work)}
 % Table: File locations within Athena IDprotect smartcard
-Lan (2016) \cite{lan} finds that attributes and sensitive key values are stored within separate files in the smartcard. His results also show the location of these attribute files and key value files for \textbf{block cipher} keys. He assumes that asymmetric attribute and key value files are stored within the same directory that he reports for block cipher keys. 
+Xiao (2016) \cite{Xiao} finds that attributes and sensitive key values are stored within separate files in the smartcard. His results also show the location of these attribute files and key value files for \textbf{block cipher} keys. He assumes that asymmetric attribute and key value files are stored within the same directory that he reports for block cipher keys. 
 
-We find in chapter 6 (section 6.6) that Lan's above assumption is not valid. This is due to the fact that RSA public and private, attribute and key files have different directories for the EF's that store their respective values. We extend hid work to include the locations of RSA attribute and key files. We report results of the locations in table 4.3.
+We find in chapter 6 (section 6.6) that Xiao's above assumption is not valid. This is due to the fact that RSA public and private, attribute and key files have different directories for the EF's that store their respective values. We extend hid work to include the locations of RSA attribute and key files. We report results of the locations in table 4.3.
 
 \begin{table}[H]
 \hskip+2.0cm\begin{tabular}{|l|l|p{6cm}|}
@@ -933,9 +933,9 @@ RSA private 	 & Attribute & 3F 00 30 00 30 \textbf{02 01 4X} \\
 \subsection{APDU Command Definitions (Summary)}
 
 
-In chapter 6 we analyse the PKCS \#11 functions and how they are broken down into multiple ISO 7816 command-response pairs (for our project's smartcard). We find as did Lan the use of the following inter-industry and proprietary commands. We provide a summary of all of the commands below.
+In chapter 6 we analyse the PKCS \#11 functions and how they are broken down into multiple ISO 7816 command-response pairs (for our project's smartcard). We find as did Xiao the use of the following inter-industry and proprietary commands. We provide a summary of all of the commands below.
 
-\textit{[Lan (2016) \cite{lan} finds the 'inner-function' names which provide a good decoding of the proprietary commands listed in table 4.4. He has used a program known as 'pcsc-spy' to find the 'inner-function' names. We discuss this tool in section 5.1]}
+\textit{[Xiao (2016) \cite{Xiao} finds the 'inner-function' names which provide a good decoding of the proprietary commands listed in table 4.4. He has used a program known as 'pcsc-spy' to find the 'inner-function' names. We discuss this tool in section 5.1]}
 
 \begin{table}[H]
 \hskip-1.0cm\begin{tabular}{|c|c|c|c|c|c|c|p{8cm}|}
@@ -995,7 +995,7 @@ This chapter explains the details regarding the use of pre-existing software pac
 \section{PCSC-Spy}
 One PKCS \#11 function is broken down into multiple APDU command-response pairs. The APDU commands are sent from the middleware to the PC/SC layer on the computer, and then to the smartcard. This is illustrated in figure 5.1.
 
-Rousseau [?] has created the open-source implementation of the PC/SC layer for computers using the linux operating system (known as PCSC-lite). As part of the implementation, he has created the \textit{pcsc-spy} program. This effectively implements a man in the middle attack between the middleware and the PC/SC layer. Using this program it is possible to sniff the 'inner function' names of all the communication between the middleware and PC/SC layer (inner functions are functions within each PKCS \#11 function that are called to send one command). By extracting this information, the program gives a good understanding of the proprietary ISO 7816 commands.
+Rousseau \cite{pcsc-lite} has created the open-source implementation of the PC/SC layer for computers using the linux operating system (known as PCSC-lite). As part of the implementation, he has created the \textit{pcsc-spy} program. This effectively implements a man in the middle attack between the middleware and the PC/SC layer. Using this program it is possible to sniff the 'inner function' names of all the communication between the middleware and PC/SC layer (inner functions are functions within each PKCS \#11 function that are called to send one command). By extracting this information, the program gives a good understanding of the proprietary ISO 7816 commands.
 
 % IMAGE: pcsc spy implementation
 \begin{figure}[H]
@@ -1007,11 +1007,11 @@ Rousseau [?] has created the open-source implementation of the PC/SC layer for c
 \end{figure}
 
 \section{Virtual Smartcard Reader}
-Morgner [?] has created the virtual smart card reader project. The project emulates a smartcard reader and creates a virtual one in the host machine. It also has the 'Relay OS' which has a basic implementation of a man in the middle attack provided in the code of the project (no APDU command response pairs are altered, the ability is just present). This can be seen in figure 5.2.
+Morgner \cite{vpcd} has created the virtual smart card reader project. The project emulates a smartcard reader and creates a virtual one in the host machine. It also has the 'Relay OS' which has a basic implementation of a man in the middle attack provided in the code of the project (no APDU command response pairs are altered, the ability is just present). This can be seen in figure 5.2.
 
 \textit{"The vpcd is a smart card reader driver for PCSC-Lite [2] and the windows smart card service. It allows} \textit{smart card applications to access the vpicc through the PC/SC API. By default vpcd opens slots} \textit{for communication with multiple vpicc's on localhost on port 35963 and port 35964. But the vpicc} \textit{does not need to run on the same machine as the vpcd, they can connect over the internet for} \textit{example.}
 
-\textit{Although the Virtual Smart Card is a software emulator, you can use PC/SC Relay to make it accessible to} \textit{an external contact-less smart card reader."} [?] - This is the explanation provided on his github page.
+\textit{Although the Virtual Smart Card is a software emulator, you can use PC/SC Relay to make it accessible to} \textit{an external contact-less smart card reader."} \cite{vpcd} - This is the explanation provided on his github page.
 
 % IMAGE: MiTM implementation
 \begin{figure}[H]
@@ -1043,7 +1043,7 @@ This is because previous literature has shown that some poor implemenations has 
 
 All the traces are reported in appendix B. These traces have been shortened to only include the command-response pairs which are deemed to be the most important to the evaluation of a function. However, the full traces for each function are given within the project directory. We will refer to appendix B including the corresponding command response pair which are given in brackets to allow ease of locating the steps throughout our analysis.
 
-\textit{C\_sign} and \textit{C\_verify} are not included in this analysis as earlier work [?] on this card show that both of these functions operate in a similar manner to C\_encrypt and C\_decrypt. \textit{C\_createObject} is also not included in this analysis, because it operates in a similar fashion to \textit{C\_generateKey} and \textit{C\_generateKeyPair}. The only difference is that the key values are provided by the user rather than being computer generated.
+\textit{C\_sign} and \textit{C\_verify} are not included in this analysis as earlier work \cite{Xiao} on this card show that both of these functions operate in a similar manner to C\_encrypt and C\_decrypt. \textit{C\_createObject} is also not included in this analysis, because it operates in a similar fashion to \textit{C\_generateKey} and \textit{C\_generateKeyPair}. The only difference is that the key values are provided by the user rather than being computer generated.
 
 To prevent repetition we list the dependencies (other functions that must be run before hand) at the start of each section when necessary.
 
@@ -1078,7 +1078,7 @@ The login function has 5 main components (these are listed below).
 
 The API requests to view the file control parameters for file X$_1$. The file location as stated within the trace is at '3F 00 00  20 00'. This holds the retry counter value, which dictates how many attempts are left before the card is blocked \textit{(A value of 'A0' states the card is currently in a blocked status)}. To make it easier to locate within the trace we have highlighted the current value in bold which is of 'AA', meaning there is 10 attempts left.
 
-Following this check, file X$_2$ is selected. We assume that this file holds a pointer to EEPROM memory where the PIN is securely stored by the smartcard. This file cannot be accessed with the inter-industry command 'READ BINARY' nor the proprietary command 'READ FILE CONTROL PARAMETERS'. However if this file is not selected PIN verification fails despite having the correct PIN value. This finding was reported by (enter name) last year [?].
+Following this check, file X$_2$ is selected. We assume that this file holds a pointer to EEPROM memory where the PIN is securely stored by the smartcard. This file cannot be accessed with the inter-industry command 'READ BINARY' nor the proprietary command 'READ FILE CONTROL PARAMETERS'. However if this file is not selected PIN verification fails despite having the correct PIN value. This finding was reported by Xiao \cite{Xiao}.
 
 After file X$_2$ has been selected, the API requests the smartcard to send an 8 byte challenge. Upon receiving said challenge, the API then responds with a 16 bytes of data for PIN verification using the proprietary 'VERIFY' command. Assuming the correct PIN has been supplied the user is now authenticated with the card, and the last step clears the security status.
 
@@ -1103,11 +1103,11 @@ The findObjects function is split into 3 main components (these are listed below
 
 First, a cmapfile is accessed. This file stores the location of key attribute files. Following this, attribute files are accessed. The attribute files store all the information regarding a specific keys attributes (listed in section 3.1.1). Finally the next (and last) file is opened. In the case more than one key was stored on the card at the time of running this function the next file would contain the attributes of the next key. However, since there is only 1 key, the next file is empty (containing all zero's) thus determining there are no more key objects to be found.
 
-Due to key and attribute files being stored separately, this function call reveals no sensitive information. This finding was reported by (name) 2015 [?] and is stated within our literature review. Only the attributes are opened and listed at the APDU layer. These attributes can be printed at the API layer as well.
+Due to key and attribute files being stored separately, this function call reveals no sensitive information. This finding was reported by Xiao \cite{Xiao} and is stated within our literature review. Only the attributes are opened and listed at the APDU layer. These attributes can be printed at the API layer as well.
 
 A possibility for an attack is present here. The ISO 7816 proprietary 'REALLOCATE BINARY' and the inter-industry 'UPDATE BINARY' commands can be used to modify a file. This will allow modification of attributes. 
 
-As reported in the literature review, the work by (name) 2015 [?] on the same card shows that they were able to modify any attributes. They tested the modification of CKA\_sensitive \& CKA\_extractable from false to true. The change in this direction is not permitted by the PKCS \#11 standard. However the ability to change these at the APDU level was achieved. This approach still yielded no significant results, as keys and attribute are stored in separate files, thus the keys could still not be loaded. This is discussed in chapter 7.
+As reported in the literature review, the work by Xiao \cite{Xiao} on the same card shows that they were able to modify any attributes. They tested the modification of CKA\_sensitive \& CKA\_extractable from false to true. The change in this direction is not permitted by the PKCS \#11 standard. However the ability to change these at the APDU level was achieved. This approach still yielded no significant results, as keys and attribute are stored in separate files, thus the keys could still not be loaded. This is discussed in chapter 7.
 
 \section{C\_generateKey}
 \textit{[For this trace we generate a triple DES key, key length of 24 bytes.]}
@@ -1156,7 +1156,7 @@ We find 15 main components in this generation of the RSA public and private key 
 \item Add public key attributes to file [inc. public exponent] (B.5 - commands 56, 57)
 \item Create private key attribute file (B.5 - command 59)
 \item Add private key attributes to file (B.5 - commands 61, 62)
-\item Create Private CTR RSA Key file (B.5 - command 64) [ref crypto section] [?]
+\item Create Private CTR RSA Key file (B.5 - command 64) [see section 2.2.1, chapter 2]
 \item Select temporary file (B.5 - command 65)
 \item Generate RSA Key Pair (B.5 - command 66)
 \item Select temporary file (B.5 - command 67)
@@ -1171,7 +1171,7 @@ We find 15 main components in this generation of the RSA public and private key 
 
 \textit{The rest of the communication we believe to be resetting the temporary file, and adding file location information to file control parameters of parent directories. (These commands are not included in the traces within the appendix)}
 
-Components 1, 3, 5, 7, 9, 11, and 13 transfer data that are wrapped within an ASN.1 BER encoding [?]. We have used an online tool [?] to decode the data fields. The following are the ASN.1 BER decodings of the commands that have these wrapping. 
+Components 1, 3, 5, 7, 9, 11, and 13 transfer data that are wrapped within an ASN.1 BER encoding \cite{kaliski1993layman}. We have used an online tool [?] to decode the data fields. The following are the ASN.1 BER decodings of the commands that have these wrapping. 
 
 \textbf{1. Create public key attribute file (B.5 - command 54)}\\
 Application 2(4 elem)\\
@@ -2262,7 +2262,7 @@ We test the vulnerability presented in Bozzato et al. (2016) [?] whereby attribu
 
 We provide an extended analysis of how PKCS \#11 functions are broken down into ISO 7816 APDU command response pairs (for our projects smartcard). In the cases of C\_generateKey, C\_generateKeyPair, C\_destroyObject, C\_wrap and C\_unwrap we provide new insights.
 
-Finally we extend the work of Lan (2016) [?] to include the key and attribute file locations of not only block cipher keys, but also RSA public and private keys.
+Finally we extend the work of Xiao (2016) [?] to include the key and attribute file locations of not only block cipher keys, but also RSA public and private keys.
 
 
 

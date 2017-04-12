@@ -66,6 +66,11 @@ Timothy~M Jurgensen and Scott~B Guthery.
 \newblock {\em Smart cards: the developer's toolkit}.
 \newblock Prentice Hall Professional, 2002.
 
+\bibitem{kaliski1993layman}
+Burton~S Kaliski~Jr.
+\newblock A layman's guide to a subset of asn. 1, ber, and der.
+\newblock 1993.
+
 \bibitem{krawczyk1997rfc}
 Hugo Krawczyk, Mihir Bellare, and Ran Canetti.
 \newblock Rfc 2104: Hmac: Keyed-hashing for message authentication.
@@ -76,9 +81,11 @@ RSA Laboratories.
 \newblock {\em PKCS $\#$11 v2.20: Cryptographic Token Interface Standard}, June
   28, 2004.
 
-\bibitem{lan}
-Xiao Lan.
-\newblock {\em Finding Vulnerabilities In Low Level Protocols}, 2016.
+\bibitem{vpcd}
+Frank Morgner.
+\newblock {\em Virtual Smartcard Reader}, (accessed December 15, 2016).
+\newblock
+  https://frankmorgner.github.io/vsmartcard/virtualsmartcard/README.html.
 
 \bibitem{m2005hotp}
 D~M'raihi, M~Bellare, F~Hoornaert, D~Naccache, and O~Ranen.
@@ -96,6 +103,11 @@ Ronald~L Rivest, Adi Shamir, and Leonard Adleman.
   cryptosystems.
 \newblock {\em Communications of the ACM}, 21(2):120--126, 1978.
 
+\bibitem{pcsc-lite}
+Ludovic Rousseau.
+\newblock {\em PCSC-lite}, (accessed October 1, 2016).
+\newblock https://pcsclite.alioth.debian.org/.
+
 \bibitem{shinde2008faster}
 GN~Shinde and HS~Fadewar.
 \newblock Faster rsa algorithm for decryption using chinese remainder theorem.
@@ -111,5 +123,9 @@ Junhyuk Song, Radha Poovendran, Jicheol Lee, and Tetsu Iwata.
 Secure~Hash Standard.
 \newblock Fips pub 180-2.
 \newblock {\em National Institute of Standards and Technology}, 2002.
+
+\bibitem{Xiao}
+Lan Xiao.
+\newblock {\em Finding Vulnerabilities In Low Level Protocols}, 2016.
 
 \end{thebibliography}

@@ -43,7 +43,7 @@
 \contentsline {section}{\numberline {6.4}C\_generateKey}{50}
 \contentsline {section}{\numberline {6.5}C\_generateKeyPair}{52}
 \contentsline {section}{\numberline {6.6}C\_destroyObject}{55}
-\contentsline {section}{\numberline {6.7}C\_encrypt}{57}
+\contentsline {section}{\numberline {6.7}C\_encrypt}{56}
 \contentsline {section}{\numberline {6.8}C\_decrypt}{57}
 \contentsline {section}{\numberline {6.9}C\_setAttribute}{58}
 \contentsline {section}{\numberline {6.10}C\_unwrap}{59}
