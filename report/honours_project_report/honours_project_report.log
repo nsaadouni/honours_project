@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.14)  12 APR 2017 00:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.14)  12 APR 2017 08:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1684,50 +1684,56 @@ Underfull \hbox (badness 10000) in paragraph at lines 2239--2240
 
 ]
 Chapter 8.
-[95] [96] [97] [98] [99] [100
+[95] [96] [97]
+Overfull \hbox (2.13745pt too wide) in paragraph at lines 2312--2313
+\T1/fve/m/n/12 clocks be-tween the smart-card and the users com-puter. Syn-chro
+-niz-ing clocks
+ []
 
-]
+[98] [99] [100]
 LaTeX Font Info:    Font shape `T1/fve/m/it' in size <9> not available
-(Font)              Font shape `T1/fve/m/sl' tried instead on input line 2340.
+(Font)              Font shape `T1/fve/m/sl' tried instead on input line 2351.
 LaTeX Font Info:    Font shape `T1/fve/m/sl' will be
-(Font)              scaled to size 8.09995pt on input line 2340.
+(Font)              scaled to size 8.09995pt on input line 2351.
 
-Underfull \hbox (badness 2547) in paragraph at lines 2344--2348
+Underfull \hbox (badness 2547) in paragraph at lines 2355--2359
 []\T1/fve/m/n/12 Albert Ein-stein. \T1/fve/m/sl/12 Zur Elek-tro-dy-namik be-weg
 ter Kör-per\T1/fve/m/n/12 . (Ger-man)
  []
 
 
-Underfull \hbox (badness 2073) in paragraph at lines 2344--2348
+Underfull \hbox (badness 2073) in paragraph at lines 2355--2359
 \T1/fve/m/n/12 [\T1/fve/m/sl/12 On the elec-tro-dy-nam-ics of mov-ing bod-ies\T
 1/fve/m/n/12 ]. An-nalen der Physik,
  []
 
 LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 10.79993pt on input line 2351.
+(Font)              scaled to size 10.79993pt on input line 2362.
 
-Overfull \hbox (56.84286pt too wide) in paragraph at lines 2355--2358
+Overfull \hbox (56.84286pt too wide) in paragraph at lines 2366--2369
 \T1/fvm/m/n/12 https://frankmorgner.github.io/vsmartcard/virtualsmartcard/READM
 E.html 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2355--2358
+Underfull \hbox (badness 10000) in paragraph at lines 2366--2369
 
  []
 
-[101] [102
+[101
+
+] [102
 
 ] [103
 
 ] [104]
 Appendix A.
 LaTeX Font Info:    Font shape `T1/fvm/m/it' in size <10.95> not available
-(Font)              Font shape `T1/fvm/m/sl' tried instead on input line 2378.
+(Font)              Font shape `T1/fvm/m/sl' tried instead on input line 2389.
 LaTeX Font Info:    Font shape `T1/fvm/m/sl' will be
-(Font)              scaled to size 9.85492pt on input line 2378.
+(Font)              scaled to size 9.85492pt on input line 2389.
 LaTeX Font Info:    Font shape `T1/fvm/b/n' will be
-(Font)              scaled to size 9.85492pt on input line 2381.
+(Font)              scaled to size 9.85492pt on input line 2392.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
@@ -1828,7 +1834,7 @@ bol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb></usr/share/texl
 ive/texmf-dist/fonts/type1/public/wasy2-ps/wasy10.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/public/wasy2-ps/wasyb10.pfb>
-Output written on honours_project_report.pdf (143 pages, 641843 bytes).
+Output written on honours_project_report.pdf (143 pages, 644024 bytes).
 PDF statistics:
  566 PDF objects out of 1000 (max. 8388607)
  372 compressed objects within 4 object streams
