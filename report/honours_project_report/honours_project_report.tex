@@ -2336,11 +2336,13 @@ Finally, in the instance of our projects smartcard, good defense programming tec
 \item PKCS \#11 attribute controls should be enforced by the smartcard's hardware
 \item The key separation principle should be enforced by the smartcard's hardware
 \item All key values are to be stored in internal EF's and never be extracted out of smartcard 'unwrapped' / un-encrypted.
+\item "All cryptographic operations take place in the smartcard" [?]
+\item The status of a user being authenticated (correct PIN) should be controlled by smartcard's hardware. And prevent invalid function requests if their authentication status is false.
 \end{itemize}
 
 The above suggestions would require a re-design to the smartcards internal operation, however would prevent all the attacks we discuss regarding the disclosure of sensitive key values. It would also provide the security the PKCS \#11 API is expected to provide, which recent literature is showing can be overridden at the APDU level. This is due to the fact that the generation of keys will all take place within the smartcard with a command specifying the key type. This will remove the need for generating the key value and storing it in a file with 2 commands (requiring secure messaging to try and prevent revealing the key value). Furthermore the removal for the ability for a user to set the key value using C\_createObject will remove the need for secure messaging entirely. Which should now prevent the sensitive key value of any type of key from being leaked at the APDU level during key generation.
 
-Since the responsibility of the controls set out by the PKCS \#11 attribute values are to be delegated to the smartcards hardware, it will not be possible to override them at the APDU level. With the key separation principle also enforced by the smartcards hardware the 'wrap/decrypt attack' will not be possible at the API or the APDU level. Finally separating file location of sensitive key values and placing them in internel EF's should prevent the opening and disclosure of the sensitive key values at the APDU level (as see n in our smartcards project).
+Since the responsibility of the controls set out by the PKCS \#11 attribute values are to be delegated to the smartcards hardware, it will not be possible to override them at the APDU level. With the key separation principle also enforced by the smartcards hardware the 'wrap/decrypt attack' will not be possible at the API or the APDU level. Finally separating file location of sensitive key values and placing them in internal EF's should prevent the opening and disclosure of the sensitive key values at the APDU level (as see n in our smartcards project).
 
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
