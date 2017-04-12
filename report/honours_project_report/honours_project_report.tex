@@ -4,6 +4,8 @@
 \documentclass[bsc,frontabs,twoside,singlespacing,parskip,deptreport]{infthesis}     % for BSc, BEng etc.
 % \documentclass[minf,frontabs,twoside,singlespacing,parskip,deptreport]{infthesis}  % for MInf
 
+
+\usepackage{graphicx}
 \usepackage{pdfpages}
 \usepackage{float}% If comment this, figure moves to Page 2
 \usepackage{subcaption}
@@ -54,9 +56,10 @@
 
 
 \abstract{
-Basic example of an abstract (this will be changed)\\
 
-Smartcards are used commercially and within industry for authentication, encryption, decryption, signing and verifying data. This project aims to look into how the smartcard interacts with an application at the lower level. PKCS\#11 (public key cryptography system?) is the standard that is implemented at the higher level and then broken down into command/response pairs sent as APDU traffic to and from the smart card. It is the APDU low-level protocol that will be analysed to see if any vulnerabilities are present with regard to the smart cards tested.\\
+
+To a large extent smartcards are used in industry due to the security they are expected to provide. The most common API used to instruct smartcards is PKCS \#11. Each PKCS \#11 function is broken down into multiple ISO/IEC 7816 APDU command response pairs. In this project we undertake the analysis of the \textbf{Athena IDprotect smartcard} that uses encrypted APDU level communication to prevent leaking sensitive key values. We present two new attacks at the APDU level for our smartcard. The first attack concerns reverse engineering the proprietary PIN authentication protocol that is used to log a user into the smartcard. The second attack concerns reverse engineering the proprietary secure messaging protocol used at the APDU level. The research of reverse engineering proprietary implementations of APDU encrypted communication is novel in that it has not been carried out before.
+
 }
 
 \maketitle
@@ -78,17 +81,15 @@ Smartcards are known as integrated circuit cards (ICC), and are universally thou
 
 Smartcards are expected to offer more secure methods for using cryptographic operations. They should provide the same level of security that would be offered to un-compromised systems, compared to those that are compromised by an attacker. This is partly due to the fact that the majority of modern smartcards have their own on-board micro-controller. This allows all of the operations to take place on the smartcard itself. This means the only actor that should be able to preform such operations would need to be in possession of the smartcard and the PIN/password. Smartcards are widely used by many industries for different application purposes such as, banking/ payment systems, telecommunications, healthcare and public sector transport. The popularity of their use is to a large extent driven by the security they are expected to provide.
 
-The most common API (application programming interface) that is used to communicate with smartcards is PKCS\#11 (Public Key Cryptography Standard). This is also known as 'Cryptoki' (cryptographic token interface). PKCS \#11 has originated from RSA Laboratories, but has since been placed into the hands of OASIS PKCS\#11 Technical Committee to continue its work (since 2013). [find ref to RSA laboratories] [?]. 
+The most common API (application programming interface) that is used to communicate with smartcards is PKCS\#11 (Public Key Cryptography Standard). This is also known as 'Cryptoki' (cryptographic token interface). PKCS \#11 has originated from RSA Laboratories, but has since been placed into the hands of OASIS PKCS\#11 Technical Committee to continue its work (since 2013). \cite{pkcs11:oasis}. 
 
 PKCS \#11 defines a platform-independent API and conditions that must be strictly followed to communicate and instruct smartcards /hardware security modules (HSM). The API only provides C header files (with the object tpyes, attributes and functions to be supported), and leaves the actual implementation to card manufacturers. Each function is broken down into multiple Application Data Protocol Unit (APDU) command-response pairs. These command-response pairs are binary instructions for the smartcard to execute and respond with data if requested. The International Standard Organization (ISO) and International Electrotechnical Commission (IEC) jointly manage the ISO/IEC 7816 standard that defines electronic identification cards. This standard provides details upon how these binary instructions should be formulated. They provide standardized inter-industry commands and responses, but also allow for proprietary commands and responses to be used, with the definitions behind the command-response pairs to be kept as proprietary information.
 
-In the last 15 years or so, the literature [?] (5,6,9 from RAID) has mainly focused the examination of the PKCS\#11 API and the security it provides. However, little attention has been paid to the lower-level communication (APDU command-response pairs), in which the higher level API is broken down into. To the best of our knowledge, there are only two papers that have been published [?]. The two papers concern the reverse engineering of proprietary ISO 7816 commands without access to the cards proprietary PKCS \#11 middlware, and APDU-level attacks on hardware security modules that do not use encrypted APDU command-response pairs.
+In the last 15 years or so, the literature \cite{bortolozzo2010attacking,clulow2003security} has mainly focused the examination of the PKCS\#11 API and the security it provides. However, little attention has been paid to the lower-level communication (APDU command-response pairs), in which the higher level API is broken down into. To the best of our knowledge, there are only two papers that have been published \cite{apdu:attacks,reprove}. The two papers concern the reverse engineering of proprietary ISO 7816 commands without access to the cards proprietary PKCS \#11 middlware, and APDU-level attacks on hardware security modules that do not use encrypted APDU command-response pairs.
 
 It is clear from the available research that APDU level attacks require further investigation. The research demonstrates the ability to grab sensitive key value and user PIN information at the APDU-level of the smartcards they examine. If the security at the low-level (APDU) command-response pairs is flawed it compromises the security that is provided by the PKCS \#11 standard. 
 
-%This is analogous to C code being compiled down to binary data to be operated on by the CPU. The addition of two integers cannot be considered correct in C, unless the corresponding binary instructions sent to the CPU are correct as well.
-
-This motivates the research of our project. We undertake the analysis of the \textbf{Athena IDprotect smartcard} that uses encrypted APDU level communication to prevent leaking sensitive key values, that have been reported in the literature. This has made the work of this project more challenging. We present two new attacks at the APDU level for our smartcard. The first attack concerns reverse engineering the proprietary PIN authentication protocol that is used to log a user into the smartcard. The second attack concerns reverse engineering the proprietary secure messaging protocol used at the APDU level to protect sensitive keys from being revealed in plain text. This attack is novel in that it has not been carried out before. Furthermore, we extend the analysis of Lan (2016) [?] in two areas. The first one concerns (specifically for our smartcard) how PKCS \#11 functions are broken down into ISO 7816 (APDU) command response pairs. The second one is regarding the key and attribute file locations in our smartcards memory. Finally, we test an attack that has been reported in the literature [?] to find out if our smartcard suffers from the same vulnerability.
+This motivates the research of our project. We undertake the analysis of the \textbf{Athena IDprotect smartcard} that uses encrypted APDU level communication to prevent leaking sensitive key values. This has made the work of this project more challenging. We present two new attacks at the APDU level for our smartcard. The first attack concerns reverse engineering the proprietary PIN authentication protocol that is used to log a user into the smartcard. The second attack concerns reverse engineering the proprietary secure messaging protocol used at the APDU level to protect sensitive keys from being revealed in plain text. This attack is novel in that it has not been carried out before. Furthermore, we extend the analysis of Lan (2016) \cite{lan} in two areas. The first one concerns (specifically for our smartcard) how PKCS \#11 functions are broken down into ISO 7816 (APDU) command response pairs. The second one is regarding the key and attribute file locations in our smartcards memory. Finally, we test an attack that has been reported in the literature \cite{apdu:attacks} to find out if our smartcard suffers from the same vulnerability.
 
 
 Our study makes five important contributions, these are:
@@ -98,12 +99,12 @@ Our study makes five important contributions, these are:
 
 \item The second attack concerns reverse engineering of the proprietary secure messaging protocol to encrypt APDU communication (specifically for our smartcard). We provide evidence to prove the cryptographic protocol used in the initialization process for secure messaging is Diffie Hellman. We also implement a man in the middle attack to set the value of the shared secret to zero. This gives an attacker the same knowledge as the API and smartcard. The final step in reverse engineering the secure messaging protocol is to derive two session keys given the shared secret value, a 32 byte challenge, and a key derivation function. Unfortunately, due to time constraints we are unable to complete this final step. We however include the methodology of the experiment that should be used to complete this attack. To the best of our knowledge, we are the first to research the reverse engineering of encrypted APDU communication (secure messaging).
 
-\item In our third contribution we extend Lan (2016) [?] analysis of how (specifically for our smartcard) the PKCS \#11 functions are broken down into multiple (APDU) command-response pairs. In the cases of C\_generateKey, C\_generateKeyPair, C\_destroyObject, C\_wrap and C\_unwrap we provide new insights into the APDU communication.
+\item In our third contribution we extend Lan (2016) \cite{lan} analysis of how (specifically for our smartcard) the PKCS \#11 functions are broken down into multiple (APDU) command-response pairs. In the cases of C\_generateKey, C\_generateKeyPair, C\_destroyObject, C\_wrap and C\_unwrap we provide new insights into the APDU communication.
 
 
-\item Lan (2016) [?] finds the location of key and attribute files for block cipher keys only. We extend his work to include, RSA public and private, key and attribute file locations in the smartcards memory.
+\item Lan (2016) \cite{lan} finds the location of key and attribute files for block cipher keys only. We extend his work to include, RSA public and private, key and attribute file locations in the smartcards memory.
 
-\item In our final contribution we test work conducted in [?], whereby the controls dictated by the attributes of a PKCS \#11 object can be overridden at the APDU level. We do this in order to test if our smartcard has the same vulnerability.\\
+\item In our final contribution we test work conducted in \cite{apdu:attacks}, whereby the controls dictated by the attributes of a PKCS \#11 object can be overridden at the APDU level. We do this in order to test if our smartcard has the same vulnerability.\\
 
 \end{itemize}
 
@@ -119,7 +120,7 @@ This chapter aims to provide an understanding of different cryptographic standar
 
 \section{Cryptograhic - Hash Functions}
 
-FIPS PUB 180-4 define [?] hash functions are a one way functions. They take in as input a \textbf{variable sized} message (a string) and output a \textbf{fixed size} message digest (another string). Hash functions are expected to hold three properties:
+FIPS PUB 180-4 define \cite{standard2002fips} hash functions are a one way functions. They take in as input a \textbf{variable sized} message (a string) and output a \textbf{fixed size} message digest (another string). Hash functions are expected to hold three properties:
 \begin{enumerate}
 \item \textbf{Simple Computation} - It should be easy to calculate the message digest of a given message.
 \item \textbf{Difficult Reversing the Computation} - It should be difficult to find the message given its message digest.
@@ -135,7 +136,7 @@ $$ Message\_digest = Hash\_function(message) $$
 Asymmetric encryption relies on public and private key pairs. Public keys can be sent over insecure channels for an entity to use to encrypt a message. Private keys should always kept a secret. Only the private key can be used to decrypt messages encrypted via the public key. This allows communication to remain confidential despite the use insecure mediums of transport.
 
 \subsection{RSA}
-Rivest, Shamir, and Adleman in their 1977 paper [?] on RSA asymmetric encryption standard define a public key (N,e) and a private key (N,d), where N is the multiplication of two large primes p and q. 
+Rivest, Shamir, and Adleman in their 1978 paper \cite{rsa1978} on RSA asymmetric encryption standard define a public key (N,e) and a private key (N,d), where N is the multiplication of two large primes p and q. 
 
 \begin{table}[H]
 \begin{tabular}{|l|l|l|}
@@ -174,7 +175,7 @@ RSA-4096 & 512\\
 
 \underline{\textbf{Chinese Remainder Theorem (CRT) RSA cryptography}}\\
 
-Shinde and Fadewar in their 2008 paper [?] explain how the use of the Chinese remainder theorem can improve the efficiency of RSA decryption by upto a factor of four. It requires three additional parameters to be calcualted upon key pair generation, these are given below.
+Shinde and Fadewar in their 2008 paper \cite{shinde2008faster} explain how the use of the Chinese remainder theorem can improve the efficiency of RSA decryption by upto a factor of four. It requires three additional parameters to be calcualted upon key pair generation, these are given below.
 \begin{enumerate}
 \item $dP = (1/e)\quad  mod (p-1)$
 \item $dQ = (1/e) \quad mod (q-1)$
@@ -189,7 +190,7 @@ $$ m = m2 + h.q  == c^d mod (N)$$
 
 
 \subsection{Diffie Hellman}
-Diffie and Hellman in their 1976 paper [?] presented the Diffie Hellman protocol. The protocol has a public and private key pair that is used to derive a shared secret over an insecure channel. Two entities in communication with each other must agree on the global parameters.
+Diffie and Hellman in their 1976 paper \cite{diffie1976new} presented the Diffie Hellman protocol. The protocol has a public and private key pair that is used to derive a shared secret over an insecure channel. Two entities in communication with each other must agree on the global parameters.
 
 \begin{table}[H]
 \begin{tabular}{|l|c|}
@@ -212,7 +213,7 @@ $$ shared\_secret = public\_key_2^{private\_key_1} \quad mod (p) $$
 \subsection{Elliptic Curve Cryptography}
 \textit{[It is worth noting that in this section, we only report how Elliptic Curve Cofactor Diffie Hellman (ECCDH) operates as this is an area of research that is part of our second attack discussed in chapter 7]}
 
-Elliptic curve cryptography is based on the algebraic structure of elliptic curve over finite fields. The standard only started to attract wide spread since 2004. It is similar to RSA in that it provides a method for sharing an entity's public key over an insecure channel. The public key can be used to encrypt data, sign data or even use a version of the Diffie Hellman protocol to derive a shared secret (ECCDH). Certicom Corp. published a paper in 2009 [?] explaining how to use the ECC standard.
+Elliptic curve cryptography is based on the algebraic structure of elliptic curve over finite fields. The standard only started to attract wide spread since 2004. It is similar to RSA in that it provides a method for sharing an entity's public key over an insecure channel. The public key can be used to encrypt data, sign data or even use a version of the Diffie Hellman protocol to derive a shared secret (ECCDH). Hankerson et al. published a paper in 2006 \cite{hankerson2006guide} explaining how to use the ECC standard.
 
 One major difference between ECC and standard cryptographic methods, is the addition and multiplication operations. In elliptic curve cryptograhpy addition and multiplication are redefined over the curve. The maths behind ECC means that addition and multiplication are no longer reversible operations, and are now assumed to be one way functions. This means to compute the reverse of one of the operations, one must solve the 'elliptic curve discrete logarithm problem'. In figure 2.1, we report examples of how addition and multiplication operation work in ECC.
 % IMAGE: ECC addition and multiplication
@@ -222,7 +223,7 @@ One major difference between ECC and standard cryptographic methods, is the addi
   \includegraphics[width=1\linewidth]
   {images/crypto/ecc.png}
 \end{subfigure}
-\caption{ECC Addition and Multiplication [?]}
+\caption{ECC Addition and Multiplication \cite{eccimage}}
 \end{figure}
 
 Global Paramters are shared (similar to Diffie Hellman) between two entities. These are given below.
@@ -301,7 +302,7 @@ Electronic CodeBook mode is the simplest form of encryption. Every block is trea
   \includegraphics[width=1\linewidth]
   {images/crypto/ecb.png}
 \end{subfigure}
-\caption{Block Cipher ECB Encryption [?]}
+\caption{Block Cipher ECB Encryption \cite{ecbcbcimage}}
 \end{figure}
 \subsection{Cipher Block Chaining (CBC) Mode}
 
@@ -316,7 +317,7 @@ Cipher Block Chaining mode is more complex. It requires an \textit{initializatio
   \includegraphics[width=1\linewidth]
   {images/crypto/cbc.png}
 \end{subfigure}
-\caption{Block Cipher CBC encryption [?]}
+\caption{Block Cipher CBC encryption \cite{ecbcbcimage}}
 \end{figure}
 
 \section{Message Authentication Codes}
@@ -325,7 +326,7 @@ A Message Authentication Code (MAC) is a checksum/ tag that is appended to a mes
 
 \subsection{Hash Based - Message Authentication Codes (HMAC)}
 
-RFC 2104 [?] defines the HMAC: keyed-hashing for message authentication. HMAC's use cryptographic hash functions to combine the message and the shared key to generate a tag that can only be computer with the knowledge the key and the message. The formula is:
+RFC 2104 \cite{krawczyk1997rfc} defines the HMAC: keyed-hashing for message authentication. HMAC's use cryptographic hash functions to combine the message and the shared key to generate a tag that can only be computer with the knowledge the key and the message. The formula is:
 
 \begin{table}[H]
 \begin{tabular}{|l|l|}
@@ -2337,12 +2338,12 @@ Finally, in the instance of our projects smartcard, good defense programming tec
 \item The key separation principle should be enforced by the smartcard's hardware
 \item All key values are to be stored in internal EF's and never be extracted out of smartcard 'unwrapped' / un-encrypted.
 \item "All cryptographic operations take place in the smartcard" [?]
-\item The status of a user being authenticated (correct PIN) should be controlled by smartcard's hardware. And prevent invalid function requests if their authentication status is false.
+\item The status of a user being authenticated (correct PIN) should be controlled by smartcard's hardware. And prevent invalid function requests if their authentication status is false.5
 \end{itemize}
 
 The above suggestions would require a re-design to the smartcards internal operation, however would prevent all the attacks we discuss regarding the disclosure of sensitive key values. It would also provide the security the PKCS \#11 API is expected to provide, which recent literature is showing can be overridden at the APDU level. This is due to the fact that the generation of keys will all take place within the smartcard with a command specifying the key type. This will remove the need for generating the key value and storing it in a file with 2 commands (requiring secure messaging to try and prevent revealing the key value). Furthermore the removal for the ability for a user to set the key value using C\_createObject will remove the need for secure messaging entirely. Which should now prevent the sensitive key value of any type of key from being leaked at the APDU level during key generation.
 
-Since the responsibility of the controls set out by the PKCS \#11 attribute values are to be delegated to the smartcards hardware, it will not be possible to override them at the APDU level. With the key separation principle also enforced by the smartcards hardware the 'wrap/decrypt attack' will not be possible at the API or the APDU level. Finally separating file location of sensitive key values and placing them in internal EF's should prevent the opening and disclosure of the sensitive key values at the APDU level (as see n in our smartcards project).
+Since the responsibility of the controls set out by the PKCS \#11 attribute values are to be delegated to the smartcards hardware, it will not be possible to override them at the APDU level. With the key separation principle also enforced by the smartcards hardware the 'wrap/decrypt attack' will not be possible at the API or the APDU level. Finally separating file location of sensitive key values and placing them in internal EF's should prevent the opening and disclosure of the sensitive key values at the APDU level (as see n in our smartcards project). \cite{test}
 
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -2350,41 +2351,10 @@ Since the responsibility of the controls set out by the PKCS \#11 attribute valu
 % use the following and \cite{} as above if you use BibTeX
 % otherwise generate bibtem entries
 \bibliographystyle{plain}
-%\bibliography{mybib}
-\begin{thebibliography}{}
-
-%-------------------------------------------------------------------------------
-% EXAMPLES!!
-\bibitem{latexcompanion} 
-Michel Goossens, Frank Mittelbach, and Alexander Samarin. 
-\textit{The \LaTeX\ Companion}. 
-Addison-Wesley, Reading, Massachusetts, 1993.
- 
-\bibitem{einstein} 
-Albert Einstein. 
-\textit{Zur Elektrodynamik bewegter K{\"o}rper}. (German) 
-[\textit{On the electrodynamics of moving bodies}]. 
-Annalen der Physik, 322(10):891–921, 1905.
- 
-\bibitem{knuthwebsite} 
-Knuth: Computers and Typesetting,
-\\\texttt{http://www-cs-faculty.stanford.edu/\~{}uno/abcde.html}
-%------------------------------------------------------------------------------
-
-\bibitem{virtual smartcard}
-Frank Morgner : Creating a Virtual Smart Card\\
-\texttt{https://frankmorgner.github.io/vsmartcard/virtualsmartcard/README.html}\\
-%\href{https://frankmorgner.github.io/vsmartcard/virtualsmartcard/README.html}{link}
-
-\bibitem{OCRA}
-Internet Engineering Task Force (IETF).\\
-\textit{OCRA: OATH Challenge-Response Algorithm}, June 2011\\
-\texttt{https://tools.ietf.org/html/rfc6287}
+\bibliography{mybibfile}
 
 
-\end{thebibliography}
 
-% Xiao Lan 
 
 
 \begin{appendices}
