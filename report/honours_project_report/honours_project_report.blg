@@ -7,51 +7,54 @@ Warning--I didn't find a database entry for "test"
 Warning--to sort, need author, organization, or key in eccimage
 Warning--to sort, need author, organization, or key in ecbcbcimage
 Warning--to sort, need author, organization, or key in cmacimage
+Warning--empty journal in grassidraft
+Warning--empty year in grassidraft
+Warning--empty journal in kaliski2000pkcs
 Warning--empty journal in kaliski1993layman
 Warning--empty journal in krawczyk1997rfc
 Warning--empty institution in m2005hotp
 Warning--empty institution in m2011totp
 Warning--can't use both volume and number fields in shinde2008faster
 Warning--empty institution in song2006aes
-You've used 24 entries,
+You've used 36 entries,
             2118 wiz_defined-function locations,
-            619 strings with 7406 characters,
-and the built_in function-call counts, 6960 in all, are:
-= -- 682
-> -- 312
+            664 strings with 9049 characters,
+and the built_in function-call counts, 9644 in all, are:
+= -- 929
+> -- 447
 < -- 6
-+ -- 129
-- -- 102
-* -- 423
-:= -- 1141
-add.period$ -- 70
-call.type$ -- 24
-change.case$ -- 115
++ -- 185
+- -- 146
+* -- 562
+:= -- 1625
+add.period$ -- 105
+call.type$ -- 36
+change.case$ -- 162
 chr.to.int$ -- 0
-cite$ -- 33
-duplicate$ -- 291
-empty$ -- 563
-format.name$ -- 102
-if$ -- 1472
+cite$ -- 48
+duplicate$ -- 401
+empty$ -- 777
+format.name$ -- 146
+if$ -- 2002
 int.to.chr$ -- 0
-int.to.str$ -- 24
-missing$ -- 14
-newline$ -- 117
-num.names$ -- 42
-pop$ -- 144
+int.to.str$ -- 36
+missing$ -- 16
+newline$ -- 176
+num.names$ -- 66
+pop$ -- 207
 preamble$ -- 1
-purify$ -- 99
+purify$ -- 144
 quote$ -- 0
-skip$ -- 217
+skip$ -- 301
 stack$ -- 0
-substring$ -- 328
-swap$ -- 75
+substring$ -- 388
+swap$ -- 95
 text.length$ -- 6
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 92
-warning$ -- 9
-while$ -- 61
-width$ -- 26
-write$ -- 240
-(There were 10 warnings)
+type$ -- 140
+warning$ -- 12
+while$ -- 85
+width$ -- 38
+write$ -- 356
+(There were 13 warnings)

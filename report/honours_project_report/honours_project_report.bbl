@@ -1,16 +1,16 @@
 \begin{thebibliography}{10}
 
 \bibitem{ecbcbcimage}
-{\em Block Cipher Modes Image Source}, (accessed April 6, 2017).
+{\em Block Cipher Modes Image Source}, (accessed March 25, 2017).
 \newblock
   https://en.wikipedia.org/wiki/Block$\_$cipher$\_$mode$\_$of$\_$operation.
 
 \bibitem{cmacimage}
-{\em CMAC Image Source}, (accessed April 6, 2017).
+{\em CMAC Image Source}, (accessed March 25, 2017).
 \newblock https://en.wikipedia.org/wiki/One-key$\_$MAC.
 
 \bibitem{eccimage}
-{\em ECC Image Source}, (accessed April 6, 2017).
+{\em ECC Image Source}, (accessed March 25, 2017).
 \newblock
   http://bitcoin.stackexchange.com/questions/37289/in-elliptic-curve-addition-where-does-the-second-point-come-from.
 
@@ -51,10 +51,70 @@ Andriana Gkaniatsou, Fiona McNeill, Alan Bundy, Graham Steel, Riccardo Focardi,
 \newblock In {\em Proceedings of the 31st Annual Computer Security Applications
   Conference}, pages 441--450. ACM, 2015.
 
+\bibitem{grassidraft}
+Paul~A Grassi, James~L Fenton, Elaine~M Newton, Ray~A Perlner, Andrew~R
+  Regenscheid, William~E Burr, Justin~P Richer, Naomi~B Lefkovitz, Jamie~M
+  Danker, YeeYin Choong, et~al.
+\newblock Draft nist special publication 800 63b digital identity guidelines.
+
 \bibitem{hankerson2006guide}
 Darrel Hankerson, Alfred~J Menezes, and Scott Vanstone.
 \newblock {\em Guide to elliptic curve cryptography}.
 \newblock Springer Science \& Business Media, 2006.
+
+\bibitem{a4}
+Athena~Smartcard Inc.
+\newblock {\em Athena Smartcard Inc. IDProtect Duo with LASER PKI Security
+  Policy Document Version 1.0}, April 25, 2012.
+\newblock https://www.cryptsoft.com/fips140/vendors/140sp1749.pdf.
+
+\bibitem{a3}
+Athena~Smartcard Inc.
+\newblock {\em Athena Smartcard Inc. IDProtect Key with LASER PKI Security
+  Policy Document Version 1.0}, April 25, 2012.
+\newblock https://www.cryptsoft.com/fips140/vendors/140sp1750.pdf.
+
+\bibitem{a5}
+Athena~Smartcard Inc.
+\newblock {\em Athena Smartcard Inc. IDProtect with LASER PKI Security Policy
+  Document Version 1.0}, April 25, 2012.
+\newblock https://www.cryptsoft.com/fips140/vendors/140sp1711.pdf.
+
+\bibitem{a7}
+Athena~Smartcard Inc.
+\newblock {\em Athena IDProtect Duo PIV Security Policy Document Version 0.5},
+  August 9, 2010.
+\newblock https://www.cryptsoft.com/fips140/vendors/140sp1487.pdf.
+
+\bibitem{a6}
+Athena~Smartcard Inc.
+\newblock {\em Athena IDProtect Security Policy Document Version 0.3}, February
+  14, 2011.
+\newblock https://www.cryptsoft.com/fips140/vendors/140sp1523.pdf.
+
+\bibitem{a9}
+Athena~Smartcard Inc.
+\newblock {\em Athena IDProtect Security Policy Document Version 3.1}, January
+  27, 2008.
+\newblock https://www.cryptsoft.com/fips140/vendors/140sp991.pdf.
+
+\bibitem{a8}
+Athena~Smartcard Inc.
+\newblock {\em Athena IDProtect Duo PIV Security Policy Document Version 0.5},
+  July 22, 2008.
+\newblock https://www.cryptsoft.com/fips140/vendors/140sp991.pdf.
+
+\bibitem{a1}
+Athena~Smartcard Inc.
+\newblock {\em Athena Smartcard Inc. IDProtect Duo with LASER PKI Security
+  Policy Document Version 1.2}, March 25, 2014.
+\newblock https://www.cryptsoft.com/fips140/vendors/140sp2127.pdf.
+
+\bibitem{a2}
+Athena~Smartcard Inc.
+\newblock {\em Athena Smartcard Inc. IDProtect Duo with PIV Security Policy
+  Document Version 0.4}, May 2, 2012.
+\newblock https://www.cryptsoft.com/fips140/vendors/140sp1764.pdf.
 
 \bibitem{iso7816}
 ISO/IEC.
@@ -65,6 +125,11 @@ ISO/IEC.
 Timothy~M Jurgensen and Scott~B Guthery.
 \newblock {\em Smart cards: the developer's toolkit}.
 \newblock Prentice Hall Professional, 2002.
+
+\bibitem{kaliski2000pkcs}
+Burt Kaliski.
+\newblock Pkcs\# 5: Password-based cryptography specification version 2.0.
+\newblock 2000.
 
 \bibitem{kaliski1993layman}
 Burton~S Kaliski~Jr.
@@ -80,6 +145,11 @@ Hugo Krawczyk, Mihir Bellare, and Ran Canetti.
 RSA Laboratories.
 \newblock {\em PKCS $\#$11 v2.20: Cryptographic Token Interface Standard}, June
   28, 2004.
+
+\bibitem{ans1}
+Lapo Luchini.
+\newblock {\em ANS.1 JavaScript Decoder}, (accessed March 4, 2017).
+\newblock https://lapo.it/asn1js/.
 
 \bibitem{vpcd}
 Frank Morgner.
