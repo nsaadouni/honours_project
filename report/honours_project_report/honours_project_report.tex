@@ -66,9 +66,10 @@ To a large extent smartcards are used in industry due to the security they are e
 
 
 \section*{Acknowledgements}
-Acknowledgements go here.
+
+
+
 % Myrto, Andriana, Parents
-% MSC student? 
 
 \tableofcontents
 
@@ -2312,11 +2313,11 @@ The mitigation for the PIN authentication protocol is still difficult challenge 
 \begin{center}
 \underline{\textbf{APDU Command Definitions}}
 \end{center}
-In chapter 6 we analyse the PKCS \#11 functions and how they are broken down into multiple ISO 7816 command-response pairs (for our project's smartcard). We find as did Xiao the use of the following inter-industry and proprietary commands. We provide a summary of all of the commands below.
+
+For all of the 'attack' (appendix A) traces we provide the corresponding commands as comments within the traces. All of the 'function' (appendix B) traces are provided in chapter 6, where we analyse the PKCS \#11 functions and how they are broken down into multiple ISO 7816 command-response pairs (for our project's smartcard). We find as did Xiao the use of the following inter-industry and proprietary commands. We provide a summary of all of the commands used in our project's smartcard in table 8.1.
 
 \textit{[Xiao (2016) \cite{Xiao} finds the 'inner-function' names which provide a good decoding of the proprietary commands listed in table 8.1. He has used a program known as 'pcsc-spy' to find the 'inner-function' names. We discuss this tool in section 5.1]}
 
-\textbf{We provide this here for decoding the traces within the appendix.}
 
 \begin{table}[H]
 \hskip-1.0cm\begin{tabular}{|c|c|c|c|c|c|c|p{8cm}|}
