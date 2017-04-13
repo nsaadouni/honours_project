@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.14)  13 APR 2017 03:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.14)  13 APR 2017 04:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -773,9 +773,13 @@ File: ts1fve.fd 2004/09/07 scalable font definitions for TS1/fve.
 )
 LaTeX Font Info:    Font shape `TS1/fve/m/n' will be
 (Font)              scaled to size 10.79993pt on input line 98.
+LaTeX Font Info:    Font shape `T1/fve/m/it' in size <12> not available
+(Font)              Font shape `T1/fve/m/sl' tried instead on input line 98.
+LaTeX Font Info:    Font shape `T1/fve/m/sl' will be
+(Font)              scaled to size 10.79993pt on input line 98.
  [10]
-Overfull \hbox (9.08345pt too wide) in paragraph at lines 102--103
-[]\T1/fve/b/n/12 Extended Anal-y-sis of PKCS #11 Func-tion De-com-po-si-tion To
+Overfull \hbox (11.28665pt too wide) in paragraph at lines 102--103
+[]\T1/fve/b/n/12 Extended Anal-y-sis Of PKCS #11 Func-tion De-com-po-si-tion To
  APDU
  []
 
@@ -784,12 +788,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 107--108
 
  []
 
-[11]
-LaTeX Font Info:    Font shape `T1/fve/m/it' in size <12> not available
-(Font)              Font shape `T1/fve/m/sl' tried instead on input line 114.
-LaTeX Font Info:    Font shape `T1/fve/m/sl' will be
-(Font)              scaled to size 10.79993pt on input line 114.
- [12]
+[11] [12]
 Chapter 2.
 [13
 
@@ -1233,11 +1232,14 @@ g 'Test-String123456']
  []
 
 
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [54]
 Underfull \hbox (badness 10000) in paragraph at lines 1234--1235
 
  []
 
-[54]
+
 Underfull \hbox (badness 10000) in paragraph at lines 1238--1239
 
  []
@@ -1252,7 +1254,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 1252--1253
 
  []
 
-
+[55]
 Underfull \hbox (badness 10000) in paragraph at lines 1256--1257
 
  []
@@ -1262,7 +1264,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 1260--1261
 
  []
 
-[55]
+
 Underfull \hbox (badness 10000) in paragraph at lines 1270--1271
 
  []
@@ -1292,12 +1294,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 1304--1305
 
  []
 
-[57]
+[57] [58]
 Underfull \hbox (badness 10000) in paragraph at lines 1337--1338
 
  []
 
-[58] [59] [60
+[59] [60
 
 ]
 Chapter 7.
@@ -1883,10 +1885,10 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [144]
 [145] (./honours_project_report.aux) ) 
 Here is how much of TeX's memory you used:
- 7840 strings out of 493085
- 116970 string characters out of 6136916
- 193330 words of memory out of 5000000
- 11103 multiletter control sequences out of 15000+600000
+ 7839 strings out of 493085
+ 116959 string characters out of 6136916
+ 193319 words of memory out of 5000000
+ 11102 multiletter control sequences out of 15000+600000
  88281 words of font info for 95 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  43i,12n,40p,1201b,418s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1907,7 +1909,7 @@ bol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb></usr/share/texl
 ive/texmf-dist/fonts/type1/public/wasy2-ps/wasy10.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/public/wasy2-ps/wasyb10.pfb>
-Output written on honours_project_report.pdf (145 pages, 649325 bytes).
+Output written on honours_project_report.pdf (145 pages, 650282 bytes).
 PDF statistics:
  574 PDF objects out of 1000 (max. 8388607)
  378 compressed objects within 4 object streams
