@@ -95,22 +95,23 @@ This motivates the research of our project. We undertake the analysis of the \te
 Our study makes five important contributions, these are:
 \begin{itemize}
 
-\item We successfully complete the first attack which concerns the reverse engineering of the proprietary (challenge response) PIN authentication protocol used in our smartcard. The PIN authentication protocols differ depending on manufacturers and also the versions of smartcards they produce. This is a new vulnerability that applies to our project's smartcard. Now an attacker can brute force/ use a dictionary attack to calculate a user's PIN given exactly one successful login communication trace. This directly violates the PKCS \#11 standard.
+\item \textbf{Reverse Engineer PIN Authentication Protocol.} We successfully complete the first attack which concerns the reverse engineering of the proprietary (challenge response) PIN authentication protocol used in our smartcard. The PIN authentication protocols differ depending on manufacturers and also the versions of smartcards they produce. This is a new vulnerability that applies to our project's smartcard. Now an attacker can brute force/ use a dictionary attack to calculate a user's PIN given exactly one successful login communication trace. This directly violates the PKCS \#11 standard.
 
-\item The second attack concerns reverse engineering of the proprietary secure messaging protocol to encrypt APDU communication (specifically for our smartcard). We provide evidence to prove the cryptographic protocol used in the initialization process for secure messaging is Diffie Hellman. We also implement a man in the middle attack to set the value of the shared secret to zero. This gives an attacker the same knowledge as the API and smartcard. The final step in reverse engineering the secure messaging protocol is to derive two session keys given the shared secret value, a 32 byte challenge, and a key derivation function. Unfortunately, due to time constraints we are unable to complete this final step. We however include the methodology of the experiment that should be used to complete this attack. To the best of our knowledge, we are the first to research the reverse engineering of encrypted APDU communication (secure messaging).
+\item \textbf{(Novel Research) Partial Reverse Engineer Secure Messaging (Encrypted APDU Communicaton).} The second attack concerns reverse engineering of the proprietary secure messaging protocol to encrypt APDU communication (specifically for our smartcard). We provide evidence to prove the cryptographic protocol used in the initialization process for secure messaging is Diffie Hellman. We also implement a man in the middle attack to set the value of the shared secret to zero. This gives an attacker the same knowledge as the API and smartcard. The final step in reverse engineering the secure messaging protocol is to derive two session keys given the shared secret value, a 32 byte challenge, and a key derivation function. Unfortunately, due to time constraints we are unable to complete this final step. We however include the methodology of the experiment that should be used to complete this attack. To the best of our knowledge, we are the first to research the reverse engineering of encrypted APDU communication (secure messaging).
 
-\item In our third contribution we extend Xiao (2016) \cite{Xiao} analysis of how (specifically for our smartcard) the PKCS \#11 functions are broken down into multiple (APDU) command-response pairs. In the cases of C\_generateKey, C\_generateKeyPair, C\_destroyObject, C\_wrap and C\_unwrap we provide new insights into the APDU communication.
+\item \textbf{Extended Analysis of PKCS \#11 Function Decomposition To APDU Command-Response Pairs.} In our third contribution we extend Xiao (2016) \cite{Xiao} analysis of how (specifically for our smartcard) the PKCS \#11 functions are broken down into multiple (APDU) command-response pairs. In the cases of C\_generateKey, C\_generateKeyPair, C\_destroyObject, C\_wrap and C\_unwrap we provide new insights into the APDU communication.
 
 
-\item Xiao (2016) \cite{Xiao} finds the location of key and attribute files for block cipher keys only. We extend his work to include, RSA public and private, key and attribute file locations in the smartcards memory.
+\item \textbf{Extended Understanding Regarding Key and Attribute File Locations In The Smartcards Memory. } Xiao (2016) \cite{Xiao} finds the location of key and attribute files for block cipher keys only. We extend his work to include, RSA public and private, key and attribute file locations in the smartcards memory.
 
-\item In our final contribution we test work conducted in \cite{apdu:attacks}, whereby the controls dictated by the attributes of a PKCS \#11 object can be overridden at the APDU level. We do this in order to test if our smartcard has the same vulnerability.\\
+\item \textbf{Testing Vulnerabilities Presented In Litreature} In our final contribution we test work conducted in \cite{apdu:attacks}, whereby the controls dictated by the attributes of a PKCS \#11 object can be overridden at the APDU level. We do this in order to test if our smartcard has the same vulnerability.\\
 
 \end{itemize}
 
 
 The remainder of the project is organized as follows. Chapter 2 provides a background of cryptographic standards. Chapter 3 explains the PKCS \#11 and ISO/IEC 7816 standards. Chapter 4 provides a review of the relevant literature. Chapter 5 discusses details of the existing tools that are used for our project. The chapter also explain how we have developed further one of the tools. Chapter 6 provides an extended analysis of how the PKCS \#11 functions are broken down into command response pairs (for our smartcard) and suggest possible vulnerabilities to investigate. Chapter 7 provides details regarding the motivations, implementation and results of the new attacks we investigate for our project smartcard. Chapter 8 concludes, suggests mitigations and finally provides details and reasoning for further research.
 
+\textit{[It is worth noting that the literature review requires an understanding of both backgrounds. This is the reason for moving it to the fourth chapter.]}
 
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -649,7 +650,7 @@ ISO/IEC 7816 section 4 provides details regarding the structure behind the \text
 \hline
 Field & Description\\
 \hline
-CLA & CLA is the 'class' byte. This dictates if the command is inter-industry or proprietary \textit{(We provide both examples in section 4.5.2)}\\
+CLA & CLA is the 'class' byte. This dictates if the command is inter-industry or proprietary \textit{(We provide both examples in table 8.1, preceding appendix A)}\\
 \hline
 INS & INS is the instruction byte. This dictates what the instruction/ command is. \\
 \hline
@@ -728,7 +729,7 @@ ISO/IEC 7816 - section 7 provides the definition of the response depending on st
 \pagebreak
 
 \subsection{Inter-Industry and Proprietary Commands}
-The ISO 7816 standard defines two sets of different commands, inter-industry and proprietary. The CLA byte dictates if the command is either inter-industry or proprietary. Inter-Industry commands are standardized and reported in the ISO 7816 documentation. Proprietary commands are created by card vendors with the definition of each data field kept as proprietary information, including the commands response. Details regarding both inter-industry and proprietary commands for our project's smartcard are provided in table 4.4, chapter 4.
+The ISO 7816 standard defines two sets of different commands, inter-industry and proprietary. The CLA byte dictates if the command is either inter-industry or proprietary. Inter-Industry commands are standardized and reported in the ISO 7816 documentation. Proprietary commands are created by card vendors with the definition of each data field kept as proprietary information, including the commands response. Details regarding both inter-industry and proprietary commands for our project's smartcard are provided in table 8.1 (preceding appendix A).
 
 \subsection{File System}
 
@@ -759,7 +760,7 @@ control purposes."
 
 \subsection{Secure Messaging}
 
-ISO/IEC 7816 section 4 reports details of the command structure of messages that occur within a 'secure messaging session'. We provide an example of the command structure in table 4.4, chapter 4 (the CLA byte is equal to 8C).
+ISO/IEC 7816 section 4 reports details of the command structure of messages that occur within a 'secure messaging session'. We provide an example of the command structure in table 8.1 (preceding appendix A) [the CLA byte is equal to 8C].
 
 Secure messaging sessions derive two session keys S$_{Enc}$ and S$_{Mac}$ between the API and the smartcard. The S$_{Enc}$ session key is used to encrypt the data-field of commands within a secure messaging session. S$_{Mac}$ is used to compute a checksum (using C-MAC) of the entire command. This checksum is appended to the command. This provides confidentiality (only the systems in question should be able to read the actual messages) and integrity (data has not been altered in transit) to command-response pairs in a secure messaging session.
 
@@ -840,7 +841,7 @@ Finding & Description\\
 \caption{Summary of Findings}
 \end{table}
 
-Xiao (2016) \cite{Xiao} used the \textit{pcsc-spy} tool. This tool is reported in section 5.1, chapter 5 of our project. The tool gave a good understanding of the proprietary commands implemented within the middlware. The inter-industry commands are standardized and can be found in the ISO 7816 specification. It is worth noting that we do not replicate this work as the details the proprietary command are listed in the appendix of the Xiao's paper. We extract this information from this appendix and summarise all of the commands in section 4.5.2.
+Xiao (2016) \cite{Xiao} used the \textit{pcsc-spy} tool. This tool is reported in section 5.1, chapter 5 of our project. The tool gave a good understanding of the proprietary commands implemented within the middlware. The inter-industry commands are standardized and can be found in the ISO 7816 specification. It is worth noting that we do not replicate this work as the details the proprietary command are listed in the appendix of the Xiao's paper. We extract this information from this appendix and summarise all of the commands in table 8.1 preceding appendix A.
 
 The second finding relates to the decoding of the attribute files. The attribute files in the Athena IDprotect smartcard are saved in a transparent binary file. The values in the file can be viewed in hexadecimal format at the APDU layer. Xiao reports that each PKCS \#11 attribute has a hexadecimal encoding. We extract the examples given in his paper and report them in table 4.2. The paper states that the representation of each attribute is stored in the attribute file in the following format:
 
@@ -929,58 +930,10 @@ RSA private 	 & Attribute & 3F 00 30 00 30 \textbf{02 01 4X} \\
 \caption{Directories of Key and Attribute Files}
 \end{table}
 
-\pagebreak
-\subsection{APDU Command Definitions (Summary)}
-
-
-In chapter 6 we analyse the PKCS \#11 functions and how they are broken down into multiple ISO 7816 command-response pairs (for our project's smartcard). We find as did Xiao the use of the following inter-industry and proprietary commands. We provide a summary of all of the commands below.
-
-\textit{[Xiao (2016) \cite{Xiao} finds the 'inner-function' names which provide a good decoding of the proprietary commands listed in table 4.4. He has used a program known as 'pcsc-spy' to find the 'inner-function' names. We discuss this tool in section 5.1]}
-
-\begin{table}[H]
-\hskip-1.0cm\begin{tabular}{|c|c|c|c|c|c|c|p{8cm}|}
-\hline
-CLA & INS & P1 & P2 & Lc  & Data Field & Le & Description\\
-\hline
-00  & -   & -  & -  & -   & -          & -  & Inter-industry (II)\\
-80  & -   & -  & -  & -   & -          & -  & Proprietary (P)\\
-XC  & -   & -  & -  & -   & -          & -  & Secure Messaging (SM)\\
-\hline
-00  & 84  & 00 & 00 & -   & -          & L  &  (II) Get Challenge [\# bytes = L]\\
-00  & B0  & X  & X  & -   & -          & L  &  (II) Read Binary [\# bytes = L] \\
-00  & C0  & 00 & 00 & -   & -          & L  &  (II) Get Remaining Bytes\\
-00  & D6  & X  & X  & L   & X          & -  &  (II) Update Binary\\
-00  & E0  & X  & X  & L   & X          & -  &  (II) Create Binary\\
-00  & 47  & 00 & 00 & L   & Params     & -  &  (II) Generate RSA KeyPair\\
-00  & E4  & 00 & 00 & 00  & -          & -  &  (II) Delete File\\
-00  & 2A  & 82 & 05 & L   & X          & 00 &  (II) Encrypt Data \\
-00  & 2A  & 80 & 05 & L   & X          & 00 &  (II) Decrypt Data \\
-00  & 2A  & 9E & 12 & L   & X          & 00 &  (II) Sign Data \\
-00  & 2A  & 80 & 0A & L   & X          & 00  & (II) Unwrap Key (RSA\_PKCS)\\
-\hline
-80  & A4  & 08 & 00 & L   & FL         & -  & (P) Select File [FL = file location; L = len(fl)]\\
-80  & A4  & 00 & 00 & -   & FL         & -  & (P) Select File [append previous path]\\
-80  & A4  & 08 & 0C & L   & FL         & -  & (P) Read File Control Parameters\\
-80  & 20  & 00 & 00 & 10  & R          & -  & (P) Verify PIN [R = Response]\\
-80  & 28  & 00 & 00 & 04  & 00 00 00 20& -  & (P) Clear Security Status\\
-80  & 30  & 01 & 00 & 00  & -          & -  & (P) List Files\\
-80  & 48  & 00 & 80 & 00  & -          & -  & (P) Get The Smartcards Public Key [SM]\\
-80  & 48  & 00 & 00 & 00  & -          & -  & (P) Get Generated Public Key\\
-80  & 86  & 00 & 00 & L   & X          & 00 & (P) Open Secure Messaging\\
-80  & 86  & FF & FF & -   & -          & -  & (P) Close Secure Messaging\\
-\hline
-90  & 32  & 00 & 03 & ff  & X          & -  &  Reallocate Binary 256 bytes\\
-80  & 32  & 00 & 03 & L   & X          & -  &  Reallocate Binary L bytes (changes file)\\
-\hline
-\end{tabular}
-\caption{APDU Commands for Athena IDprotect}
-\end{table} 
-
-
 \subsection{Manually Overriding Attribute Controls (Replication Study)}
 One of the APDU level attacks reported by Bozzato et al. (2016) \cite{apdu:attacks} involves sending APDU commands to the smartcard, bypassing the controls that attributes at the PKCS \#11 API level is expected enforce. We test the same attack on our smartcard to find out if it has the same vulnerability as all five hardware security modules that are examined in the above paper. 
 
-To test this vulnerability, we generate a triple DES symmetric key on the smartcard and set CKA\_encrypt attribute to false. First, we request the PKCS \#11 API to encrypt the string 'TestString123456'. The API returns the following error 'CKR\_KEY\_FUNCTION\_NOT\_PERMITTED'. This states that the function is not supported due to the attribute settings. Second, we send the APDU command 'SELECT FILE' (reported in table 4.4) to select the triple DES key we have generated. Then we send the APDU command for the security operation 'ENCRYPT' to attempt to override the attribute controls that the API enforce. 
+To test this vulnerability, we generate a triple DES symmetric key on the smartcard and set CKA\_encrypt attribute to false. First, we request the PKCS \#11 API to encrypt the string 'TestString123456'. The API returns the following error 'CKR\_KEY\_FUNCTION\_NOT\_PERMITTED'. This states that the function is not supported due to the attribute settings. Second, we send the APDU command 'SELECT FILE' (reported in table 8.1, preceding appendix A) to select the triple DES key we have generated. Then we send the APDU command for the security operation 'ENCRYPT' to attempt to override the attribute controls that the API enforce. 
 
 Our result is consistent with the findings of Bozzato et al. (2016) \cite{apdu:attacks}. The APDU command executed successfully and resulted in the encryption taking place on the card, and returning in the APDU response, the value of the encryption. The APDU communication trace of this test is reported in appendix A.4.1.
 
@@ -1026,7 +979,7 @@ Morgner \cite{vpcd} has created the virtual smart card reader project. The proje
 
 We use the Virtual Smartcard Reader project discussed above. We develop on top of the project's code to implement a software man in the middle attack for a variety of applications our project. The developed code includes both APDU commands and responses as printed output and uses the python package 'hexdump' for clarity in the printed APDU communication traces. We also added the functionality of altering the APDU communication from the terminal. Some of the applications for which the developed code is used for in our project are:
 \begin{itemize}
-\item Bypassing attribute controls by sending the APDU commands for secuirty operations (discussed in section 4.5.3, chapter 4)
+\item Bypassing attribute controls by sending the APDU commands for secuirty operations (discussed in section 4.5.2, chapter 4)
 \item Altering the challenge sent by the smartcard in PIN authentication (discussed in section 7.2, chapter 7)
 \item Injecting our own response in PIN authentication (discussed in section section 7.2.3, chapter 7)
 \item Altering bytes of the smartcards public key to derive the protocol used in secure messaging (discussed in section 7.3, chapter 7)
@@ -1358,9 +1311,9 @@ Furthermore, an attacker can also modify the attributes as the key is saved with
 
 
 \section{C\_wrap}
-As discussed in section 4.3, literature showed the wrap/decrypt attack is carried out at the API level whereby one key can be given wrapping and decryption functionalities within its attributes. This allows for any key (regardless of the attributes) to be wrapped, exported out of the card, and then decrypted by the same key. This would reveal its key value in plain text. This vulnerability bypassed all controls that the attributes of a key are expected to provide. Due to this vulnerability discovery, it is reasonable to assume that 'Athena smartcard solutions' decided to remove the ability to wrap keys completely in an attempt to prevent this type of attack. This reasoning is based on the fact that requesting any key to wrap another key at the API level causes an error: \textit{CKR\_Function\_Not\_Supported}.
+As discussed in section 4.3, literature showed the wrap/decrypt attack is carried out at the API level whereby one key can be given wrapping and decryption functionalities within its attributes. This allows for any key (regardless of the attributes, except for CKA\_extractable) to be wrapped, exported out of the card, and then decrypted by the same key. This would reveal its key value in plain text. This vulnerability bypassed all controls that the attributes of a key are expected to provide. Due to this vulnerability discovery, it is reasonable to assume that 'Athena smartcard solutions' decided to remove the ability to wrap keys completely in an attempt to prevent this type of attack. This reasoning is based on the fact that requesting any key to wrap another key at the API level causes an error: \textit{CKR\_Function\_Not\_Supported}.
 
-From the analysis of table 4.4 (see section 4.5.2), we find a correlation between the P1 and P2 parameters for the APDU commands for encryption, decryption and unwrapping. These values are tabulated below:
+From the analysis of table 8.1 (preceding appendix A), we find a correlation between the P1 and P2 parameters for the APDU commands for encryption, decryption and unwrapping. These values are tabulated below:
 
 \begin{table}[H]
 \begin{tabular}{|c|c|l|}
@@ -2106,7 +2059,7 @@ The second experiment concerns finding the key derivation function and the block
 \item Compare the encrypted command generate by the API to the command we generate. If they match we have found the KDF, and block cipher.
 \end{enumerate}
 
-The first step is simple, since we already know the ISO 7816 inter-industry 'GET CHALLENGE' command. This is discussed in the reverse engineering of the pin authentication protocol (section 7.2) and is also reported in table 4.4 (chapter 4). We also have the encrypted version of the 'GET CHALLENGE' command, which is reported in appendix A.3.6 (command/response pair 26) and table 7.16 (The commands reported below are for generating 24 bytes (24 = '18' in hexadecimal) using 'GET CHALLENGE' ISO 7816 command).
+The first step is simple, since we already know the ISO 7816 inter-industry 'GET CHALLENGE' command. This is discussed in the reverse engineering of the pin authentication protocol (section 7.2) and is also reported in table 8.1 (preceding appendix A). We also have the encrypted version of the 'GET CHALLENGE' command, which is reported in appendix A.3.6 (command/response pair 26) and table 7.16 (The commands reported below are for generating 24 bytes (24 = '18' in hexadecimal) using 'GET CHALLENGE' ISO 7816 command).
 
 \begin{table}[H]
 \hskip-1.5cm\begin{tabular}{|l|p{10cm}|}
@@ -2285,7 +2238,7 @@ The second part concerns our discussion in chapter 6, section 6.11. We find the 
 Once these two additional understandings are found, and coupled with the knowledge we provide in this project, the following attack can be completed. The attack is at the APDU level and does not require the use of the middlware (just send APDU commands directly to the smartcard).
 
 \begin{itemize}
-\item Using 'CREATE FILE' APDU command, create a block cipher key$_1$ (see table 4.4, chapter 4) at a file location that is empty. (See table 4.3 for file locations)
+\item Using 'CREATE FILE' APDU command, create a block cipher key$_1$ at a file location that is empty. (See table 8.1, preceding appendix A for APDU commands and see table 4.3 for file locations)
 
 \item Incrementally select key file directories with 'SELECT FILE' APDU command. This will return '90 00' in the case that the file exists. Or an APDU error in the case that the key file does not exist. This will provide the information regarding the locations of saved keys on the smartcard.
 \item For each key$_i$ found, use the 'wrap' APDU command to wrap the key$_i$ with key$_1$. This will return in the APDU response the encrypted key, key$_e$
@@ -2361,9 +2314,9 @@ Since the responsibility of the controls set out by the PKCS \#11 attribute valu
 \end{center}
 In chapter 6 we analyse the PKCS \#11 functions and how they are broken down into multiple ISO 7816 command-response pairs (for our project's smartcard). We find as did Xiao the use of the following inter-industry and proprietary commands. We provide a summary of all of the commands below.
 
-\textit{[Xiao (2016) \cite{Xiao} finds the 'inner-function' names which provide a good decoding of the proprietary commands listed in table 4.4. He has used a program known as 'pcsc-spy' to find the 'inner-function' names. We discuss this tool in section 5.1]}
+\textit{[Xiao (2016) \cite{Xiao} finds the 'inner-function' names which provide a good decoding of the proprietary commands listed in table 8.1. He has used a program known as 'pcsc-spy' to find the 'inner-function' names. We discuss this tool in section 5.1]}
 
-We provide this here for decoding the traces within the appendix.
+\textbf{We provide this here for decoding the traces within the appendix.}
 
 \begin{table}[H]
 \hskip-1.0cm\begin{tabular}{|c|c|c|c|c|c|c|p{8cm}|}
