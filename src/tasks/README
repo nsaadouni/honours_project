@@ -1,0 +1,67 @@
+
+This readme file is to dictate what each folder contains and running instructions for particular python scripts.
+
+** The file should be read in the following format (file_name) and indentation indication nested folders. **
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+tracing.py X ->  creates the man in the middle attack we use for the analysis for this project. We have developed serval modes of operation for this attack.
+
+'python tracing.py print_trace' -> Standard MiTM attack and just prints the trace
+'python tracing.py alter_trace' -> Same as print_trace but allows the modification of both APDU command response pairs
+'python tracing.py alter_inject_response_trace' -> This is the same as alter_trace, but upon every login, a different (valid) injected response is sent
+
+'python tracing.py same_challenge' -> On 2 logins sets the value of the challenge to be the same
+'python tracing.py different_challenge' -> On 2 logins sets the value of the challnege to be different
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+(api_functions)
+Contains the code for executing PKCS 11 functions on a smartcard. 
+
+'python c_funcions.py X' -> X is 0 for the emulated smartcard reader
+						 -> X is 2 for the real smartcard reader
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+(block_cipher_injection)
+Contains the code used in the search for the correct secure messaging initialization cryptographic protocol. This protocol turned out to be Diffie Hellman therefore the other folders except for 'dh' can be dis-regarded. 
+
+	(dh)
+	dh.py -> is the inital code for starting the second attack I mention in the report. (This is not completed)
+	key_mod.py -> provides the code to generate the correct values for the injection attack for diffie hellman setting the shared secret to a value of 0
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+(login_injecton)
+Contains the code for the first attack
+	
+	(authentication_protocol_search)
+	Contains all of the code for the different searches conducted for attack 1
+	The file that finds the correct protol can be found at:
+
+		(3.0)
+		c_login_test.py
+
+
+	(login_scripts)
+	Contains 4 files for logging into the smartcard twice. Once and then immediatly after another.
+	These files were used to provide the characteristics of the login described in attack 1
+
+	'python login.py X' -> X = [0,2]
+	'python two_logings.py X' -> X = [0,2]
+	'python two_logings_spaced_time.py X' -> X = [0,2]
+	'python two_pins_logins.py X' -> X = [0,2]
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+(traces)
+Contains all of the full traces that we reported in the honours thesis.

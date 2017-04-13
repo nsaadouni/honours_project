@@ -1,3 +1,6 @@
+# This code has been extended from the Virtual Smartcard Reader project to conduct man in the middle attacks specifically for our projects smartcard
+# https://frankmorgner.github.io/vsmartcard/virtualsmartcard/README.html
+
 import atexit
 import signal
 import sys

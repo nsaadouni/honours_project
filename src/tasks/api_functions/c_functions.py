@@ -1,3 +1,7 @@
+# This code is for running specific PKCS 11 commands. It is adapted but mainly taken directly from the source code of the PyKCS11 python wrapper API
+# https://pkcs11wrap.sourceforge.io/api/
+# Due to the previous student taking the code from the same source (his file is getTraces.py) the code is very similar
+
 from PyKCS11 import *
 import sys
 

@@ -75,7 +75,7 @@ print ''
 
 
 print ''
-print len(command1)
+# print len(command1)
 print '\n-------------------\n\n'
 
 command1 = []
@@ -138,5 +138,5 @@ for i in x3.split():
 
 
 
-print_ints(xx)
+# print_ints(xx)
 

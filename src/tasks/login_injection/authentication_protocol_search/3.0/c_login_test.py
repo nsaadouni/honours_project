@@ -153,10 +153,10 @@ _names = ['normal', 'sha1', 'sha256', 'sha384', 'sha512', 'md5']
 
 for i in range(len(_names)):
 		
-		cipher = DES3.new(all_pin1[i], DES3.MODE_ECB, IV='\x00\x00\x00\x00\x00\x00\x00\x00')
+		cipher = DES3.new(all_pin1[i], DES3.MODE_CBC, IV='\x00\x00\x00\x00\x00\x00\x00\x00')
 		print (ba.hexlify(cipher.decrypt(y1)[0:8]) + ' ' + ba.hexlify(cipher.decrypt(y1)[8:16])).upper()
 
-		cipher = DES3.new(all_pin2[i], DES3.MODE_ECB, IV='\x00\x00\x00\x00\x00\x00\x00\x00')
+		cipher = DES3.new(all_pin2[i], DES3.MODE_CBC, IV='\x00\x00\x00\x00\x00\x00\x00\x00')
 		print (ba.hexlify(cipher.decrypt(y2)[0:8]) + ' ' +  ba.hexlify(cipher.decrypt(y2)[8:16])).upper()
 
 		print '\n pin method: ' + _names[i]
