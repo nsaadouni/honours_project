@@ -17,45 +17,45 @@ Warning--empty institution in m2011totp
 Warning--empty journal in rydell2011ocra
 Warning--can't use both volume and number fields in shinde2008faster
 Warning--empty institution in song2006aes
-You've used 40 entries,
+You've used 41 entries,
             2118 wiz_defined-function locations,
-            677 strings with 9422 characters,
-and the built_in function-call counts, 10616 in all, are:
-= -- 1016
-> -- 502
-< -- 6
-+ -- 207
-- -- 164
-* -- 613
-:= -- 1802
-add.period$ -- 116
-call.type$ -- 40
-change.case$ -- 183
+            682 strings with 9564 characters,
+and the built_in function-call counts, 11081 in all, are:
+= -- 1068
+> -- 515
+< -- 7
++ -- 212
+- -- 168
+* -- 638
+:= -- 1866
+add.period$ -- 120
+call.type$ -- 41
+change.case$ -- 188
 chr.to.int$ -- 0
-cite$ -- 54
-duplicate$ -- 438
-empty$ -- 850
-format.name$ -- 164
-if$ -- 2195
+cite$ -- 55
+duplicate$ -- 461
+empty$ -- 891
+format.name$ -- 168
+if$ -- 2306
 int.to.chr$ -- 0
-int.to.str$ -- 40
-missing$ -- 19
-newline$ -- 195
-num.names$ -- 74
-pop$ -- 237
+int.to.str$ -- 41
+missing$ -- 20
+newline$ -- 200
+num.names$ -- 76
+pop$ -- 245
 preamble$ -- 1
-purify$ -- 161
+purify$ -- 165
 quote$ -- 0
-skip$ -- 331
+skip$ -- 350
 stack$ -- 0
-substring$ -- 408
-swap$ -- 97
-text.length$ -- 6
+substring$ -- 445
+swap$ -- 108
+text.length$ -- 7
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 156
+type$ -- 160
 warning$ -- 14
-while$ -- 93
-width$ -- 42
-write$ -- 392
+while$ -- 98
+width$ -- 43
+write$ -- 404
 (There were 14 warnings)

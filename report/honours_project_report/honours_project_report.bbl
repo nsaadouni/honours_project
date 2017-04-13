@@ -73,6 +73,12 @@ Darrel Hankerson, Alfred~J Menezes, and Scott Vanstone.
 \newblock {\em Guide to elliptic curve cryptography}.
 \newblock Springer Science \& Business Media, 2006.
 
+\bibitem{hao2008password}
+Feng Hao and Peter~YA Ryan.
+\newblock Password authenticated key exchange by juggling.
+\newblock In {\em International Workshop on Security Protocols}, pages
+  159--171. Springer, 2008.
+
 \bibitem{idprotect2012athena}
 Athena IDProtect and OS755~Java Card.
 \newblock Athena idpass icao eac.
