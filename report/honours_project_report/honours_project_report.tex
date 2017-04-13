@@ -1446,7 +1446,7 @@ Secondly is the understanding behind how the \textbf{\textit{Unwrap}} APDU comma
 
 All of the vulnerabilities discussed within this section are to be implemented at the APDU layer and would not provide the user the knowledge that an attack is taking place. This is the main reasoning behind selecting these vulnerabilities for further investigation, and the fact they are far more serious compared to the vulnerabilities discussed earlier, in terms of violations of the PKCS \#11 API. Furthermore the attacks suggested for further investigation also remove the dependencies on the use of the API, which will allow an attacker to send commands at the APDU layer independently. This gives an attacker a higher capability.
 
-\section{Reverse Engineering PIN Authentication Protocol}
+\section{Reverse Engineering PIN Authentication Protocol} \label{sect:boom}
 The first attack we investigate is the reverse engineering of the PIN authentication protocol. If this is successful, an attacker will be able to brute force and/ or use a dictionary attack to calculate the users PIN. The attack shall also remove one dependency on the use of the API. At this stage the API is required to login into the smartcard as we are unaware of how the challenge-response algorithm is implemented. Figure 7.1 shows the procedure for logging into the smartcard at the APDU level.
 
 % IMAGE: challenge-response pin authentication
@@ -1604,7 +1604,7 @@ Unfortunately, this did not result in a match between the 16 byte responses calc
 %--------------------------------------
 % source is OCRA!!!
 \textbf{\underline{Search 2.1 - OCRA: OATH Challenge-Response Algorithm}}\\
-With no success in deducing the challenge-response algorithm, we have decided to examine more complex standards that already exist and are used in different sectors of the computing industry for challenge response protocols, rather than password storage techniques. The international engineering task force (IETF) released a paper in 2011 [?]. This paper provides details of a one-way challenge response algorithm which fitted the characteristics of the authentication that takes place between the API and the smartcard. We have extracted the protocol and provided it below:
+With no success in deducing the challenge-response algorithm, we have decided to examine more complex standards that already exist and are used in different sectors of the computing industry for challenge response protocols, rather than password storage techniques. The international engineering task force (IETF) released a paper in 2011 \cite{rydell2011ocra}. This paper provides details of a one-way challenge response algorithm which fitted the characteristics of the authentication that takes place between the API and the smartcard. We have extracted the protocol and provided it below:
 
 
 
@@ -1641,7 +1641,7 @@ With no success in deducing the challenge-response algorithm, we have decided to
 
       T - Timestamp, optional.
       
-      (source) [?]\\\\\\
+      (source:\cite{rydell2011ocra})\\\\\\
             
 \end{Verbatim}
 
@@ -1819,11 +1819,11 @@ Thus concluding this attack.
 
 \section{Reverse Engineering Secure Messaging}
 
-The first objective of our second attack is to investigate the reverse engineering of the secure messaging protocol used by the card. As discussed in section 3.2.4 (chapter 3), and reported in 'Athena smartcard solutions' security policies [?] for several different cards the vendor produces, the secure messaging initialization is used to derive 2 session keys. S$_{Enc}$, S$_{Mac}$ are used to encrypt and compute a message authentication code (MAC) of the messages within a secure messaging session respectively. This provides confidentiality and data integrity of the messages. The decision concerning how to derive these keys is left to the discretion the card's vendor. This makes this attack inherently difficult as there are several methods that could be used.
+The first objective of our second attack is to investigate the reverse engineering of the secure messaging protocol used by the card. As discussed in section 3.2.4 (chapter 3), and reported in 'Athena smartcard solutions' security policies \cite{a4,a3,a5,a1}, the secure messaging initialization is used to derive 2 session keys. S$_{Enc}$, S$_{Mac}$ are used to encrypt and compute a message authentication code (MAC) of the messages within a secure messaging session respectively. This provides confidentiality and data integrity of the messages. The decision concerning how to derive these keys is left to the discretion the card's vendor. This makes this attack inherently difficult as there are several methods that could be used.
 
-As discussed in chapter 6, the secure messaging sessions are used in the \textbf{\textit{GenerateKey}} and \textbf{\textit{Unwrap}} functions. This is also reported in \textbf{\textit{CreateObject}} function by (name) 2015 [?]. In all cases, it is used to provide confidentiality of the CKA\_value of block cipher keys. The ability to successfully reverse engineer the secure messaging protocol would allow an attacker to use a man in the middle attack to derive two sets of session keys (one with the API and one with the smartcard). This would allow the attacker to decrypt the command data field and find value of the generated block cipher keys. This would violate the PKCS \#11 standard if the keys were set to be sensitive and un-extractable. This attack is far more serious than the previously analysed attacks, due to the high chance the user would be completely unaware of the attack.
+As discussed in chapter 6, the secure messaging sessions are used in the \textbf{\textit{GenerateKey}} and \textbf{\textit{Unwrap}} functions. This is also reported in \textbf{\textit{CreateObject}} function by Xiao (2016) \cite{Xiao}. In all cases, it is used to provide confidentiality of the CKA\_value of block cipher keys. The ability to successfully reverse engineer the secure messaging protocol would allow an attacker to use a man in the middle attack to derive two sets of session keys (one with the API and one with the smartcard). This would allow the attacker to decrypt the command data field and find value of the generated block cipher keys. This would violate the PKCS \#11 standard if the keys were set to be sensitive and un-extractable. This attack is far more serious than the previously analysed attacks, due to the high chance the user would be completely unaware of the attack.
 
-Our second objective is to learn how the \textbf{\textit{unwrap}} command data field is built and then build the correct command for \textbf{\textit{wrap}} at the APDU level. This might be completed by decrypting the data field of the unwrap command when used via the API. With this knowledge it should then be possible to implement the wrap/decrypt attack [?] at the APDU level, and will therefore allow the exporting of all keys including RSA private keys which are generated on the card which are assumed to be securely stored.
+Our second objective is to learn how the \textbf{\textit{unwrap}} command data field is built and then build the correct command for \textbf{\textit{wrap}} at the APDU level. This might be completed by decrypting the data field of the unwrap command when used via the API. With this knowledge it should then be possible to implement the wrap/decrypt attack \cite{clulow2003security} at the APDU level, and will therefore allow the exporting of all keys including RSA private keys which are generated on the card which are assumed to be securely stored.
 
 We use the API to call the function \textbf{\textit{GenerateKey}}, as we know that secure messaging is used within this function. This permits us to have a good overview about how the secure messaging protocol works. Below is a diagram that visually demonstrates what exactly occurs at the APDU level. The actual APDU commands are reported in appendix A.3.1
 
@@ -1837,7 +1837,7 @@ We use the API to call the function \textbf{\textit{GenerateKey}}, as we know th
 \caption{Secure Messaging Initialization}
 \end{figure}
 
-As shown in figure 7.2 the API first requests the public key of the card. In total (split between two messages due to the size exceeding 256 bytes), the smartcard sends to the API 265 bytes worth of data (its public key). The API then proceeds to send 131 bytes to the smartcard. Finally, the smartcard sends 32 bytes of data to the API, which completes the initialization of secure messaging. At this stage both the smartcard and the API are aware of two sets of block cipher keys S$_{Enc}$ and S$_{Mac}$ which are used to encrypt all of the following communication. From studying multiple traces we have found that these 131 bytes and 32 bytes of data, sent by the API and smartcard respectively, change every time a new secure messaging session is opened. The 265 bytes of data sent first are static (remain the same).
+As shown in figure 7.2 the API first requests the public key of the card. In total (split between two messages due to the size exceeding 256 bytes), the smartcard sends to the API 265 bytes worth of data (its public key). The API then proceeds to send 128 bytes to the smartcard. Finally, the smartcard sends 32 bytes of data to the API, which completes the initialization of secure messaging. At this stage both the smartcard and the API are aware of two sets of block cipher keys S$_{Enc}$ and S$_{Mac}$ which are used to encrypt all of the following communication. From studying multiple traces we have found that these 131 bytes and 32 bytes of data, sent by the API and smartcard respectively, change every time a new secure messaging session is opened. The 265 bytes of data sent first are static (remain the same).
 
 \subsection{Raw byte analysis of the data fields}
 The first step we have decided to take is to analyse the raw bytes within the data fields. From studying the traces of secure messaging sessions, we found that the 265 bytes that where sent from the smartcard to the API (smartcards public key) had an encoding. From reviewing ISO/IEC 7816 section 13 we have found that the 265 bytes are in fact 3 distinctive pieces of data of the following values. 
@@ -1876,7 +1876,7 @@ Using the information in table 7.9 we now test protocols that would allow sessio
 \subsection{Protocol search}
 There are three main protocols that would support session keys being derived that would remain a secret between the API and the smartcard. These are: RSA encryption, Elliptic Curve Cofactor Diffie Hellman (ECCDH) and Diffie Hellman (DH) (see section 2.2.2, chapter 2). 
 
-The security policies for 'Athena smartcard solutions' [?] states that ECCDH is used for some of their smartcards. They also report that the 32 bytes of random data sent by the card is used to XOR with the shared secret derived from ECCDH to create the 2 session keys. 
+The security policies for 'Athena smartcard solutions' \cite{a1,a3,a4,a5} states that ECCDH is used for some of their smartcards. They also report that the 32 bytes of random data sent by the card is used to XOR with the shared secret derived from ECCDH to create the 2 session keys. 
 
 \textit{[The same documentation stated that the shared secret derived from ECCDH was 32 bytes in length, and the session keys were 2 x  \textbf{Triple DES (key option 2)} 16 byte keys]}
 
@@ -1998,7 +1998,7 @@ Card random challenge & (32 bytes) = & Used for session key derivation (not part
 \caption{Data organization within secure messaging initialization process}
 \end{table}
 
-We assume that the 32 bytes sent at the end of the secure messaging initialization is to be similar to the ones reported under 'Athena Security Policies' that used ECCDH for secure messaging initialization [?]. They will be used to generate the final session keys S$_{Enc}$ and S$_{Mac}$ (this is discussed in more detail in section 7.3.4). The next process is to implement a man in the middle attack for the Diffie Hellman protocol so that an attacker is also in the knowledge of the shared secret.
+We assume that the 32 bytes sent at the end of the secure messaging initialization is to be similar to the ones reported under 'Athena Security Policies' that used ECCDH for secure messaging initialization \cite{a4}. They will be used to generate the final session keys S$_{Enc}$ and S$_{Mac}$ (this is discussed in more detail in section 7.3.4). The next process is to implement a man in the middle attack for the Diffie Hellman protocol so that an attacker is also in the knowledge of the shared secret.
 
 \subsection{Man in the middle attack - Diffie Hellman Key Agreement Protocol}
 A normal man in the middle attack for Diffie Hellman would require two Diffie Hellman key agreements to occur. One between the API and the attacker, and one between the attack and the smartcard. From the results reported in 7.12 we have found that we can force the API's public key to be 0, by setting the generator to be 0. We can also force the shared secret to be zero, if we alter the cards public key to be 0 as well. This leads to the card, the API and the attacker to be in the knowledge of the shared secret which is zero. 
@@ -2121,9 +2121,9 @@ The first step is simple, since we already know the ISO 7816 inter-industry 'GET
 
 Following our review of multiple traces of different secure messaging sessions, we have found that the highlighted bytes are constant for commands with empty data fields. For commands with data fields we have found another 2 bytes that are also constant, these are '87' and  '01'. It appears that control bytes are placed structurally throughout the encrypted command in order to separate the encrypted data field and the CMAC checksum. 
 
-Given the above finding, we review the GlobalPlatform 2.2 [?] standard which provides explanations for secure channel protocols. Our object here is to find how to build encrypted commands using secure messaging. Unfortunately this review does not provide any useful explanations with regard to how to build the encrypted commands. 
+Given the above finding, we review the GlobalPlatform 2.2 \cite{platform2006global} standard which provides explanations for secure channel protocols. Our object here is to find how to build encrypted commands using secure messaging. Unfortunately this review does not provide any useful explanations with regard to how to build the encrypted commands. 
 
-Thus we carry out a further thorough research of the 'Athena smartcard solutions' security polices. We find one security policy [?] that discusses the possible use of Diffie Hellman for secure messaging. This security policy cites a paper by the \textit{International Civil Aviation Organization} [?]. This latter paper is aims at explaining machine readable travel documents and their implementation. It shows a proprietary implementation of how to build the commands and responses for secure messaging sessions. The constant bytes present in the communication traces of secure messaging that we review for our smartcard match the constant bytes that are reported to be used in the methods explained in the paper. The diagrams reported below are extracted from the paper.
+Thus we carry out a further thorough research of the 'Athena smartcard solutions' security polices. We find one security policy \cite{idprotect2012athena} that discusses the possible use of Diffie Hellman for secure messaging. This security policy cites a paper by the \textit{International Civil Aviation Organization} \cite{doc20059303}. This latter paper is aims at explaining machine readable travel documents and their implementation. It shows a proprietary implementation of how to build the commands and responses for secure messaging sessions. The constant bytes present in the communication traces of secure messaging that we review for our smartcard match the constant bytes that are reported to be used in the methods explained in the paper. The diagrams reported below are extracted from the paper.
 
 
 % IMAGE: SM command
@@ -2133,7 +2133,7 @@ Thus we carry out a further thorough research of the 'Athena smartcard solutions
   \includegraphics[width=1\linewidth]
   {images/section_7/7.3/sm_command.png}
 \end{subfigure}
-\caption{How to build APDU commands within secure messaging [?]}
+\caption{How to build APDU commands within secure messaging \cite{doc20059303}}
 \end{figure}
 
 % IMAGE: SM response
@@ -2143,7 +2143,7 @@ Thus we carry out a further thorough research of the 'Athena smartcard solutions
   \includegraphics[width=1\linewidth]
   {images/section_7/7.3/sm_response.png}
 \end{subfigure}
-\caption{How to build APDU response's within secure messaging [?]}
+\caption{How to build APDU response's within secure messaging \cite{doc20059303}}
 \end{figure}
 
 The paper suggests that only triple DES or AES block ciphers (see section 2.3, chapter 2) are used within secure messaging. With the knowledge of how to build the commands under secure messaging, we can deduce the length of the checksum (CMAC). For our smartcard the checksum length is 8 bytes. This therefore rules out the possibility of the use of AES, and only leaves triple DES. Triple DES has 3 key options. In experiment 1 we report that the first 16 bytes of the cards 32 byte challenge is used for deriving S$_{Enc}$, and the second 16 bytes are for S$_{Mac}$. Considering it is 16 bytes, and not 8 nor 24, we assume that key option 2 for triple DES is used for secure messaging.
@@ -2241,7 +2241,7 @@ Encrypted command = 0C 84 00 00 0D 97 01 18 8E 08 $Checksum$ 00\\
 
 If a match between the encrypted command that is generated and the command the API encrypts is found, the method for deriving S$_{Enc}$ and S$_{Mac}$ will be known. This completes the reverse engineering of the proprietary secure messaging protocol implemented on our smartcard. 
 
-In the case that none of the methods suggested in table 7.19 do not reverse engineer the session keys S$_{Enc}$ and S$_{Mac}$ there is also another possibility that within the key derivation function a counter value is used. This is reported as an option in the machine readable travel document paper [?]. It states 2 possibilities, either an initial value of 0 is used, or the counter value can be generated from the first 4 bytes of the nonce sent by the API and the first 4 bytes of the smartcards challenge concatenated together. These bytes are from the login authentication that we reversed engineered in the section 7.2. Thus, the next option to test afterwards (in the case of failing to find a match) is:
+In the case that none of the methods suggested in table 7.19 do not reverse engineer the session keys S$_{Enc}$ and S$_{Mac}$ there is also another possibility that within the key derivation function a counter value is used. This is reported as an option in the machine readable travel document paper \cite{doc20059303}. It states 2 possibilities, either an initial value of 0 is used, or the counter value can be generated from the first 4 bytes of the nonce sent by the API and the first 4 bytes of the smartcards challenge concatenated together. These bytes are from the login authentication that we reversed engineered in the section 7.2. Thus, the next option to test afterwards (in the case of failing to find a match) is:
 \begin{center}
 \textit{S$_{Enc}$ = Truncate( Hash( ss $||$ counter )) XOR cc\_1\\}
 \textit{S$_{Mac}$ = Truncate( Hash( ss $||$ counter )) XOR cc\_2\\}
@@ -2254,15 +2254,15 @@ We examine in this project the Athena IDprotect smartcard that uses encrypted AP
 
 We successfully reverse engineer the proprietary implementation for PIN authentication. Using the protocol we deduce in section 7.2, an attacker can brute force/ use a dictionary attack to calculate a users PIN given one successful login (APDU) communication trace. This seriously violates the PKCS \#11 standard.
 
-We also successfully reverse engineer the cryptographic protocol that is implemented at the secure messaging (SM) initialization process. We find that this process uses the Diffie Hellman protocol. We implement a man in the middle attack to set the shared secret to a value of zero. Following our thorough analysis of a number of security policies of 'Athena Smartcard Solutions', we find a paper by the International Civil Aviation Organization [?] that describes how to build encrypted APDU commands and responses that matches that of our smartcard. The final step involves using the 32 byte card challenge, the shared secret (set to 0), a key derivation function and the encrypted command 'GET CHALLENGE' to calculate the SM session keys S$_{Enc}$ and S$_{Mac}$. We leave this for future work as time constraints does not permit its completion.
+We also successfully reverse engineer the cryptographic protocol that is implemented at the secure messaging (SM) initialization process. We find that this process uses the Diffie Hellman protocol. We implement a man in the middle attack to set the shared secret to a value of zero. Following our thorough analysis of a number of security policies of 'Athena Smartcard Solutions', we find a paper by the International Civil Aviation Organization \cite{doc20059303} that describes how to build encrypted APDU commands and responses that matches that of our smartcard. The final step involves using the 32 byte card challenge, the shared secret (set to 0), a key derivation function and the encrypted command 'GET CHALLENGE' to calculate the SM session keys S$_{Enc}$ and S$_{Mac}$. We leave this for future work as time constraints does not permit its completion.
 
-Our contribution to this future work is that we provide detailed explanations (in section 7.3, chapter 7) of the steps that need to be taken to complete the reverse engineering of the secure messaging protocol. We are confident that using our suggestions and experimental setup, this attack can be completed. If completed this will reveal sensitive key values of block cipher keys created and/or generated. It will also lead onto the investigation of whether or not the Clulow (2003) [?] 'wrap/decrpyt attack' can be achieved at the APDU level on our smartcard. The attack is not achievable at this stage due to the removal of the wrap functionality at the PKCS \#11 API level of our smartcard. We believe from the investigation we undertook in section 6.11, the security operation for wrapping is still supported at the APDU level. If this is achieved the attacker can extract all keys including RSA private keys from our smartcard. This will be in direct violation of the PKCS \#11 standard. We provide the steps necessary for this second investigation within section 8.1.
+Our contribution to this future work is that we provide detailed explanations (in section 7.3, chapter 7) of the steps that need to be taken to complete the reverse engineering of the secure messaging protocol. We are confident that using our suggestions and experimental setup, this attack can be completed. If completed this will reveal sensitive key values of block cipher keys created and/or generated. It will also lead onto the investigation of whether or not the Clulow (2003) \cite{clulow2003security} 'wrap/decrpyt attack' can be achieved at the APDU level on our smartcard. The attack is not achievable at this stage due to the removal of the wrap functionality at the PKCS \#11 API level of our smartcard. We believe from the investigation we undertook in section 6.11, the security operation for wrapping is still supported at the APDU level. If this is achieved the attacker can extract all keys including RSA private keys from our smartcard. This will be in direct violation of the PKCS \#11 standard. We provide the steps necessary for this second investigation within section 8.1.
 
-We test the vulnerability presented in Bozzato et al. (2016) [?] whereby attribute controls at the PKCS \#11 API level can be overridden at the APDU level. The results of the test show that our smartcard suffers from the same vulnerability, and that security operations (e.g. encrypt, sign) can be conducted on the smartcard regardless of the values of the keys attributes, that dictate if they key should be able to do so.
+We test the vulnerability presented in Bozzato et al. (2016) \cite{apdu:attacks} whereby attribute controls at the PKCS \#11 API level can be overridden at the APDU level. The results of the test show that our smartcard suffers from the same vulnerability, and that security operations (e.g. encrypt, sign) can be conducted on the smartcard regardless of the values of the keys attributes, that dictate if they key should be able to do so.
 
 We provide an extended analysis of how PKCS \#11 functions are broken down into ISO 7816 APDU command response pairs (for our projects smartcard). In the cases of C\_generateKey, C\_generateKeyPair, C\_destroyObject, C\_wrap and C\_unwrap we provide new insights.
 
-Finally we extend the work of Xiao (2016) [?] to include the key and attribute file locations of not only block cipher keys, but also RSA public and private keys.
+Finally we extend the work of Xiao (2016) \cite{Xiao} to include the key and attribute file locations of not only block cipher keys, but also RSA public and private keys.
 
 
 
@@ -2270,7 +2270,7 @@ Finally we extend the work of Xiao (2016) [?] to include the key and attribute f
 
 The first suggestion we have for future work is the completion of the reverse engineering of the secure messaging protocol for our smartcard. The explanation for how to do this can be found in chapter 7, section 7.3. We are confident that this can be achieved. If this is achieved, the first attack that will then be possible is the decryption of block cipher key values as they are being created/ generated with C\_createObject and C\_generateKey respectively.
 
-More importantly is our second attack suggestion. Based on the reverse engineering of the secure messaging protocol, our second suggestion for future work is the implementation of the 'wrap/decrypt attack' at the APDU level. This should be able to be achieved by completing the following:
+More importantly is our second attack suggestion. Based on the reverse engineering of the secure messaging protocol, our second suggestion for future work is the implementation of the 'wrap/decrypt attack' at the APDU level. This should be achievable by completing the following:
 
 \begin{itemize}
 \item Generate a new key with C\_generateKey function and decrypt the data field for create file (when creating the key file)
@@ -2280,9 +2280,9 @@ More importantly is our second attack suggestion. Based on the reverse engineeri
 
 We suggest decrypting the data field for the creation of a key file to find the understanding of how to create and store in the smartcards memory, a block cipher key without the need for the middlware. This is the first part to be completed before we can complete 'wrap/decrypt' attack at the APDU level.
 
-The second part concerns our discussion in chapter 6, section 6.11. We find the APDU command we assume to correspond to the 'wrap' security operation. We tested an example command and find an APDU level error, stating the parameters in the data field are incorrect. We think that studying the data field of the un-encrypted 'unwrap' APDU command might give insight into how the 'wrap' data field is defined. This is the reason for decrypting the data field of the 'unwrap' APDU command. If this does not achieve the understanding required for the APDU 'wrap' command, a study into previous hardware security modules and/or middlware versions (of 'Athena Smartcard Solutions') could find the correct correct APDU 'wrap' command. 
+The second part concerns our discussion in chapter 6, section 6.11. We find the APDU command we assume to correspond to the 'wrap' security operation. We have tested an example command and found an APDU level error, stating the parameters in the data field are incorrect. We are of the opinion, that studying the data field of the un-encrypted 'unwrap' APDU command might give insight into how the 'wrap' data field is defined. This is the reason for decrypting the data field of the 'unwrap' APDU command. If this does not achieve the understanding required for the APDU 'wrap' command, a study into previous hardware security modules and/or middlware versions (of 'Athena Smartcard Solutions') may find the correct correct APDU 'wrap' command. 
 
-Once these two additional understandings are found, using the knowledge we provide in this project the following attack should be able to take place on the smartcard. The attack is at the APDU level and does not require the use of the middlware (just send APDU commands directly to the smartcard).
+Once these two additional understandings are found, and coupled with the knowledge we provide in this project, the following attack can be completed. The attack is at the APDU level and does not require the use of the middlware (just send APDU commands directly to the smartcard).
 
 \begin{itemize}
 \item Using 'CREATE FILE' APDU command, create a block cipher key$_1$ (see table 4.4, chapter 4) at a file location that is empty. (See table 4.3 for file locations)
@@ -2293,11 +2293,11 @@ Once these two additional understandings are found, using the knowledge we provi
 \item Using the value we set for key$_1$, decrypt key$_e$ outside of the smartcard.
 \end{itemize}
 
-All key values stored in the smartcard regardless of any CKA\_attribute values should now appear in an un-encrypted format outside of the smartcard. This is in direct violation of the PKCS \#11 standard. And if successful is a very serious attack. Due to sending the commands directly to the smartcard, the middlware is no longer required. Therefore, the mitigation suggested by Bozzato et al. (2016) [?] of running the middlware on a separate process and different privilege to user would not mitigate this attack.
+All key values stored in the smartcard regardless of any CKA\_attribute values should now appear in an un-encrypted format outside of the smartcard. This is in direct violation of the PKCS \#11 standard. This will be a very serious attack if it is successful. Due to sending the commands directly to the smartcard, the middlware is no longer required. Therefore, the mitigation suggested by Bozzato et al. (2016) \cite{apdu:attacks} of running the middlware on a separate process and different privilege to user would not mitigate this attack.
 
 As we only study one smartcard in our project, a study into more PKCS \#11 hardware security modules that use encrypted APDU command response pairs should take place. On the basis of the above attack being successful, one of the aims of the study should be to find an understanding of whether the above attack is possible on other (more secure) smartcards. 
 
-If this is the case, this could provide evidence of whether a change in the standards for contact smartcards is necessary. In the following chapter we hypothesise that it might only be possible to provide aspects of the security of PKCS \#11, by implementing the PKCS \#11 standard on the smartcard. Thus, it would be the hardware to reject requests for security operations to take place, when the keys attributes do not permit it. Not the middleware on the computer. This will prevent APDU level attacks that override the controls the PKCS \#11 API dictates. It will also allow for the key separation principle to be enforced and never overridden at the APDU level, preventing the 'wrap/decrpyt attack'.
+If this is the case, this could provide evidence of whether a change in the standards for contact smartcards is necessary. In the following section we hypothesise that it might only be possible to provide aspects of the security of PKCS \#11, by implementing the PKCS \#11 standard on the smartcard. Thus, it would be the hardware to reject requests for security operations to take place, when the keys attributes do not permit it and not the middleware on the computer. This will prevent APDU level attacks that override the controls the PKCS \#11 API dictates. It will also allow for the key separation principle to be enforced and never overridden at the APDU level, preventing the 'wrap/decrpyt attack'.
 
 
 %Try using 'reallocate binary' and/or 'delete file' then 'create file' (must be done with caution! could brick card) to alter the retry counter for logging in. (Then a successful login trace is not required!)
@@ -2308,28 +2308,30 @@ If this is the case, this could provide evidence of whether a change in the stan
 
 Smartcards should provide isolated security especially for the sensitive key values that are stored in their memory. This security should be provided regardless of the threat model. Therefore the assumption that a physical man in the middle attack is in process (on the users system), should remain true throughout the development process of smartcards, to provide the security against this happening.
 
-It has been proven that our projects smartcard does not provide this protection, by the attacks we successfully complete. Bozzato et al. (2016) [?] also report the smartcards they examine providing no detection nor protection against man in the middle attacks. 
+It has been proven that our project's smartcard does not provide this protection. This assertion is based on the successful completion of our attacks. Bozzato et al. (2016) \cite{apdu:attacks} also report the smartcards they examine provide no detection and no protection against man in the middle attacks. 
 
-The methods for detecting man in the middle attacks require synchronous clocks between the smartcard and the users computer. Synchronizing clocks will allow for relative time measurements between the smartcard and the API to be calculated. This task is far from simple, and so far has not been reported as a methodology used by card vendors (that create PKCS \#11 hardware security modules) in literature. A trivial example of a detection method would be to calculate the averaged time between each specific APDU command and its corresponding response. If for a specific command response pair, the time exceeds X milliseconds assume a man in the middle attack is occurring. 
+The methods for detecting man in the middle attacks require synchronous clocks between the smartcard and the users computer. Synchronizing clocks will allow for relative time measurements between the smartcard and the API to be calculated. This task is extremely challenging, and so far has not been reported as a methodology used by card vendors (that create PKCS \#11 hardware security modules). A trivial example of a detection method would be to calculate the average time between each specific APDU command and its corresponding response. If for a specific command response pair, the time exceeds X milliseconds assume a man in the middle attack is occurring. 
 
-The implementation of detection and prevention of man in the middle attacks for smartcards that do not already support it, will be of high cost. A re-design to the smartcards hardware will most likely be required. This in most cases should prevent similar analysis's that we undertook in this project from being completed. This would aid the prevention of attackers gaining knowledge that is required to carry out the attacks we present and suggest as part of future work.
+The implementation of detection and prevention of man in the middle attacks for smartcards that do not already support it, will be of a high cost. A re-design to the smartcards hardware will most likely be required. If detection and prevention of man in the middle attacks is implemented, it will prevent an attacker from gaining the insights to how the smartcards middleware is implemented. This knowledge is required by attackers to successfully carry out the attacks we suggest as part of future work.
 
-Mitigations suggested in literature [?] are more reasonable for smartcard manufacturers to be able to implement at a much lower cost. These include:
+Mitigations suggested in literature \cite{apdu:attacks} are more reasonable for smartcard manufacturers to implement at a lower cost. These include:
 \begin{enumerate}
-\item The key separation principle at the API layer. One key/ key pair should not hold the ability for wrapping/unwrapping and encryption/decryption. They should hold only one of those sets.
+\item The key separation principle at the API layer. One key/ key pair should not hold the ability for wrapping/unwrapping and encryption/decryption. They should hold only one of those sets. \textit{As we discuss as part of our second suggestion for future work this might be of no use if this can be overridden at the APDU level.}
 
-\item Using the OTP functionality of some hardware security modules (usb tokens) for PIN authentication protocols. This should make it far more difficult for an attacker to reverse engineer the PIN authentication protocol. In the case they do, the attacker will still require physical access to the device.
+\item Using the OTP functionality of some hardware security modules (usb tokens) for PIN authentication protocols. This should make it far more difficult for an attacker to reverse engineer the PIN authentication protocol. In the case they do, the attacker will still require physical access to the device. \textit{This would however only apply to that of hardware secuirty modules with the OTP functionality implemented and have a display unit.}
 
 \item Running the middleware on a different process and at a higher privilege than the user of the system. This should prevent an attacker from attaching to the process and observing/ altering APDU communication.
 \end{enumerate}
 
-(1) as we discuss as part of our second suggestion for future work might be of no use if this can be overridden at the APDU level. (2) would only apply to that of hardware secuirty modules with the OTP functionality implemented and have a display unit. (3) does not prevent an attacker from gaining the understanding of the smartcards middleware implementation on his own computer (as he can give himself the same privilege level as the middleware). With that understanding an attacker could then send APDU commands directly to the smartcard on a users infected machine without the use of the middleware. Thus rendering the approach in-applicable to those forms of attacks.
+(move) does not prevent an attacker from gaining the understanding of the smartcards middleware implementation on his own computer (as he can give himself the same privilege level as the middleware). With that understanding an attacker could then send APDU commands directly to the smartcard on a users infected machine without the use of the middleware. Thus rendering the approach in-applicable to those forms of attacks.
 
-These forms of attacks rely on the fact that an attacker is able to gain a detailed understanding of how the card manufacturers middleware is implemented. We therefore suggest that the middleware that is released to customers be stripped of proper idiomatic function names, replacing them with names that only have meaning to the manufacturer. This will only help reduce the ability for an attacker to gain this understanding. It will however not prevent it, as reported in Gkaniatsou et al. (2015) [?] achieving this understanding is possible without the use of the manufacturers middleware. 
+These forms of attacks rely on the fact that an attacker is able to gain a detailed understanding of how the card manufacturers middleware is implemented. We therefore suggest that the middleware that is released to customers be stripped of proper idiomatic function names, replacing them with names that only have meaning to the manufacturer. This will only help reduce the ability for an attacker to gain this understanding. It will however not prevent it, as reported in Gkaniatsou et al. (2015) \cite{reprove} achieving this understanding is possible without the use of the manufacturers middleware. 
 
-Furthermore detection and prevention of man in the middle attacks should be implemented. This will seriously halt the ability to gain the understanding required for the APDU level attacks discussed, if implemented correctly. However there is no guarantee that detection and prevention is possible for man in the middle attacks that are automated by software. Considering clock synchronization between two devices always incurs a lag, it is possible that a software man in the middle attack could go undetected. This is worth investigating for card manufactures but as stated before would not come at a cheap cost.
+Furthermore detection and prevention of man in the middle attacks should be implemented. This will seriously halt the ability to gain the understanding required for the APDU level attacks discussed, if implemented correctly. However there is no guarantee that detection and prevention is possible for man in the middle attacks that are automated by software. Considering clock synchronization between two devices always incurs a lag, it is possible that an automated software man in the middle attack could go undetected. This is worth investigating for card manufacturers but as stated earlier would not come at a low cost.
 
-Finally, in the instance of our projects smartcard, good defense programming techniques would have made it far more difficult to reverse engineer the protocols we studied. For example not seeding the random number generator with only the current time (in PIN authentication). Or not allowing invalid values such as zero for the generator (for secure messaging). Defensive programming techniques would however only of made the job of reverse engineering the protocols more difficult, not prevent them. Thus we argue that the methods suggested above will only provide obscurity, not security. The hardware security modules discussed in this project, Gkaniatsou et al. (2015) and Bozzato et al. (2016) were once thought to be secure devices. A study into hardware security modules that are thought to be more secure could provide evidence that supports the mitigations that we suggest below (which are of high cost):
+Finally, in the instance of our project's smartcard, good defense programming techniques would have made it far more difficult to reverse engineer the protocols we studied. For example, not seeding the random number generator with only the current time (in PIN authentication). Or not allowing invalid values such as zero for the generator (for secure messaging). Defensive programming techniques would however only make the job of reverse engineering the protocols more difficult, but would not prevent them. 
+
+Thus we argue that the methods suggested above will only provide obscurity, not security. The hardware security modules discussed in our project, Gkaniatsou et al. (2015) and Bozzato et al. (2016) were once thought to be secure devices. A study into hardware security modules that are thought to be more secure could provide evidence that supports the mitigations that we suggest below (which would be costly):
 
 \begin{itemize}
 \item The ability for a user to set the key values using C\_createObject be removed
@@ -2337,13 +2339,13 @@ Finally, in the instance of our projects smartcard, good defense programming tec
 \item PKCS \#11 attribute controls should be enforced by the smartcard's hardware
 \item The key separation principle should be enforced by the smartcard's hardware
 \item All key values are to be stored in internal EF's and never be extracted out of smartcard 'unwrapped' / un-encrypted.
-\item "All cryptographic operations take place in the smartcard" [?]
-\item The status of a user being authenticated (correct PIN) should be controlled by smartcard's hardware. And prevent invalid function requests if their authentication status is false.5
+\item "All cryptographic operations take place in the smartcard" \cite{apdu:attacks}
+\item The status of a user being authenticated (correct PIN) should be controlled by smartcard's hardware. It should also prevent invalid function requests if their authentication status is false.
 \end{itemize}
 
-The above suggestions would require a re-design to the smartcards internal operation, however would prevent all the attacks we discuss regarding the disclosure of sensitive key values. It would also provide the security the PKCS \#11 API is expected to provide, which recent literature is showing can be overridden at the APDU level. This is due to the fact that the generation of keys will all take place within the smartcard with a command specifying the key type. This will remove the need for generating the key value and storing it in a file with 2 commands (requiring secure messaging to try and prevent revealing the key value). Furthermore the removal for the ability for a user to set the key value using C\_createObject will remove the need for secure messaging entirely. Which should now prevent the sensitive key value of any type of key from being leaked at the APDU level during key generation.
+The above suggestions would require a re-design to the smartcards internal operation. This would prevent all the attacks we discuss regarding the disclosure of sensitive key values. It would also provide the security the PKCS \#11 API is expected to provide, which recent literature has shown can be overridden at the APDU level. This is due to the fact that the generation of keys will all take place within the smartcard with a command specifying the key type. This will remove the need for generating the key value and storing it in a file with 2 commands (requiring secure messaging to try and prevent revealing the key value). Furthermore the removal for the ability for a user to set the key value using C\_createObject will remove the need for secure messaging entirely. This prevents the sensitive key value of any type of key from being leaked at the APDU level during key generation.
 
-Since the responsibility of the controls set out by the PKCS \#11 attribute values are to be delegated to the smartcards hardware, it will not be possible to override them at the APDU level. With the key separation principle also enforced by the smartcards hardware the 'wrap/decrypt attack' will not be possible at the API or the APDU level. Finally separating file location of sensitive key values and placing them in internal EF's should prevent the opening and disclosure of the sensitive key values at the APDU level (as see n in our smartcards project). \cite{test}
+Since the responsibility of the controls set out by the PKCS \#11 attribute values are to be delegated to the smartcards hardware, it will not be possible to override them at the APDU level. With the key separation principle also enforced by the smartcards hardware the 'wrap/decrypt attack' will not be possible at the API or the APDU level. Finally separating file location of sensitive key values and placing them in internal EF's should prevent the opening and disclosure of the sensitive key values at the APDU level (as reported in our project's smartcard).
 
 
 %---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -2352,9 +2354,55 @@ Since the responsibility of the controls set out by the PKCS \#11 attribute valu
 % otherwise generate bibtem entries
 \bibliographystyle{plain}
 \bibliography{mybibfile}
+\pagebreak
 
+\begin{center}
+\underline{\textbf{APDU Command Definitions}}
+\end{center}
+In chapter 6 we analyse the PKCS \#11 functions and how they are broken down into multiple ISO 7816 command-response pairs (for our project's smartcard). We find as did Xiao the use of the following inter-industry and proprietary commands. We provide a summary of all of the commands below.
 
+\textit{[Xiao (2016) \cite{Xiao} finds the 'inner-function' names which provide a good decoding of the proprietary commands listed in table 4.4. He has used a program known as 'pcsc-spy' to find the 'inner-function' names. We discuss this tool in section 5.1]}
 
+We provide this here for decoding the traces within the appendix.
+
+\begin{table}[H]
+\hskip-1.0cm\begin{tabular}{|c|c|c|c|c|c|c|p{8cm}|}
+\hline
+CLA & INS & P1 & P2 & Lc  & Data Field & Le & Description\\
+\hline
+00  & -   & -  & -  & -   & -          & -  & Inter-industry (II)\\
+80  & -   & -  & -  & -   & -          & -  & Proprietary (P)\\
+XC  & -   & -  & -  & -   & -          & -  & Secure Messaging (SM)\\
+\hline
+00  & 84  & 00 & 00 & -   & -          & L  &  (II) Get Challenge [\# bytes = L]\\
+00  & B0  & X  & X  & -   & -          & L  &  (II) Read Binary [\# bytes = L] \\
+00  & C0  & 00 & 00 & -   & -          & L  &  (II) Get Remaining Bytes\\
+00  & D6  & X  & X  & L   & X          & -  &  (II) Update Binary\\
+00  & E0  & X  & X  & L   & X          & -  &  (II) Create Binary\\
+00  & 47  & 00 & 00 & L   & Params     & -  &  (II) Generate RSA KeyPair\\
+00  & E4  & 00 & 00 & 00  & -          & -  &  (II) Delete File\\
+00  & 2A  & 82 & 05 & L   & X          & 00 &  (II) Encrypt Data \\
+00  & 2A  & 80 & 05 & L   & X          & 00 &  (II) Decrypt Data \\
+00  & 2A  & 9E & 12 & L   & X          & 00 &  (II) Sign Data \\
+00  & 2A  & 80 & 0A & L   & X          & 00  & (II) Unwrap Key (RSA\_PKCS)\\
+\hline
+80  & A4  & 08 & 00 & L   & FL         & -  & (P) Select File [FL = file location; L = len(fl)]\\
+80  & A4  & 00 & 00 & -   & FL         & -  & (P) Select File [append previous path]\\
+80  & A4  & 08 & 0C & L   & FL         & -  & (P) Read File Control Parameters\\
+80  & 20  & 00 & 00 & 10  & R          & -  & (P) Verify PIN [R = Response]\\
+80  & 28  & 00 & 00 & 04  & 00 00 00 20& -  & (P) Clear Security Status\\
+80  & 30  & 01 & 00 & 00  & -          & -  & (P) List Files\\
+80  & 48  & 00 & 80 & 00  & -          & -  & (P) Get The Smartcards Public Key [SM]\\
+80  & 48  & 00 & 00 & 00  & -          & -  & (P) Get Generated Public Key\\
+80  & 86  & 00 & 00 & L   & X          & 00 & (P) Open Secure Messaging\\
+80  & 86  & FF & FF & -   & -          & -  & (P) Close Secure Messaging\\
+\hline
+90  & 32  & 00 & 03 & FF  & X          & -  &  Reallocate Binary 256 bytes\\
+80  & 32  & 00 & 03 & L   & X          & -  &  Reallocate Binary L bytes (changes file)\\
+\hline
+\end{tabular}
+\caption{APDU Commands for Athena IDprotect}
+\end{table} 
 
 
 \begin{appendices}

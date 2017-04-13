@@ -43,6 +43,17 @@ Whitfield Diffie and Martin Hellman.
 \newblock New directions in cryptography.
 \newblock {\em IEEE transactions on Information Theory}, 22(6):644--654, 1976.
 
+\bibitem{doc20059303}
+ICAO Doc.
+\newblock 9303.
+\newblock {\em Machine Readable Travel Documents, part 11}, 2005.
+
+\bibitem{vpcd}
+Morgner Frank.
+\newblock {\em Virtual Smartcard Reader}, (accessed December 15, 2016).
+\newblock
+  https://frankmorgner.github.io/vsmartcard/virtualsmartcard/README.html.
+
 \bibitem{reprove}
 Andriana Gkaniatsou, Fiona McNeill, Alan Bundy, Graham Steel, Riccardo Focardi,
   and Claudio Bozzato.
@@ -61,6 +72,11 @@ Paul~A Grassi, James~L Fenton, Elaine~M Newton, Ray~A Perlner, Andrew~R
 Darrel Hankerson, Alfred~J Menezes, and Scott Vanstone.
 \newblock {\em Guide to elliptic curve cryptography}.
 \newblock Springer Science \& Business Media, 2006.
+
+\bibitem{idprotect2012athena}
+Athena IDProtect and OS755~Java Card.
+\newblock Athena idpass icao eac.
+\newblock 2012.
 
 \bibitem{a4}
 Athena~Smartcard Inc.
@@ -146,16 +162,19 @@ RSA Laboratories.
 \newblock {\em PKCS $\#$11 v2.20: Cryptographic Token Interface Standard}, June
   28, 2004.
 
+\bibitem{Xiao}
+Xiao Lan.
+\newblock {\em Finding Vulnerabilities In Low Level Protocols}, 2016.
+
 \bibitem{ans1}
-Lapo Luchini.
+Luchini Lapo.
 \newblock {\em ANS.1 JavaScript Decoder}, (accessed March 4, 2017).
 \newblock https://lapo.it/asn1js/.
 
-\bibitem{vpcd}
-Frank Morgner.
-\newblock {\em Virtual Smartcard Reader}, (accessed December 15, 2016).
-\newblock
-  https://frankmorgner.github.io/vsmartcard/virtualsmartcard/README.html.
+\bibitem{pcsc-lite}
+Rousseau Ludovic.
+\newblock {\em PCSC-lite}, (accessed October 1, 2016).
+\newblock https://pcsclite.alioth.debian.org/.
 
 \bibitem{m2005hotp}
 D~M'raihi, M~Bellare, F~Hoornaert, D~Naccache, and O~Ranen.
@@ -167,16 +186,21 @@ David M'Raihi, S~Machani, M~Pei, and J~Rydell.
 \newblock Totp: Time-based one-time password algorithm.
 \newblock Technical report, 2011.
 
+\bibitem{platform2006global}
+Global Platform.
+\newblock Global platform card specifications, version 2.2, 2006.
+
 \bibitem{rsa1978}
 Ronald~L Rivest, Adi Shamir, and Leonard Adleman.
 \newblock A method for obtaining digital signatures and public-key
   cryptosystems.
 \newblock {\em Communications of the ACM}, 21(2):120--126, 1978.
 
-\bibitem{pcsc-lite}
-Ludovic Rousseau.
-\newblock {\em PCSC-lite}, (accessed October 1, 2016).
-\newblock https://pcsclite.alioth.debian.org/.
+\bibitem{rydell2011ocra}
+Johan Rydell, Siddharth Bajaj, David M'Raihi, David Naccache, and Salah
+  Machani.
+\newblock Ocra: Oath challenge-response algorithms.
+\newblock 2011.
 
 \bibitem{shinde2008faster}
 GN~Shinde and HS~Fadewar.
@@ -193,9 +217,5 @@ Junhyuk Song, Radha Poovendran, Jicheol Lee, and Tetsu Iwata.
 Secure~Hash Standard.
 \newblock Fips pub 180-2.
 \newblock {\em National Institute of Standards and Technology}, 2002.
-
-\bibitem{Xiao}
-Lan Xiao.
-\newblock {\em Finding Vulnerabilities In Low Level Protocols}, 2016.
 
 \end{thebibliography}

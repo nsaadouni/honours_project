@@ -3,58 +3,59 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: honours_project_report.aux
 The style file: plain.bst
 Database file #1: mybibfile.bib
-Warning--I didn't find a database entry for "test"
 Warning--to sort, need author, organization, or key in eccimage
 Warning--to sort, need author, organization, or key in ecbcbcimage
 Warning--to sort, need author, organization, or key in cmacimage
 Warning--empty journal in grassidraft
 Warning--empty year in grassidraft
+Warning--empty journal in idprotect2012athena
 Warning--empty journal in kaliski2000pkcs
 Warning--empty journal in kaliski1993layman
 Warning--empty journal in krawczyk1997rfc
 Warning--empty institution in m2005hotp
 Warning--empty institution in m2011totp
+Warning--empty journal in rydell2011ocra
 Warning--can't use both volume and number fields in shinde2008faster
 Warning--empty institution in song2006aes
-You've used 36 entries,
+You've used 40 entries,
             2118 wiz_defined-function locations,
-            664 strings with 9049 characters,
-and the built_in function-call counts, 9644 in all, are:
-= -- 929
-> -- 447
+            677 strings with 9422 characters,
+and the built_in function-call counts, 10616 in all, are:
+= -- 1016
+> -- 502
 < -- 6
-+ -- 185
-- -- 146
-* -- 562
-:= -- 1625
-add.period$ -- 105
-call.type$ -- 36
-change.case$ -- 162
++ -- 207
+- -- 164
+* -- 613
+:= -- 1802
+add.period$ -- 116
+call.type$ -- 40
+change.case$ -- 183
 chr.to.int$ -- 0
-cite$ -- 48
-duplicate$ -- 401
-empty$ -- 777
-format.name$ -- 146
-if$ -- 2002
+cite$ -- 54
+duplicate$ -- 438
+empty$ -- 850
+format.name$ -- 164
+if$ -- 2195
 int.to.chr$ -- 0
-int.to.str$ -- 36
-missing$ -- 16
-newline$ -- 176
-num.names$ -- 66
-pop$ -- 207
+int.to.str$ -- 40
+missing$ -- 19
+newline$ -- 195
+num.names$ -- 74
+pop$ -- 237
 preamble$ -- 1
-purify$ -- 144
+purify$ -- 161
 quote$ -- 0
-skip$ -- 301
+skip$ -- 331
 stack$ -- 0
-substring$ -- 388
-swap$ -- 95
+substring$ -- 408
+swap$ -- 97
 text.length$ -- 6
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 140
-warning$ -- 12
-while$ -- 85
-width$ -- 38
-write$ -- 356
-(There were 13 warnings)
+type$ -- 156
+warning$ -- 14
+while$ -- 93
+width$ -- 42
+write$ -- 392
+(There were 14 warnings)
